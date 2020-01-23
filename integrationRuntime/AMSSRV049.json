@@ -1,0 +1,7 @@
+{
+	"name": "AMSSRV049",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "Integration runtime hosted on AMSSRV049"
+	}
+}
