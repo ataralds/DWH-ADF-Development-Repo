@@ -3,7 +3,9 @@
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"description": "ADF Development connection to dwhdatalakedevelopment",
-		"annotations": [],
+		"annotations": [
+			"datalakedevelopment connection"
+		],
 		"type": "AzureBlobFS",
 		"typeProperties": {
 			"url": "https://dwhdatalakedevelopment.dfs.core.windows.net",
