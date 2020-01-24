@@ -4,7 +4,7 @@
 	"properties": {
 		"description": "ADF Development connection to dwhdatalakedevelopment",
 		"annotations": [
-			"datalakedevelopment connection"
+			"datalake development connection"
 		],
 		"type": "AzureBlobFS",
 		"typeProperties": {
