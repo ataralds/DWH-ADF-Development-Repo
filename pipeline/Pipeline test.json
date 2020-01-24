@@ -1,0 +1,9 @@
+{
+	"name": "Pipeline test",
+	"properties": {
+		"folder": {
+			"name": "dwh-prepare"
+		},
+		"annotations": []
+	}
+}
