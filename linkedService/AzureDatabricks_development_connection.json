@@ -4,7 +4,7 @@
 	"properties": {
 		"description": "Connection to DataBricks Development",
 		"annotations": [
-			"DataBricks Development connection"
+			"databricks development connection"
 		],
 		"type": "AzureDatabricks",
 		"typeProperties": {
