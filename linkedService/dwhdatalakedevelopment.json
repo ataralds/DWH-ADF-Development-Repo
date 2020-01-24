@@ -1,0 +1,13 @@
+{
+	"name": "dwhdatalakedevelopment",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "Connection to dwhdatalakedevelopment",
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://dwhdatalakedevelopment.dfs.core.windows.net",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRXSC1BREYtREVWRUxPUE1FTlRfMDhhNzU5NjktZjZkNy00ZjczLWI2NmYtODJmNWNhMzE3Y2M2Ig0KfQ=="
+		}
+	}
+}
