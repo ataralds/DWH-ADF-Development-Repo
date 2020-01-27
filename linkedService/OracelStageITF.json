@@ -1,0 +1,16 @@
+{
+	"name": "OracelStageITF",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "Oracle",
+		"typeProperties": {
+			"connectionString": "host=areoda03-scan.gard.local;port=1521;servicename=dwprd.gard.local;user id=stage_itf",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI0OGQ5ZTYyZS1iNWM3LTQ4MjItODY3Yy04MDM5ZjRkODA3ZGEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "AMSSRV049",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
