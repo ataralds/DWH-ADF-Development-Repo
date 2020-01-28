@@ -11,6 +11,9 @@
 		"OracelStageITF_connectionString": {
 			"value": ""
 		},
+		"OracleCStage_connectionString": {
+			"value": ""
+		},
 		"dwhdatalakedevelopment_accountKey": {
 			"value": ""
 		},

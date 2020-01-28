@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'OracelStageITF'"
 		},
+		"OracleCStage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OracleCStage'"
+		},
 		"dwhdatalakedevelopment_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'dwhdatalakedevelopment'"
@@ -58,6 +62,9 @@
 					},
 					"OracelStageITF_connectionString": {
 						"value": "[parameters('OracelStageITF_connectionString')]"
+					},
+					"OracleCStage_connectionString": {
+						"value": "[parameters('OracleCStage_connectionString')]"
 					},
 					"dwhdatalakedevelopment_properties_typeProperties_url": {
 						"value": "[parameters('dwhdatalakedevelopment_properties_typeProperties_url')]"

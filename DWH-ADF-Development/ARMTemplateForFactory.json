@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'OracelStageITF'"
 		},
+		"OracleCStage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OracleCStage'"
+		},
 		"dwhdatalakedevelopment_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'dwhdatalakedevelopment'"
@@ -28,354 +32,6 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/CopyPipeline_ys1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_ys1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "STAGE_ITF.T_CROSSREFERENCE"
-							},
-							{
-								"name": "Destination",
-								"value": "dwh-stage/Mapping_System/stage_itf.t_crossreference"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "test_perben1src",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "test_perben1tcross",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"folder": {
-					"name": "PERBEN"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/test_perben1src')]",
-				"[concat(variables('factoryId'), '/datasets/test_perben1tcross')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Pipeline test')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "test_perben",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "test_perben",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"folder": {
-					"name": "dwh-prepare"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/test_perben')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/test_perben')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ForEach_zca",
-						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@pipeline().parameters.cw_items",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Copy_zca",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [
-										{
-											"name": "Source",
-											"value": "STAGE_ITF.@{item().source.table}"
-										},
-										{
-											"name": "Destination",
-											"value": "dwh-stage//@{item().destination.fileName}"
-										}
-									],
-									"typeProperties": {
-										"source": {
-											"type": "OracleSource",
-											"partitionOption": "None"
-										},
-										"sink": {
-											"type": "DelimitedTextSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "DelimitedTextWriteSettings",
-												"quoteAllText": true,
-												"fileExtension": ".txt"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "test_perben2src",
-											"type": "DatasetReference",
-											"parameters": {
-												"cw_table": "@item().source.table"
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "test_perben2",
-											"type": "DatasetReference",
-											"parameters": {
-												"cw_fileName": "@item().destination.fileName"
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"parameters": {
-					"cw_items": {
-						"type": "Array",
-						"defaultValue": [
-							{
-								"source": {
-									"table": "G_EMPLOYEE"
-								},
-								"destination": {
-									"fileName": "STAGE_ITF.G_EMPLOYEE.txt"
-								}
-							},
-							{
-								"source": {
-									"table": "G_INCIDENT"
-								},
-								"destination": {
-									"fileName": "STAGE_ITF.G_INCIDENT.txt"
-								}
-							},
-							{
-								"source": {
-									"table": "G_SYNDICATE"
-								},
-								"destination": {
-									"fileName": "STAGE_ITF.G_SYNDICATE.txt"
-								}
-							},
-							{
-								"source": {
-									"table": "T_CROSSREFERENCE"
-								},
-								"destination": {
-									"fileName": "STAGE_ITF.T_CROSSREFERENCE.txt"
-								}
-							}
-						]
-					}
-				},
-				"folder": {
-					"name": "PERBEN"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/test_perben2src')]",
-				"[concat(variables('factoryId'), '/datasets/test_perben2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/test_perben1tcross')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "PERBEN"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "stage_itf.t_crossreference",
-						"folderPath": "Mapping_System",
-						"fileSystem": "dwh-stage"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/dwhdatalakedevelopment')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/test_perben2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_fileName": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "PERBEN"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().cw_fileName",
-							"type": "Expression"
-						},
-						"fileSystem": "dwh-stage"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/dwhdatalakedevelopment')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/test_perben1src')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "PERBEN"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "STAGE_ITF",
-					"table": "T_CROSSREFERENCE"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracelStageITF')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/test_perben2src')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_table": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "PERBEN"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "STAGE_ITF",
-					"table": {
-						"value": "@dataset().cw_table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracelStageITF')]"
-			]
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AzureDatabricks_development_connection')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -408,6 +64,25 @@
 				"type": "Oracle",
 				"typeProperties": {
 					"connectionString": "[parameters('OracelStageITF_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AMSSRV049",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/AMSSRV049')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OracleCStage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('OracleCStage_connectionString')]"
 				},
 				"connectVia": {
 					"referenceName": "AMSSRV049",
