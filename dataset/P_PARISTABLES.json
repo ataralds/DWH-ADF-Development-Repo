@@ -7,7 +7,7 @@
 		},
 		"parameters": {
 			"fileName": {
-				"type": "string"
+				"type": "array"
 			}
 		},
 		"folder": {
