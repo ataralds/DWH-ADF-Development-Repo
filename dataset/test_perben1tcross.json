@@ -5,6 +5,9 @@
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "PERBEN"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {

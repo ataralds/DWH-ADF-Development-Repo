@@ -5,6 +5,9 @@
 			"referenceName": "OracelStageITF",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "PERBEN"
+		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
