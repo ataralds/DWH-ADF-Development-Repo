@@ -8,9 +8,6 @@
 		"parameters": {
 			"tableName": {
 				"type": "string"
-			},
-			"x": {
-				"type": "string"
 			}
 		},
 		"folder": {
@@ -20,10 +17,7 @@
 		"type": "OracleTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": {
-				"value": "@dataset().x",
-				"type": "Expression"
-			},
+			"schema": "CSTAGE_PARIS",
 			"table": {
 				"value": "@dataset().tableName",
 				"type": "Expression"
