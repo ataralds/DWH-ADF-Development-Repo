@@ -7,7 +7,7 @@
 		},
 		"parameters": {
 			"tableName": {
-				"type": "string"
+				"type": "array"
 			}
 		},
 		"folder": {
