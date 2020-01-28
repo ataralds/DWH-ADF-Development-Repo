@@ -5,6 +5,12 @@
 		"factoryName": {
 			"value": "DWH-ADF-Development"
 		},
+		"AzureDatabricks_development_connection_accessToken": {
+			"value": ""
+		},
+		"OracelStageITF_connectionString": {
+			"value": ""
+		},
 		"dwhdatalakedevelopment_accountKey": {
 			"value": ""
 		},

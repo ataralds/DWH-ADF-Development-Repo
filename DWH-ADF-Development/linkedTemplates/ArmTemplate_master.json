@@ -7,6 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "DWH-ADF-Development"
 		},
+		"AzureDatabricks_development_connection_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_development_connection'"
+		},
+		"OracelStageITF_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OracelStageITF'"
+		},
 		"dwhdatalakedevelopment_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'dwhdatalakedevelopment'"
@@ -42,8 +50,14 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureDatabricks_development_connection_accessToken": {
+						"value": "[parameters('AzureDatabricks_development_connection_accessToken')]"
+					},
 					"dwhdatalakedevelopment_accountKey": {
 						"value": "[parameters('dwhdatalakedevelopment_accountKey')]"
+					},
+					"OracelStageITF_connectionString": {
+						"value": "[parameters('OracelStageITF_connectionString')]"
 					},
 					"dwhdatalakedevelopment_properties_typeProperties_url": {
 						"value": "[parameters('dwhdatalakedevelopment_properties_typeProperties_url')]"

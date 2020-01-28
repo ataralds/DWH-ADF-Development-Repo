@@ -6,22 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "DWH-ADF-Development"
-		},
-		"AzureDatabricks_development_connection_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_development_connection'"
-		},
-		"OracelStageITF_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'OracelStageITF'"
-		},
-		"dwhdatalakedevelopment_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'dwhdatalakedevelopment'"
-		},
-		"dwhdatalakedevelopment_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://dwhdatalakedevelopment.dfs.core.windows.net"
 		}
 	},
 	"variables": {
@@ -71,15 +55,13 @@
 						"inputs": [
 							{
 								"referenceName": "test_perben1src",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "test_perben1tcross",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
@@ -110,8 +92,7 @@
 								"referenceName": "test_perben",
 								"type": "PipelineReference"
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
+							"waitOnCompletion": true
 						}
 					}
 				],
@@ -340,9 +321,7 @@
 					"table": "T_CROSSREFERENCE"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracelStageITF')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/test_perben2src')]",
@@ -372,9 +351,7 @@
 					}
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracelStageITF')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AzureDatabricks_development_connection')]",
@@ -390,7 +367,7 @@
 					"domain": "https://westeurope.azuredatabricks.net",
 					"accessToken": {
 						"type": "SecureString",
-						"value": "[parameters('AzureDatabricks_development_connection_accessToken')]"
+						"value": "**********"
 					},
 					"newClusterNodeType": "Standard_DS3_v2",
 					"newClusterNumOfWorker": "1",
@@ -398,25 +375,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OracelStageITF')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Oracle",
-				"typeProperties": {
-					"connectionString": "[parameters('OracelStageITF_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "AMSSRV049",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AMSSRV049')]"
-			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dwhdatalakedevelopment')]",
@@ -429,23 +387,12 @@
 				],
 				"type": "AzureBlobFS",
 				"typeProperties": {
-					"url": "[parameters('dwhdatalakedevelopment_properties_typeProperties_url')]",
+					"url": "https://dwhdatalakedevelopment.dfs.core.windows.net",
 					"accountKey": {
 						"type": "SecureString",
-						"value": "[parameters('dwhdatalakedevelopment_accountKey')]"
+						"value": "**********"
 					}
 				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AMSSRV049')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"description": "Integration runtime hosted on AMSSRV049",
-				"typeProperties": {}
 			},
 			"dependsOn": []
 		}
