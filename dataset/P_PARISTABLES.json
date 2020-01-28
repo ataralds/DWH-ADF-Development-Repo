@@ -19,7 +19,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@concat('p_','dataset().fileName')",
+					"value": "@concat('p_',dataset().fileName)",
 					"type": "Expression"
 				},
 				"fileSystem": "test"
