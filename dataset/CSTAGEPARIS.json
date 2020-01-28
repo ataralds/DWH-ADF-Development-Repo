@@ -8,13 +8,22 @@
 		"parameters": {
 			"tableName": {
 				"type": "string"
+			},
+			"x": {
+				"type": "string"
 			}
+		},
+		"folder": {
+			"name": "perben"
 		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "CSTAGE_PARIS",
+			"schema": {
+				"value": "@dataset().x",
+				"type": "Expression"
+			},
 			"table": {
 				"value": "@dataset().tableName",
 				"type": "Expression"
