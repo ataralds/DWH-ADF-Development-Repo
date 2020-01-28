@@ -1,0 +1,119 @@
+{
+	"name": "CopyPipeline_zca",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_zca",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_zca",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "STAGE_ITF.@{item().source.table}"
+								},
+								{
+									"name": "Destination",
+									"value": "dwh-stage//@{item().destination.fileName}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "SourceDataset_zca",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().source.table"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DestinationDataset_zca",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_fileName": "@item().destination.fileName"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"table": "G_EMPLOYEE"
+						},
+						"destination": {
+							"fileName": "STAGE_ITF.G_EMPLOYEE.txt"
+						}
+					},
+					{
+						"source": {
+							"table": "G_INCIDENT"
+						},
+						"destination": {
+							"fileName": "STAGE_ITF.G_INCIDENT.txt"
+						}
+					},
+					{
+						"source": {
+							"table": "G_SYNDICATE"
+						},
+						"destination": {
+							"fileName": "STAGE_ITF.G_SYNDICATE.txt"
+						}
+					},
+					{
+						"source": {
+							"table": "T_CROSSREFERENCE"
+						},
+						"destination": {
+							"fileName": "STAGE_ITF.T_CROSSREFERENCE.txt"
+						}
+					}
+				]
+			}
+		},
+		"annotations": []
+	}
+}
