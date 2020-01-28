@@ -54,7 +54,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "SourceDataset_zca",
+									"referenceName": "test_perben2src",
 									"type": "DatasetReference",
 									"parameters": {
 										"cw_table": "@item().source.table"
@@ -63,7 +63,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "DestinationDataset_zca",
+									"referenceName": "test_perben2",
 									"type": "DatasetReference",
 									"parameters": {
 										"cw_fileName": "@item().destination.fileName"

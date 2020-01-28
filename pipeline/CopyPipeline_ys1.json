@@ -38,13 +38,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SourceDataset_ys1",
+						"referenceName": "test_perben1src",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DestinationDataset_ys1",
+						"referenceName": "test_perben1tcross",
 						"type": "DatasetReference"
 					}
 				]

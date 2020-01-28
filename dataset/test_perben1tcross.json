@@ -1,5 +1,5 @@
 {
-	"name": "DestinationDataset_ys1",
+	"name": "test_perben1tcross",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",

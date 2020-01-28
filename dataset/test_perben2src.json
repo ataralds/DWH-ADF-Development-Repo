@@ -1,5 +1,5 @@
 {
-	"name": "SourceDataset_zca",
+	"name": "test_perben2src",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OracelStageITF",

@@ -1,5 +1,5 @@
 {
-	"name": "DestinationDataset_zca",
+	"name": "test_perben2",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
