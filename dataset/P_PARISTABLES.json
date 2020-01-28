@@ -1,13 +1,13 @@
 {
-	"name": "DestinationDataset_rg9",
+	"name": "P_PARISTABLES",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"cw_fileName": {
-				"type": "String"
+			"fileName": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -16,7 +16,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@dataset().cw_fileName",
+					"value": "@concat('p_','dataset().fileName')",
 					"type": "Expression"
 				},
 				"fileSystem": "test"

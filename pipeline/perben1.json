@@ -3,80 +3,6 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ForEach_rg9",
-				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "Set variable1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@pipeline().parameters.cw_items",
-						"type": "Expression"
-					},
-					"activities": [
-						{
-							"name": "Copy_rg9",
-							"type": "Copy",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [
-								{
-									"name": "Source",
-									"value": "STAGE_ITF.@{item().source.table}"
-								},
-								{
-									"name": "Destination",
-									"value": "test//@{item().destination.fileName}"
-								}
-							],
-							"typeProperties": {
-								"source": {
-									"type": "OracleSource",
-									"partitionOption": "None"
-								},
-								"sink": {
-									"type": "ParquetSink",
-									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings"
-									}
-								},
-								"enableStaging": false
-							},
-							"inputs": [
-								{
-									"referenceName": "SourceDataset_rg9",
-									"type": "DatasetReference",
-									"parameters": {
-										"cw_table": "@item().source.table"
-									}
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "DestinationDataset_rg9",
-									"type": "DatasetReference",
-									"parameters": {
-										"cw_fileName": "@item().destination.fileName"
-									}
-								}
-							]
-						}
-					]
-				}
-			},
-			{
 				"name": "Lookup Paris Tables",
 				"type": "Lookup",
 				"dependsOn": [],
@@ -103,8 +29,8 @@
 				}
 			},
 			{
-				"name": "Set variable1",
-				"type": "SetVariable",
+				"name": "Copy loop",
+				"type": "ForEach",
 				"dependsOn": [
 					{
 						"activity": "Lookup Paris Tables",
@@ -115,11 +41,63 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "tablename",
-					"value": {
+					"items": {
 						"value": "@activity('Lookup Paris Tables').output",
 						"type": "Expression"
-					}
+					},
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"partitionOption": "None",
+									"queryTimeout": "02:00:00"
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "CSTAGEPARIS",
+									"type": "DatasetReference",
+									"parameters": {
+										"tableName": {
+											"value": "@activity('Lookup Paris Tables').output",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "P_PARISTABLES",
+									"type": "DatasetReference",
+									"parameters": {
+										"fileName": {
+											"value": "@activity('Lookup Paris Tables').output",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
 				}
 			}
 		],

@@ -1,0 +1,24 @@
+{
+	"name": "CSTAGEPARIS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracelStageITF",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "CSTAGE_PARIS",
+			"table": {
+				"value": "@dataset().tableName",
+				"type": "Expression"
+			}
+		}
+	}
+}
