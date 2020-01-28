@@ -89,7 +89,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "concat('p_','@activity('Lookup Paris Tables').output')",
+											"value": "@activity('Lookup Paris Tables').output",
 											"type": "Expression"
 										}
 									}
