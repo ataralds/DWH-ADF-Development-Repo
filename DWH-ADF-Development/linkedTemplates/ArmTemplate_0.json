@@ -240,6 +240,699 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/PRE_DIM_CLAIM_TEAM')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "test"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PEAPEAID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEACCODE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEACOMP2",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEASTOPUSE",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAINVISIBLE",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAPERSID",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEACOLID",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAMDESCR",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEALANG2",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEABIRTWS",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEASUBTYPE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEABIRTNO",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEASW10",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAPERSRFL",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEASTOPCOD",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEARESDAT",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAINCREDAY",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAINGIRO",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAINGIRONO",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEANOTACO",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAPURTYP",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEANOTLAY",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEANOTSORT",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEASWINK",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAOUTCREDAY",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAOUTGIRO",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAOUTGIRONO",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEASWRUN",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEACLOMET",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEANOPDUE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEASTATYP",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEASTAAMT",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEASTTNIV",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEASTANIV",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEACLMADV",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAAPROBO",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAAADDBO",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAACLOBO",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAACLMBO",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAACORBO",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAMEXCDATE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAMEXCURR",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAMEXAMT",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAMEXPRO",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEACCLCURR",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEACCLAMT",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEACCINT",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEACCINTR",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEACALCURR",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEACALAMT",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAXLCURR",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAXLPOIN",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAIYEAR",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEASTENSW",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEASTDATE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAENDATE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAMAXPER",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAIEDIV",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAIEBUSNDIV",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAIE2BUSNDIV",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAIE3BUSNDIV",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAIESECT",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAIEBUSNSE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAIE2BUSNSE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAIE3BUSNSE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAIEINT",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAIEINT1",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAIEINT2",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAIEINT3",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAIEINT4",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAIEINT5",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAIECOND",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAIECON1",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAIECON2",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAIECON3",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAIECON4",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAIECON5",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEACRDATE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEACRSIGN",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEALUDATE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEALUSIGN",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEASEX",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAVATNO",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAORGNO",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEANOPURR",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAACLMADV",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAADDBOR",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAADDMAILFREQ",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEACLAMAILFREQ",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEACLMBOR",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEACLMINTYNSW",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEACLMMAILFREQ",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEACLOBOR",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEACLOSMAILFREQ",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEACORBO",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEACORRMAILFREQ",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEADUEDAY",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAFROMCOMP",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAINGIROLUDATE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAINGIROLUSIGN",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAINVNOTIFY",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAKNVMARK",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAMAILSIZEMB",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEANOTDAYS",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAOUTGIROLUDATE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAOUTGIROLUSIGN",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAPRENOTIFY",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAPROBOR",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAPROVMAILFREQ",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAPURNOTIFY",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEASTOPPREMNOTE",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEASTTPRMCLM",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAUSECOLFEE",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEACRMID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAEXTID",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEALEICODE",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEALETNOTIFY",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAEXTID2",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAMAILCNDNSPLIT",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAMAILUSESERVADRESS",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAMASKED",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAEXTTRANSFER2",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEAEXTTRANSFER",
+						"type": "UTF8"
+					},
+					{
+						"name": "PEACRUSER",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEALUUSER",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PEAALTERNATEPAYER",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/dwhdatalakedevelopment')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Parquet1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1239,30 +1932,6 @@
 						"value": "@dataset().tableName",
 						"type": "Expression"
 					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracelStageITF')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CSTAGEPARISTABLES')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "STAGE_ITF",
-					"table": "PERBEN_TEST2"
 				}
 			},
 			"dependsOn": [
