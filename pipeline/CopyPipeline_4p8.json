@@ -35,21 +35,12 @@
 						}
 					},
 					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "SourceDataset_4p8",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DestinationDataset_4p8",
-						"type": "DatasetReference"
-					}
-				]
+				}
 			}
 		],
+		"folder": {
+			"name": "perben"
+		},
 		"annotations": []
 	}
 }
