@@ -1,14 +1,9 @@
 {
-	"name": "P_PARISTABLES",
+	"name": "T_CROSS",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"fileName": {
-				"type": "array"
-			}
 		},
 		"folder": {
 			"name": "perben"
@@ -18,14 +13,45 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().fileName",
-					"type": "Expression"
-				},
-				"fileSystem": "test"
+				"fileName": "stage_itf.t_crossreference",
+				"folderPath": "Mapping_System",
+				"fileSystem": "dwh-stage"
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "SOURCE_CODE_KEY",
+				"type": "UTF8"
+			},
+			{
+				"name": "SOURCE_SYSTEM",
+				"type": "UTF8"
+			},
+			{
+				"name": "TARGET_CODE",
+				"type": "UTF8"
+			},
+			{
+				"name": "TARGET_DESCRIPTION",
+				"type": "UTF8"
+			},
+			{
+				"name": "CODE_TYPE",
+				"type": "UTF8"
+			},
+			{
+				"name": "CODE_TYPE_ID",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "CODE2",
+				"type": "UTF8"
+			},
+			{
+				"name": "OM_X_REF",
+				"type": "UTF8"
+			}
+		]
 	}
 }
