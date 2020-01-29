@@ -15,14 +15,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'dwhdatalakedevelopment'"
 		},
-		"OracelStageITF_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'OracelStageITF'"
-		},
-		"OracleCStage_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'OracleCStage'"
-		},
 		"dwhdatalakedevelopment_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://dwhdatalakedevelopment.dfs.core.windows.net"
@@ -133,10 +125,6 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().cw_fileName",
-							"type": "Expression"
-						},
 						"fileSystem": "test"
 					},
 					"compressionCodec": "snappy"
@@ -257,6 +245,154 @@
 					"location": {
 						"type": "AzureBlobFSLocation",
 						"fileName": "T_CROSSREFERENCE",
+						"fileSystem": "test"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/dwhdatalakedevelopment')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PECTABLE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "P_PECTABLE",
+						"fileSystem": "test"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PECPECID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PECEXTKEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "PECCONTYP",
+						"type": "UTF8"
+					},
+					{
+						"name": "PECCONPEAID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PECDEPITY",
+						"type": "UTF8"
+					},
+					{
+						"name": "PECDEPINT",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PECPROCOM",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PECMANFEE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PECDUEDATE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PECNOOFYR",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PECPROSW1",
+						"type": "UTF8"
+					},
+					{
+						"name": "PECNOUFYR",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PECPROSW2",
+						"type": "UTF8"
+					},
+					{
+						"name": "PECCOFOPT",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PECCOFOBL",
+						"type": "UTF8"
+					},
+					{
+						"name": "PECIBNRPR",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PECIYEAR",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PECSW5",
+						"type": "UTF8"
+					},
+					{
+						"name": "PECPCAID",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/dwhdatalakedevelopment')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PPPPPECCTBLLLLL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
 						"fileSystem": "test"
 					},
 					"compressionCodec": "snappy"
@@ -1231,44 +1367,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/dwhdatalakedevelopment')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OracelStageITF')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Oracle",
-				"typeProperties": {
-					"connectionString": "[parameters('OracelStageITF_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "AMSSRV049",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AMSSRV049')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OracleCStage')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Oracle",
-				"typeProperties": {
-					"connectionString": "[parameters('OracleCStage_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "AMSSRV049",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AMSSRV049')]"
 			]
 		}
 	]

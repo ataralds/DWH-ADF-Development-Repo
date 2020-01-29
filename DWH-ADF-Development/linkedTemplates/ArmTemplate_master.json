@@ -60,12 +60,6 @@
 					"dwhdatalakedevelopment_accountKey": {
 						"value": "[parameters('dwhdatalakedevelopment_accountKey')]"
 					},
-					"OracelStageITF_connectionString": {
-						"value": "[parameters('OracelStageITF_connectionString')]"
-					},
-					"OracleCStage_connectionString": {
-						"value": "[parameters('OracleCStage_connectionString')]"
-					},
 					"dwhdatalakedevelopment_properties_typeProperties_url": {
 						"value": "[parameters('dwhdatalakedevelopment_properties_typeProperties_url')]"
 					}
@@ -86,11 +80,37 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"OracelStageITF_connectionString": {
+						"value": "[parameters('OracelStageITF_connectionString')]"
+					},
+					"OracleCStage_connectionString": {
+						"value": "[parameters('OracleCStage_connectionString')]"
 					}
 				}
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_1')]"
 			]
 		}
 	]
