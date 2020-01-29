@@ -1,0 +1,20 @@
+{
+	"name": "DestinationDataset_zra",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "STAGE_ITFT_CROSSREFERENCE.txt",
+				"fileSystem": "test"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
