@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "perben_tcross.parquet",
 				"fileSystem": "test"
 			},
 			"compressionCodec": "snappy"
