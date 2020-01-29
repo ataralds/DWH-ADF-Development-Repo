@@ -4,7 +4,7 @@
 		"description": "Copy T cross refrence",
 		"activities": [
 			{
-				"name": "Copy_l0x",
+				"name": "Copy_TCrossRef",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
