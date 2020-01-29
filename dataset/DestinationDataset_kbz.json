@@ -1,0 +1,20 @@
+{
+	"name": "DestinationDataset_kbz",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "perben_tcross.parquet",
+				"fileSystem": "test"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
