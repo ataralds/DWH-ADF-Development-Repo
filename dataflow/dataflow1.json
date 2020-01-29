@@ -1,0 +1,34 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Parquet3",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "Parquet5",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				},
+				{
+					"dataset": {
+						"referenceName": "Parquet6",
+						"type": "DatasetReference"
+					},
+					"name": "source3"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(output(\n\t\tEMP_ID as decimal(38,18),\n\t\tLOGIN_NAME as string,\n\t\tFULL_NAME as string,\n\t\tEMP_TYPE_ID as decimal(38,18),\n\t\tGROUP_ID as decimal(38,18),\n\t\tDEPT_ID as decimal(38,18),\n\t\tLOC_ID as decimal(38,18),\n\t\tSYND_ID as decimal(38,18),\n\t\tDISABLED_IND as decimal(38,18),\n\t\tLOGGING_IND as decimal(38,18),\n\t\tUNDERWRITER_IND as decimal(38,18),\n\t\tCLAIMS_ADJUSTER_IND as decimal(38,18),\n\t\tREMINDER_RESP_IND as string,\n\t\tPASSWORD_DATE as timestamp,\n\t\tCREATED_BY as string,\n\t\tCREATED_WHEN as timestamp,\n\t\tUPDATED_BY as string,\n\t\tUPDATED_WHEN as timestamp,\n\t\tPERSONAL_CLAIMS_IND as decimal(38,18),\n\t\tNEW_LOGIN_NAME as string,\n\t\tE_MAIL as string,\n\t\tPROMAN_EKEY as decimal(38,18),\n\t\tJOBNAME as string,\n\t\tUNDERWRITER_ASSISTANT_IND as decimal(38,18),\n\t\tOLD_LOGIN_NAME as string,\n\t\tAUTHORIZED_PAYMENT_LEVEL_ID as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source1\nsource(output(\n\t\tINCIDENT_ID as decimal(38,18),\n\t\tUNIQUE_ENTRY_ID as decimal(38,18),\n\t\tINCIDENT_FILE_NUMBER as decimal(38,18),\n\t\tCLAIM_TYPE_ID_MAIN_CLAIM_TYPE as decimal(38,18),\n\t\tEMPLOYEE_ID_MAIN_ADJUSTER as decimal(38,18),\n\t\tMEMBERS_REFERENCE as string,\n\t\tARCHIVE_NUMBER as decimal(38,18),\n\t\tARCHIVE_DATE as timestamp,\n\t\tOLD_ARCHIVE_NUMBER as decimal(38,18),\n\t\tOLD_ARCHIVE_DATE as timestamp,\n\t\tGEOGRAPHICAL_AREA_ID_PLACE as decimal(38,18),\n\t\tGEOGRAPHICAL_AREA_ID_VOY_FROM as decimal(38,18),\n\t\tGEOGRAPHICAL_AREA_ID_VOY_TO as decimal(38,18),\n\t\tDATE_OF_INCIDENT as timestamp,\n\t\tMONTH_OR_PERIOD_OF_INCIDENT as string,\n\t\tCASUALTY_ID as decimal(38,18),\n\t\tMAIN_CAUSE_ID as decimal(38,18),\n\t\tGEOGRAPHICAL_AREA_ID_MAIN_JUR as decimal(38,18),\n\t\tCURRENCY_ID_MAIN_CURRENCY as decimal(38,18),\n\t\tINCIDENT_TEXT as string,\n\t\tEMPLOYEE_ID_REGISTERED_BY as decimal(38,18),\n\t\tREGISTERED_DATE as timestamp,\n\t\tLAST_REVIEWED_DATE as timestamp,\n\t\tLARGE_CLAIMS_GROUP_INDICATOR as string,\n\t\tTOTAL_CURRENT_RESERVE_USD as double,\n\t\tTOTAL_CURRENT_COMP_USD as double,\n\t\tCREATED_BY as string,\n\t\tCREATED_WHEN as timestamp,\n\t\tUPDATED_BY as string,\n\t\tUPDATED_WHEN as timestamp,\n\t\tTIMESTAMP_ as decimal(38,18),\n\t\tOFFICE_ROLE_ID_REFUND as decimal(38,18),\n\t\tREFUND_PERCENT as decimal(38,18),\n\t\tREFUND_MAPPER_NUMBER as decimal(38,18),\n\t\tPHYSICAL_FILE_CREATED as decimal(38,18),\n\t\tGEOGRAPHICAL_AREA_ID_1ST_PORT as decimal(38,18),\n\t\tTIMEBAR as timestamp,\n\t\tDEALT_WITH as string,\n\t\tOM_CLAIM_TYPE as decimal(38,18),\n\t\tCOMPLEXITY_ID as double,\n\t\tNO_ICR_REMINDER_DATE as timestamp,\n\t\tEVENT_ID as double,\n\t\tEVENT_DETAIL_ID as double,\n\t\tMAIN_CLAIM_DETAIL_ID as double,\n\t\tMYGARD_CLAIM_ID as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source2\nsource(output(\n\t\tSYND_ID as decimal(38,18),\n\t\tSYND_NAME as string,\n\t\tCREATED_BY as string,\n\t\tCREATED_WHEN as timestamp,\n\t\tUPDATED_BY as string,\n\t\tUPDATED_WHEN as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source3"
+		}
+	}
+}

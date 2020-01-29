@@ -1,0 +1,50 @@
+{
+	"name": "Parquet6",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "perben"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "STAGE_ITF.G_SYNDICATE.parquet",
+				"fileSystem": "test"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "SYND_ID",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SYND_NAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "CREATED_BY",
+				"type": "UTF8"
+			},
+			{
+				"name": "CREATED_WHEN",
+				"type": "INT96"
+			},
+			{
+				"name": "UPDATED_BY",
+				"type": "UTF8"
+			},
+			{
+				"name": "UPDATED_WHEN",
+				"type": "INT96"
+			}
+		]
+	}
+}
