@@ -1,0 +1,20 @@
+{
+	"name": "DestinationDataset_4p8",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "P_PECTABLE",
+				"fileSystem": "test"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
