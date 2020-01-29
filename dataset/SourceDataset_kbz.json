@@ -1,0 +1,16 @@
+{
+	"name": "SourceDataset_kbz",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracelStageITF",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "STAGE_ITF",
+			"table": "T_CROSSREFERENCE"
+		}
+	}
+}
