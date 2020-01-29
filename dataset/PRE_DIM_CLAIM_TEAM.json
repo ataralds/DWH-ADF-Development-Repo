@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "M_PRE_DIM_CLAIM_TEAM",
 				"fileSystem": "test"
 			},
 			"compressionCodec": "snappy"
