@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
+						"oracleReaderQuery": "select * from stage_itf.perben_test2 ",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
@@ -44,6 +45,7 @@
 						"value": "@activity('Lookup Paris Tables').output",
 						"type": "Expression"
 					},
+					"isSequential": false,
 					"activities": [
 						{
 							"name": "Copy data1",
@@ -77,19 +79,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"tableName": {
-											"value": "@activity('Lookup Paris Tables').output",
-											"type": "Expression"
-										}
-									}
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "P_PARISTABLES",
-									"type": "DatasetReference",
-									"parameters": {
-										"fileName": {
-											"value": "@activity('Lookup Paris Tables').output",
+											"value": "@item()",
 											"type": "Expression"
 										}
 									}
