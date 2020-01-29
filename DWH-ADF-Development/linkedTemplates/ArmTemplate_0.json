@@ -131,6 +131,9 @@
 					"referenceName": "dwhdatalakedevelopment",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "perben"
+				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
@@ -247,6 +250,9 @@
 				"linkedServiceName": {
 					"referenceName": "dwhdatalakedevelopment",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "perben"
 				},
 				"annotations": [],
 				"type": "Parquet",
@@ -1150,6 +1156,9 @@
 				"linkedServiceName": {
 					"referenceName": "dwhdatalakedevelopment",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "perben"
 				},
 				"annotations": [],
 				"type": "Parquet",
