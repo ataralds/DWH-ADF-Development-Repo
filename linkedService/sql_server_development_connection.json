@@ -1,0 +1,12 @@
+{
+	"name": "sql_server_development_connection",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "ADF connection to SQL server Development ",
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=dwh-sql-development.database.windows.net;Initial Catalog=dwdev"
+		}
+	}
+}
