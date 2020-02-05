@@ -17,6 +17,12 @@
 		"dwhdatalakedevelopment_accountKey": {
 			"value": ""
 		},
+		"sql_server_development_connection_connectionString": {
+			"value": ""
+		},
+		"ADF_dev_linked_service_properties_typeProperties_baseUrl": {
+			"value": "https://dwh-development-keyvault.vault.azure.net/"
+		},
 		"dwhdatalakedevelopment_properties_typeProperties_url": {
 			"value": "https://dwhdatalakedevelopment.dfs.core.windows.net"
 		},

@@ -23,6 +23,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'dwhdatalakedevelopment'"
 		},
+		"sql_server_development_connection_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'sql_server_development_connection'"
+		},
+		"ADF_dev_linked_service_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://dwh-development-keyvault.vault.azure.net/"
+		},
 		"dwhdatalakedevelopment_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://dwhdatalakedevelopment.dfs.core.windows.net"
@@ -60,6 +68,15 @@
 					"dwhdatalakedevelopment_accountKey": {
 						"value": "[parameters('dwhdatalakedevelopment_accountKey')]"
 					},
+					"sql_server_development_connection_connectionString": {
+						"value": "[parameters('sql_server_development_connection_connectionString')]"
+					},
+					"OracelStageITF_connectionString": {
+						"value": "[parameters('OracelStageITF_connectionString')]"
+					},
+					"ADF_dev_linked_service_properties_typeProperties_baseUrl": {
+						"value": "[parameters('ADF_dev_linked_service_properties_typeProperties_baseUrl')]"
+					},
 					"dwhdatalakedevelopment_properties_typeProperties_url": {
 						"value": "[parameters('dwhdatalakedevelopment_properties_typeProperties_url')]"
 					}
@@ -81,9 +98,6 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"OracelStageITF_connectionString": {
-						"value": "[parameters('OracelStageITF_connectionString')]"
-					},
 					"OracleCStage_connectionString": {
 						"value": "[parameters('OracleCStage_connectionString')]"
 					}
@@ -91,26 +105,6 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_0')]"
-			]
-		},
-		{
-			"name": "ArmTemplate_2",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_1')]"
 			]
 		}
 	]
