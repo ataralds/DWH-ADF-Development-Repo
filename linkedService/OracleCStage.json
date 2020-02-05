@@ -2,7 +2,9 @@
 	"name": "OracleCStage",
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
-		"annotations": [],
+		"annotations": [
+			"IR AMSSRV049"
+		],
 		"type": "Oracle",
 		"typeProperties": {
 			"connectionString": "host=areoda03-scan.gard.local;port=1521;servicename=dwprd.gard.local;user id=CSTAGE_PARIS",
