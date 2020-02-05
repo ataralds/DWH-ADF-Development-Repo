@@ -1,0 +1,10 @@
+{
+	"name": "ADF_dev_linked_service",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://dwh-development-keyvault.vault.azure.net/"
+		}
+	}
+}
