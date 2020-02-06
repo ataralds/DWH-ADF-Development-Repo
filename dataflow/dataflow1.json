@@ -39,7 +39,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "Parquet9",
+						"referenceName": "perbentaerget",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
