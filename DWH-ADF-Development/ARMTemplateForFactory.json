@@ -2192,6 +2192,30 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/perbentaerget')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "test"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/dwhdatalakedevelopment')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ADF_dev_linked_service')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -2363,7 +2387,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "Parquet9",
+								"referenceName": "perbentaerget",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -2421,7 +2445,7 @@
 				"[concat(variables('factoryId'), '/datasets/Parquet5')]",
 				"[concat(variables('factoryId'), '/datasets/Parquet6')]",
 				"[concat(variables('factoryId'), '/datasets/Parquet8')]",
-				"[concat(variables('factoryId'), '/datasets/Parquet9')]"
+				"[concat(variables('factoryId'), '/datasets/perbentaerget')]"
 			]
 		}
 	]
