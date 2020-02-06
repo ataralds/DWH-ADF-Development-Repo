@@ -1,0 +1,101 @@
+{
+	"name": "CopyPipeline_sm5",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_sm5",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_sm5",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "@{item().source.schema}.@{item().source.table}"
+								},
+								{
+									"name": "Destination",
+									"value": "test//@{item().destination.fileName}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "SourceDataset_sm5",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_schema": "@item().source.schema",
+										"cw_table": "@item().source.table"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DestinationDataset_sm5",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_fileName": "@item().destination.fileName"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"schema": "CSTAGE_PARIS",
+							"table": "CPATABLE"
+						},
+						"destination": {
+							"fileName": "CSTAGE_PARISCPATABLE.parquet"
+						}
+					},
+					{
+						"source": {
+							"schema": "STAGE_ITF",
+							"table": "P_CPATABLE"
+						},
+						"destination": {
+							"fileName": "STAGE_ITFP_CPATABLE.parquet"
+						}
+					}
+				]
+			}
+		},
+		"annotations": []
+	}
+}
