@@ -21,6 +21,369 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Parquet5')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "STAGE_ITF.G_INCIDENT.parquet",
+						"fileSystem": "test"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "INCIDENT_ID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "UNIQUE_ENTRY_ID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "INCIDENT_FILE_NUMBER",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "CLAIM_TYPE_ID_MAIN_CLAIM_TYPE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "EMPLOYEE_ID_MAIN_ADJUSTER",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "MEMBERS_REFERENCE",
+						"type": "UTF8"
+					},
+					{
+						"name": "ARCHIVE_NUMBER",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "ARCHIVE_DATE",
+						"type": "INT96"
+					},
+					{
+						"name": "OLD_ARCHIVE_NUMBER",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "OLD_ARCHIVE_DATE",
+						"type": "INT96"
+					},
+					{
+						"name": "GEOGRAPHICAL_AREA_ID_PLACE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "GEOGRAPHICAL_AREA_ID_VOY_FROM",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "GEOGRAPHICAL_AREA_ID_VOY_TO",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "DATE_OF_INCIDENT",
+						"type": "INT96"
+					},
+					{
+						"name": "MONTH_OR_PERIOD_OF_INCIDENT",
+						"type": "UTF8"
+					},
+					{
+						"name": "CASUALTY_ID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "MAIN_CAUSE_ID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "GEOGRAPHICAL_AREA_ID_MAIN_JUR",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "CURRENCY_ID_MAIN_CURRENCY",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "INCIDENT_TEXT",
+						"type": "UTF8"
+					},
+					{
+						"name": "EMPLOYEE_ID_REGISTERED_BY",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "REGISTERED_DATE",
+						"type": "INT96"
+					},
+					{
+						"name": "LAST_REVIEWED_DATE",
+						"type": "INT96"
+					},
+					{
+						"name": "LARGE_CLAIMS_GROUP_INDICATOR",
+						"type": "UTF8"
+					},
+					{
+						"name": "TOTAL_CURRENT_RESERVE_USD",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "TOTAL_CURRENT_COMP_USD",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "CREATED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CREATED_WHEN",
+						"type": "INT96"
+					},
+					{
+						"name": "UPDATED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "UPDATED_WHEN",
+						"type": "INT96"
+					},
+					{
+						"name": "TIMESTAMP_",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "OFFICE_ROLE_ID_REFUND",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "REFUND_PERCENT",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "REFUND_MAPPER_NUMBER",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "PHYSICAL_FILE_CREATED",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "GEOGRAPHICAL_AREA_ID_1ST_PORT",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "TIMEBAR",
+						"type": "INT96"
+					},
+					{
+						"name": "DEALT_WITH",
+						"type": "UTF8"
+					},
+					{
+						"name": "OM_CLAIM_TYPE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "COMPLEXITY_ID",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "NO_ICR_REMINDER_DATE",
+						"type": "INT96"
+					},
+					{
+						"name": "EVENT_ID",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "EVENT_DETAIL_ID",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "MAIN_CLAIM_DETAIL_ID",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "MYGARD_CLAIM_ID",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Parquet6')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "STAGE_ITF.G_SYNDICATE.parquet",
+						"fileSystem": "test"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "SYND_ID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "SYND_NAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "CREATED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CREATED_WHEN",
+						"type": "INT96"
+					},
+					{
+						"name": "UPDATED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "UPDATED_WHEN",
+						"type": "INT96"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Parquet7')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "T_CROSSREFERENCE",
+						"fileSystem": "test"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "SOURCE_CODE_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "SOURCE_SYSTEM",
+						"type": "UTF8"
+					},
+					{
+						"name": "TARGET_CODE",
+						"type": "UTF8"
+					},
+					{
+						"name": "TARGET_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CODE_TYPE",
+						"type": "UTF8"
+					},
+					{
+						"name": "CODE_TYPE_ID",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "CODE2",
+						"type": "UTF8"
+					},
+					{
+						"name": "OM_X_REF",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Parquet8')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -265,6 +628,27 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_6we')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracelStageITF",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "STAGE_ST",
+					"table": "STA_COVERAGE_GROUP"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OracelStageITF')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_e6n')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -441,16 +825,13 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_zra')]",
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_yef')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
 					"referenceName": "OracelStageITF",
 					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
 				},
 				"annotations": [],
 				"type": "OracleTable",
@@ -462,417 +843,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/OracelStageITF')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "perben"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "Parquet3",
-								"type": "DatasetReference"
-							},
-							"name": "emp",
-							"typeProperties": {}
-						},
-						{
-							"dataset": {
-								"referenceName": "Parquet5",
-								"type": "DatasetReference"
-							},
-							"name": "inc",
-							"typeProperties": {}
-						},
-						{
-							"dataset": {
-								"referenceName": "Parquet6",
-								"type": "DatasetReference"
-							},
-							"name": "syn",
-							"typeProperties": {}
-						},
-						{
-							"dataset": {
-								"referenceName": "Parquet8",
-								"type": "DatasetReference"
-							},
-							"name": "tcross",
-							"typeProperties": {}
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "perbentaerget",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "Filter1"
-						},
-						{
-							"name": "emp1"
-						},
-						{
-							"name": "inc1"
-						},
-						{
-							"name": "syn1"
-						},
-						{
-							"name": "Join1"
-						},
-						{
-							"name": "Join2"
-						},
-						{
-							"name": "Join3"
-						},
-						{
-							"name": "Select1"
-						},
-						{
-							"name": "dedup"
-						},
-						{
-							"name": "DerivedColumn1"
-						},
-						{
-							"name": "Select2"
-						},
-						{
-							"name": "DerivedColumn2"
-						},
-						{
-							"name": "DerivedColumn3"
-						},
-						{
-							"name": "DerivedColumn4"
-						}
-					],
-					"script": "source(output(\n\t\tEMP_ID as decimal(38,18),\n\t\tLOGIN_NAME as string,\n\t\tFULL_NAME as string,\n\t\tEMP_TYPE_ID as decimal(38,18),\n\t\tGROUP_ID as decimal(38,18),\n\t\tDEPT_ID as decimal(38,18),\n\t\tLOC_ID as decimal(38,18),\n\t\tSYND_ID as decimal(38,18),\n\t\tDISABLED_IND as decimal(38,18),\n\t\tLOGGING_IND as decimal(38,18),\n\t\tUNDERWRITER_IND as decimal(38,18),\n\t\tCLAIMS_ADJUSTER_IND as decimal(38,18),\n\t\tREMINDER_RESP_IND as string,\n\t\tPASSWORD_DATE as timestamp,\n\t\tCREATED_BY as string,\n\t\tCREATED_WHEN as timestamp,\n\t\tUPDATED_BY as string,\n\t\tUPDATED_WHEN as timestamp,\n\t\tPERSONAL_CLAIMS_IND as decimal(38,18),\n\t\tNEW_LOGIN_NAME as string,\n\t\tE_MAIL as string,\n\t\tPROMAN_EKEY as decimal(38,18),\n\t\tJOBNAME as string,\n\t\tUNDERWRITER_ASSISTANT_IND as decimal(38,18),\n\t\tOLD_LOGIN_NAME as string,\n\t\tAUTHORIZED_PAYMENT_LEVEL_ID as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> emp\nsource(output(\n\t\tINCIDENT_ID as decimal(38,18),\n\t\tUNIQUE_ENTRY_ID as decimal(38,18),\n\t\tINCIDENT_FILE_NUMBER as decimal(38,18),\n\t\tCLAIM_TYPE_ID_MAIN_CLAIM_TYPE as decimal(38,18),\n\t\tEMPLOYEE_ID_MAIN_ADJUSTER as decimal(38,18),\n\t\tMEMBERS_REFERENCE as string,\n\t\tARCHIVE_NUMBER as decimal(38,18),\n\t\tARCHIVE_DATE as timestamp,\n\t\tOLD_ARCHIVE_NUMBER as decimal(38,18),\n\t\tOLD_ARCHIVE_DATE as timestamp,\n\t\tGEOGRAPHICAL_AREA_ID_PLACE as decimal(38,18),\n\t\tGEOGRAPHICAL_AREA_ID_VOY_FROM as decimal(38,18),\n\t\tGEOGRAPHICAL_AREA_ID_VOY_TO as decimal(38,18),\n\t\tDATE_OF_INCIDENT as timestamp,\n\t\tMONTH_OR_PERIOD_OF_INCIDENT as string,\n\t\tCASUALTY_ID as decimal(38,18),\n\t\tMAIN_CAUSE_ID as decimal(38,18),\n\t\tGEOGRAPHICAL_AREA_ID_MAIN_JUR as decimal(38,18),\n\t\tCURRENCY_ID_MAIN_CURRENCY as decimal(38,18),\n\t\tINCIDENT_TEXT as string,\n\t\tEMPLOYEE_ID_REGISTERED_BY as decimal(38,18),\n\t\tREGISTERED_DATE as timestamp,\n\t\tLAST_REVIEWED_DATE as timestamp,\n\t\tLARGE_CLAIMS_GROUP_INDICATOR as string,\n\t\tTOTAL_CURRENT_RESERVE_USD as double,\n\t\tTOTAL_CURRENT_COMP_USD as double,\n\t\tCREATED_BY as string,\n\t\tCREATED_WHEN as timestamp,\n\t\tUPDATED_BY as string,\n\t\tUPDATED_WHEN as timestamp,\n\t\tTIMESTAMP_ as decimal(38,18),\n\t\tOFFICE_ROLE_ID_REFUND as decimal(38,18),\n\t\tREFUND_PERCENT as decimal(38,18),\n\t\tREFUND_MAPPER_NUMBER as decimal(38,18),\n\t\tPHYSICAL_FILE_CREATED as decimal(38,18),\n\t\tGEOGRAPHICAL_AREA_ID_1ST_PORT as decimal(38,18),\n\t\tTIMEBAR as timestamp,\n\t\tDEALT_WITH as string,\n\t\tOM_CLAIM_TYPE as decimal(38,18),\n\t\tCOMPLEXITY_ID as double,\n\t\tNO_ICR_REMINDER_DATE as timestamp,\n\t\tEVENT_ID as double,\n\t\tEVENT_DETAIL_ID as double,\n\t\tMAIN_CLAIM_DETAIL_ID as double,\n\t\tMYGARD_CLAIM_ID as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> inc\nsource(output(\n\t\tSYND_ID as decimal(38,18),\n\t\tSYND_NAME as string,\n\t\tCREATED_BY as string,\n\t\tCREATED_WHEN as timestamp,\n\t\tUPDATED_BY as string,\n\t\tUPDATED_WHEN as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> syn\nsource(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> tcross\ntcross filter(SOURCE_SYSTEM == 'GIC' && CODE_TYPE_ID ==792) ~> Filter1\nemp select(mapColumn(\n\t\tEMP_ID,\n\t\tSYND_ID\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> emp1\nDerivedColumn3 select(mapColumn(\n\t\tEMPLOYEE_ID_MAIN_ADJUSTER\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> inc1\nDerivedColumn4 select(mapColumn(\n\t\tSYND_ID,\n\t\tSYND_NAME\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> syn1\nDerivedColumn2, inc1 join(EMP_ID == EMPLOYEE_ID_MAIN_ADJUSTER,\n\tjoinType:'inner',\n\tbroadcast: 'both')~> Join1\nJoin1, syn1 join(DerivedColumn2@SYND_ID == syn1@SYND_ID,\n\tjoinType:'inner',\n\tpartitionBy('roundRobin', 2),\n\tbroadcast: 'both')~> Join2\nJoin2, Filter1 join(toString(syn1@SYND_ID) == SOURCE_CODE_KEY,\n\tjoinType:'left',\n\tbroadcast: 'both')~> Join3\nJoin3 select(mapColumn(\n\t\tEMP_ID,\n\t\tSYND_ID = syn1@SYND_ID,\n\t\tSYND_NAME,\n\t\tTARGET_CODE,\n\t\tTARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 aggregate(groupBy(TARGET_CODE,\n\t\tTARGET_DESCRIPTION,\n\t\tSYND_ID,\n\t\tEMP_ID),\n\tSYND_NAME = first(SYND_NAME)) ~> dedup\ndedup derive(TEM_KEY = case(isNull(TARGET_CODE), concat('C', toString(SYND_ID)), TARGET_CODE),\n\t\tPK_PRE_DIM_CLAIM_TEAM = concat('G', toString(EMP_ID)),\n\t\tTEM_DESCRIPTION = case(isNull(TARGET_DESCRIPTION), SYND_NAME, TARGET_DESCRIPTION),\n\t\tDATE_INSERTED = currentTimestamp(),\n\t\tDATE_LAST_UPDATED = currentTimestamp(),\n\t\tINSERTED_BY = 'M_PRE_DIM_CLAIM_TEAM',\n\t\tLAST_UPDATED_BY = 'M_PRE_DIM_CLAIM_TEAM') ~> DerivedColumn1\nDerivedColumn1 select(mapColumn(\n\t\tEMP_ID,\n\t\tTEM_KEY,\n\t\tPK_PRE_DIM_CLAIM_TEAM,\n\t\tTEM_DESCRIPTION,\n\t\tDATE_INSERTED,\n\t\tDATE_LAST_UPDATED,\n\t\tINSERTED_BY,\n\t\tLAST_UPDATED_BY\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nemp1 derive(EMP_ID = toInteger(EMP_ID),\n\t\tSYND_ID = toInteger(SYND_ID)) ~> DerivedColumn2\ninc derive(EMPLOYEE_ID_MAIN_ADJUSTER = toInteger(EMPLOYEE_ID_MAIN_ADJUSTER)) ~> DerivedColumn3\nsyn derive(SYND_ID = toInteger(SYND_ID)) ~> DerivedColumn4\nSelect2 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['M_PRE_DIM_PERBEN'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Parquet8')]",
-				"[concat(variables('factoryId'), '/datasets/perbentaerget')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CopyPipeline_e6n')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_e6n",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "STAGE_ITF.T_CROSSREFERENCE"
-							},
-							{
-								"name": "Destination",
-								"value": "test//perben3.parquet"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_e6n",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_e6n",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_e6n')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CopyPipeline_sm5')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ForEach_sm5",
-						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@pipeline().parameters.cw_items",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Copy_sm5",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [
-										{
-											"name": "Source",
-											"value": "@{item().source.schema}.@{item().source.table}"
-										},
-										{
-											"name": "Destination",
-											"value": "test//@{item().destination.fileName}"
-										}
-									],
-									"typeProperties": {
-										"source": {
-											"type": "OracleSource",
-											"partitionOption": "None"
-										},
-										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "SourceDataset_sm5",
-											"type": "DatasetReference",
-											"parameters": {
-												"cw_schema": "@item().source.schema",
-												"cw_table": "@item().source.table"
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "DestinationDataset_sm5",
-											"type": "DatasetReference",
-											"parameters": {
-												"cw_fileName": "@item().destination.fileName"
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"parameters": {
-					"cw_items": {
-						"type": "Array",
-						"defaultValue": [
-							{
-								"source": {
-									"schema": "CSTAGE_PARIS",
-									"table": "CPATABLE"
-								},
-								"destination": {
-									"fileName": "CSTAGE_PARISCPATABLE.parquet"
-								}
-							},
-							{
-								"source": {
-									"schema": "STAGE_ITF",
-									"table": "P_CPATABLE"
-								},
-								"destination": {
-									"fileName": "STAGE_ITFP_CPATABLE.parquet"
-								}
-							}
-						]
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_sm5')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CopyPipeline_xmp')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ForEach_xmp",
-						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@pipeline().parameters.cw_items",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Copy_xmp",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [
-										{
-											"name": "Source",
-											"value": "STAGE_ITF.@{item().source.table}"
-										},
-										{
-											"name": "Destination",
-											"value": "test//@{item().destination.fileName}"
-										}
-									],
-									"typeProperties": {
-										"source": {
-											"type": "OracleSource",
-											"partitionOption": "None"
-										},
-										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "SourceDataset_xmp",
-											"type": "DatasetReference",
-											"parameters": {
-												"cw_table": "@item().source.table"
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "DestinationDataset_xmp",
-											"type": "DatasetReference",
-											"parameters": {
-												"cw_fileName": "@item().destination.fileName"
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"parameters": {
-					"cw_items": {
-						"type": "Array",
-						"defaultValue": [
-							{
-								"source": {
-									"table": "G_EMPLOYEE"
-								},
-								"destination": {
-									"fileName": "STAGE_ITF.G_EMPLOYEE.txt"
-								}
-							},
-							{
-								"source": {
-									"table": "G_INCIDENT"
-								},
-								"destination": {
-									"fileName": "STAGE_ITF.G_INCIDENT.txt"
-								}
-							},
-							{
-								"source": {
-									"table": "G_SYNDICATE"
-								},
-								"destination": {
-									"fileName": "STAGE_ITF.G_SYNDICATE.txt"
-								}
-							},
-							{
-								"source": {
-									"table": "P_LCATABLE"
-								},
-								"destination": {
-									"fileName": "STAGE_ITF.P_LCATABLE.txt"
-								}
-							},
-							{
-								"source": {
-									"table": "P_SIGTABLE"
-								},
-								"destination": {
-									"fileName": "STAGE_ITF.P_SIGTABLE.txt"
-								}
-							},
-							{
-								"source": {
-									"table": "T_CROSSREFERENCE"
-								},
-								"destination": {
-									"fileName": "STAGE_ITF.T_CROSSREFERENCE.txt"
-								}
-							}
-						]
-					}
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_xmp')]"
 			]
 		}
 	]
