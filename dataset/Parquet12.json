@@ -1,0 +1,331 @@
+{
+	"name": "Parquet12",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "STAGE_ITFP_SIGTABLE.parquet",
+				"fileSystem": "test"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "SIGSIGN",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGMDESCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGLDESCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGCPHONE",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGCFAX",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGCMAIL",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGPEAID",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGMAINSIGN",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGHIERARC",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGORGPLACE",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGFUNC",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGBPRTPL",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGCOMP2",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGDEFCCODE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGDEFAGTYPE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGDEFOBRT",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGOFFICE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGBUSNDIV",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGBUSNSEC",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGBUSNCLA",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGBUSNTYP",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGLANG2",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGIYEAR",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGCURR",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGPWDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGSQLSEQ",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGGENSEC",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGMAISEC",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGPERSSECUR",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGCREATEFUNC",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGCLOSEFUNC",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGCLAIMFUNC",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGELREMITFUNC",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGPLTRANSFUNC",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGLOCDEFTAB",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGLOCSWITCHES",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGCREATESWITCHES",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGPREMSWITCHES",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGCLMDEFUPDATE",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGCLMSWITCHES",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGACCOACCG",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGACCOSREF",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGACCOSUBREF",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGACCOSWITCHES",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGPOLPRLABEL",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGLETTERPRLABEL",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGNOTEPRLABEL",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGMISCPRLABEL",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGSTOPUSE",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGNAMEID",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGEFILEDOMAIN",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGAACYNSW",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGACCYNSW",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGEFILEPLACE",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGEFILELIBRARY",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGEFILEPASSWORD",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGEFILEUSERID",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGACLYNSW",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGAUWYNSW",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGUWAYNSW",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGCLMYNSW",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGFRYEAR",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGSPECIALVERSION",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGTOYEAR",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "SIGINTSELECTION",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGDEBUGMACRO",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGINTAIE",
+				"type": "UTF8"
+			},
+			{
+				"name": "SIGDEBUGIDENTIFY",
+				"type": "UTF8"
+			}
+		]
+	}
+}
