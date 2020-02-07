@@ -56,6 +56,29 @@
 				}
 			}
 		],
+		"parameters": {
+			"cw_items": {
+				"type": "array",
+				"defaultValue": [
+					{
+						"source": {
+							"table": "P_LCATABLE"
+						},
+						"destination": {
+							"fileName": "STAGE_ITFP_LCATABLE.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "P_SIGTABLE"
+						},
+						"destination": {
+							"fileName": "STAGE_ITFP_SIGTABLE.parquet"
+						}
+					}
+				]
+			}
+		},
 		"annotations": []
 	}
 }
