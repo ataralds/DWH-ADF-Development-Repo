@@ -1,0 +1,98 @@
+{
+	"name": "copy claim team tables paris",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_lnm",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_lnm",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "STAGE_ITF.@{item().source.table}"
+								},
+								{
+									"name": "Destination",
+									"value": "test//@{item().destination.fileName}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "SourceDataset_lnm",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().source.table"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DestinationDataset_lnm",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_fileName": "@item().destination.fileName"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"table": "P_LCATABLE"
+						},
+						"destination": {
+							"fileName": "STAGE_ITFP_LCATABLE.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "P_SIGTABLE"
+						},
+						"destination": {
+							"fileName": "STAGE_ITFP_SIGTABLE.parquet"
+						}
+					}
+				]
+			}
+		},
+		"annotations": []
+	}
+}
