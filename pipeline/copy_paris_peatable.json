@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_gyu",
+				"name": "Copy_peatable",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
