@@ -1,0 +1,16 @@
+{
+	"name": "SourceDataset_6we",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracelStageITF",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "STAGE_ST",
+			"table": "STA_COVERAGE_GROUP"
+		}
+	}
+}
