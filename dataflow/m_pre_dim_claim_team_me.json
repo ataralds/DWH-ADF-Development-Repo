@@ -1,6 +1,9 @@
 {
-	"name": "dataflow2",
+	"name": "m_pre_dim_claim_team_me",
 	"properties": {
+		"folder": {
+			"name": "perben"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
