@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow1",
+						"referenceName": "m_pre_dim_claim_team_pi",
 						"type": "DataFlowReference"
 					},
 					"compute": {
