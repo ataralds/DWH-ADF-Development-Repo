@@ -1,0 +1,21 @@
+{
+	"name": "Test hanne",
+	"properties": {
+		"activities": [
+			{
+				"name": "CopyTCrossToParquet",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "CopyTCrossToParquet",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": []
+	}
+}
