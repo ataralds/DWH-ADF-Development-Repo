@@ -21,6 +21,246 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Parquet13')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "mapsys1.parquet",
+						"fileSystem": "test"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "SOURCE_CODE_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "SOURCE_SYSTEM",
+						"type": "UTF8"
+					},
+					{
+						"name": "TARGET_CODE",
+						"type": "UTF8"
+					},
+					{
+						"name": "TARGET_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CODE_TYPE",
+						"type": "UTF8"
+					},
+					{
+						"name": "CODE_TYPE_ID",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "CODE2",
+						"type": "UTF8"
+					},
+					{
+						"name": "OM_X_REF",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Parquet2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "test"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Parquet3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "STAGE_ITF.G_EMPLOYEE.parquet",
+						"fileSystem": "test"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "EMP_ID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LOGIN_NAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "FULL_NAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "EMP_TYPE_ID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "GROUP_ID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "DEPT_ID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LOC_ID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "SYND_ID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "DISABLED_IND",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LOGGING_IND",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "UNDERWRITER_IND",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "CLAIMS_ADJUSTER_IND",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "REMINDER_RESP_IND",
+						"type": "UTF8"
+					},
+					{
+						"name": "PASSWORD_DATE",
+						"type": "INT96"
+					},
+					{
+						"name": "CREATED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CREATED_WHEN",
+						"type": "INT96"
+					},
+					{
+						"name": "UPDATED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "UPDATED_WHEN",
+						"type": "INT96"
+					},
+					{
+						"name": "PERSONAL_CLAIMS_IND",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "NEW_LOGIN_NAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "E_MAIL",
+						"type": "UTF8"
+					},
+					{
+						"name": "PROMAN_EKEY",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "JOBNAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "UNDERWRITER_ASSISTANT_IND",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "OLD_LOGIN_NAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "AUTHORIZED_PAYMENT_LEVEL_ID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Parquet4')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -645,6 +885,483 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pre_dim_claim_team_me')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "test"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "LCALCAID",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAICAID",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCACLMN3",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCACLMDATE",
+						"type": "INT96"
+					},
+					{
+						"name": "LCACYEAR",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCATRTMCO",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCAACSTAT",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCALOSSCO",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAOUTSTM",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAUWSIGN",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAOFFICE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCALDESCR",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCACLODATE",
+						"type": "INT96"
+					},
+					{
+						"name": "LCACEFOCC",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCACEFOCM",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCACLMCAC",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAECAUSECO",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCACLINTC",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCATCAUSECO",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCABONYNSW",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAIMPEXP",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCANCAUSECO",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCANMCLEF",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCACCOD2",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAAREACD",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCACEFOUC",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAONOFFS",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCAENINTRST",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAENASSSHR",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCAMPLCURR",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAMPLAMT",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCAXLMREF",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAREPDATE",
+						"type": "INT96"
+					},
+					{
+						"name": "LCALIMCURR",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCALIMAMT",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCABIGEVENT",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCALODESCR",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAINTNOTE",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCALTDATE",
+						"type": "INT96"
+					},
+					{
+						"name": "LCACRSIGN",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCACRDATE",
+						"type": "INT96"
+					},
+					{
+						"name": "LCALUSIGN",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCALUDATE",
+						"type": "INT96"
+					},
+					{
+						"name": "LCAKNVMARK",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCALABID",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAAGAID",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAOBNO",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCACROBBID",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAWRKCLAIM",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCAFPAREACD",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCATOAREACD",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAJURISDICTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAFILEREF",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCANEXTSIGN",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAAREADESCR",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCALRGCLMYNSW",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAFROMAREACD",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCANEXTDATE",
+						"type": "INT96"
+					},
+					{
+						"name": "LCAWORKPLACE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCAOCCOFFDATE",
+						"type": "INT96"
+					},
+					{
+						"name": "LCAWRKPLCCOD",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCAREGNDATE",
+						"type": "INT96"
+					},
+					{
+						"name": "LCAOCCOFFYNSW",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAREGRESS",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCACLMPEAID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCAOCCOWNYNSW",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAREGNSIGN",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAMUOFFPROS",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCAREGCURR",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAREGAMT",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCAMUOWNPROS",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCALIMDAYS",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCAREGTEXT70",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCAEUOFFPROS",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCAMUOFFGRP",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCAEUOWNPROS",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCABIRTNO",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "INT96"
+					},
+					{
+						"name": "DATE_LAST_UPDATED",
+						"type": "INT96"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "LAST_UPDATED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "MAP_DATE",
+						"type": "INT96"
+					},
+					{
+						"name": "LCAADJSIGN",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCACLMID",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCALOADATE",
+						"type": "INT96"
+					},
+					{
+						"name": "LCAEXTCLMID",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCATLOTYPE",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "LCACATEGORYTYPE",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCARECOVPOTAMT",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCARECOVCCVID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "LCARECOVREMDATE",
+						"type": "INT96"
+					},
+					{
+						"name": "LCARECOVACHCURR",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCARECOVPOTINTNOTE",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCARECOVACHYNSW",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCARECOVACHINTNOTE",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCARECOVACHDATE",
+						"type": "INT96"
+					},
+					{
+						"name": "LCARECOVPOTCURR",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCARECOVACHSIGN",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCARECOVPOTYNSW",
+						"type": "UTF8"
+					},
+					{
+						"name": "LCARECOVACHAMT",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/OracelStageITF')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -850,126 +1567,6 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "STAGE_ITF",
-					"table": {
-						"value": "@dataset().cw_table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracelStageITF')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_kbz')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "STAGE_ITF",
-					"table": "T_CROSSREFERENCE"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracelStageITF')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_lnm')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_table": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "STAGE_ITF",
-					"table": {
-						"value": "@dataset().cw_table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracelStageITF')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_rg9')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_table": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "STAGE_ITF",
-					"table": {
-						"value": "@dataset().cw_table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracelStageITF')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_sm5')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_schema": {
-						"type": "String"
-					},
-					"cw_table": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": {
-						"value": "@dataset().cw_schema",
-						"type": "Expression"
-					},
 					"table": {
 						"value": "@dataset().cw_table",
 						"type": "Expression"
