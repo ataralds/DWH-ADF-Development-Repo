@@ -8,8 +8,8 @@
 		],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
-			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=dwh-sql-development.database.windows.net;initial catalog=dwdev;user id=DWH",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJmMjc0OTQxYi1iODRkLTRkMjctOTIwMy0wMjNlMDY0ZTk2NTUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=dwh-sql-development.database.windows.net;initial catalog=dwdev;user id=dwh",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjOWMwMmI5NS1lZDQyLTRkMjctYTNhZi0zMmEzMzZhNzNlOWYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "AMSSRV049",
