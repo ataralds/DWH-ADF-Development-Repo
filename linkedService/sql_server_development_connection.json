@@ -8,7 +8,12 @@
 		],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
-			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=dwh-sql-development.database.windows.net;Initial Catalog=dwdev"
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=dwh-sql-development.database.windows.net;initial catalog=dwdev;user id=DWH",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJmMjc0OTQxYi1iODRkLTRkMjctOTIwMy0wMjNlMDY0ZTk2NTUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "AMSSRV049",
+			"type": "IntegrationRuntimeReference"
 		}
 	}
 }
