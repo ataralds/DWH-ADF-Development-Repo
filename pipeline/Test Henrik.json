@@ -1,0 +1,39 @@
+{
+	"name": "Test Henrik",
+	"properties": {
+		"activities": [
+			{
+				"name": "S7 general",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://management.azure.com/subscriptions/{083c5fa4-4e85-4d15-b75d-1da12f3577ff}/resourceGroups/{DataWarehouse_Operations}/providers/Microsoft.Sql/servers/{dwh-sql-operations-server}/databases/{dwh-sql-operations-db}?api-version=2017-10-01-preview",
+					"method": "PUT",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"sku": {
+							"name": "S7",
+							"tier": "Standard"
+						},
+						"location": "West Europe"
+					},
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://management.azure.com/"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}
