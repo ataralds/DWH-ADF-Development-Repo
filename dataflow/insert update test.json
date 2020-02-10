@@ -1,6 +1,9 @@
 {
-	"name": "dataflow1",
+	"name": "insert update test",
 	"properties": {
+		"folder": {
+			"name": "perben"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
