@@ -16,7 +16,7 @@
 		"typeProperties": {
 			"schema": "CSTAGE_PARIS",
 			"table": {
-				"value": "@dataset().cw_table",
+				"value": "@dataset().OracleParis",
 				"type": "Expression"
 			}
 		}
