@@ -16,7 +16,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@dataset().cw_fileName",
+					"value": "@dataset().ScrParis",
 					"type": "Expression"
 				},
 				"fileSystem": "test"
