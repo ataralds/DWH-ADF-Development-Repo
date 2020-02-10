@@ -52,7 +52,10 @@
 									"referenceName": "ScrParisTest",
 									"type": "DatasetReference",
 									"parameters": {
-										"OracleParis": "@item().source.table"
+										"OracleParis": {
+											"value": "@pipeline().parameters.cw_items",
+											"type": "Expression"
+										}
 									}
 								}
 							],
