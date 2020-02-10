@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"cw_table": {
+			"OracleParis": {
 				"type": "String"
 			}
 		},
