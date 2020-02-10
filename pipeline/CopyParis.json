@@ -14,7 +14,7 @@
 					},
 					"activities": [
 						{
-							"name": "Copy_svw",
+							"name": "CopyParisOnPrem",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
