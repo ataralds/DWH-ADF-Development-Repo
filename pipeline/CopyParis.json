@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ForEach_svw",
+				"name": "CopyParisOnPrem",
 				"type": "ForEach",
 				"dependsOn": [],
 				"userProperties": [],
