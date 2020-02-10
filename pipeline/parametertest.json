@@ -1,0 +1,53 @@
+{
+	"name": "parametertest",
+	"properties": {
+		"activities": [
+			{
+				"name": "Parametertest",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "ScrParisTest",
+						"type": "DatasetReference",
+						"parameters": {
+							"OracleParis": "OracleParis"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "rawParis",
+						"type": "DatasetReference",
+						"parameters": {
+							"ScrParis": "rawparis"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}

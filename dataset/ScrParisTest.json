@@ -7,7 +7,7 @@
 		},
 		"parameters": {
 			"OracleParis": {
-				"type": "String"
+				"type": "string"
 			}
 		},
 		"annotations": [],
