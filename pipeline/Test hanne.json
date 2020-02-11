@@ -22,6 +22,9 @@
 				"userProperties": []
 			}
 		],
+		"folder": {
+			"name": "Test"
+		},
 		"annotations": []
 	}
 }
