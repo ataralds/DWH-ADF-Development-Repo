@@ -1,5 +1,5 @@
 {
-	"name": "dataflow2",
+	"name": "m_pre_dim_claim_teeeem",
 	"properties": {
 		"folder": {
 			"name": "perben"
@@ -9,28 +9,29 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DestinationDataset_e6n",
+						"referenceName": "AzureSqlTable8",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "sigtable"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable7",
+						"type": "DatasetReference"
+					},
+					"name": "mapsys"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable9",
+						"type": "DatasetReference"
+					},
+					"name": "lcatable"
 				}
 			],
 			"sinks": [],
-			"transformations": [
-				{
-					"name": "Lookup1"
-				},
-				{
-					"name": "Join1"
-				},
-				{
-					"name": "DerivedColumn1"
-				},
-				{
-					"name": "AlterRow1"
-				}
-			],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source1\nsource1 lookup(ERROR_FUNCTION('') == ERROR_FUNCTION(''),\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> Lookup1\nLookup1 join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),\n\tjoinType:'inner',\n\tbroadcast: 'none')~> Join1\nJoin1 derive() ~> DerivedColumn1\nDerivedColumn1 alterRow() ~> AlterRow1"
+			"transformations": [],
+			"script": "source(output(\n\t\tsigsign as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> sigtable\nsource(output(\n\t\tsource_code_key as string,\n\t\tsource_system as string,\n\t\tcode_type_id as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> mapsys\nsource(output(\n\t\tlcauwsign as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> lcatable"
 		}
 	}
 }
