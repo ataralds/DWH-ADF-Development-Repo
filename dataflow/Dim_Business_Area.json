@@ -22,9 +22,12 @@
 				},
 				{
 					"name": "DerivedColumn1"
+				},
+				{
+					"name": "DerivedColumn2"
 				}
 			],
-			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source1\nsource1 filter(CODE_TYPE_ID == 106 && TARGET_CODE !='PI') ~> Filter1\nFilter1 aggregate(groupBy(TARGET_CODE),\n\tTARGET_DESCRIPTION = first(TARGET_DESCRIPTION)) ~> Aggregate1\nAggregate1 derive(GRP_CODE = case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'EG', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE))\r\n\r\n,\n\t\tGRP_DESCRIPTION = case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'Energy+', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE))\r\n\r\n,\n\t\tBUA_DESCRIPTION = case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE)\r\n,\n\t\tBUA_CODE = case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE)\r\n\r\n) ~> DerivedColumn1"
+			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source1\nsource1 filter(CODE_TYPE_ID == 106  && TARGET_CODE !='PI') ~> Filter1\nFilter1 aggregate(groupBy(TARGET_CODE),\n\tTARGET_DESCRIPTION = first(TARGET_DESCRIPTION)) ~> Aggregate1\nAggregate1 derive(GRP_CODE = case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'EG', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE))\r\n\r\n,\n\t\tGRP_DESCRIPTION = case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'Energy+', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE))\r\n\r\n,\n\t\tBUA_DESCRIPTION = case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE)\r\n,\n\t\tBUA_CODE = case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE)\r\n\r\n) ~> DerivedColumn1\nDerivedColumn1 derive(Business_area = @(field=)) ~> DerivedColumn2"
 		}
 	}
 }
