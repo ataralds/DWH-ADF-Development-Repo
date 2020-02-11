@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "AzureSqlTable4",
+						"referenceName": "BusinessAreaTest1",
 						"type": "DatasetReference"
 					},
 					"name": "Sink"
