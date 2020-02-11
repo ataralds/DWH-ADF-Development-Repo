@@ -1,6 +1,9 @@
 {
-	"name": "dataflow3",
+	"name": "datetest",
 	"properties": {
+		"folder": {
+			"name": "perben"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
