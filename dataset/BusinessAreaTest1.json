@@ -12,7 +12,7 @@
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "dwh_stage",
+			"schema": "marts",
 			"table": "business_area"
 		}
 	}
