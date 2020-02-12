@@ -21,14 +21,14 @@
 						"referenceName": "AzureSqlTable6",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "insert"
 				},
 				{
 					"dataset": {
 						"referenceName": "AzureSqlTable6",
 						"type": "DatasetReference"
 					},
-					"name": "sink2"
+					"name": "update"
 				}
 			],
 			"transformations": [
@@ -45,7 +45,7 @@
 					"name": "AlterRow1"
 				}
 			],
-			"script": "source(output(\n\t\tdimension_key as integer,\n\t\tins as timestamp,\n\t\tupd as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> dato\ndato split(isNull(ins)==true(),\n\tdisjoint: false) ~> ConditionalSplit1@(null, notnull)\nConditionalSplit1@null derive(ins = currentTimestamp(),\n\t\tupd = currentTimestamp()) ~> DerivedColumn1\nConditionalSplit1@notnull derive(upd = currentTimestamp()) ~> DerivedColumn2\nDerivedColumn2 alterRow(updateIf(isNull(ins)==false())) ~> AlterRow1\nDerivedColumn1 sink(input(\n\t\tdimension_key as integer,\n\t\tins as timestamp,\n\t\tlast_upd as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1\nAlterRow1 sink(input(\n\t\tdimension_key as integer,\n\t\tins as timestamp,\n\t\tlast_upd as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:true,\n\tupsertable:false,\n\tkeys:['dimension_key'],\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink2"
+			"script": "source(output(\n\t\tdimension_key as integer,\n\t\tins as timestamp,\n\t\tupd as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> dato\ndato split(isNull(ins)==true(),\n\tdisjoint: false) ~> ConditionalSplit1@(null, notnull)\nConditionalSplit1@null derive(ins = currentTimestamp(),\n\t\tupd = currentTimestamp()) ~> DerivedColumn1\nConditionalSplit1@notnull derive(upd = currentTimestamp()) ~> DerivedColumn2\nDerivedColumn2 alterRow(updateIf(isNull(ins)==false())) ~> AlterRow1\nDerivedColumn1 sink(input(\n\t\tdimension_key as integer,\n\t\tins as timestamp,\n\t\tlast_upd as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> insert\nAlterRow1 sink(input(\n\t\tdimension_key as integer,\n\t\tins as timestamp,\n\t\tlast_upd as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:true,\n\tupsertable:false,\n\tkeys:['dimension_key'],\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> update"
 		}
 	}
 }
