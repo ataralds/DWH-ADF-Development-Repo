@@ -4,7 +4,7 @@
 		"description": "Copy Paris from Amsterdam new environment to test performance",
 		"activities": [
 			{
-				"name": "ForEach_u4w",
+				"name": "ForEach_AllParisTables",
 				"type": "ForEach",
 				"dependsOn": [],
 				"userProperties": [],
@@ -15,7 +15,7 @@
 					},
 					"activities": [
 						{
-							"name": "Copy_u4w",
+							"name": "Copy_Oracle_Paris_All_Tables",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
