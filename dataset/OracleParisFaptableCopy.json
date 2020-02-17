@@ -1,0 +1,16 @@
+{
+	"name": "OracleParisFaptableCopy",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracleDbParisScrAmster",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "CSTAGE_PARIS",
+			"table": "FAPTABLE"
+		}
+	}
+}
