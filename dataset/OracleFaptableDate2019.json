@@ -1,0 +1,12 @@
+{
+	"name": "OracleFaptableDate2019",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracleDbParisScrAmster",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
