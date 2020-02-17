@@ -1,0 +1,17 @@
+{
+	"name": "OracleDbParisScrAmster",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "Source to Paris data in amsterdam set up by Morten. This is only an copy of production. ",
+		"annotations": [],
+		"type": "Oracle",
+		"typeProperties": {
+			"connectionString": "host=padazuredb.gard.local;port=1521;sid=padazure1;user id=cstage_paris",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJmYTIyMmNjOS1kYTU1LTQ0NDgtOTdmZC05Y2Y0YjMxYjIxNDMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "AMSSRV049",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
