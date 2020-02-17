@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_tqi",
+				"name": "Copy_faptable_date",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
