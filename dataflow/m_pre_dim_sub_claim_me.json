@@ -6,10 +6,25 @@
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Azure_Lake_Paris_All_Tables",
+						"type": "DatasetReference"
+					},
+					"name": "lcatable"
+				},
+				{
+					"dataset": {
+						"referenceName": "Azure_Lake_Paris_All_Tables",
+						"type": "DatasetReference"
+					},
+					"name": "ldatable"
+				}
+			],
 			"sinks": [],
 			"transformations": [],
-			"script": ""
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> lcatable\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> ldatable"
 		}
 	}
 }
