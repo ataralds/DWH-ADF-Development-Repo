@@ -1,7 +1,7 @@
 {
-	"name": "BinarySourceFileStore",
+	"name": "BinarySinkFileStore",
 	"properties": {
-		"description": "Connection to your source data store.",
+		"description": "Connection to your destination data store.",
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
@@ -19,7 +19,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "ACOTABLE.parquet",
 				"folderPath": {
 					"value": "@dataset().directory",
 					"type": "Expression"
