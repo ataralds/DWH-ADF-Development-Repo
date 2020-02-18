@@ -10,6 +10,9 @@
 				"type": "String"
 			}
 		},
+		"folder": {
+			"name": "Test"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {

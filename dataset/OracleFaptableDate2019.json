@@ -5,6 +5,9 @@
 			"referenceName": "OracleDbParisScrAmster",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Test"
+		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": []
