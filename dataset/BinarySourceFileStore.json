@@ -8,7 +8,8 @@
 		},
 		"parameters": {
 			"container": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "test"
 			},
 			"directory": {
 				"type": "string"
@@ -19,7 +20,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "ACOTABLE.parquet",
+				"fileName": "file_list.csv",
 				"folderPath": {
 					"value": "@dataset().directory",
 					"type": "Expression"
