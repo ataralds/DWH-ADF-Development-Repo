@@ -1,0 +1,115 @@
+{
+	"name": "SourceDataset_tb8",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "ECATABLE.parquet",
+				"folderPath": "Paris",
+				"fileSystem": "raw"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "ECAECAID"
+			},
+			{
+				"name": "ECALCAID"
+			},
+			{
+				"name": "ECAOBNO",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "ECAINTRST"
+			},
+			{
+				"name": "ECAOBJEMA",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "ECAAREACD"
+			},
+			{
+				"name": "ECACURR"
+			},
+			{
+				"name": "ECANECLM",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "ECAPINTSH",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "ECAINTNOTE"
+			},
+			{
+				"name": "ECACRSIGN"
+			},
+			{
+				"name": "ECACRDATE",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "ECALUSIGN"
+			},
+			{
+				"name": "ECALUDATE",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "ECAAMT",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "ECAECLID"
+			},
+			{
+				"name": "ECALIMDAYS",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "ECADEDCD3",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "ECADEDDAYS",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "ECACLMLEAD",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "ECAECOID"
+			},
+			{
+				"name": "ECAECFID"
+			},
+			{
+				"name": "ECADEDAMT",
+				"precision": 38,
+				"scale": 18
+			}
+		]
+	}
+}
