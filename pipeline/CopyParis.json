@@ -14,7 +14,7 @@
 					},
 					"activities": [
 						{
-							"name": "CopyParisOnPrem",
+							"name": "CopyParis",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
