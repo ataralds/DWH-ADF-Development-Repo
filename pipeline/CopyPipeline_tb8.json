@@ -1,0 +1,180 @@
+{
+	"name": "CopyPipeline_tb8",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_tb8",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "raw/Paris/ECATABLE.parquet"
+					},
+					{
+						"name": "Destination",
+						"value": "dwh_stage.p_crctable"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ECAECAID",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "crcratcod",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ECALCAID",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "crcratcomp",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "ECAOBNO",
+									"type": "DECIMAL"
+								},
+								"sink": {
+									"name": "crcsw5",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ECAINTRST",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "crccpers4",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "ECAOBJEMA",
+									"type": "DECIMAL"
+								},
+								"sink": {
+									"name": "crccpers2",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "ECAAREACD",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "crcsdescr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ECACURR",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "crcstopuse",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ECANECLM",
+									"type": "DECIMAL"
+								},
+								"sink": {
+									"name": "crcperinc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ECAPINTSH",
+									"type": "DECIMAL"
+								},
+								"sink": {
+									"name": "crclospro",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ECAINTNOTE",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "crcccode",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "ECACRSIGN",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "crccpers3",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "ECACRDATE",
+									"type": "DECIMAL"
+								},
+								"sink": {
+									"name": "crcmdescr",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_tb8",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_tb8",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
