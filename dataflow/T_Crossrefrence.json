@@ -1,6 +1,9 @@
 {
 	"name": "T_Crossrefrence",
 	"properties": {
+		"folder": {
+			"name": "Test"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
