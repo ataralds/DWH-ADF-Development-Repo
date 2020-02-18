@@ -1,0 +1,12 @@
+{
+	"name": "m_pre_dim_sub_claim_me",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
