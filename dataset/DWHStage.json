@@ -14,7 +14,7 @@
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "dbo",
+			"schema": "dwh_stage",
 			"table": {
 				"value": "@dataset().SinkDataset",
 				"type": "Expression"
