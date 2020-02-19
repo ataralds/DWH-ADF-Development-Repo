@@ -81,7 +81,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "@item().name",
+											"value": "@item().Prop_0",
 											"type": "Expression"
 										},
 										"SourceContainer": {
@@ -101,7 +101,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"SinkDataset": {
-											"value": "@item().name",
+											"value": "@item().Prop_0",
 											"type": "Expression"
 										}
 									}
