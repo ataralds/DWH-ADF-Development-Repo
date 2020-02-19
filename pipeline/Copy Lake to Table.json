@@ -70,6 +70,9 @@
 										"recursive": true
 									}
 								},
+								"sink": {
+									"type": "AzureSqlSink"
+								},
 								"enableStaging": false
 							},
 							"inputs": [
@@ -78,6 +81,26 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
+											"value": "@item().name",
+											"type": "Expression"
+										},
+										"SourceContainer": {
+											"value": "@pipeline().parameters.SourceContainer",
+											"type": "Expression"
+										},
+										"SourceDirectory": {
+											"value": "@pipeline().parameters.SourceDirectory",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DWHStage",
+									"type": "DatasetReference",
+									"parameters": {
+										"SinkDataset": {
 											"value": "@item().name",
 											"type": "Expression"
 										}
