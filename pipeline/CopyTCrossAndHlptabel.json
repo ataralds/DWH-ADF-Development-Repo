@@ -3,7 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ForEach_bt8",
+				"name": "CopyTcrossandHlp",
+				"description": "KopiereT cross og hlp exchange rate til Dwh_stage.",
 				"type": "ForEach",
 				"dependsOn": [],
 				"userProperties": [],
@@ -14,7 +15,7 @@
 					},
 					"activities": [
 						{
-							"name": "Copy_bt8",
+							"name": "Copy_bothtables",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
