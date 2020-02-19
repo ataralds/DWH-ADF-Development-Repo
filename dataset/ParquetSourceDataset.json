@@ -25,10 +25,6 @@
 					"value": "@dataset().fileName",
 					"type": "Expression"
 				},
-				"folderPath": {
-					"value": "@dataset().SourceDirectory",
-					"type": "Expression"
-				},
 				"fileSystem": {
 					"value": "@dataset().SourceContainer",
 					"type": "Expression"
