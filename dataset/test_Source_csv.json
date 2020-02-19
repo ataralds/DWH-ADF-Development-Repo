@@ -1,6 +1,7 @@
 {
-	"name": "test_Source_csv_peatable",
+	"name": "test_Source_csv",
 	"properties": {
+		"description": "Paris file 2",
 		"linkedServiceName": {
 			"referenceName": "ARESRV476_Arendal",
 			"type": "LinkedServiceReference"
@@ -10,7 +11,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "FileServerLocation",
-				"fileName": "peatable.csv",
+				"fileName": "pebtable.csv",
 				"folderPath": "Dwh/ADF/Files"
 			},
 			"columnDelimiter": ",",

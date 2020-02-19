@@ -45,7 +45,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "test_Source_csv_peatable",
+						"referenceName": "test_Source_csv",
 						"type": "DatasetReference"
 					}
 				],
