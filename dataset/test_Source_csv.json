@@ -14,7 +14,7 @@
 				"fileName": "pebtable.csv",
 				"folderPath": "Dwh/ADF/Files"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": "|",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
