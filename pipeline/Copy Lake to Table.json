@@ -87,6 +87,10 @@
 										"SourceContainer": {
 											"value": "@pipeline().parameters.SourceContainer",
 											"type": "Expression"
+										},
+										"SourceDirectory": {
+											"value": "@pipeline().parameters.SourceDirectory",
+											"type": "Expression"
 										}
 									}
 								}
@@ -110,6 +114,9 @@
 		],
 		"parameters": {
 			"SourceContainer": {
+				"type": "string"
+			},
+			"SourceDirectory": {
 				"type": "string"
 			}
 		},
