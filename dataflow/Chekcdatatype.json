@@ -14,7 +14,7 @@
 			],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(output(\n\t\tPEBPEBID as string,\n\t\tPEBPEAID as string,\n\t\tPEBPEVER as string,\n\t\tPEBMDESCR as string,\n\t\tPEBVERSTAT as string,\n\t\tPEBVALDATE as string,\n\t\tPEBCONCOMP2 as string,\n\t\tPEBCONBUSNDIV as string,\n\t\tPEBCONOFFICE as string,\n\t\tPEBRESSIGN as string,\n\t\tPEBISOLAN as string,\n\t\tPEBTAXNO as string,\n\t\tPEBDISTRICT as string,\n\t\tPEBRATCOD as string,\n\t\tPEBREASON as string,\n\t\tPEBGROUP as string,\n\t\tPEBPERSACC as string,\n\t\tPEBBRDATE as string,\n\t\tPEBEMLCURR as string,\n\t\tPEBGENEML as string,\n\t\tPEBMACHEML as string,\n\t\tPEBEMLMDESCR as string,\n\t\tPEBLUDATE as string,\n\t\tPEBLUSIGN as string,\n\t\tPEBFORTTRADE as string,\n\t\tPEBPEOID as string,\n\t\tPEBPEOOPEAID as string,\n\t\tPEBINSTADYNZ as string,\n\t\tPEBNMISIC as string,\n\t\tPEBNMNYK as string,\n\t\tPEBPAYLEVEL as string,\n\t\tPEBSUPPORTER as string,\n\t\tPEBTYPELEVEL as string,\n\t\tPEBPIBREGDATE as string,\n\t\tPEBPIBREGSIGN as string,\n\t\tPEBDUNCO as string,\n\t\tPEBFORTSECTOR as string,\n\t\tPEBPIDID as string,\n\t\tPEBCONBUSNSEC as string,\n\t\tPEBPIDCNAME as string,\n\t\tPEBHOURPRICE as string,\n\t\tPEBCIVILSTATUS as string,\n\t\tPEBMVAYNSW as string,\n\t\tPEBCONBUSNCLA as string,\n\t\tPEBPRICECURR as string,\n\t\tPEBRATCOMP as string,\n\t\tPEBRATEDATE as string,\n\t\tPEBRATLUDATE as string,\n\t\tPEBRATSIGN as string,\n\t\tPEBQASTATUS as string,\n\t\tPEBSITID as string,\n\t\tPEBQADATE as string,\n\t\tPEBQASIGN as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source1"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source1"
 		}
 	}
 }
