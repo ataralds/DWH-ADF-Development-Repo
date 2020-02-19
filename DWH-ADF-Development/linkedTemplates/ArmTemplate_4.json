@@ -1,0 +1,1950 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "DWH-ADF-Development"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_claim_team_me')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "perben"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Parquet11",
+								"type": "DatasetReference"
+							},
+							"name": "lcatable",
+							"typeProperties": {}
+						},
+						{
+							"dataset": {
+								"referenceName": "Parquet12",
+								"type": "DatasetReference"
+							},
+							"name": "sigtable",
+							"typeProperties": {}
+						},
+						{
+							"dataset": {
+								"referenceName": "Parquet13",
+								"type": "DatasetReference"
+							},
+							"name": "mapsys",
+							"typeProperties": {}
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable2",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "lcatable2"
+						},
+						{
+							"name": "sigtable2"
+						},
+						{
+							"name": "Join1"
+						},
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "Aggregate1"
+						},
+						{
+							"name": "DerivedColumn1"
+						},
+						{
+							"name": "DerivedColumn2"
+						},
+						{
+							"name": "Lookup1"
+						},
+						{
+							"name": "Select2"
+						},
+						{
+							"name": "DerivedColumn3"
+						}
+					],
+					"script": "source(output(\n\t\tLCALCAID as string,\n\t\tLCAICAID as string,\n\t\tLCACLMN3 as decimal(38,18),\n\t\tLCACLMDATE as timestamp,\n\t\tLCACYEAR as decimal(38,18),\n\t\tLCATRTMCO as decimal(38,18),\n\t\tLCAACSTAT as string,\n\t\tLCALOSSCO as string,\n\t\tLCAOUTSTM as string,\n\t\tLCAUWSIGN as string,\n\t\tLCAOFFICE as decimal(38,18),\n\t\tLCALDESCR as string,\n\t\tLCACLODATE as timestamp,\n\t\tLCACEFOCC as string,\n\t\tLCACEFOCM as string,\n\t\tLCACLMCAC as string,\n\t\tLCAECAUSECO as string,\n\t\tLCACLINTC as decimal(38,18),\n\t\tLCATCAUSECO as string,\n\t\tLCABONYNSW as string,\n\t\tLCAIMPEXP as decimal(38,18),\n\t\tLCANCAUSECO as string,\n\t\tLCANMCLEF as string,\n\t\tLCACCOD2 as string,\n\t\tLCAAREACD as string,\n\t\tLCACEFOUC as string,\n\t\tLCAONOFFS as decimal(38,18),\n\t\tLCAENINTRST as string,\n\t\tLCAENASSSHR as decimal(38,18),\n\t\tLCAMPLCURR as string,\n\t\tLCAMPLAMT as decimal(38,18),\n\t\tLCAXLMREF as string,\n\t\tLCAREPDATE as timestamp,\n\t\tLCALIMCURR as string,\n\t\tLCALIMAMT as decimal(38,18),\n\t\tLCABIGEVENT as string,\n\t\tLCALODESCR as string,\n\t\tLCAINTNOTE as string,\n\t\tLCALTDATE as timestamp,\n\t\tLCACRSIGN as string,\n\t\tLCACRDATE as timestamp,\n\t\tLCALUSIGN as string,\n\t\tLCALUDATE as timestamp,\n\t\tLCAKNVMARK as string,\n\t\tLCALABID as string,\n\t\tLCAAGAID as string,\n\t\tLCAOBNO as decimal(38,18),\n\t\tLCACROBBID as string,\n\t\tLCAWRKCLAIM as decimal(38,18),\n\t\tLCAFPAREACD as string,\n\t\tLCATOAREACD as string,\n\t\tLCAJURISDICTION as string,\n\t\tLCAFILEREF as decimal(38,18),\n\t\tLCANEXTSIGN as string,\n\t\tLCAAREADESCR as string,\n\t\tLCALRGCLMYNSW as string,\n\t\tLCAFROMAREACD as string,\n\t\tLCANEXTDATE as timestamp,\n\t\tLCAWORKPLACE as decimal(38,18),\n\t\tLCAOCCOFFDATE as timestamp,\n\t\tLCAWRKPLCCOD as decimal(38,18),\n\t\tLCAREGNDATE as timestamp,\n\t\tLCAOCCOFFYNSW as string,\n\t\tLCAREGRESS as decimal(38,18),\n\t\tLCACLMPEAID as decimal(38,18),\n\t\tLCAOCCOWNYNSW as string,\n\t\tLCAREGNSIGN as string,\n\t\tLCAMUOFFPROS as decimal(38,18),\n\t\tLCAREGCURR as string,\n\t\tLCAREGAMT as decimal(38,18),\n\t\tLCAMUOWNPROS as decimal(38,18),\n\t\tLCALIMDAYS as decimal(38,18),\n\t\tLCAREGTEXT70 as string,\n\t\tLCAEUOFFPROS as decimal(38,18),\n\t\tLCAMUOFFGRP as decimal(38,18),\n\t\tLCAEUOWNPROS as decimal(38,18),\n\t\tLCABIRTNO as string,\n\t\tDATE_INSERTED as timestamp,\n\t\tDATE_LAST_UPDATED as timestamp,\n\t\tINSERTED_BY as string,\n\t\tLAST_UPDATED_BY as string,\n\t\tMAP_DATE as timestamp,\n\t\tLCAADJSIGN as string,\n\t\tLCACLMID as string,\n\t\tLCALOADATE as timestamp,\n\t\tLCAEXTCLMID as string,\n\t\tLCATLOTYPE as double,\n\t\tLCACATEGORYTYPE as string,\n\t\tLCARECOVPOTAMT as decimal(38,18),\n\t\tLCARECOVCCVID as decimal(38,18),\n\t\tLCARECOVREMDATE as timestamp,\n\t\tLCARECOVACHCURR as string,\n\t\tLCARECOVPOTINTNOTE as string,\n\t\tLCARECOVACHYNSW as string,\n\t\tLCARECOVACHINTNOTE as string,\n\t\tLCARECOVACHDATE as timestamp,\n\t\tLCARECOVPOTCURR as string,\n\t\tLCARECOVACHSIGN as string,\n\t\tLCARECOVPOTYNSW as string,\n\t\tLCARECOVACHAMT as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> lcatable\nsource(output(\n\t\tSIGSIGN as string,\n\t\tSIGMDESCR as string,\n\t\tSIGLDESCR as string,\n\t\tSIGCPHONE as string,\n\t\tSIGCFAX as string,\n\t\tSIGCMAIL as string,\n\t\tSIGPEAID as decimal(38,18),\n\t\tSIGMAINSIGN as string,\n\t\tSIGHIERARC as string,\n\t\tSIGORGPLACE as string,\n\t\tSIGFUNC as string,\n\t\tSIGBPRTPL as string,\n\t\tSIGCOMP2 as decimal(38,18),\n\t\tSIGDEFCCODE as decimal(38,18),\n\t\tSIGDEFAGTYPE as decimal(38,18),\n\t\tSIGDEFOBRT as decimal(38,18),\n\t\tSIGOFFICE as decimal(38,18),\n\t\tSIGBUSNDIV as decimal(38,18),\n\t\tSIGBUSNSEC as decimal(38,18),\n\t\tSIGBUSNCLA as decimal(38,18),\n\t\tSIGBUSNTYP as decimal(38,18),\n\t\tSIGLANG2 as string,\n\t\tSIGIYEAR as decimal(38,18),\n\t\tSIGCURR as string,\n\t\tSIGPWDATE as decimal(38,18),\n\t\tSIGSQLSEQ as decimal(38,18),\n\t\tSIGGENSEC as decimal(38,18),\n\t\tSIGMAISEC as decimal(38,18),\n\t\tSIGPERSSECUR as string,\n\t\tSIGCREATEFUNC as string,\n\t\tSIGCLOSEFUNC as string,\n\t\tSIGCLAIMFUNC as string,\n\t\tSIGELREMITFUNC as string,\n\t\tSIGPLTRANSFUNC as string,\n\t\tSIGLOCDEFTAB as decimal(38,18),\n\t\tSIGLOCSWITCHES as string,\n\t\tSIGCREATESWITCHES as string,\n\t\tSIGPREMSWITCHES as string,\n\t\tSIGCLMDEFUPDATE as string,\n\t\tSIGCLMSWITCHES as string,\n\t\tSIGACCOACCG as decimal(38,18),\n\t\tSIGACCOSREF as string,\n\t\tSIGACCOSUBREF as string,\n\t\tSIGACCOSWITCHES as string,\n\t\tSIGPOLPRLABEL as string,\n\t\tSIGLETTERPRLABEL as string,\n\t\tSIGNOTEPRLABEL as string,\n\t\tSIGMISCPRLABEL as string,\n\t\tSIGSTOPUSE as string,\n\t\tSIGNAMEID as string,\n\t\tSIGEFILEDOMAIN as string,\n\t\tSIGAACYNSW as string,\n\t\tSIGACCYNSW as string,\n\t\tSIGEFILEPLACE as string,\n\t\tSIGEFILELIBRARY as string,\n\t\tSIGEFILEPASSWORD as string,\n\t\tSIGEFILEUSERID as string,\n\t\tSIGACLYNSW as string,\n\t\tSIGAUWYNSW as string,\n\t\tSIGUWAYNSW as string,\n\t\tSIGCLMYNSW as string,\n\t\tSIGFRYEAR as decimal(38,18),\n\t\tSIGSPECIALVERSION as string,\n\t\tSIGTOYEAR as decimal(38,18),\n\t\tSIGINTSELECTION as string,\n\t\tSIGDEBUGMACRO as string,\n\t\tSIGINTAIE as string,\n\t\tSIGDEBUGIDENTIFY as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> sigtable\nsource(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> mapsys\nlcatable select(mapColumn(\n\t\tLCAUWSIGN\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> lcatable2\nsigtable select(mapColumn(\n\t\tSIGSIGN,\n\t\tSIGOFFICE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sigtable2\nlcatable2, sigtable2 join(LCAUWSIGN == SIGSIGN,\n\tjoinType:'inner',\n\tbroadcast: 'both')~> Join1\nJoin1 select(mapColumn(\n\t\tSIGSIGN,\n\t\tSIGOFFICE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nDerivedColumn3 aggregate(groupBy(SIGSIGN),\n\tSIGOFFICE = first(SIGOFFICE)) ~> Aggregate1\nAggregate1 derive(TEM_KEY = concat('P', toString(SIGSIGN)),\n\t\tPK_PRE_DIM_CLAIM_TEAM = concat('P', SIGSIGN),\n\t\tSOURCE_SYSTEM = 'PARIS',\n\t\tCODE_TYPE_ID = '792',\n\t\tDATE_INSERTED = toTimestamp(currentDate() )) ~> DerivedColumn1\nmapsys derive(CODE_TYPE_ID_STRING = toString(toInteger(CODE_TYPE_ID))) ~> DerivedColumn2\nDerivedColumn1, DerivedColumn2 lookup(SIGOFFICE == SOURCE_CODE_KEY\n\t&& DerivedColumn1@SOURCE_SYSTEM == mapsys@SOURCE_SYSTEM\n\t&& DerivedColumn1@CODE_TYPE_ID == CODE_TYPE_ID_STRING,\n\tmultiple: false,\n\tpickup: 'any',\n\tpartitionBy('hash', 1),\n\tbroadcast: 'none')~> Lookup1\nLookup1 select(mapColumn(\n\t\tSIGSIGN,\n\t\tPK_PRE_DIM_CLAIM_TEAM,\n\t\tTEM_KEY = TARGET_CODE,\n\t\tTEM_DESC = TARGET_DESCRIPTION,\n\t\tDATE_INSERTED\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSelect1 derive(SIGOFFICE = toString(toInteger(SIGOFFICE))) ~> DerivedColumn3\nSelect2 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tkeys:['SIGSIGN'],\n\tformat: 'table',\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_claim_team_pi')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "perben"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Parquet3",
+								"type": "DatasetReference"
+							},
+							"name": "emp",
+							"typeProperties": {}
+						},
+						{
+							"dataset": {
+								"referenceName": "Parquet5",
+								"type": "DatasetReference"
+							},
+							"name": "inc",
+							"typeProperties": {}
+						},
+						{
+							"dataset": {
+								"referenceName": "Parquet6",
+								"type": "DatasetReference"
+							},
+							"name": "syn",
+							"typeProperties": {}
+						},
+						{
+							"dataset": {
+								"referenceName": "Parquet8",
+								"type": "DatasetReference"
+							},
+							"name": "tcross",
+							"typeProperties": {}
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "perbentaerget",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Filter1"
+						},
+						{
+							"name": "emp1"
+						},
+						{
+							"name": "inc1"
+						},
+						{
+							"name": "syn1"
+						},
+						{
+							"name": "Join1"
+						},
+						{
+							"name": "Join2"
+						},
+						{
+							"name": "Join3"
+						},
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "dedup"
+						},
+						{
+							"name": "DerivedColumn1"
+						},
+						{
+							"name": "Select2"
+						},
+						{
+							"name": "DerivedColumn2"
+						},
+						{
+							"name": "DerivedColumn3"
+						},
+						{
+							"name": "DerivedColumn4"
+						}
+					],
+					"script": "source(output(\n\t\tEMP_ID as decimal(38,18),\n\t\tLOGIN_NAME as string,\n\t\tFULL_NAME as string,\n\t\tEMP_TYPE_ID as decimal(38,18),\n\t\tGROUP_ID as decimal(38,18),\n\t\tDEPT_ID as decimal(38,18),\n\t\tLOC_ID as decimal(38,18),\n\t\tSYND_ID as decimal(38,18),\n\t\tDISABLED_IND as decimal(38,18),\n\t\tLOGGING_IND as decimal(38,18),\n\t\tUNDERWRITER_IND as decimal(38,18),\n\t\tCLAIMS_ADJUSTER_IND as decimal(38,18),\n\t\tREMINDER_RESP_IND as string,\n\t\tPASSWORD_DATE as timestamp,\n\t\tCREATED_BY as string,\n\t\tCREATED_WHEN as timestamp,\n\t\tUPDATED_BY as string,\n\t\tUPDATED_WHEN as timestamp,\n\t\tPERSONAL_CLAIMS_IND as decimal(38,18),\n\t\tNEW_LOGIN_NAME as string,\n\t\tE_MAIL as string,\n\t\tPROMAN_EKEY as decimal(38,18),\n\t\tJOBNAME as string,\n\t\tUNDERWRITER_ASSISTANT_IND as decimal(38,18),\n\t\tOLD_LOGIN_NAME as string,\n\t\tAUTHORIZED_PAYMENT_LEVEL_ID as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> emp\nsource(output(\n\t\tINCIDENT_ID as decimal(38,18),\n\t\tUNIQUE_ENTRY_ID as decimal(38,18),\n\t\tINCIDENT_FILE_NUMBER as decimal(38,18),\n\t\tCLAIM_TYPE_ID_MAIN_CLAIM_TYPE as decimal(38,18),\n\t\tEMPLOYEE_ID_MAIN_ADJUSTER as decimal(38,18),\n\t\tMEMBERS_REFERENCE as string,\n\t\tARCHIVE_NUMBER as decimal(38,18),\n\t\tARCHIVE_DATE as timestamp,\n\t\tOLD_ARCHIVE_NUMBER as decimal(38,18),\n\t\tOLD_ARCHIVE_DATE as timestamp,\n\t\tGEOGRAPHICAL_AREA_ID_PLACE as decimal(38,18),\n\t\tGEOGRAPHICAL_AREA_ID_VOY_FROM as decimal(38,18),\n\t\tGEOGRAPHICAL_AREA_ID_VOY_TO as decimal(38,18),\n\t\tDATE_OF_INCIDENT as timestamp,\n\t\tMONTH_OR_PERIOD_OF_INCIDENT as string,\n\t\tCASUALTY_ID as decimal(38,18),\n\t\tMAIN_CAUSE_ID as decimal(38,18),\n\t\tGEOGRAPHICAL_AREA_ID_MAIN_JUR as decimal(38,18),\n\t\tCURRENCY_ID_MAIN_CURRENCY as decimal(38,18),\n\t\tINCIDENT_TEXT as string,\n\t\tEMPLOYEE_ID_REGISTERED_BY as decimal(38,18),\n\t\tREGISTERED_DATE as timestamp,\n\t\tLAST_REVIEWED_DATE as timestamp,\n\t\tLARGE_CLAIMS_GROUP_INDICATOR as string,\n\t\tTOTAL_CURRENT_RESERVE_USD as double,\n\t\tTOTAL_CURRENT_COMP_USD as double,\n\t\tCREATED_BY as string,\n\t\tCREATED_WHEN as timestamp,\n\t\tUPDATED_BY as string,\n\t\tUPDATED_WHEN as timestamp,\n\t\tTIMESTAMP_ as decimal(38,18),\n\t\tOFFICE_ROLE_ID_REFUND as decimal(38,18),\n\t\tREFUND_PERCENT as decimal(38,18),\n\t\tREFUND_MAPPER_NUMBER as decimal(38,18),\n\t\tPHYSICAL_FILE_CREATED as decimal(38,18),\n\t\tGEOGRAPHICAL_AREA_ID_1ST_PORT as decimal(38,18),\n\t\tTIMEBAR as timestamp,\n\t\tDEALT_WITH as string,\n\t\tOM_CLAIM_TYPE as decimal(38,18),\n\t\tCOMPLEXITY_ID as double,\n\t\tNO_ICR_REMINDER_DATE as timestamp,\n\t\tEVENT_ID as double,\n\t\tEVENT_DETAIL_ID as double,\n\t\tMAIN_CLAIM_DETAIL_ID as double,\n\t\tMYGARD_CLAIM_ID as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> inc\nsource(output(\n\t\tSYND_ID as decimal(38,18),\n\t\tSYND_NAME as string,\n\t\tCREATED_BY as string,\n\t\tCREATED_WHEN as timestamp,\n\t\tUPDATED_BY as string,\n\t\tUPDATED_WHEN as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> syn\nsource(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> tcross\ntcross filter(SOURCE_SYSTEM == 'GIC' && CODE_TYPE_ID ==792) ~> Filter1\nemp select(mapColumn(\n\t\tEMP_ID,\n\t\tSYND_ID\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> emp1\nDerivedColumn3 select(mapColumn(\n\t\tEMPLOYEE_ID_MAIN_ADJUSTER\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> inc1\nDerivedColumn4 select(mapColumn(\n\t\tSYND_ID,\n\t\tSYND_NAME\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> syn1\nDerivedColumn2, inc1 join(EMP_ID == EMPLOYEE_ID_MAIN_ADJUSTER,\n\tjoinType:'inner',\n\tbroadcast: 'both')~> Join1\nJoin1, syn1 join(DerivedColumn2@SYND_ID == syn1@SYND_ID,\n\tjoinType:'inner',\n\tpartitionBy('roundRobin', 2),\n\tbroadcast: 'both')~> Join2\nJoin2, Filter1 join(toString(syn1@SYND_ID) == SOURCE_CODE_KEY,\n\tjoinType:'left',\n\tbroadcast: 'both')~> Join3\nJoin3 select(mapColumn(\n\t\tEMP_ID,\n\t\tSYND_ID = syn1@SYND_ID,\n\t\tSYND_NAME,\n\t\tTARGET_CODE,\n\t\tTARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 aggregate(groupBy(TARGET_CODE,\n\t\tTARGET_DESCRIPTION,\n\t\tSYND_ID,\n\t\tEMP_ID),\n\tSYND_NAME = first(SYND_NAME)) ~> dedup\ndedup derive(TEM_KEY = case(isNull(TARGET_CODE), concat('C', toString(SYND_ID)), TARGET_CODE),\n\t\tPK_PRE_DIM_CLAIM_TEAM = concat('G', toString(EMP_ID)),\n\t\tTEM_DESCRIPTION = case(isNull(TARGET_DESCRIPTION), SYND_NAME, TARGET_DESCRIPTION),\n\t\tDATE_INSERTED = currentTimestamp(),\n\t\tDATE_LAST_UPDATED = currentTimestamp(),\n\t\tINSERTED_BY = 'M_PRE_DIM_CLAIM_TEAM',\n\t\tLAST_UPDATED_BY = 'M_PRE_DIM_CLAIM_TEAM') ~> DerivedColumn1\nDerivedColumn1 select(mapColumn(\n\t\tEMP_ID,\n\t\tTEM_KEY,\n\t\tPK_PRE_DIM_CLAIM_TEAM,\n\t\tTEM_DESCRIPTION,\n\t\tDATE_INSERTED,\n\t\tDATE_LAST_UPDATED,\n\t\tINSERTED_BY,\n\t\tLAST_UPDATED_BY\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nemp1 derive(EMP_ID = toInteger(EMP_ID),\n\t\tSYND_ID = toInteger(SYND_ID)) ~> DerivedColumn2\ninc derive(EMPLOYEE_ID_MAIN_ADJUSTER = toInteger(EMPLOYEE_ID_MAIN_ADJUSTER)) ~> DerivedColumn3\nsyn derive(SYND_ID = toInteger(SYND_ID)) ~> DerivedColumn4\nSelect2 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['M_PRE_DIM_PERBEN'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/map')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "perben"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Parquet13",
+								"type": "DatasetReference"
+							},
+							"name": "mapsys",
+							"typeProperties": {}
+						},
+						{
+							"dataset": {
+								"referenceName": "Parquet12",
+								"type": "DatasetReference"
+							},
+							"name": "sigtable",
+							"typeProperties": {}
+						},
+						{
+							"dataset": {
+								"referenceName": "Parquet11",
+								"type": "DatasetReference"
+							},
+							"name": "lcatable",
+							"typeProperties": {}
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable7",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable9",
+								"type": "DatasetReference"
+							},
+							"name": "sink3"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable10",
+								"type": "DatasetReference"
+							},
+							"name": "sink4"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn1"
+						},
+						{
+							"name": "DerivedColumn2"
+						}
+					],
+					"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> mapsys\nsource(output(\n\t\tSIGSIGN as string,\n\t\tSIGMDESCR as string,\n\t\tSIGLDESCR as string,\n\t\tSIGCPHONE as string,\n\t\tSIGCFAX as string,\n\t\tSIGCMAIL as string,\n\t\tSIGPEAID as decimal(38,18),\n\t\tSIGMAINSIGN as string,\n\t\tSIGHIERARC as string,\n\t\tSIGORGPLACE as string,\n\t\tSIGFUNC as string,\n\t\tSIGBPRTPL as string,\n\t\tSIGCOMP2 as decimal(38,18),\n\t\tSIGDEFCCODE as decimal(38,18),\n\t\tSIGDEFAGTYPE as decimal(38,18),\n\t\tSIGDEFOBRT as decimal(38,18),\n\t\tSIGOFFICE as decimal(38,18),\n\t\tSIGBUSNDIV as decimal(38,18),\n\t\tSIGBUSNSEC as decimal(38,18),\n\t\tSIGBUSNCLA as decimal(38,18),\n\t\tSIGBUSNTYP as decimal(38,18),\n\t\tSIGLANG2 as string,\n\t\tSIGIYEAR as decimal(38,18),\n\t\tSIGCURR as string,\n\t\tSIGPWDATE as decimal(38,18),\n\t\tSIGSQLSEQ as decimal(38,18),\n\t\tSIGGENSEC as decimal(38,18),\n\t\tSIGMAISEC as decimal(38,18),\n\t\tSIGPERSSECUR as string,\n\t\tSIGCREATEFUNC as string,\n\t\tSIGCLOSEFUNC as string,\n\t\tSIGCLAIMFUNC as string,\n\t\tSIGELREMITFUNC as string,\n\t\tSIGPLTRANSFUNC as string,\n\t\tSIGLOCDEFTAB as decimal(38,18),\n\t\tSIGLOCSWITCHES as string,\n\t\tSIGCREATESWITCHES as string,\n\t\tSIGPREMSWITCHES as string,\n\t\tSIGCLMDEFUPDATE as string,\n\t\tSIGCLMSWITCHES as string,\n\t\tSIGACCOACCG as decimal(38,18),\n\t\tSIGACCOSREF as string,\n\t\tSIGACCOSUBREF as string,\n\t\tSIGACCOSWITCHES as string,\n\t\tSIGPOLPRLABEL as string,\n\t\tSIGLETTERPRLABEL as string,\n\t\tSIGNOTEPRLABEL as string,\n\t\tSIGMISCPRLABEL as string,\n\t\tSIGSTOPUSE as string,\n\t\tSIGNAMEID as string,\n\t\tSIGEFILEDOMAIN as string,\n\t\tSIGAACYNSW as string,\n\t\tSIGACCYNSW as string,\n\t\tSIGEFILEPLACE as string,\n\t\tSIGEFILELIBRARY as string,\n\t\tSIGEFILEPASSWORD as string,\n\t\tSIGEFILEUSERID as string,\n\t\tSIGACLYNSW as string,\n\t\tSIGAUWYNSW as string,\n\t\tSIGUWAYNSW as string,\n\t\tSIGCLMYNSW as string,\n\t\tSIGFRYEAR as decimal(38,18),\n\t\tSIGSPECIALVERSION as string,\n\t\tSIGTOYEAR as decimal(38,18),\n\t\tSIGINTSELECTION as string,\n\t\tSIGDEBUGMACRO as string,\n\t\tSIGINTAIE as string,\n\t\tSIGDEBUGIDENTIFY as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> sigtable\nsource(output(\n\t\tLCALCAID as string,\n\t\tLCAICAID as string,\n\t\tLCACLMN3 as decimal(38,18),\n\t\tLCACLMDATE as timestamp,\n\t\tLCACYEAR as decimal(38,18),\n\t\tLCATRTMCO as decimal(38,18),\n\t\tLCAACSTAT as string,\n\t\tLCALOSSCO as string,\n\t\tLCAOUTSTM as string,\n\t\tLCAUWSIGN as string,\n\t\tLCAOFFICE as decimal(38,18),\n\t\tLCALDESCR as string,\n\t\tLCACLODATE as timestamp,\n\t\tLCACEFOCC as string,\n\t\tLCACEFOCM as string,\n\t\tLCACLMCAC as string,\n\t\tLCAECAUSECO as string,\n\t\tLCACLINTC as decimal(38,18),\n\t\tLCATCAUSECO as string,\n\t\tLCABONYNSW as string,\n\t\tLCAIMPEXP as decimal(38,18),\n\t\tLCANCAUSECO as string,\n\t\tLCANMCLEF as string,\n\t\tLCACCOD2 as string,\n\t\tLCAAREACD as string,\n\t\tLCACEFOUC as string,\n\t\tLCAONOFFS as decimal(38,18),\n\t\tLCAENINTRST as string,\n\t\tLCAENASSSHR as decimal(38,18),\n\t\tLCAMPLCURR as string,\n\t\tLCAMPLAMT as decimal(38,18),\n\t\tLCAXLMREF as string,\n\t\tLCAREPDATE as timestamp,\n\t\tLCALIMCURR as string,\n\t\tLCALIMAMT as decimal(38,18),\n\t\tLCABIGEVENT as string,\n\t\tLCALODESCR as string,\n\t\tLCAINTNOTE as string,\n\t\tLCALTDATE as timestamp,\n\t\tLCACRSIGN as string,\n\t\tLCACRDATE as timestamp,\n\t\tLCALUSIGN as string,\n\t\tLCALUDATE as timestamp,\n\t\tLCAKNVMARK as string,\n\t\tLCALABID as string,\n\t\tLCAAGAID as string,\n\t\tLCAOBNO as decimal(38,18),\n\t\tLCACROBBID as string,\n\t\tLCAWRKCLAIM as decimal(38,18),\n\t\tLCAFPAREACD as string,\n\t\tLCATOAREACD as string,\n\t\tLCAJURISDICTION as string,\n\t\tLCAFILEREF as decimal(38,18),\n\t\tLCANEXTSIGN as string,\n\t\tLCAAREADESCR as string,\n\t\tLCALRGCLMYNSW as string,\n\t\tLCAFROMAREACD as string,\n\t\tLCANEXTDATE as timestamp,\n\t\tLCAWORKPLACE as decimal(38,18),\n\t\tLCAOCCOFFDATE as timestamp,\n\t\tLCAWRKPLCCOD as decimal(38,18),\n\t\tLCAREGNDATE as timestamp,\n\t\tLCAOCCOFFYNSW as string,\n\t\tLCAREGRESS as decimal(38,18),\n\t\tLCACLMPEAID as decimal(38,18),\n\t\tLCAOCCOWNYNSW as string,\n\t\tLCAREGNSIGN as string,\n\t\tLCAMUOFFPROS as decimal(38,18),\n\t\tLCAREGCURR as string,\n\t\tLCAREGAMT as decimal(38,18),\n\t\tLCAMUOWNPROS as decimal(38,18),\n\t\tLCALIMDAYS as decimal(38,18),\n\t\tLCAREGTEXT70 as string,\n\t\tLCAEUOFFPROS as decimal(38,18),\n\t\tLCAMUOFFGRP as decimal(38,18),\n\t\tLCAEUOWNPROS as decimal(38,18),\n\t\tLCABIRTNO as string,\n\t\tDATE_INSERTED as timestamp,\n\t\tDATE_LAST_UPDATED as timestamp,\n\t\tINSERTED_BY as string,\n\t\tLAST_UPDATED_BY as string,\n\t\tMAP_DATE as timestamp,\n\t\tLCAADJSIGN as string,\n\t\tLCACLMID as string,\n\t\tLCALOADATE as timestamp,\n\t\tLCAEXTCLMID as string,\n\t\tLCATLOTYPE as double,\n\t\tLCACATEGORYTYPE as string,\n\t\tLCARECOVPOTAMT as decimal(38,18),\n\t\tLCARECOVCCVID as decimal(38,18),\n\t\tLCARECOVREMDATE as timestamp,\n\t\tLCARECOVACHCURR as string,\n\t\tLCARECOVPOTINTNOTE as string,\n\t\tLCARECOVACHYNSW as string,\n\t\tLCARECOVACHINTNOTE as string,\n\t\tLCARECOVACHDATE as timestamp,\n\t\tLCARECOVPOTCURR as string,\n\t\tLCARECOVACHSIGN as string,\n\t\tLCARECOVPOTYNSW as string,\n\t\tLCARECOVACHAMT as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> lcatable\nmapsys derive(CODE_TYPE_ID = toString(toInteger(CODE_TYPE_ID))) ~> DerivedColumn1\nsigtable derive(SIGOFFICE = toString(toInteger(SIGOFFICE))) ~> DerivedColumn2\nDerivedColumn1 sink(input(\n\t\tsource_code_key as string,\n\t\tsource_system as string,\n\t\tcode_type_id as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tsource_code_key = SOURCE_CODE_KEY,\n\t\tsource_system = SOURCE_SYSTEM,\n\t\tcode_type_id = CODE_TYPE_ID\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1\nlcatable sink(input(\n\t\tlcauwsign as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tlcauwsign = LCAUWSIGN\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink3\nDerivedColumn2 sink(input(\n\t\tsigsign as string,\n\t\tsigoffice as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tsigsign = SIGSIGN,\n\t\tsigoffice = SIGOFFICE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink4"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyFaptable')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_faptable_date",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "CSTAGE_PARIS.FAPTABLE"
+							},
+							{
+								"name": "Destination",
+								"value": "test//FAPTABLE.parquet"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "OracleParisFaptableCopy",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Azure_Lake_Faptable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyFaptableFilterDato')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_l0e",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "."
+							},
+							{
+								"name": "Destination",
+								"value": "test//faptableDate.parquet"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"oracleReaderQuery": "select * from cstage_paris.faptable\r\nwhere fapiyear >= 2019",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "OracleFaptableDate2019",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Azure_lake_faptable_2019",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyParis')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CopyParisOnPrem",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@pipeline().parameters.cw_items",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "CopyParis",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [
+										{
+											"name": "Source",
+											"value": "CSTAGE_PARIS.@{item().source.table}"
+										},
+										{
+											"name": "Destination",
+											"value": "test//@{item().destination.fileName}"
+										}
+									],
+									"typeProperties": {
+										"source": {
+											"type": "OracleSource",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "ScrParisTest",
+											"type": "DatasetReference",
+											"parameters": {
+												"OracleParis": {
+													"value": "@pipeline().parameters.cw_items",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "rawParis",
+											"type": "DatasetReference",
+											"parameters": {
+												"ScrParis": "@item().destination.fileName"
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"parameters": {
+					"cw_items": {
+						"type": "Array",
+						"defaultValue": [
+							{
+								"source": {
+									"table": "ICATABLE"
+								},
+								"destination": {
+									"fileName": "PARIS.ICATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "INATABLE"
+								},
+								"destination": {
+									"fileName": "PARIS.INATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "INGTABLE"
+								},
+								"destination": {
+									"fileName": "PARIS.INGTABLE.parquet"
+								}
+							}
+						]
+					}
+				},
+				"folder": {
+					"name": "copy/raw"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyParisScrFromAmster')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Copy Paris from Amsterdam new environment to test performance",
+				"activities": [
+					{
+						"name": "ForEach_AllParisTables",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@pipeline().parameters.cw_items",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Copy_Oracle_Paris_All_Tables",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [
+										{
+											"name": "Source",
+											"value": "CSTAGE_PARIS.@{item().source.table}"
+										},
+										{
+											"name": "Destination",
+											"value": "raw/Paris/@{item().destination.fileName}"
+										}
+									],
+									"typeProperties": {
+										"source": {
+											"type": "OracleSource",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "Oracel_Paris_Amster_All_Tables",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_table": "@item().source.table"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "Azure_Lake_Paris_All_Tables",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_fileName": "@item().destination.fileName"
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"parameters": {
+					"cw_items": {
+						"type": "Array",
+						"defaultValue": [
+							{
+								"source": {
+									"table": "ACOTABLE"
+								},
+								"destination": {
+									"fileName": "ACOTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "AGATABLE"
+								},
+								"destination": {
+									"fileName": "AGATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "AGZTABLE"
+								},
+								"destination": {
+									"fileName": "AGZTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "CARTABLE"
+								},
+								"destination": {
+									"fileName": "CARTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "CBSTABLE"
+								},
+								"destination": {
+									"fileName": "CBSTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "CBTTABLE"
+								},
+								"destination": {
+									"fileName": "CBTTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "CCOTABLE"
+								},
+								"destination": {
+									"fileName": "CCOTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "CCVTABLE"
+								},
+								"destination": {
+									"fileName": "CCVTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "CLPTABLE"
+								},
+								"destination": {
+									"fileName": "CLPTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "CPATABLE"
+								},
+								"destination": {
+									"fileName": "CPATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "CPTTABLE"
+								},
+								"destination": {
+									"fileName": "CPTTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "CRCTABLE"
+								},
+								"destination": {
+									"fileName": "CRCTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "ECATABLE"
+								},
+								"destination": {
+									"fileName": "ECATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "FALTABLE"
+								},
+								"destination": {
+									"fileName": "FALTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "FAPTABLE"
+								},
+								"destination": {
+									"fileName": "FAPTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "FILTABLE"
+								},
+								"destination": {
+									"fileName": "FILTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "FIPTABLE"
+								},
+								"destination": {
+									"fileName": "FIPTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "ICATABLE"
+								},
+								"destination": {
+									"fileName": "ICATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "ICOTABLE"
+								},
+								"destination": {
+									"fileName": "ICOTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "IFATABLE"
+								},
+								"destination": {
+									"fileName": "IFATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "INATABLE"
+								},
+								"destination": {
+									"fileName": "INATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "INGTABLE"
+								},
+								"destination": {
+									"fileName": "INGTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "IPATABLE"
+								},
+								"destination": {
+									"fileName": "IPATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "ISATABLE"
+								},
+								"destination": {
+									"fileName": "ISATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "ISOTABLE"
+								},
+								"destination": {
+									"fileName": "ISOTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "ISZTABLE"
+								},
+								"destination": {
+									"fileName": "ISZTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "IUVTABLE"
+								},
+								"destination": {
+									"fileName": "IUVTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "IUWTABLE"
+								},
+								"destination": {
+									"fileName": "IUWTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "LAATABLE"
+								},
+								"destination": {
+									"fileName": "LAATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "LABTABLE"
+								},
+								"destination": {
+									"fileName": "LABTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "LCATABLE"
+								},
+								"destination": {
+									"fileName": "LCATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "LCFTABLE"
+								},
+								"destination": {
+									"fileName": "LCFTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "LCRTABLE"
+								},
+								"destination": {
+									"fileName": "LCRTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "LDATABLE"
+								},
+								"destination": {
+									"fileName": "LDATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "LGATABLE"
+								},
+								"destination": {
+									"fileName": "LGATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "OBATABLE"
+								},
+								"destination": {
+									"fileName": "OBATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "OBBTABLE"
+								},
+								"destination": {
+									"fileName": "OBBTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "PAATABLE"
+								},
+								"destination": {
+									"fileName": "PAATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "PEATABLE"
+								},
+								"destination": {
+									"fileName": "PEATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "PEBTABLE"
+								},
+								"destination": {
+									"fileName": "PEBTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "PECTABLE"
+								},
+								"destination": {
+									"fileName": "PECTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "PEVTABLE"
+								},
+								"destination": {
+									"fileName": "PEVTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "PEZTABLE"
+								},
+								"destination": {
+									"fileName": "PEZTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "PFSTABLE"
+								},
+								"destination": {
+									"fileName": "PFSTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "PGQTABLE"
+								},
+								"destination": {
+									"fileName": "PGQTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "QTBTABLE"
+								},
+								"destination": {
+									"fileName": "QTBTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "RDATABLE"
+								},
+								"destination": {
+									"fileName": "RDATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "RSATABLE"
+								},
+								"destination": {
+									"fileName": "RSATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "SIGTABLE"
+								},
+								"destination": {
+									"fileName": "SIGTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "UATTABLE"
+								},
+								"destination": {
+									"fileName": "UATTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "UCSTABLE"
+								},
+								"destination": {
+									"fileName": "UCSTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "UWATABLE"
+								},
+								"destination": {
+									"fileName": "UWATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "UWBTABLE"
+								},
+								"destination": {
+									"fileName": "UWBTABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "UWLTABLE"
+								},
+								"destination": {
+									"fileName": "UWLTABLE.parquet"
+								}
+							}
+						]
+					}
+				},
+				"folder": {
+					"name": "Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyPipeline_6we')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_6we",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "STAGE_ST.STA_COVERAGE_GROUP"
+							},
+							{
+								"name": "Destination",
+								"value": "test//sta_coverage_group.parquet"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_6we",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_6we",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyPipeline_e6n')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_e6n",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "STAGE_ITF.T_CROSSREFERENCE"
+							},
+							{
+								"name": "Destination",
+								"value": "test//perben3.parquet"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_e6n",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_e6n",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyPipeline_sm5')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEach_sm5",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@pipeline().parameters.cw_items",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Copy_sm5",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [
+										{
+											"name": "Source",
+											"value": "@{item().source.schema}.@{item().source.table}"
+										},
+										{
+											"name": "Destination",
+											"value": "test//@{item().destination.fileName}"
+										}
+									],
+									"typeProperties": {
+										"source": {
+											"type": "OracleSource",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "SourceDataset_sm5",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_schema": "@item().source.schema",
+												"cw_table": "@item().source.table"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DestinationDataset_sm5",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_fileName": "@item().destination.fileName"
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"parameters": {
+					"cw_items": {
+						"type": "Array",
+						"defaultValue": [
+							{
+								"source": {
+									"schema": "CSTAGE_PARIS",
+									"table": "CPATABLE"
+								},
+								"destination": {
+									"fileName": "CSTAGE_PARISCPATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"schema": "STAGE_ITF",
+									"table": "P_CPATABLE"
+								},
+								"destination": {
+									"fileName": "STAGE_ITFP_CPATABLE.parquet"
+								}
+							}
+						]
+					}
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyPipeline_xmp')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEach_xmp",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@pipeline().parameters.cw_items",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Copy_xmp",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [
+										{
+											"name": "Source",
+											"value": "STAGE_ITF.@{item().source.table}"
+										},
+										{
+											"name": "Destination",
+											"value": "test//@{item().destination.fileName}"
+										}
+									],
+									"typeProperties": {
+										"source": {
+											"type": "OracleSource",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "SourceDataset_xmp",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_table": "@item().source.table"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DestinationDataset_xmp",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_fileName": "@item().destination.fileName"
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"parameters": {
+					"cw_items": {
+						"type": "Array",
+						"defaultValue": [
+							{
+								"source": {
+									"table": "G_EMPLOYEE"
+								},
+								"destination": {
+									"fileName": "STAGE_ITF.G_EMPLOYEE.txt"
+								}
+							},
+							{
+								"source": {
+									"table": "G_INCIDENT"
+								},
+								"destination": {
+									"fileName": "STAGE_ITF.G_INCIDENT.txt"
+								}
+							},
+							{
+								"source": {
+									"table": "G_SYNDICATE"
+								},
+								"destination": {
+									"fileName": "STAGE_ITF.G_SYNDICATE.txt"
+								}
+							},
+							{
+								"source": {
+									"table": "P_LCATABLE"
+								},
+								"destination": {
+									"fileName": "STAGE_ITF.P_LCATABLE.txt"
+								}
+							},
+							{
+								"source": {
+									"table": "P_SIGTABLE"
+								},
+								"destination": {
+									"fileName": "STAGE_ITF.P_SIGTABLE.txt"
+								}
+							},
+							{
+								"source": {
+									"table": "T_CROSSREFERENCE"
+								},
+								"destination": {
+									"fileName": "STAGE_ITF.T_CROSSREFERENCE.txt"
+								}
+							}
+						]
+					}
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyPipeline_zra')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_zra",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "STAGE_ITF.T_CROSSREFERENCE"
+							},
+							{
+								"name": "Destination",
+								"value": "test//STAGE_ITFT_CROSSREFERENCE.txt"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_zra",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_zra",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyTCrossToParquet')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Copy T cross refrence",
+				"activities": [
+					{
+						"name": "Copy_TCrossRef",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "STAGE_ITF.T_CROSSREFERENCE"
+							},
+							{
+								"name": "Destination",
+								"value": "test//T_CROSSREFERENCE"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "HSourceDatasetTCrossRef",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "HDestinationDatasetParquet",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyTcrossFromParquet')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "T_Crossrefrence",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "T_Crossrefrence",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ParquetTcross": {},
+									"TCrossRefrence": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"folder": {
+					"name": "Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RunBusinessArea')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Dim_Business_Area",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Dim_Business_Area",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"Sink": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"folder": {
+					"name": "Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/copy claim team tables paris')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEach_lnm",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@pipeline().parameters.cw_items",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Copy_lnm",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [
+										{
+											"name": "Source",
+											"value": "STAGE_ITF.@{item().source.table}"
+										},
+										{
+											"name": "Destination",
+											"value": "test//@{item().destination.fileName}"
+										}
+									],
+									"typeProperties": {
+										"source": {
+											"type": "OracleSource",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "SourceDataset_lnm",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_table": "@item().source.table"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DestinationDataset_lnm",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_fileName": "@item().destination.fileName"
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"parameters": {
+					"cw_items": {
+						"type": "Array",
+						"defaultValue": [
+							{
+								"source": {
+									"table": "P_LCATABLE"
+								},
+								"destination": {
+									"fileName": "STAGE_ITFP_LCATABLE.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "P_SIGTABLE"
+								},
+								"destination": {
+									"fileName": "STAGE_ITFP_SIGTABLE.parquet"
+								}
+							}
+						]
+					}
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/copy t cross')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_yef",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "STAGE_ITF.T_CROSSREFERENCE"
+							},
+							{
+								"name": "Destination",
+								"value": "test//mapsys1.parquet"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_yef",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_yef",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/copy_paris_peatable')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_peatable",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "CSTAGE_PARIS.PEATABLE"
+							},
+							{
+								"name": "Destination",
+								"value": "test//peatable.parquet"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Sourcepeatable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "peatable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "OracleTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Parquet2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dataflow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_pre_dim_claim_team_pi",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"emp": {},
+									"inc": {},
+									"syn": {},
+									"tcross": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/m_pre_dim_claim_team_pi')]"
+			]
+		}
+	]
+}

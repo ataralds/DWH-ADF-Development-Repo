@@ -13,316 +13,615 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/copy_paris_peatable')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/Oracel_Paris_Amster_All_Tables')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "Copy_peatable",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "CSTAGE_PARIS.PEATABLE"
-							},
-							{
-								"name": "Destination",
-								"value": "test//peatable.parquet"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "Sourcepeatable",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "peatable",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "OracleTable1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Parquet2",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"folder": {
-					"name": "perben"
+				"linkedServiceName": {
+					"referenceName": "OracleDbParisScrAmster",
+					"type": "LinkedServiceReference"
 				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "dataflow1",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "m_pre_dim_claim_team_pi",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"emp": {},
-									"inc": {},
-									"syn": {},
-									"tcross": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
-						}
+				"parameters": {
+					"cw_table": {
+						"type": "String"
 					}
-				],
-				"folder": {
-					"name": "perben"
 				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/tcross')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_kbz",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "STAGE_ITF.T_CROSSREFERENCE"
-							},
-							{
-								"name": "Destination",
-								"value": "test//perben_tcross.parquet"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_kbz",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_kbz",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
 				"folder": {
 					"name": "Test"
 				},
-				"annotations": []
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CSTAGE_PARIS",
+					"table": {
+						"value": "@dataset().cw_table",
+						"type": "Expression"
+					}
+				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline3')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/OracleFaptableDate2019')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "CopyPipeline_6we",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "CopyPipeline_6we",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "copy t cross",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "CopyPipeline_6we",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "copy t cross",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "copy claim team tables paris",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "copy t cross",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "copy claim team tables paris",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
+				"linkedServiceName": {
+					"referenceName": "OracleDbParisScrAmster",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Test"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OracleParisFaptableCopy')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracleDbParisScrAmster",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Test"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CSTAGE_PARIS",
+					"table": "FAPTABLE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OracleTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracelStageITF",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CSTAGE_PARIS",
+					"table": "PEATABLE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ScrParisTest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracleCStage",
+					"type": "LinkedServiceReference"
+				},
 				"parameters": {
-					"cw_items": {
-						"type": "array",
-						"defaultValue": [
-							{
-								"source": {
-									"table": "P_LCATABLE"
-								},
-								"destination": {
-									"fileName": "STAGE_ITFP_LCATABLE.parquet"
-								}
-							},
-							{
-								"source": {
-									"table": "P_SIGTABLE"
-								},
-								"destination": {
-									"fileName": "STAGE_ITFP_SIGTABLE.parquet"
-								}
-							}
-						]
+					"OracleParis": {
+						"type": "string"
 					}
 				},
-				"annotations": []
+				"folder": {
+					"name": "Test"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CSTAGE_PARIS",
+					"table": {
+						"value": "@dataset().OracleParis",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_6we')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracelStageITF",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "STAGE_ST",
+					"table": "STA_COVERAGE_GROUP"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_e6n')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracelStageITF",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "STAGE_ITF",
+					"table": "T_CROSSREFERENCE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_fa7')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracelStageITF",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"cw_table": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "STAGE_ITF",
+					"table": {
+						"value": "@dataset().cw_table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_kbz')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracelStageITF",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "STAGE_ITF",
+					"table": "T_CROSSREFERENCE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_lnm')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracelStageITF",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"cw_table": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "STAGE_ITF",
+					"table": {
+						"value": "@dataset().cw_table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_rg9')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracelStageITF",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"cw_table": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "STAGE_ITF",
+					"table": {
+						"value": "@dataset().cw_table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_sm5')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracelStageITF",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"cw_schema": {
+						"type": "String"
+					},
+					"cw_table": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().cw_schema",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().cw_table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_xmp')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracelStageITF",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"cw_table": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "STAGE_ITF",
+					"table": {
+						"value": "@dataset().cw_table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_yef')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracelStageITF",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "STAGE_ITF",
+					"table": "T_CROSSREFERENCE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_zra')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracelStageITF",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "STAGE_ITF",
+					"table": "T_CROSSREFERENCE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sourcepeatable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracleCStage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "perben"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CSTAGE_PARIS",
+					"table": "PEATABLE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dim_Business_Area')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "Test"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ParquetTCROSS",
+								"type": "DatasetReference"
+							},
+							"name": "source1",
+							"typeProperties": {}
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "SqldimBusinessArea",
+								"type": "DatasetReference"
+							},
+							"name": "Sink"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Filter1"
+						},
+						{
+							"name": "Aggregate1"
+						},
+						{
+							"name": "DerivedColumn1"
+						},
+						{
+							"name": "Select1"
+						}
+					],
+					"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source1\nsource1 filter(CODE_TYPE_ID == 106.0  && TARGET_CODE !='PI') ~> Filter1\nFilter1 aggregate(groupBy(TARGET_CODE),\n\tTARGET_DESCRIPTION = first(TARGET_DESCRIPTION)) ~> Aggregate1\nAggregate1 derive(GRP_CODE = case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'EG', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE)),\n\t\tGRP_DESCRIPTION = case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'Energy+', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE)),\n\t\tBUA_DESCRIPTION = case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE),\n\t\tBUA_CODE = case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE)) ~> DerivedColumn1\nDerivedColumn1 select(mapColumn(\n\t\tBUS_KEY = TARGET_CODE,\n\t\tBUS_DESCRIPTION = TARGET_DESCRIPTION,\n\t\tGRP_KEY = GRP_CODE,\n\t\tGRP_DESCRIPTION,\n\t\tBUA_DESCRIPTION,\n\t\tBUA_KEY = BUA_CODE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 sink(input(\n\t\tGRP_DESCRIPTION as string,\n\t\tGRP_KEY as string,\n\t\tBUA_DESCRIPTION as string,\n\t\tBUA_KEY as string,\n\t\tBUS_KEY as string,\n\t\tBUS_DESCRIPTION as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Sink"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/T_Crossrefrence')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "Test"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ParquetTCROSS",
+								"type": "DatasetReference"
+							},
+							"name": "ParquetTcross",
+							"typeProperties": {}
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureTCrossdwhStage",
+								"type": "DatasetReference"
+							},
+							"name": "TCrossRefrence"
+						}
+					],
+					"transformations": [],
+					"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> ParquetTcross\nParquetTcross sink(input(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as decimal(38,0),\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> TCrossRefrence"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/datetest')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "perben"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable5",
+								"type": "DatasetReference"
+							},
+							"name": "dato",
+							"typeProperties": {}
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable6",
+								"type": "DatasetReference"
+							},
+							"name": "insert"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable6",
+								"type": "DatasetReference"
+							},
+							"name": "update"
+						}
+					],
+					"transformations": [
+						{
+							"name": "ConditionalSplit1"
+						},
+						{
+							"name": "DerivedColumn1"
+						},
+						{
+							"name": "DerivedColumn2"
+						},
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"script": "source(output(\n\t\tdimension_key as integer,\n\t\tins as timestamp,\n\t\tupd as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> dato\ndato split(isNull(ins)==true(),\n\tdisjoint: false) ~> ConditionalSplit1@(null, notnull)\nConditionalSplit1@null derive(ins = currentTimestamp(),\n\t\tupd = currentTimestamp()) ~> DerivedColumn1\nConditionalSplit1@notnull derive(upd = currentTimestamp()) ~> DerivedColumn2\nDerivedColumn2 alterRow(updateIf(isNull(ins)==false())) ~> AlterRow1\nDerivedColumn1 sink(input(\n\t\tdimension_key as integer,\n\t\tins as timestamp,\n\t\tlast_upd as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> insert\nAlterRow1 sink(input(\n\t\tdimension_key as integer,\n\t\tins as timestamp,\n\t\tlast_upd as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:true,\n\tupsertable:false,\n\tkeys:['dimension_key'],\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> update"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/insert update test')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "perben"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "test1",
+								"type": "DatasetReference"
+							},
+							"name": "source1",
+							"typeProperties": {}
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "test2",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						},
+						{
+							"dataset": {
+								"referenceName": "test2",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "ConditionalSplit1"
+						},
+						{
+							"name": "DerivedColumn1"
+						},
+						{
+							"name": "DerivedColumn2"
+						},
+						{
+							"name": "AlterRow1"
+						},
+						{
+							"name": "AlterRow2"
+						},
+						{
+							"name": "SurrogateKey1"
+						},
+						{
+							"name": "Select1"
+						}
+					],
+					"script": "source(output(\n\t\tdate_inserted as timestamp,\n\t\tdate_last_updated as timestamp,\n\t\tintint as integer,\n\t\tcharchar as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource1 split(isNull(date_inserted)==true(),\n\tdisjoint: false) ~> ConditionalSplit1@(en, to)\nConditionalSplit1@en derive(date_inserted = currentTimestamp(),\n\t\tdate_last_updated = currentTimestamp()) ~> DerivedColumn1\nConditionalSplit1@to derive(date_last_updated = currentTimestamp()) ~> DerivedColumn2\nDerivedColumn2 alterRow(updateIf(isNull(date_inserted)==false())) ~> AlterRow1\nSelect1 alterRow(insertIf(isNull(date_inserted)==true())) ~> AlterRow2\nDerivedColumn1 keyGenerate(output(intint as long),\n\tstartAt: 100L) ~> SurrogateKey1\nSurrogateKey1 select(skipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nAlterRow2 sink(input(\n\t\tdate_inserted as timestamp,\n\t\tdate_last_updated as timestamp,\n\t\tintint as integer,\n\t\tcharchar as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1\nAlterRow1 sink(input(\n\t\tdate_inserted as timestamp,\n\t\tdate_last_updated as timestamp,\n\t\tintint as integer,\n\t\tcharchar as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:true,\n\tupsertable:false,\n\tkeys:['intint'],\n\tformat: 'table',\n\tmapColumn(\n\t\tdate_inserted,\n\t\tdate_last_updated,\n\t\tintint,\n\t\tcharchar\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink2"
+				}
 			},
 			"dependsOn": []
 		}

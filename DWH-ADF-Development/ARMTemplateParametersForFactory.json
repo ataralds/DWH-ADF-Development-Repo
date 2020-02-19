@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "DWH-ADF-Development"
 		},
+		"ARESRV476_Arendal_password": {
+			"value": ""
+		},
 		"AzureDatabricks_development_connection_accessToken": {
 			"value": ""
 		},
@@ -12,6 +15,9 @@
 			"value": ""
 		},
 		"OracleCStage_connectionString": {
+			"value": ""
+		},
+		"OracleDbParisScrAmster_connectionString": {
 			"value": ""
 		},
 		"dwhdatalakedevelopment_accountKey": {
@@ -22,6 +28,12 @@
 		},
 		"ADF_dev_linked_service_properties_typeProperties_baseUrl": {
 			"value": "https://dwh-development-keyvault.vault.azure.net/"
+		},
+		"ARESRV476_Arendal_properties_typeProperties_host": {
+			"value": "\\\\ARESRV476\\Arendal\\"
+		},
+		"ARESRV476_Arendal_properties_typeProperties_userId": {
+			"value": "audun.taraldsen@gard.no"
 		},
 		"dwhdatalakedevelopment_properties_typeProperties_url": {
 			"value": "https://dwhdatalakedevelopment.dfs.core.windows.net"
