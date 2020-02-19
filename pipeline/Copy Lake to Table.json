@@ -61,7 +61,16 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": [],
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "@{pipeline().parameters.SourceContainer}/@{pipeline().parameters.SourceDirectory}/@{concat(item().Prop_0,'.parquet')}"
+								},
+								{
+									"name": "Destination",
+									"value": "dwh_stage.@{toLower(concat('p_',item().Prop_0))}"
+								}
+							],
 							"typeProperties": {
 								"source": {
 									"type": "ParquetSource",
