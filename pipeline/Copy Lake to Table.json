@@ -81,7 +81,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "@item().Prop_0",
+											"value": "@item().Prop_0.parquet",
 											"type": "Expression"
 										},
 										"SourceContainer": {
