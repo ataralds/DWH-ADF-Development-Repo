@@ -17,18 +17,31 @@
 						"type": "DatasetReference"
 					},
 					"name": "tTopGroup"
+				},
+				{
+					"dataset": {
+						"referenceName": "marts_dim_capital",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
 				}
 			],
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "Join1"
+					"name": "Filter1"
 				},
 				{
-					"name": "Filter1"
+					"name": "DerivedColumn1"
+				},
+				{
+					"name": "Union1"
+				},
+				{
+					"name": "Lookup1"
 				}
 			],
-			"script": "source(output(\n\t\tna_code as string,\n\t\tna_desc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tNotApplicable\nsource(output(\n\t\tdimension_name as string,\n\t\ttop_key as string,\n\t\ttop_desc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tTopGroup\ntNotApplicable, Filter1 join(na_code == top_key,\n\tjoinType:'outer',\n\tbroadcast: 'none')~> Join1\ntTopGroup filter(dimension_name=='dim_capital') ~> Filter1"
+			"script": "source(output(\n\t\tna_code as string,\n\t\tna_desc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tNotApplicable\nsource(output(\n\t\tdimension_name as string,\n\t\ttop_key as string,\n\t\ttop_desc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tTopGroup\nsource(output(\n\t\tdimension_key as long,\n\t\ttop_id as decimal(28,10),\n\t\tcpt_number as decimal(28,10),\n\t\tcpt_key as string,\n\t\ttop_description as string,\n\t\tcpt_id as decimal(28,10),\n\t\tcpt_description as string,\n\t\ttop_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\ntTopGroup filter(dimension_name=='dim_capital') ~> Filter1\ntNotApplicable derive(top_key = 'ALL',\n\t\ttop_desc = 'All Capital') ~> DerivedColumn1\nDerivedColumn1, Filter1 union(byName: true)~> Union1\nUnion1, tNotApplicable lookup(ERROR_FUNCTION('') == ERROR_FUNCTION(''),\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> Lookup1"
 		}
 	}
 }
