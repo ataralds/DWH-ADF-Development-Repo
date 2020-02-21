@@ -1,0 +1,16 @@
+{
+	"name": "SourceDataset_5xi",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracleCStage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "CSTAGE_PARIS",
+			"table": "PAATABLE"
+		}
+	}
+}
