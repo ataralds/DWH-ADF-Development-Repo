@@ -5,6 +5,9 @@
 			"referenceName": "sql_server_development_connection",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "dwh_stage/Static"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
