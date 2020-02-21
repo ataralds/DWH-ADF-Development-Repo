@@ -1,0 +1,34 @@
+{
+	"name": "m_not_applicable_1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dwh_stage_t_not_applicable",
+						"type": "DatasetReference"
+					},
+					"name": "tNotApplicable"
+				},
+				{
+					"dataset": {
+						"referenceName": "dwh_stage_t_top_group",
+						"type": "DatasetReference"
+					},
+					"name": "tTopGroup"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "Join1"
+				},
+				{
+					"name": "Filter1"
+				}
+			],
+			"script": "source(output(\n\t\tna_code as string,\n\t\tna_desc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tNotApplicable\nsource(output(\n\t\tdimension_name as string,\n\t\ttop_key as string,\n\t\ttop_desc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tTopGroup\ntNotApplicable, tTopGroup join(na_code == top_key,\n\tjoinType:'outer',\n\tbroadcast: 'none')~> Join1\ntTopGroup filter(dimension_name=='dim_capital') ~> Filter1"
+		}
+	}
+}
