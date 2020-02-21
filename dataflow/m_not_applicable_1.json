@@ -28,7 +28,7 @@
 					"name": "Filter1"
 				}
 			],
-			"script": "source(output(\n\t\tna_code as string,\n\t\tna_desc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tNotApplicable\nsource(output(\n\t\tdimension_name as string,\n\t\ttop_key as string,\n\t\ttop_desc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tTopGroup\ntNotApplicable, tTopGroup join(na_code == top_key,\n\tjoinType:'outer',\n\tbroadcast: 'none')~> Join1\ntTopGroup filter(dimension_name=='dim_capital') ~> Filter1"
+			"script": "source(output(\n\t\tna_code as string,\n\t\tna_desc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tNotApplicable\nsource(output(\n\t\tdimension_name as string,\n\t\ttop_key as string,\n\t\ttop_desc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tTopGroup\ntNotApplicable, Filter1 join(na_code == top_key,\n\tjoinType:'outer',\n\tbroadcast: 'none')~> Join1\ntTopGroup filter(dimension_name=='dim_capital') ~> Filter1"
 		}
 	}
 }
