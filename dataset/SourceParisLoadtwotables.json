@@ -1,5 +1,5 @@
 {
-	"name": "CopyTCrossAndHlp",
+	"name": "SourceParisLoadtwotables",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OracelStageITF",
@@ -11,7 +11,7 @@
 			}
 		},
 		"folder": {
-			"name": "temp_dwh_stage/mapsys"
+			"name": "temp_dwh_stage/paris"
 		},
 		"annotations": [],
 		"type": "OracleTable",

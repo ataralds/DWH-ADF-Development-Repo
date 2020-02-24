@@ -259,6 +259,9 @@
 				]
 			}
 		},
+		"folder": {
+			"name": "temp_stage_itf/mapsys"
+		},
 		"annotations": []
 	}
 }

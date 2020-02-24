@@ -1,0 +1,1236 @@
+{
+	"name": "CopyParis1",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_sjg",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_sjg",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "STAGE_ITF.@{item().source.table}"
+								},
+								{
+									"name": "Destination",
+									"value": "dwh_stage.@{item().destination.table}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "AzureSqlSink"
+								},
+								"enableStaging": false,
+								"translator": {
+									"value": "@item().copyActivity.translator",
+									"type": "Expression"
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "SourceParisLoadtwotables",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().source.table"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DestinationDwhStageParistwotables",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().destination.table"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"table": "P_LCATABLE"
+						},
+						"destination": {
+							"table": "p_lcatable"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "LCALCAID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcalcaid",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCACLODATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "lcaclodate",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LCALRGCLMYNSW",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcalrgclmynsw",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCALDESCR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaldescr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAREPDATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "lcarepdate",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAMPLAMT",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcamplamt",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAENASSSHR",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcaenassshr",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAAREADESCR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaareadescr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAEXTCLMID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaextclmid",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAICAID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaicaid",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCALUDATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "lcaludate",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "DATE_LAST_UPDATED",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "date_last_updated",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAINTNOTE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaintnote",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCACATEGORYTYPE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcacategorytype",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCANEXTSIGN",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcanextsign",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCACEFOCC",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcacefocc",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAREGNSIGN",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaregnsign",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAOCCOFFDATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "lcaoccoffdate",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAONOFFS",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcaonoffs",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "LCARECOVPOTAMT",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcarecovpotamt",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAREGAMT",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcaregamt",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "LCALIMAMT",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcalimamt",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "LCARECOVPOTINTNOTE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcarecovpotintnote",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAEUOWNPROS",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcaeuownpros",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "LCALIMCURR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcalimcurr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCACLMN3",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcaclmn3",
+											"type": "Int16"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAADJSIGN",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaadjsign",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCATLOTYPE",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "lcatlotype",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAREGNDATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "lcaregndate",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAOBNO",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcaobno",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAOUTSTM",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaoutstm",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCABIGEVENT",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcabigevent",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAWRKPLCCOD",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcawrkplccod",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "LCATOAREACD",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcatoareacd",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCATCAUSECO",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcatcauseco",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCACCOD2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaccod2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCACROBBID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcacrobbid",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAECAUSECO",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaecauseco",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAENINTRST",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaenintrst",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCANCAUSECO",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcancauseco",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCACEFOCM",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcacefocm",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCARECOVREMDATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "lcarecovremdate",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "INSERTED_BY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "inserted_by",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCARECOVACHDATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "lcarecovachdate",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LCALOSSCO",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcalossco",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAREGTEXT70",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaregtext70",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCALIMDAYS",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcalimdays",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAAREACD",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaareacd",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAMUOFFPROS",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcamuoffpros",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "LCALUSIGN",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcalusign",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCALTDATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "lcaltdate",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAIMPEXP",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcaimpexp",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "LCACEFOUC",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcacefouc",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DATE_INSERTED",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "date_inserted",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LAST_UPDATED_BY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "last_updated_by",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAOCCOFFYNSW",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaoccoffynsw",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCARECOVCCVID",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcarecovccvid",
+											"type": "Int16"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAEUOFFPROS",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcaeuoffpros",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "LCARECOVPOTYNSW",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcarecovpotynsw",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCACRDATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "lcacrdate",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAKNVMARK",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaknvmark",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCALOADATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "lcaloadate",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAOFFICE",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcaoffice",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "LCARECOVACHINTNOTE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcarecovachintnote",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAMPLCURR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcamplcurr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCABONYNSW",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcabonynsw",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCARECOVACHAMT",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcarecovachamt",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "LCANEXTDATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "lcanextdate",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAREGCURR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaregcurr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCACLINTC",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcaclintc",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAUWSIGN",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcauwsign",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCACLMDATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "lcaclmdate",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LCALABID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcalabid",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCARECOVACHSIGN",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcarecovachsign",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MAP_DATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "map_date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LCARECOVACHCURR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcarecovachcurr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAAGAID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaagaid",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAACSTAT",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaacstat",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAFPAREACD",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcafpareacd",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCABIRTNO",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcabirtno",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCACRSIGN",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcacrsign",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCARECOVACHYNSW",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcarecovachynsw",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAWORKPLACE",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcaworkplace",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAXLMREF",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaxlmref",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCACLMCAC",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaclmcac",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAFILEREF",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcafileref",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "LCATRTMCO",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcatrtmco",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAOCCOWNYNSW",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaoccownynsw",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAFROMAREACD",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcafromareacd",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCACLMPEAID",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcaclmpeaid",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "LCACLMID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcaclmid",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAMUOFFGRP",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcamuoffgrp",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAWRKCLAIM",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcawrkclaim",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAREGRESS",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcaregress",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAMUOWNPROS",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcamuownpros",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "LCAJURISDICTION",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcajurisdiction",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCANMCLEF",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcanmclef",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCACYEAR",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "lcacyear",
+											"type": "Int16"
+										}
+									},
+									{
+										"source": {
+											"name": "LCALODESCR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcalodescr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LCARECOVPOTCURR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lcarecovpotcurr",
+											"type": "String"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "P_LDATABLE"
+						},
+						"destination": {
+							"table": "p_ldatable"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "LDALDAID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ldaldaid",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LDADEDCURR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ldadedcurr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LDADEDCD3",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "ldadedcd3",
+											"type": "Int16"
+										}
+									},
+									{
+										"source": {
+											"name": "LDALCAID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ldalcaid",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LDADAYS",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "ldadays",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "LDADEDKEY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ldadedkey",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LDADEDAMT",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "ldadedamt",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "LDACRSIGN",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ldacrsign",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LDACRDATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "ldacrdate",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LDALN2",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "ldaln2",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "LDACLMCAT",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ldaclmcat",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LDATEXT",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ldatext",
+											"type": "String"
+										}
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		"folder": {
+			"name": "temp_stage_itf/paris"
+		},
+		"annotations": []
+	}
+}
