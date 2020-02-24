@@ -1,0 +1,6 @@
+{
+	"name": "AMSSRVRUN01",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
