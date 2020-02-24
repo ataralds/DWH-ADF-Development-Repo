@@ -1,0 +1,197 @@
+{
+	"name": "CopyPipeline_llj",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_llj",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "STAGE_ITF.P_PEZTABLE"
+					},
+					{
+						"name": "Destination",
+						"value": "dwh_stage.p_peztable"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PEZDEFBUSNDIV",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pezdefbusndiv",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEZDEFINSTCALCTYPE",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pezdefinstcalctype",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEZDEFOFFICE",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pezdefoffice",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEZDEFAGTNOL",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pezdefagtnol",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "PEZDEFNCOMM",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pezdefncomm",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "PEZDEFBUSNCLA",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pezdefbusncla",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEZDEFCOMCOD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pezdefcomcod",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEZPEZID",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pezpezid",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "PEZDEFBUSNSEC",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pezdefbusnsec",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEZDEFMORTG",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pezdefmortg",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "PEZDEFCCPID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pezdefccpid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEZDEFACCREBYNSW",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pezdefaccrebynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEZDEFBUSNBRANCH",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pezdefbusnbranch",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEZDEFTARCODOF",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pezdeftarcodof",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_llj",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_llj",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
