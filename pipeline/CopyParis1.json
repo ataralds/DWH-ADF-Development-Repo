@@ -1228,6 +1228,9 @@
 				]
 			}
 		},
+		"folder": {
+			"name": "temp_stage_itf/paris"
+		},
 		"annotations": []
 	}
 }
