@@ -1,0 +1,587 @@
+{
+	"name": "CopyPipeline_15j",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_15j",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "STAGE_ITF.P_PEBTABLE"
+					},
+					{
+						"name": "Destination",
+						"value": "dwh_stage.p_pebtable"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PEBPEBID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebpebid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBPRICECURR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebpricecurr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBMDESCR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebmdescr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBHOURPRICE",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebhourprice",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBNMNYK",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebnmnyk",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBISOLAN",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebisolan",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBPEVER",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebpever",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBSUPPORTER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebsupporter",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBCIVILSTATUS",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebcivilstatus",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBNMISIC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebnmisic",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBLUDATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "pebludate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBCONCOMP2",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebconcomp2",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBPEOOPEAID",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebpeoopeaid",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBEMLCURR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebemlcurr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBPAYLEVEL",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebpaylevel",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBRATCOD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebratcod",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBDUNCO",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebdunco",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBCONBUSNDIV",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebconbusndiv",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBEMLMDESCR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebemlmdescr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBRATEDATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "pebratedate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBVALDATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "pebvaldate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBCONBUSNSEC",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebconbusnsec",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBMVAYNSW",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebmvaynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBRATLUDATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "pebratludate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBPIDCNAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebpidcname",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBPEOID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebpeoid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBPEAID",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebpeaid",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBDISTRICT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebdistrict",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBLUSIGN",
+									"type": "String"
+								},
+								"sink": {
+									"name": "peblusign",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DATE_INSERTED",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "date_inserted",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "INSERTED_BY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "inserted_by",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBTAXNO",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebtaxno",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBMACHEML",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebmacheml",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBVERSTAT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebverstat",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBGENEML",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebgeneml",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBRATSIGN",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebratsign",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBFORTTRADE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebforttrade",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DATE_LAST_UPDATED",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "date_last_updated",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBFORTSECTOR",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebfortsector",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "LAST_UPDATED_BY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "last_updated_by",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBGROUP",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebgroup",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBCONBUSNCLA",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebconbusncla",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBRATCOMP",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebratcomp",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "MAP_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "map_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBPIDID",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebpidid",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBTYPELEVEL",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebtypelevel",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBRESSIGN",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebressign",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBREASON",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebreason",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBPIBREGDATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "pebpibregdate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBBRDATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "pebbrdate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBCONOFFICE",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebconoffice",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBINSTADYNZ",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pebinstadynz",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PEBPERSACC",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "pebpersacc",
+									"type": "Int64"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_15j",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_15j",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
