@@ -1,9 +1,9 @@
 {
-	"name": "copy t cross",
+	"name": "CopyPipeline_9bb",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_yef",
+				"name": "Copy_9bb",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -16,20 +16,23 @@
 				"userProperties": [
 					{
 						"name": "Source",
-						"value": "STAGE_ITF.T_CROSSREFERENCE"
+						"value": "Dwh/ADF/Files/GIC/CLAIM.dat"
 					},
 					{
 						"name": "Destination",
-						"value": "test//mapsys1.parquet"
+						"value": "test//testperben12412"
 					}
 				],
 				"typeProperties": {
 					"source": {
-						"type": "OracleSource",
-						"partitionOption": "None"
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "FileServerReadSettings",
+							"recursive": true
+						}
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "BinarySink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						}
@@ -38,21 +41,18 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SourceDataset_yef",
+						"referenceName": "SourceDataset_9bb",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DestinationDataset_yef",
+						"referenceName": "gictestperben123",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
-		"folder": {
-			"name": "perben"
-		},
 		"annotations": []
 	}
 }

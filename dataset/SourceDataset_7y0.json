@@ -1,0 +1,28 @@
+{
+	"name": "SourceDataset_7y0",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ARESRV476_Arendal",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": "CLAIM.dat",
+				"folderPath": "Dwh/ADF/Files/GIC"
+			},
+			"columnDelimiter": "<ec>",
+			"rowDelimiter": "<ev>",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"type": "String"
+			}
+		]
+	}
+}

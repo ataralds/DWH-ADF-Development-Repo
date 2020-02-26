@@ -1,22 +1,22 @@
 {
-	"name": "DestinationDataset_zra",
+	"name": "DestinationDataset_7y0",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
-		"folder": {
-			"name": "perben"
-		},
 		"annotations": [],
-		"type": "Parquet",
+		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "STAGE_ITFT_CROSSREFERENCE.txt",
+				"fileName": "asfagfAafasda",
 				"fileSystem": "test"
 			},
-			"compressionCodec": "snappy"
+			"columnDelimiter": "µ",
+			"rowDelimiter": "∞",
+			"escapeChar": "\\",
+			"quoteChar": "\""
 		},
 		"schema": []
 	}

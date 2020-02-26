@@ -1,9 +1,9 @@
 {
-	"name": "CopyPipeline_6we",
+	"name": "CopyPipeline_7y0",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_6we",
+				"name": "Copy_7y0",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -16,43 +16,52 @@
 				"userProperties": [
 					{
 						"name": "Source",
-						"value": "STAGE_ST.STA_COVERAGE_GROUP"
+						"value": "Dwh/ADF/Files/GIC/CLAIM.dat"
 					},
 					{
 						"name": "Destination",
-						"value": "test//sta_coverage_group.parquet"
+						"value": "test//asfagfAafasda"
 					}
 				],
 				"typeProperties": {
 					"source": {
-						"type": "OracleSource",
-						"partitionOption": "None"
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSettings",
+							"recursive": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings",
+							"skipLineCount": 0
+						}
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
-						"referenceName": "SourceDataset_6we",
+						"referenceName": "SourceDataset_7y0",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DestinationDataset_6we",
+						"referenceName": "DestinationDataset_7y0",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
-		"folder": {
-			"name": "perben"
-		},
 		"annotations": []
 	}
 }

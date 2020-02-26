@@ -1,9 +1,9 @@
 {
-	"name": "CopyPipeline_e6n",
+	"name": "copy_gic_to_lake",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_e6n",
+				"name": "Copy_lud",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -16,43 +16,53 @@
 				"userProperties": [
 					{
 						"name": "Source",
-						"value": "STAGE_ITF.T_CROSSREFERENCE"
+						"value": "Dwh/ADF/Files/GIC/"
 					},
 					{
 						"name": "Destination",
-						"value": "test//perben3.parquet"
+						"value": "raw/GIC/"
 					}
 				],
 				"typeProperties": {
 					"source": {
-						"type": "OracleSource",
-						"partitionOption": "None"
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings",
+							"skipLineCount": 0
+						}
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
-						"referenceName": "SourceDataset_e6n",
+						"referenceName": "SourceDataset_lud",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DestinationDataset_e6n",
+						"referenceName": "DestinationDataset_lud",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
-		"folder": {
-			"name": "perben"
-		},
 		"annotations": []
 	}
 }
