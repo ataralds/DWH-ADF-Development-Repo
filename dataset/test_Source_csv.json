@@ -6,6 +6,9 @@
 			"referenceName": "ARESRV476_Arendal",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Test"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
