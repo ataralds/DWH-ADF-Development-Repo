@@ -52,9 +52,72 @@
 				},
 				{
 					"name": "SelectAll"
+				},
+				{
+					"name": "AggregateTop"
+				},
+				{
+					"name": "SurrogateKeyTop"
+				},
+				{
+					"name": "DeriveTopID"
+				},
+				{
+					"name": "AggregateGrp"
+				},
+				{
+					"name": "SurrogateKeyGrp"
+				},
+				{
+					"name": "DeriveGrpID"
+				},
+				{
+					"name": "FilterEmpty"
+				},
+				{
+					"name": "AggregateBua"
+				},
+				{
+					"name": "FilterEmptyBua"
+				},
+				{
+					"name": "SurrogateKeyBua"
+				},
+				{
+					"name": "DeriveBuaID"
+				},
+				{
+					"name": "SelectAll2"
+				},
+				{
+					"name": "Join1"
+				},
+				{
+					"name": "Join2"
+				},
+				{
+					"name": "Join3"
+				},
+				{
+					"name": "AggregateBus"
+				},
+				{
+					"name": "FilterEmtyBus"
+				},
+				{
+					"name": "SurrogateKeyBus"
+				},
+				{
+					"name": "Join4"
+				},
+				{
+					"name": "Select1"
+				},
+				{
+					"name": "DeriveDimensionKey"
 				}
 			],
-			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nTCrossReference filter(CODE_TYPE_ID == 106.0 && TARGET_CODE != 'PI') ~> FilterCodetypeIDandTargetCode\nFilterCodetypeIDandTargetCode aggregate(groupBy(TARGET_CODE),\n\tTARGET_DESCRIPTION = first(TARGET_DESCRIPTION)) ~> AggregateTargetCode\nAggregateTargetCode derive(TOP_KEY = 'ALL',\n\t\tTOP_DESCRIPTION = 'All Business Areas',\n\t\tGRP_KEY = case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'EG', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE)),\n\t\tGRP_DESCRIPTION = case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'Energy+', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE)),\n\t\tBUA_KEY = case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE),\n\t\tBUA_DESCRIPTION = case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE)) ~> DeriveTopGrpBus\nDeriveTopGrpBus derive(each(match(!startsWith(name,'TOP')), $$ = '')) ~> DerivedColumn1\nDerivedColumn1 aggregate(groupBy(TOP_KEY),\n\teach(match(name != 'TOP_KEY'), $$ = first($$))) ~> Aggregate1\nDeriveTopGrpBus derive(each(match(!startsWith(name, 'TOP') && !startsWith(name, 'GRP')), $$ = '')) ~> DerivedColumn2\nDerivedColumn2 aggregate(groupBy(GRP_KEY),\n\teach(match(name != 'GRP_KEY'), $$ = first($$))) ~> Aggregate2\nDeriveTopGrpBus derive(each(match(!startsWith(name, 'TOP') && !startsWith(name, 'GRP') && !startsWith(name, 'BUA')), $$ = '')) ~> DerivedColumn3\nDerivedColumn3 aggregate(groupBy(BUA_KEY),\n\teach(match(name != 'BUA_KEY'), $$ = first($$))) ~> Aggregate3\nAggregate1, Aggregate2 union(byName: true)~> UnionTopGrp\nUnionTopGrp, Aggregate3 union(byName: true)~> UnionGrpBua\nUnionGrpBua, DeriveTopGrpBus union(byName: true)~> UnionBus\nDeriveTopGrpBus select(mapColumn(\n\t\tTARGET_CODE,\n\t\tTARGET_DESCRIPTION,\n\t\tTOP_KEY,\n\t\tTOP_DESCRIPTION,\n\t\tGRP_KEY,\n\t\tGRP_DESCRIPTION,\n\t\tBUA_KEY,\n\t\tBUA_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectAll"
+			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nTCrossReference filter(CODE_TYPE_ID == 106.0 && TARGET_CODE != 'PI') ~> FilterCodetypeIDandTargetCode\nFilterCodetypeIDandTargetCode aggregate(groupBy(TARGET_CODE),\n\tTARGET_DESCRIPTION = first(TARGET_DESCRIPTION)) ~> AggregateTargetCode\nAggregateTargetCode derive(TOP_KEY = 'ALL',\n\t\tTOP_DESCRIPTION = 'All Business Areas',\n\t\tGRP_KEY = case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'EG', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE)),\n\t\tGRP_DESCRIPTION = case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'Energy+', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE)),\n\t\tBUA_KEY = case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE),\n\t\tBUA_DESCRIPTION = case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE)) ~> DeriveTopGrpBus\nDeriveTopGrpBus derive(each(match(!startsWith(name,'TOP')), $$ = '')) ~> DerivedColumn1\nDerivedColumn1 aggregate(groupBy(TOP_KEY),\n\teach(match(name != 'TOP_KEY'), $$ = first($$))) ~> Aggregate1\nDeriveTopGrpBus derive(each(match(!startsWith(name, 'TOP') && !startsWith(name, 'GRP')), $$ = '')) ~> DerivedColumn2\nDerivedColumn2 aggregate(groupBy(GRP_KEY),\n\teach(match(name != 'GRP_KEY'), $$ = first($$))) ~> Aggregate2\nDeriveTopGrpBus derive(each(match(!startsWith(name, 'TOP') && !startsWith(name, 'GRP') && !startsWith(name, 'BUA')), $$ = '')) ~> DerivedColumn3\nDerivedColumn3 aggregate(groupBy(BUA_KEY),\n\teach(match(name != 'BUA_KEY'), $$ = first($$))) ~> Aggregate3\nAggregate1, Aggregate2 union(byName: true)~> UnionTopGrp\nUnionTopGrp, Aggregate3 union(byName: true)~> UnionGrpBua\nUnionGrpBua, DeriveTopGrpBus union(byName: true)~> UnionBus\nDeriveTopGrpBus select(mapColumn(\n\t\tTARGET_CODE,\n\t\tTARGET_DESCRIPTION,\n\t\tTOP_KEY,\n\t\tTOP_DESCRIPTION,\n\t\tGRP_KEY,\n\t\tGRP_DESCRIPTION,\n\t\tBUA_KEY,\n\t\tBUA_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectAll\nUnionBus aggregate(groupBy(TOP_KEY),\n\tTOP_DESCRIPTION = first(TOP_DESCRIPTION)) ~> AggregateTop\nAggregateTop keyGenerate(output(TOP_ID as long),\n\tstartAt: 1L) ~> SurrogateKeyTop\nSurrogateKeyTop derive(TOP_ID = TOP_ID*-1) ~> DeriveTopID\nUnionBus aggregate(groupBy(GRP_KEY),\n\tGRP_DESCRIPTION = first(GRP_DESCRIPTION)) ~> AggregateGrp\nFilterEmpty keyGenerate(output(GRP_ID as long),\n\tstartAt: 1L) ~> SurrogateKeyGrp\nSurrogateKeyGrp derive(GRP_ID = GRP_ID*-1) ~> DeriveGrpID\nAggregateGrp filter(GRP_KEY != '') ~> FilterEmpty\nUnionBus aggregate(groupBy(BUA_KEY),\n\tBUA_DESCRIPTION = first(BUA_DESCRIPTION)) ~> AggregateBua\nAggregateBua filter(BUA_KEY != '') ~> FilterEmptyBua\nFilterEmptyBua keyGenerate(output(BUA_ID as long),\n\tstartAt: 1L) ~> SurrogateKeyBua\nSurrogateKeyBua derive(BUA_ID = BUA_ID*-1) ~> DeriveBuaID\nUnionBus select(mapColumn(\n\t\tTOP_KEY2 = TOP_KEY,\n\t\tTOP_DESCRIPTION,\n\t\tGRP_KEY2 = GRP_KEY,\n\t\tGRP_DESCRIPTION,\n\t\tBUA_KEY2 = BUA_KEY,\n\t\tBUA_DESCRIPTION,\n\t\tBUS_KEY = TARGET_CODE,\n\t\tBUS_DESCRIPTION = TARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectAll2\nSelectAll2, DeriveTopID join(TOP_KEY2 == TOP_KEY,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> Join1\nJoin1, DeriveGrpID join(GRP_KEY2 == GRP_KEY,\n\tjoinType:'left',\n\tbroadcast: 'none')~> Join2\nJoin2, DeriveBuaID join(BUA_KEY2 == BUA_KEY,\n\tjoinType:'left',\n\tbroadcast: 'none')~> Join3\nUnionBus aggregate(groupBy(TARGET_CODE),\n\tTARGET_DESCRIPTION = first(TARGET_DESCRIPTION)) ~> AggregateBus\nAggregateBus filter(TARGET_CODE != '') ~> FilterEmtyBus\nFilterEmtyBus keyGenerate(output(BUS_ID as long),\n\tstartAt: 1L) ~> SurrogateKeyBus\nJoin3, SurrogateKeyBus join(BUS_KEY == TARGET_CODE,\n\tjoinType:'left',\n\tbroadcast: 'none')~> Join4\nJoin4 select(mapColumn(\n\t\tTOP_ID,\n\t\tTOP_KEY = TOP_KEY2,\n\t\tTOP_DESCRIPTION = SelectAll2@TOP_DESCRIPTION,\n\t\tGRP_ID,\n\t\tGRP_KEY = GRP_KEY2,\n\t\tGRP_DESCRIPTION = SelectAll2@GRP_DESCRIPTION,\n\t\tBUA_ID,\n\t\tBUA_KEY = BUA_KEY2,\n\t\tBUA_DESCRIPTION = SelectAll2@BUA_DESCRIPTION,\n\t\tBUS_ID,\n\t\tBUS_KEY,\n\t\tBUS_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 derive(DIMENSION_KEY = case(GRP_KEY=='',TOP_ID,case(BUA_KEY=='', GRP_ID, case(BUS_KEY =='', BUA_ID, BUS_ID)))) ~> DeriveDimensionKey"
 		}
 	}
 }
