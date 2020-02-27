@@ -1,5 +1,5 @@
 {
-	"name": "P_QTBTABLE",
+	"name": "t_crossreference",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_server_development_connection",
@@ -12,29 +12,42 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "qtbmdescr",
+				"name": "code_type_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "code2",
 				"type": "varchar"
 			},
 			{
-				"name": "qtbsdescr",
+				"name": "target_description",
 				"type": "varchar"
 			},
 			{
-				"name": "qtbfieldn",
+				"name": "source_system",
 				"type": "varchar"
 			},
 			{
-				"name": "qtbvalue",
+				"name": "om_x_ref",
 				"type": "varchar"
 			},
 			{
-				"name": "qtbdispynsw",
+				"name": "target_code",
+				"type": "varchar"
+			},
+			{
+				"name": "code_type",
+				"type": "varchar"
+			},
+			{
+				"name": "source_code_key",
 				"type": "varchar"
 			}
 		],
 		"typeProperties": {
 			"schema": "dwh_stage",
-			"table": "p_qtbtable"
+			"table": "t_crossreference"
 		}
 	}
 }
