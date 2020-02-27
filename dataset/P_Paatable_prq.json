@@ -1,0 +1,138 @@
+{
+	"name": "P_Paatable_prq",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "PAATABLE.parquet",
+				"folderPath": "Paris",
+				"fileSystem": "raw"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "PAAPEAID",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "PAASPBUSNDIV",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "PAAFUNCT",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "PAACNAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAAREVCNAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAACFAX",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAACPHONE",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAACTELEX",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAAINTNOTE",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAACONTCNAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAAWWW",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAAINTNET",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAACNAME2",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAALCNAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAASCNAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAACADDRESS1",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAACADDRESS2",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAACADDRESS3",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAACADDRESS4",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAACADDRESS5",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAACADDRPOSTAL",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAACADDRCOUNTRY",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAALONGNAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAACONTMOBCPHONE",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAACONTCPHONE",
+				"type": "UTF8"
+			},
+			{
+				"name": "PAACONTPEAID",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "PAACONTEMAIL",
+				"type": "UTF8"
+			}
+		]
+	}
+}
