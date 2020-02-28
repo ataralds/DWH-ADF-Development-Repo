@@ -13,6 +13,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "AsqlDimBusinessArea"
+				},
+				{
+					"dataset": {
+						"referenceName": "marts_dim_business_area",
+						"type": "DatasetReference"
+					},
+					"name": "MaxDimensionKey"
 				}
 			],
 			"sinks": [],
@@ -55,9 +62,24 @@
 				},
 				{
 					"name": "UnionAllLevels"
+				},
+				{
+					"name": "LookupExisting"
+				},
+				{
+					"name": "ConditionalSplit"
+				},
+				{
+					"name": "AddDimensionKey"
+				},
+				{
+					"name": "JoinToAddMaxDimensionKey"
+				},
+				{
+					"name": "DerivedColumn1"
 				}
 			],
-			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> TCrossReference\nsource(output(\n\t\tdimension_key as long,\n\t\ttop_description as string,\n\t\tgrp_key as string,\n\t\tgrp_description as string,\n\t\ttop_id as decimal(28,10),\n\t\tbua_description as string,\n\t\tbus_key as string,\n\t\tbua_id as decimal(28,10),\n\t\tbua_key as string,\n\t\ttop_key as string,\n\t\tgrp_id as decimal(28,10),\n\t\tbus_description as string,\n\t\tbus_id as decimal(28,10)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> AsqlDimBusinessArea\nTCrossReference filter(CODE_TYPE_ID == 106.0 && TARGET_CODE != 'PI') ~> FilterCodetypeIDandTargetCode\nFilterCodetypeIDandTargetCode aggregate(groupBy(TARGET_CODE),\n\tTARGET_DESCRIPTION = first(TARGET_DESCRIPTION)) ~> AggregateTargetCode\nAggregateTargetCode derive(TOP_KEY = 'ALL',\n\t\tTOP_DESCRIPTION = 'All Business Areas',\n\t\tGRP_KEY = case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'EG', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE)),\n\t\tGRP_DESCRIPTION = case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'Energy+', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE)),\n\t\tBUA_KEY = case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE),\n\t\tBUA_DESCRIPTION = case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE)) ~> DeriveTopGrpBus\nDeriveTopGrpBus derive(each(match(!startsWith(name,'TOP')), $$ = '')) ~> DeriveTopLevel\nDeriveTopLevel aggregate(groupBy(TOP_KEY),\n\teach(match(name!='TOP_KEY'), $$ = first($$))) ~> AggregateTopLevel\nDeriveTopGrpBus derive(each(match(!startsWith(name,'TOP')&&!startsWith(name,'GRP')), $$ = '')) ~> DeriveGrpLevel\nDeriveGrpLevel aggregate(groupBy(GRP_KEY),\n\teach(match(name!='GRP_KEY'), $$ = first($$))) ~> AggregateGrpLevel\nDeriveTopGrpBus derive(each(match(!startsWith(name,'TOP')&&!startsWith(name,'GRP')&&!startsWith(name,'BUA')), $$ = '')) ~> DeriveBuaLevel\nDeriveBuaLevel aggregate(groupBy(BUA_KEY),\n\teach(match(name!='BUA_KEY'), $$ = first($$))) ~> AggregateBuaLevel\nAggregateTopLevel, AggregateGrpLevel union(byName: true)~> UnionTopAndGrp\nUnionTopAndGrp, AggregateBuaLevel union(byName: true)~> UnionGrpAndBua\nDeriveTopGrpBus select(mapColumn(\n\t\tTARGET_CODE,\n\t\tTARGET_DESCRIPTION,\n\t\tTOP_KEY,\n\t\tTOP_DESCRIPTION,\n\t\tGRP_KEY,\n\t\tGRP_DESCRIPTION,\n\t\tBUA_KEY,\n\t\tBUA_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectBusLevel\nUnionGrpAndBua, SelectBusLevel union(byName: true)~> UnionAllLevels"
+			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> TCrossReference\nsource(output(\n\t\tdimension_key as long,\n\t\ttop_description as string,\n\t\tgrp_key as string,\n\t\tgrp_description as string,\n\t\ttop_id as decimal(28,10),\n\t\tbua_description as string,\n\t\tbus_key as string,\n\t\tbua_id as decimal(28,10),\n\t\tbua_key as string,\n\t\ttop_key as string,\n\t\tgrp_id as decimal(28,10),\n\t\tbus_description as string,\n\t\tbus_id as decimal(28,10)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> AsqlDimBusinessArea\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select MAX(dimension_key) as MaxDimKey from marts.dim_business_area',\n\tformat: 'query') ~> MaxDimensionKey\nTCrossReference filter(CODE_TYPE_ID == 106.0 && TARGET_CODE != 'PI') ~> FilterCodetypeIDandTargetCode\nFilterCodetypeIDandTargetCode aggregate(groupBy(TARGET_CODE),\n\tTARGET_DESCRIPTION = first(TARGET_DESCRIPTION)) ~> AggregateTargetCode\nAggregateTargetCode derive(TOP_KEY = 'ALL',\n\t\tTOP_DESCRIPTION = 'All Business Areas',\n\t\tGRP_KEY = case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'EG', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE)),\n\t\tGRP_DESCRIPTION = case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'Energy+', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE)),\n\t\tBUA_KEY = case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE),\n\t\tBUA_DESCRIPTION = case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE)) ~> DeriveTopGrpBus\nDeriveTopGrpBus derive(each(match(!startsWith(name,'TOP')), $$ = '')) ~> DeriveTopLevel\nDeriveTopLevel aggregate(groupBy(TOP_KEY),\n\teach(match(name!='TOP_KEY'), $$ = first($$))) ~> AggregateTopLevel\nDeriveTopGrpBus derive(each(match(!startsWith(name,'TOP')&&!startsWith(name,'GRP')), $$ = '')) ~> DeriveGrpLevel\nDeriveGrpLevel aggregate(groupBy(GRP_KEY),\n\teach(match(name!='GRP_KEY'), $$ = first($$))) ~> AggregateGrpLevel\nDeriveTopGrpBus derive(each(match(!startsWith(name,'TOP')&&!startsWith(name,'GRP')&&!startsWith(name,'BUA')), $$ = '')) ~> DeriveBuaLevel\nDeriveBuaLevel aggregate(groupBy(BUA_KEY),\n\teach(match(name!='BUA_KEY'), $$ = first($$))) ~> AggregateBuaLevel\nAggregateTopLevel, AggregateGrpLevel union(byName: true)~> UnionTopAndGrp\nUnionTopAndGrp, AggregateBuaLevel union(byName: true)~> UnionGrpAndBua\nDeriveTopGrpBus select(mapColumn(\n\t\tTARGET_CODE,\n\t\tTARGET_DESCRIPTION,\n\t\tTOP_KEY,\n\t\tTOP_DESCRIPTION,\n\t\tGRP_KEY,\n\t\tGRP_DESCRIPTION,\n\t\tBUA_KEY,\n\t\tBUA_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectBusLevel\nUnionGrpAndBua, SelectBusLevel union(byName: true)~> UnionAllLevels\nUnionAllLevels, AsqlDimBusinessArea lookup(UnionAllLevels@TOP_KEY == AsqlDimBusinessArea@top_key\n\t&& UnionAllLevels@GRP_KEY == AsqlDimBusinessArea@grp_key\n\t&& UnionAllLevels@BUA_KEY == AsqlDimBusinessArea@bua_key\n\t&& TARGET_CODE == bus_key,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> LookupExisting\nLookupExisting split(isMatch(),\n\tdisjoint: false) ~> ConditionalSplit@(ExisitingRows, NewRows)\nJoinToAddMaxDimensionKey keyGenerate(output(Dimension_Key as long),\n\tstartAt: 1L) ~> AddDimensionKey\nConditionalSplit@NewRows, MaxDimensionKey join(1==1,\n\tjoinType:'cross',\n\tbroadcast: 'none')~> JoinToAddMaxDimensionKey\nAddDimensionKey derive(dimension_key = AddDimensionKey@Dimension_Key+ toInteger(MaxDimKey)) ~> DerivedColumn1"
 		}
 	}
 }
