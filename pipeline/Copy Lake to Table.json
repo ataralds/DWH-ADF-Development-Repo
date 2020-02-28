@@ -130,7 +130,7 @@
 			}
 		},
 		"folder": {
-			"name": "temp_stage_itf/paris"
+			"name": "copy/dwh_stage/paris"
 		},
 		"annotations": []
 	}
