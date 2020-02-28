@@ -11,7 +11,7 @@
 			}
 		},
 		"folder": {
-			"name": "Test"
+			"name": "source/paris"
 		},
 		"annotations": [],
 		"type": "OracleTable",
