@@ -1,0 +1,40 @@
+{
+	"name": "P_QTBTABLE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Copy"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "qtbmdescr",
+				"type": "varchar"
+			},
+			{
+				"name": "qtbsdescr",
+				"type": "varchar"
+			},
+			{
+				"name": "qtbfieldn",
+				"type": "varchar"
+			},
+			{
+				"name": "qtbvalue",
+				"type": "varchar"
+			},
+			{
+				"name": "qtbdispynsw",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": "p_qtbtable"
+		}
+	}
+}

@@ -1,0 +1,87 @@
+{
+	"name": "P_PEZTABLE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Copy"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pezdefbusndiv",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "pezdefinstcalctype",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "pezdefoffice",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "pezdefagtnol",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "pezdefncomm",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "pezdefbusncla",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "pezdefcomcod",
+				"type": "varchar"
+			},
+			{
+				"name": "pezpezid",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "pezdefbusnsec",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "pezdefmortg",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "pezdefccpid",
+				"type": "varchar"
+			},
+			{
+				"name": "pezdefaccrebynsw",
+				"type": "varchar"
+			},
+			{
+				"name": "pezdefbusnbranch",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "pezdeftarcodof",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": "p_peztable"
+		}
+	}
+}

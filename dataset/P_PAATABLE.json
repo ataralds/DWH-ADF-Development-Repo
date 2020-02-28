@@ -1,0 +1,135 @@
+{
+	"name": "P_PAATABLE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Copy"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "paapeaid",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "paaspbusndiv",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "paafunct",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "paarevcname",
+				"type": "varchar"
+			},
+			{
+				"name": "paawww",
+				"type": "varchar"
+			},
+			{
+				"name": "paalongname",
+				"type": "varchar"
+			},
+			{
+				"name": "paacaddress1",
+				"type": "varchar"
+			},
+			{
+				"name": "paaintnote",
+				"type": "varchar"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "paalcname",
+				"type": "varchar"
+			},
+			{
+				"name": "map_date",
+				"type": "date"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "paacaddrcountry",
+				"type": "varchar"
+			},
+			{
+				"name": "date_inserted",
+				"type": "date"
+			},
+			{
+				"name": "paaintnet",
+				"type": "varchar"
+			},
+			{
+				"name": "paacname2",
+				"type": "varchar"
+			},
+			{
+				"name": "paacontcname",
+				"type": "varchar"
+			},
+			{
+				"name": "paacaddress4",
+				"type": "varchar"
+			},
+			{
+				"name": "paacfax",
+				"type": "varchar"
+			},
+			{
+				"name": "paacaddrpostal",
+				"type": "varchar"
+			},
+			{
+				"name": "paascname",
+				"type": "varchar"
+			},
+			{
+				"name": "date_last_updated",
+				"type": "date"
+			},
+			{
+				"name": "paacaddress5",
+				"type": "varchar"
+			},
+			{
+				"name": "paactelex",
+				"type": "varchar"
+			},
+			{
+				"name": "paacaddress2",
+				"type": "varchar"
+			},
+			{
+				"name": "paacphone",
+				"type": "varchar"
+			},
+			{
+				"name": "paacname",
+				"type": "varchar"
+			},
+			{
+				"name": "paacaddress3",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": "p_paatable"
+		}
+	}
+}
