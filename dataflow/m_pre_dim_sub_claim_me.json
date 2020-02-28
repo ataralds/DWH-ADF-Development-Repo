@@ -9,14 +9,14 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "Azure_Lake_Paris_All_Tables",
+						"referenceName": "T_Azure_Lake_Paris_All_Tables",
 						"type": "DatasetReference"
 					},
 					"name": "lcatable"
 				},
 				{
 					"dataset": {
-						"referenceName": "Azure_Lake_Paris_All_Tables",
+						"referenceName": "T_Azure_Lake_Paris_All_Tables",
 						"type": "DatasetReference"
 					},
 					"name": "ldatable"

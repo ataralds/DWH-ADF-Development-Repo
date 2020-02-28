@@ -59,7 +59,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "Azure_Lake_Paris_All_Tables",
+									"referenceName": "T_Azure_Lake_Paris_All_Tables",
 									"type": "DatasetReference",
 									"parameters": {
 										"cw_fileName": "@item().destination.fileName"

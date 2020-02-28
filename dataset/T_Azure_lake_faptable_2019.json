@@ -1,12 +1,12 @@
 {
-	"name": "Azure_lake_faptable_2019",
+	"name": "T_Azure_lake_faptable_2019",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "Test"
+			"name": "raw - lake/paris"
 		},
 		"annotations": [],
 		"type": "Parquet",

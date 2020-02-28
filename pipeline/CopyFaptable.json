@@ -44,7 +44,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Azure_Lake_Faptable",
+						"referenceName": "T_Azure_Lake_Faptable",
 						"type": "DatasetReference"
 					}
 				]
