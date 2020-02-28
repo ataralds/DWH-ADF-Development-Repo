@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "Test"
+			"name": "raw - lake/paris"
 		},
 		"annotations": [],
 		"type": "Parquet",
