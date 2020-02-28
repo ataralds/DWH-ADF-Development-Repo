@@ -1,5 +1,5 @@
 {
-	"name": "OracleParisFaptableCopy",
+	"name": "Oracle_Paris_Faptable",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OracleDbParisScrAmster",
