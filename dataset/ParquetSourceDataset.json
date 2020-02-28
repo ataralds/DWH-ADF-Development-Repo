@@ -16,6 +16,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "Copy"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {

@@ -10,6 +10,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "Copy"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": []
