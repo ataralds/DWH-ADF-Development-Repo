@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_faptable_date",
+				"name": "Copy_faptable",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -38,13 +38,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "OracleParisFaptableCopy",
+						"referenceName": "Oracle_Paris_Faptable",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "T_Azure_Lake_Faptable",
+						"referenceName": "Azure_Lake_Faptable",
 						"type": "DatasetReference"
 					}
 				]
