@@ -1,0 +1,46 @@
+{
+	"name": "New_M_DIM_BUSINESS_AREA",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ParquetTCROSS",
+						"type": "DatasetReference"
+					},
+					"name": "TCrossReference"
+				},
+				{
+					"dataset": {
+						"referenceName": "marts_dim_business_area",
+						"type": "DatasetReference"
+					},
+					"name": "AsqlDimBusinessArea"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "FilterCodetypeIDandTargetCode"
+				},
+				{
+					"name": "AggregateTargetCode"
+				},
+				{
+					"name": "DeriveTopGrpBus"
+				},
+				{
+					"name": "RemoveUnusedColumns"
+				},
+				{
+					"name": "LookupBUSkey"
+				},
+				{
+					"name": "ConditionalSplit1"
+				}
+			],
+			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nsource(output(\n\t\tdimension_key as long,\n\t\ttop_description as string,\n\t\tgrp_key as string,\n\t\tgrp_description as string,\n\t\ttop_id as decimal(28,10),\n\t\tbua_description as string,\n\t\tbus_key as string,\n\t\tbua_id as decimal(28,10),\n\t\tbua_key as string,\n\t\ttop_key as string,\n\t\tgrp_id as decimal(28,10),\n\t\tbus_description as string,\n\t\tbus_id as decimal(28,10)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> AsqlDimBusinessArea\nTCrossReference filter(CODE_TYPE_ID == 106.0 && TARGET_CODE != 'PI') ~> FilterCodetypeIDandTargetCode\nFilterCodetypeIDandTargetCode aggregate(groupBy(TARGET_CODE),\n\tTARGET_DESCRIPTION = first(TARGET_DESCRIPTION)) ~> AggregateTargetCode\nAggregateTargetCode derive(TOP = @(KEY='ALL',\n\t\tDESCRIPTION='All Business Areas',\n\t\tID=0),\n\t\tGRP = @(KEY=case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'EG', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE)),\n\t\tDESCRIPTION=case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'Energy+', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE)),\n\t\tID=0),\n\t\tBUA = @(KEY=case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE),\n\t\tDESCRIPTION=case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE),\n\t\tID=0),\n\t\tBUS = @(KEY=TARGET_CODE,\n\t\tDESCRIPTION=TARGET_DESCRIPTION,\n\t\tID=0)) ~> DeriveTopGrpBus\nDeriveTopGrpBus select(mapColumn(\n\t\tTOP,\n\t\tGRP,\n\t\tBUA,\n\t\tBUS\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nRemoveUnusedColumns, AsqlDimBusinessArea lookup(BUS.KEY == bus_key,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> LookupBUSkey\nLookupBUSkey split(isMatch(),\n\tdisjoint: false) ~> ConditionalSplit1@(ExistingRows, NewRows)"
+		}
+	}
+}
