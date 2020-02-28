@@ -130,7 +130,7 @@
 			}
 		},
 		"folder": {
-			"name": "copy/dwh_stage/paris"
+			"name": "copy from/dwh_stage/paris"
 		},
 		"annotations": []
 	}

@@ -1,5 +1,5 @@
 {
-	"name": "CopyParisScrFromAmster",
+	"name": "Copy_Paris_Scr_From_Amster",
 	"properties": {
 		"description": "Copy Paris from Amsterdam new environment to test performance",
 		"activities": [
@@ -59,7 +59,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "T_Azure_Lake_Paris_All_Tables",
+									"referenceName": "Azure_Lake_Paris_All_Tables",
 									"type": "DatasetReference",
 									"parameters": {
 										"cw_fileName": "@item().destination.fileName"
@@ -511,7 +511,7 @@
 			}
 		},
 		"folder": {
-			"name": "copy/raw/paris"
+			"name": "copy from/raw/paris"
 		},
 		"annotations": []
 	}
