@@ -1,5 +1,5 @@
 {
-	"name": "T_Azure_Lake_Paris_All_Tables",
+	"name": "Azure_Lake_Paris_All_Tables",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",

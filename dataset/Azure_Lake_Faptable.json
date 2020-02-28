@@ -1,5 +1,5 @@
 {
-	"name": "T_Azure_Lake_Faptable",
+	"name": "Azure_Lake_Faptable",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
