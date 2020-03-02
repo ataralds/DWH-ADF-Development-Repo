@@ -1,6 +1,0 @@
-{
-	"name": "integrationRuntimeVirtualNetwork",
-	"properties": {
-		"type": "SelfHosted"
-	}
-}
