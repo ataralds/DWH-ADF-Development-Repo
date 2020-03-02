@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ForEach_dh6",
+				"name": "Copy_paris",
 				"type": "ForEach",
 				"dependsOn": [],
 				"userProperties": [],
@@ -3327,6 +3327,9 @@
 					}
 				]
 			}
+		},
+		"folder": {
+			"name": "temp_stage_itf"
 		},
 		"annotations": []
 	}
