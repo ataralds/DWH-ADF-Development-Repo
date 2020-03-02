@@ -59,7 +59,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "dwh_stage_paris_tables",
+									"referenceName": "dwh_stage_paris",
 									"type": "DatasetReference",
 									"parameters": {
 										"cw_table": "@item().destination.table"
