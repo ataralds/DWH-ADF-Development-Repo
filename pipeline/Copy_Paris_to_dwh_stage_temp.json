@@ -14,7 +14,7 @@
 					},
 					"activities": [
 						{
-							"name": "Copy_dh6",
+							"name": "Copy_Paris_to_dwh_stage_temp",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
