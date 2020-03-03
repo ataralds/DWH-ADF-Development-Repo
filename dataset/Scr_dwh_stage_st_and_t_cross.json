@@ -1,8 +1,8 @@
 {
-	"name": "CopyTCrossAndHlp",
+	"name": "Scr_dwh_stage_st_and_t_cross",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "OracelStageITF",
+			"referenceName": "sql_server_development_connection",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
@@ -11,10 +11,10 @@
 			}
 		},
 		"annotations": [],
-		"type": "OracleTable",
+		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "STAGE_ITF",
+			"schema": "dwh_stage",
 			"table": {
 				"value": "@dataset().cw_table",
 				"type": "Expression"

@@ -1,8 +1,8 @@
 {
-	"name": "CopyTCrossAndHlp",
+	"name": "dwh_stage_paris",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "OracelStageITF",
+			"referenceName": "sql_server_development_connection",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
@@ -10,11 +10,14 @@
 				"type": "String"
 			}
 		},
+		"folder": {
+			"name": "temp_dwh_stage/paris"
+		},
 		"annotations": [],
-		"type": "OracleTable",
+		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "STAGE_ITF",
+			"schema": "dwh_stage",
 			"table": {
 				"value": "@dataset().cw_table",
 				"type": "Expression"

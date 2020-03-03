@@ -11,7 +11,7 @@
 			}
 		},
 		"folder": {
-			"name": "temp_dwh_stage/paris"
+			"name": "dwh_stage/paris"
 		},
 		"annotations": [],
 		"type": "OracleTable",

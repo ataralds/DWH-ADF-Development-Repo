@@ -10,9 +10,6 @@
 				"type": "String"
 			}
 		},
-		"folder": {
-			"name": "temp_dwh_stage/mapsys"
-		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
