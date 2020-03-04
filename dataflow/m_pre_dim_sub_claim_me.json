@@ -2,7 +2,7 @@
 	"name": "m_pre_dim_sub_claim_me",
 	"properties": {
 		"folder": {
-			"name": "dwh_prepare"
+			"name": "dwh_prepare/paris"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
