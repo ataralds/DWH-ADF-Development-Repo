@@ -1,0 +1,34 @@
+{
+	"name": "dataflow3",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dwh_stage_p_lgatable",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "dwh_stage_p_peatable",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "Union1"
+				},
+				{
+					"name": "Exists1"
+				}
+			],
+			"script": "source(output(\n\t\tsigsign as string,\n\t\tsigcreatefunc as string,\n\t\tsigstopuse as string,\n\t\tsiglocdeftab as integer,\n\t\tsigoffice as integer,\n\t\tsigmiscprlabel as string,\n\t\tsigmainsign as string,\n\t\tsigbusnsec as integer,\n\t\tsigaclynsw as string,\n\t\tsigpwdate as integer,\n\t\tsigpltransfunc as string,\n\t\tsiguwaynsw as string,\n\t\tsigdefccode as integer,\n\t\tsigsqlseq as integer,\n\t\tsigbusncla as integer,\n\t\tsigdebugidentify as string,\n\t\tsigorgplace as string,\n\t\tsigclmynsw as string,\n\t\tsigmdescr as string,\n\t\tsigbprtpl as string,\n\t\tsigaacynsw as string,\n\t\tsigclosefunc as string,\n\t\tsigcfax as string,\n\t\tsigcphone as string,\n\t\tsigintaie as string,\n\t\tsigefilelibrary as string,\n\t\tsigpolprlabel as string,\n\t\tsiglocswitches as string,\n\t\tsigcmail as string,\n\t\tsigefileuserid as string,\n\t\tsigclmswitches as string,\n\t\tsigaccoaccg as integer,\n\t\tsigaccosref as string,\n\t\tsigaccosubref as string,\n\t\tsigefileplace as string,\n\t\tsigdefobrt as integer,\n\t\tsigclmdefupdate as string,\n\t\tsigaccynsw as string,\n\t\tsigcreateswitches as string,\n\t\tsigintselection as string,\n\t\tsigldescr as string,\n\t\tsiglang2 as string,\n\t\tsigclaimfunc as string,\n\t\tsigefilepassword as string,\n\t\tsigfryear as integer,\n\t\tsigauwynsw as string,\n\t\tsigletterprlabel as string,\n\t\tsigcurr as string,\n\t\tsigfunc as string,\n\t\tsigelremitfunc as string,\n\t\tsigbusndiv as integer,\n\t\tsigefiledomain as string,\n\t\tsigdebugmacro as string,\n\t\tsignameid as string,\n\t\tsigmaisec as integer,\n\t\tsigtoyear as integer,\n\t\tsigpremswitches as string,\n\t\tsigpeaid as long,\n\t\tsiggensec as integer,\n\t\tsigaccoswitches as string,\n\t\tsighierarc as string,\n\t\tsignoteprlabel as string,\n\t\tsigdefagtype as integer,\n\t\tsigspecialversion as string,\n\t\tsigperssecur as string,\n\t\tsigcomp2 as integer,\n\t\tsigbusntyp as integer,\n\t\tsigiyear as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource(output(\n\t\tpeapeaid as long,\n\t\tpeainvisible as string,\n\t\tpeaiebusndiv as integer,\n\t\tpeaiecond as string,\n\t\tpeaprobor as integer,\n\t\tpeaiyear as integer,\n\t\tpeasex as string,\n\t\tpeacorrmailfreq as integer,\n\t\tpeanopurr as string,\n\t\tpeaoutgirono as string,\n\t\tpeaclosmailfreq as integer,\n\t\tpeaieint5 as string,\n\t\tlast_updated_by as string,\n\t\tpeaclmmailfreq as integer,\n\t\tpeainvnotify as integer,\n\t\tpeaacorbo as integer,\n\t\tpeamexcdate as date,\n\t\tpeaaddmailfreq as integer,\n\t\tpeaieint3 as string,\n\t\tpeamailsizemb as decimal(28,10),\n\t\tpeaiediv as string,\n\t\tpeaorgno as string,\n\t\tpeaaclmbo as integer,\n\t\tpeacalamt as long,\n\t\tpeaxlcurr as string,\n\t\tmap_date as date,\n\t\tpeaccintr as decimal(28,10),\n\t\tpeaextid2 as string,\n\t\tpeapurnotify as integer,\n\t\tpeaccode as integer,\n\t\tpeasw10 as string,\n\t\tpeaaclmadv as integer,\n\t\tpeaclomet as integer,\n\t\tpeacloclm as integer,\n\t\tpeamexamt as long,\n\t\tpeaprotyp as integer,\n\t\tpeanotsort as integer,\n\t\tpeaieint1 as string,\n\t\tpeaiecon3 as integer,\n\t\tpeaincreday as integer,\n\t\tpeapersid as string,\n\t\tpeaaaddbo as integer,\n\t\tpeanotdays as integer,\n\t\tpeaaclobo as integer,\n\t\tpeacalcurr as string,\n\t\tpeaprovad as integer,\n\t\tpeafromcomp as long,\n\t\tpeastopuse as string,\n\t\tpeaclmadv as integer,\n\t\tpeasttniv as integer,\n\t\tpeamexcurr as string,\n\t\tpeaiecon4 as integer,\n\t\tpeasubtype as integer,\n\t\tpeaswrun as integer,\n\t\tpealeicode as string,\n\t\tpeaoutcreday as integer,\n\t\tpeaoutgiro as integer,\n\t\tpeamexpro as decimal(28,10),\n\t\tpeaoutgiroludate as date,\n\t\tpeaiecon2 as integer,\n\t\tpeaieint2 as string,\n\t\tpeastdate as date,\n\t\tpeaclamailfreq as integer,\n\t\tpeacclamt as long,\n\t\tpealang2 as string,\n\t\tpeastatyp as integer,\n\t\tpeaingirolusign as string,\n\t\tpeacrsign as string,\n\t\tpeaie2busnse as integer,\n\t\tpeabirtno as string,\n\t\tpeaiesect as string,\n\t\tpeaaddbor as integer,\n\t\tpeaieint4 as string,\n\t\tpeasttprmclm as integer,\n\t\tpeaiebusnse as integer,\n\t\tpeanotaco as integer,\n\t\tpeastaamt as integer,\n\t\tpeacclcurr as string,\n\t\tpeaextid as string,\n\t\tpeaendate as date,\n\t\tpeacomp2 as integer,\n\t\tpeabirtws as integer,\n\t\tpeaie2busndiv as integer,\n\t\tpearesdat as date,\n\t\tpeausecolfee as string,\n\t\tpeanotlay as integer,\n\t\tpealudate as date,\n\t\tpeaxlpoin as long,\n\t\tpeaoutgirolusign as string,\n\t\tpeaprenotify as integer,\n\t\tpeacrdate as date,\n\t\tpeaaprobo as integer,\n\t\tpeanopdue as integer,\n\t\tpeaingiroludate as date,\n\t\tpeaie3busnse as integer,\n\t\tdate_inserted as date,\n\t\tpeapurtyp as integer,\n\t\tinserted_by as string,\n\t\tpeapersrfl as long,\n\t\tpeacorbo as integer,\n\t\tpeastaniv as integer,\n\t\tdate_last_updated as date,\n\t\tpeastensw as integer,\n\t\tpeaccint as string,\n\t\tpeaswink as integer,\n\t\tpealusign as string,\n\t\tpeaiecon5 as integer,\n\t\tpeaknvmark as string,\n\t\tpeastopcod as integer,\n\t\tpeacrmid as long,\n\t\tpeaieint as string,\n\t\tpeamaxper as decimal(28,10),\n\t\tpeastoppremnote as string,\n\t\tpeaiecon1 as integer,\n\t\tpeamdescr as string,\n\t\tpeaclmintynsw as string,\n\t\tpeadueday as integer,\n\t\tpeaingirono as string,\n\t\tpeaie3busndiv as integer,\n\t\tpeaprovmailfreq as integer,\n\t\tpeaclmbor as integer,\n\t\tpeacolid as string,\n\t\tpeaingiro as integer,\n\t\tpeaclobor as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source2\nsource1, source2 union(byName: true)~> Union1\nUnion1, source2 exists(ERROR_FUNCTION('') == ERROR_FUNCTION(''),\n\tnegate:false,\n\tbroadcast: 'none')~> Exists1"
+		}
+	}
+}
