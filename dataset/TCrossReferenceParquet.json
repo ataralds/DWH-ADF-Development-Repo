@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "T_CROSSREFERENCE",
+				"fileName": "T_CROSSREFERENCE.parquet",
 				"fileSystem": "test"
 			},
 			"compressionCodec": "snappy"
