@@ -10,7 +10,41 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "code_type_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "code2",
+				"type": "varchar"
+			},
+			{
+				"name": "target_description",
+				"type": "varchar"
+			},
+			{
+				"name": "source_system",
+				"type": "varchar"
+			},
+			{
+				"name": "om_x_ref",
+				"type": "varchar"
+			},
+			{
+				"name": "target_code",
+				"type": "varchar"
+			},
+			{
+				"name": "code_type",
+				"type": "varchar"
+			},
+			{
+				"name": "source_code_key",
+				"type": "varchar"
+			}
+		],
 		"typeProperties": {
 			"schema": "dwh_stage",
 			"table": "t_crossreference"
