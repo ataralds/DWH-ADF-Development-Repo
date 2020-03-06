@@ -5,6 +5,9 @@
 			"referenceName": "sql_server_development_connection",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "temp_dwh_stage/paris"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
