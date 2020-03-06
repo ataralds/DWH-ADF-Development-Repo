@@ -1,5 +1,5 @@
 {
-	"name": "Parquet1",
+	"name": "TestParquet",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage_test",
