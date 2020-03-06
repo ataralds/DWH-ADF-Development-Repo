@@ -1,0 +1,454 @@
+{
+	"name": "dwh_stage_p_lcatable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "temp_dwh_stage/paris"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "lcalcaid",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaclodate",
+				"type": "date"
+			},
+			{
+				"name": "lcalrgclmynsw",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaldescr",
+				"type": "varchar"
+			},
+			{
+				"name": "lcarepdate",
+				"type": "date"
+			},
+			{
+				"name": "lcamplamt",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "lcaenassshr",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "lcaareadescr",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaextclmid",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaicaid",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaludate",
+				"type": "date"
+			},
+			{
+				"name": "date_last_updated",
+				"type": "date"
+			},
+			{
+				"name": "lcaintnote",
+				"type": "varchar"
+			},
+			{
+				"name": "lcacategorytype",
+				"type": "varchar"
+			},
+			{
+				"name": "lcanextsign",
+				"type": "varchar"
+			},
+			{
+				"name": "lcacefocc",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaregnsign",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaoccoffdate",
+				"type": "date"
+			},
+			{
+				"name": "lcaonoffs",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "lcarecovpotamt",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "lcaregamt",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "lcalimamt",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "lcarecovpotintnote",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaeuownpros",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "lcalimcurr",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaclmn3",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "lcaadjsign",
+				"type": "varchar"
+			},
+			{
+				"name": "lcatlotype",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "lcaregndate",
+				"type": "date"
+			},
+			{
+				"name": "lcaobno",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "lcaoutstm",
+				"type": "varchar"
+			},
+			{
+				"name": "lcabigevent",
+				"type": "varchar"
+			},
+			{
+				"name": "lcawrkplccod",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "lcatoareacd",
+				"type": "varchar"
+			},
+			{
+				"name": "lcatcauseco",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaccod2",
+				"type": "varchar"
+			},
+			{
+				"name": "lcacrobbid",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaecauseco",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaenintrst",
+				"type": "varchar"
+			},
+			{
+				"name": "lcancauseco",
+				"type": "varchar"
+			},
+			{
+				"name": "lcacefocm",
+				"type": "varchar"
+			},
+			{
+				"name": "lcarecovremdate",
+				"type": "date"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "lcarecovachdate",
+				"type": "date"
+			},
+			{
+				"name": "lcalossco",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaregtext70",
+				"type": "varchar"
+			},
+			{
+				"name": "lcalimdays",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "lcaareacd",
+				"type": "varchar"
+			},
+			{
+				"name": "lcamuoffpros",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "lcalusign",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaltdate",
+				"type": "date"
+			},
+			{
+				"name": "lcaimpexp",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "lcacefouc",
+				"type": "varchar"
+			},
+			{
+				"name": "date_inserted",
+				"type": "date"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaoccoffynsw",
+				"type": "varchar"
+			},
+			{
+				"name": "lcarecovccvid",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "lcaeuoffpros",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "lcarecovpotynsw",
+				"type": "varchar"
+			},
+			{
+				"name": "lcacrdate",
+				"type": "date"
+			},
+			{
+				"name": "lcaknvmark",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaloadate",
+				"type": "date"
+			},
+			{
+				"name": "lcaoffice",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "lcarecovachintnote",
+				"type": "varchar"
+			},
+			{
+				"name": "lcamplcurr",
+				"type": "varchar"
+			},
+			{
+				"name": "lcabonynsw",
+				"type": "varchar"
+			},
+			{
+				"name": "lcarecovachamt",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "lcanextdate",
+				"type": "date"
+			},
+			{
+				"name": "lcaregcurr",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaclintc",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "lcauwsign",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaclmdate",
+				"type": "date"
+			},
+			{
+				"name": "lcalabid",
+				"type": "varchar"
+			},
+			{
+				"name": "lcarecovachsign",
+				"type": "varchar"
+			},
+			{
+				"name": "map_date",
+				"type": "date"
+			},
+			{
+				"name": "lcarecovachcurr",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaagaid",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaacstat",
+				"type": "varchar"
+			},
+			{
+				"name": "lcafpareacd",
+				"type": "varchar"
+			},
+			{
+				"name": "lcabirtno",
+				"type": "varchar"
+			},
+			{
+				"name": "lcacrsign",
+				"type": "varchar"
+			},
+			{
+				"name": "lcarecovachynsw",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaworkplace",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "lcaxlmref",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaclmcac",
+				"type": "varchar"
+			},
+			{
+				"name": "lcafileref",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "lcatrtmco",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "lcaoccownynsw",
+				"type": "varchar"
+			},
+			{
+				"name": "lcafromareacd",
+				"type": "varchar"
+			},
+			{
+				"name": "lcaclmpeaid",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "lcaclmid",
+				"type": "varchar"
+			},
+			{
+				"name": "lcamuoffgrp",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "lcawrkclaim",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "lcaregress",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "lcamuownpros",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "lcajurisdiction",
+				"type": "varchar"
+			},
+			{
+				"name": "lcanmclef",
+				"type": "varchar"
+			},
+			{
+				"name": "lcacyear",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "lcalodescr",
+				"type": "varchar"
+			},
+			{
+				"name": "lcarecovpotcurr",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": "p_lcatable"
+		}
+	}
+}
