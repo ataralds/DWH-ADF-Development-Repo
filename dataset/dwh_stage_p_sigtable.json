@@ -1,0 +1,311 @@
+{
+	"name": "dwh_stage_p_sigtable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "temp_dwh_stage/paris"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "sigsign",
+				"type": "varchar"
+			},
+			{
+				"name": "sigcreatefunc",
+				"type": "varchar"
+			},
+			{
+				"name": "sigstopuse",
+				"type": "varchar"
+			},
+			{
+				"name": "siglocdeftab",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "sigoffice",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "sigmiscprlabel",
+				"type": "varchar"
+			},
+			{
+				"name": "sigmainsign",
+				"type": "varchar"
+			},
+			{
+				"name": "sigbusnsec",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "sigaclynsw",
+				"type": "varchar"
+			},
+			{
+				"name": "sigpwdate",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "sigpltransfunc",
+				"type": "varchar"
+			},
+			{
+				"name": "siguwaynsw",
+				"type": "varchar"
+			},
+			{
+				"name": "sigdefccode",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "sigsqlseq",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "sigbusncla",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "sigdebugidentify",
+				"type": "varchar"
+			},
+			{
+				"name": "sigorgplace",
+				"type": "varchar"
+			},
+			{
+				"name": "sigclmynsw",
+				"type": "varchar"
+			},
+			{
+				"name": "sigmdescr",
+				"type": "varchar"
+			},
+			{
+				"name": "sigbprtpl",
+				"type": "varchar"
+			},
+			{
+				"name": "sigaacynsw",
+				"type": "varchar"
+			},
+			{
+				"name": "sigclosefunc",
+				"type": "varchar"
+			},
+			{
+				"name": "sigcfax",
+				"type": "varchar"
+			},
+			{
+				"name": "sigcphone",
+				"type": "varchar"
+			},
+			{
+				"name": "sigintaie",
+				"type": "varchar"
+			},
+			{
+				"name": "sigefilelibrary",
+				"type": "varchar"
+			},
+			{
+				"name": "sigpolprlabel",
+				"type": "varchar"
+			},
+			{
+				"name": "siglocswitches",
+				"type": "varchar"
+			},
+			{
+				"name": "sigcmail",
+				"type": "varchar"
+			},
+			{
+				"name": "sigefileuserid",
+				"type": "varchar"
+			},
+			{
+				"name": "sigclmswitches",
+				"type": "varchar"
+			},
+			{
+				"name": "sigaccoaccg",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "sigaccosref",
+				"type": "varchar"
+			},
+			{
+				"name": "sigaccosubref",
+				"type": "varchar"
+			},
+			{
+				"name": "sigefileplace",
+				"type": "varchar"
+			},
+			{
+				"name": "sigdefobrt",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "sigclmdefupdate",
+				"type": "varchar"
+			},
+			{
+				"name": "sigaccynsw",
+				"type": "varchar"
+			},
+			{
+				"name": "sigcreateswitches",
+				"type": "varchar"
+			},
+			{
+				"name": "sigintselection",
+				"type": "varchar"
+			},
+			{
+				"name": "sigldescr",
+				"type": "varchar"
+			},
+			{
+				"name": "siglang2",
+				"type": "varchar"
+			},
+			{
+				"name": "sigclaimfunc",
+				"type": "varchar"
+			},
+			{
+				"name": "sigefilepassword",
+				"type": "varchar"
+			},
+			{
+				"name": "sigfryear",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "sigauwynsw",
+				"type": "varchar"
+			},
+			{
+				"name": "sigletterprlabel",
+				"type": "varchar"
+			},
+			{
+				"name": "sigcurr",
+				"type": "varchar"
+			},
+			{
+				"name": "sigfunc",
+				"type": "varchar"
+			},
+			{
+				"name": "sigelremitfunc",
+				"type": "varchar"
+			},
+			{
+				"name": "sigbusndiv",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "sigefiledomain",
+				"type": "varchar"
+			},
+			{
+				"name": "sigdebugmacro",
+				"type": "varchar"
+			},
+			{
+				"name": "signameid",
+				"type": "varchar"
+			},
+			{
+				"name": "sigmaisec",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "sigtoyear",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "sigpremswitches",
+				"type": "varchar"
+			},
+			{
+				"name": "sigpeaid",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "siggensec",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "sigaccoswitches",
+				"type": "varchar"
+			},
+			{
+				"name": "sighierarc",
+				"type": "varchar"
+			},
+			{
+				"name": "signoteprlabel",
+				"type": "varchar"
+			},
+			{
+				"name": "sigdefagtype",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "sigspecialversion",
+				"type": "varchar"
+			},
+			{
+				"name": "sigperssecur",
+				"type": "varchar"
+			},
+			{
+				"name": "sigcomp2",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "sigbusntyp",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "sigiyear",
+				"type": "smallint",
+				"precision": 5
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": "p_sigtable"
+		}
+	}
+}
