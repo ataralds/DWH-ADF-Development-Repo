@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "dhw_prepare"
+			"name": "dwh_prepare"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
