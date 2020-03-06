@@ -1,6 +1,9 @@
 {
 	"name": "m_pre_dim_claim_rule",
 	"properties": {
+		"folder": {
+			"name": "dwh_prepare/paris"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
