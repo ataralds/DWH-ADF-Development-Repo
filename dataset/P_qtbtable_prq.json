@@ -1,0 +1,45 @@
+{
+	"name": "P_qtbtable_prq",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Copy"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "QTBTABLE.parquet",
+				"folderPath": "Paris",
+				"fileSystem": "raw"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "QTBFIELDN",
+				"type": "UTF8"
+			},
+			{
+				"name": "QTBVALUE",
+				"type": "UTF8"
+			},
+			{
+				"name": "QTBMDESCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "QTBSDESCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "QTBDISPYNSW",
+				"type": "UTF8"
+			}
+		]
+	}
+}
