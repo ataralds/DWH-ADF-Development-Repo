@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "QTBTABLE.parquet",
 				"folderPath": "tests",
 				"fileSystem": "test"
 			},
