@@ -14,8 +14,8 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "QTBTABLE.parquet",
-				"folderPath": "Paris",
-				"fileSystem": "raw"
+				"folderPath": "tests",
+				"fileSystem": "test"
 			},
 			"compressionCodec": "snappy"
 		},
