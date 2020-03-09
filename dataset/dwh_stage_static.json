@@ -1,5 +1,5 @@
 {
-	"name": "static_tables",
+	"name": "dwh_stage_static",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
