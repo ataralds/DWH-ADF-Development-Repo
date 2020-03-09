@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "m_pre_dim_claim_rule",
+						"referenceName": "pre_dim_claim_rule",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
