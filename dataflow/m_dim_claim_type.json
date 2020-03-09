@@ -1,5 +1,5 @@
 {
-	"name": "dataflow5",
+	"name": "m_dim_claim_type",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
