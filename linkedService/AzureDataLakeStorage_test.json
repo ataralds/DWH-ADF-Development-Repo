@@ -1,0 +1,10 @@
+{
+	"name": "AzureDataLakeStorage_test",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://dwhdatalakedevelopment.dfs.core.windows.net"
+		}
+	}
+}
