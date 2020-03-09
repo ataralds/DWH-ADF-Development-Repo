@@ -1,0 +1,825 @@
+{
+	"name": "dwh_stage_p_lcatable_lake",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "temp_dwh_stage_lake/paris"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "LCATABLE.parquet",
+				"folderPath": "Paris",
+				"fileSystem": "raw"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "LCALCAID",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAICAID",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACLMN3",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCACLMDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCACYEAR",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCATRTMCO",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAACSTAT",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCALOSSCO",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAOUTSTM",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAUWSIGN",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAOFFICE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCALDESCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACLODATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAECAUSECO",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACLINTC",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCABONYNSW",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAIMPEXP",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCANMCLEF",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACCOD2",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAAREACD",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACEFOUC",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAONOFFS",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAENINTRST",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAMPLCURR",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAMPLAMT",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAXLMREF",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAREPDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCALIMCURR",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCALIMAMT",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCABIGEVENT",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCALODESCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAINTNOTE",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCALTDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCACRSIGN",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACRDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCALUSIGN",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCALUDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAKNVMARK",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCALABID",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAAGAID",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAOBNO",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCACROBBID",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAWRKCLAIM",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAFPAREACD",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCATOAREACD",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAJURISDICTION",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAFILEREF",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCANEXTSIGN",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAAREADESCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCALRGCLMYNSW",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAFROMAREACD",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCANEXTDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAOCCOFFDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAWORKPLACE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAWRKPLCCOD",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAREGNDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAOCCOFFYNSW",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAREGRESS",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCACLMPEAID",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAOCCOWNYNSW",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAREGNSIGN",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAMUOFFPROS",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAREGCURR",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAREGAMT",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAMUOWNPROS",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCALIMDAYS",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAREGTEXT70",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAEUOFFPROS",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAMUOFFGRP",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAEUOWNPROS",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCABIRTNO",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAADJSIGN",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACAGTYP",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACALCLAMTFRINJURED",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACLMDATECHD",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACLMID",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCACLMINTYNSW",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACNDID",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACOMMONYNSW",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACOMPLLEVEL",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAEXPPDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAFOADATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAGEODESCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAHOUR",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAINSURED",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAINSUREDMOF",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCALIABCODE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCALIABTXT",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCALIMDEDAMT",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCALOADATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAMANHAVSALAER",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCANOOFPERS",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAPREPAYAMTP",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAPREPAYCURR",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCATAUCODE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCATAUTXT",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCATAXNO",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCATRANME",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCATRANTY",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCATZONE",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACATTYPE",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAEXTADJYNSW",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAN1NOOFTREATM",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAN2NOOFTREATM",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAN3NOOFTREATM",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAN4NOOFTREATM",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAN5NOOFTREATM",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAN6NOOFTREATM",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAN7NOOFTREATM",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAN8NOOFTREATM",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAPORTCCCID",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCATLOTYPE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAWOCDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAWOCSTAT",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAENASSSHR",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAINSCURR",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAECOID",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAECLID",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAECFID",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAINSAMT",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCALIMRENEWED",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCACCOD2DATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAEXTCLMID",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCATIMNOTE",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCATMDUEDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCATMEXTLUDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAAUTOSETLEYN",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCATMLUDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCATMEXTDOCID",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCATMEXTLUSIGN",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCATMLUSIGN",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCATMCLOLUDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCATMSTATUS",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCATMCLOLUSIGN",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCATMEXTDUEDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCACEFOCM",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACEFOCC",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCATCAUSECO",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCANCAUSECO",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACLMCAC",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAMOVEDSIGN",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAREDUCEPREM",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAMOVEDTO",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAISRNDCONTRSSIGNED",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACATEGORYTYPE",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAMOVEDDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAFINALSTATMDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCARESUMTIONFROM",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCAINSUREDMNO",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCARECOVPOTAMT",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCAPILOTONBOARD",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCARECOVCCVID",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCARECOVREMDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCARECOVACHCURR",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCARECOVPOTINTNOTE",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCARECOVACHYNSW",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCARECOVACHINTNOTE",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCARECOVACHDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCARECOVPOTCURR",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCACCOD2TRMTDATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "LCACCOD2TXT35",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCARECOVACHSIGN",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCARECOVPOTYNSW",
+				"type": "UTF8"
+			},
+			{
+				"name": "LCARECOVACHAMT",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			}
+		]
+	}
+}
