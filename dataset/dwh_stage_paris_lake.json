@@ -10,6 +10,9 @@
 				"type": "String"
 			}
 		},
+		"folder": {
+			"name": "temp_dwh_stage_lake/paris"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
