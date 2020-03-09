@@ -1,5 +1,5 @@
 {
-	"name": "m_pre_dim_claim_rule",
+	"name": "pre_dim_claim_rule",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
