@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "Simplify_M_DIM_BUSINESS_AREA",
+						"referenceName": "M_DIM_BUSINESS_AREA",
 						"type": "DataFlowReference"
 					},
 					"compute": {
