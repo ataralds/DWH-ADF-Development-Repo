@@ -6,6 +6,10 @@
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
 			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=dwh-sql-operations-server.database.windows.net;Initial Catalog=dwh-sql-operations-db"
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntimeWestEurope",
+			"type": "IntegrationRuntimeReference"
 		}
 	}
 }
