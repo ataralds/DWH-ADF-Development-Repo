@@ -1,5 +1,5 @@
 {
-	"name": "SourceDataset_oaj",
+	"name": "scr_oracle_sta_tables",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OracelStageITF",
