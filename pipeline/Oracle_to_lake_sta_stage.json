@@ -1,0 +1,98 @@
+{
+	"name": "Oracle_to_lake_sta_stage",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_oaj",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_oaj",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "STAGE_ST.@{item().source.table}"
+								},
+								{
+									"name": "Destination",
+									"value": "dwh-stage/Static/@{item().destination.fileName}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "SourceDataset_oaj",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().source.table"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "static_tables",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_fileName": "@item().destination.fileName"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"table": "STA_COVERAGE_GROUP"
+						},
+						"destination": {
+							"fileName": "sta_coverage_group.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_SOURCE_SYSTEM"
+						},
+						"destination": {
+							"fileName": "sta_source_system.parquet"
+						}
+					}
+				]
+			}
+		},
+		"annotations": []
+	}
+}
