@@ -47,18 +47,9 @@
 								},
 								"enableStaging": false
 							},
-							"inputs": [
-								{
-									"referenceName": "SourceDataset_oaj",
-									"type": "DatasetReference",
-									"parameters": {
-										"cw_table": "@item().source.table"
-									}
-								}
-							],
 							"outputs": [
 								{
-									"referenceName": "static_tables",
+									"referenceName": "dwh_stage_static",
 									"type": "DatasetReference",
 									"parameters": {
 										"cw_fileName": "@item().destination.fileName"
