@@ -1,0 +1,178 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "dimension_key",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "dimension_key",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "top_key",
+									"type": "String"
+								},
+								"sink": {
+									"name": "top_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "top_description",
+									"type": "String"
+								},
+								"sink": {
+									"name": "top_description",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "top_id",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "top_id",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "grp_key",
+									"type": "String"
+								},
+								"sink": {
+									"name": "grp_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "grp_description",
+									"type": "String"
+								},
+								"sink": {
+									"name": "grp_description",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "grp_id",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "grp_id",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "bua_key",
+									"type": "String"
+								},
+								"sink": {
+									"name": "bua_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "bua_description",
+									"type": "String"
+								},
+								"sink": {
+									"name": "bua_description",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "bua_id",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "bua_id",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "bus_key",
+									"type": "String"
+								},
+								"sink": {
+									"name": "bus_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "bus_description",
+									"type": "String"
+								},
+								"sink": {
+									"name": "bus_description",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "bus_id",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "bus_id",
+									"type": "Decimal"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "OperationsTest",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "OperationsTest",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
