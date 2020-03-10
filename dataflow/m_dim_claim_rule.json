@@ -1,6 +1,9 @@
 {
 	"name": "m_dim_claim_rule",
 	"properties": {
+		"folder": {
+			"name": "marts/paris"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
