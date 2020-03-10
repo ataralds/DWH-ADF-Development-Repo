@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ForEach_vuo",
+				"name": "ForEach_Paris",
 				"type": "ForEach",
 				"dependsOn": [],
 				"userProperties": [],
