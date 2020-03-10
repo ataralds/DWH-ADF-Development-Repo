@@ -13,6 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "pre_dim_claim_rule",
 				"folderPath": "Pre_Dim",
 				"fileSystem": "dwh-prepare"
 			},
