@@ -15,7 +15,7 @@
 					},
 					"activities": [
 						{
-							"name": "Copy_7hp",
+							"name": "Copy_all_static_tables",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
