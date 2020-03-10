@@ -1,9 +1,12 @@
 {
-	"name": "DestinationDataset_uhu",
+	"name": "Oracle_destination_peatable",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OracleAzureDwh",
 			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "sql_to_oracle"
 		},
 		"annotations": [],
 		"type": "OracleTable",
