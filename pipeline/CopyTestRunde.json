@@ -26,7 +26,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"partitionOption": "None"
+						"partitionOption": "PhysicalPartitionsOfTable",
+						"partitionSettings": {
+							"partitionNames": []
+						}
 					},
 					"sink": {
 						"type": "ParquetSink",
@@ -34,9 +37,7 @@
 							"type": "AzureBlobFSWriteSettings"
 						}
 					},
-					"enableStaging": false,
-					"parallelCopies": 8,
-					"dataIntegrationUnits": 32
+					"enableStaging": false
 				},
 				"inputs": [
 					{
