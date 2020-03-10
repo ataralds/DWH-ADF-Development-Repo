@@ -1292,6 +1292,9 @@
 				]
 			}
 		],
+		"folder": {
+			"name": "copy/sql_to_oracle"
+		},
 		"annotations": []
 	}
 }
