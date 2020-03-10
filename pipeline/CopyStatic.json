@@ -1,0 +1,635 @@
+{
+	"name": "CopyStatic",
+	"properties": {
+		"description": "Copy tables from static oltp05",
+		"activities": [
+			{
+				"name": "ForEach_7hp",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_7hp",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "STATIC.@{item().source.table}"
+								},
+								{
+									"name": "Destination",
+									"value": "raw/Static/@{item().destination.fileName}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "Scr_oracle_static",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().source.table"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "lake_raw_static",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_fileName": "@item().destination.fileName"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"table": "EXT_EXCHANGE_RATE"
+						},
+						"destination": {
+							"fileName": "EXT_EXCHANGE_RATE.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "EXT_EXCHANGE_RATE_HIST"
+						},
+						"destination": {
+							"fileName": "EXT_EXCHANGE_RATE_HIST.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "EXTERNAL_LEI_CODE_REGISTER"
+						},
+						"destination": {
+							"fileName": "EXTERNAL_LEI_CODE_REGISTER.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "MD_SOURCE_SYSTEM"
+						},
+						"destination": {
+							"fileName": "MD_SOURCE_SYSTEM.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "MD_TARGET_REPORTS"
+						},
+						"destination": {
+							"fileName": "MD_TARGET_REPORTS.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_ACCOUNT"
+						},
+						"destination": {
+							"fileName": "PILL_ACCOUNT.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_ACCOUNT_GROUP"
+						},
+						"destination": {
+							"fileName": "PILL_ACCOUNT_GROUP.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_ACCOUNT_TERM"
+						},
+						"destination": {
+							"fileName": "PILL_ACCOUNT_TERM.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_ASSET_TYPE_MAPPING"
+						},
+						"destination": {
+							"fileName": "PILL_ASSET_TYPE_MAPPING.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_BAD_DEPT_RI_RBNS"
+						},
+						"destination": {
+							"fileName": "PILL_BAD_DEPT_RI_RBNS.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_BEST_ESTIMATE_CALC"
+						},
+						"destination": {
+							"fileName": "PILL_BEST_ESTIMATE_CALC.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_BRANCH_ALLOC_IG_CLAIM"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_BRANCH_ALLOC_IG_CLAIM.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_CC_ACCOUNT_MAPPING"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_CC_ACCOUNT_MAPPING.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_CC_ASSET_MANUAL"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_CC_ASSET_MANUAL.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_CC_BRANCH_ALLOC"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_CC_BRANCH_ALLOC.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_CC_INTERN_COUNTERPARTY"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_CC_INTERN_COUNTERPARTY.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_CC_VALUTA_SPLIT"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_CC_VALUTA_SPLIT.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_DEFAULT_RATIOS_CAPITAL"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_DEFAULT_RATIOS_CAPITAL.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_EIOPA_FREE_RATES"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_EIOPA_FREE_RATES.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_EXT_ASSET_DEPOSIT_LOANS"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_EXT_ASSET_DEPOSIT_LOANS.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_FIN_VAL_UP_DOWN"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_FIN_VAL_UP_DOWN.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_INTERCOMPANY_TRANSACTION"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_INTERCOMPANY_TRANSACTION.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_INTERNMODEL"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_INTERNMODEL.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_LT_ASSET_CAT_MAP"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_LT_ASSET_CAT_MAP.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_MANUAL_CHECK_LIST"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_MANUAL_CHECK_LIST.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_NT_ACCOUNTS"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_NT_ACCOUNTS.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_OF_D_IMPORT"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_OF_D_IMPORT.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_PAYMENT_PROFILE"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_PAYMENT_PROFILE.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_PERIODICAL_PLAN"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_PERIODICAL_PLAN.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_REINS_EXTRA"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_REINS_EXTRA.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_RUN_TYPE"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_RUN_TYPE.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_SCR_CAT_RISK_INPUT"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_SCR_CAT_RISK_INPUT.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_SCR_CURRENCY"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_SCR_CURRENCY.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_SHARE_OF_POOL_CLAIMS"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_SHARE_OF_POOL_CLAIMS.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_STA_LEI"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_STA_LEI.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_STA_MKT_IR_INPUT"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_STA_MKT_IR_INPUT.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "PILL_STRUCTURED_PRODUCTS"
+						},
+						"destination": {
+							"fileName": "STATIC.PILL_STRUCTURED_PRODUCTS.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_CLAIM_PROCESS"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_CLAIM_PROCESS.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_CLAIM_RULE"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_CLAIM_RULE.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_CONDITION_GROUP"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_CONDITION_GROUP.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_COST_TYPE"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_COST_TYPE.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_COVERAGE_GROUP"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_COVERAGE_GROUP.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_EMPLOYEE_FTE"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_EMPLOYEE_FTE.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_EXPENSE_CODE"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_EXPENSE_CODE.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_EXPENSE_CODE_IDIT"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_EXPENSE_CODE_IDIT.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_EXPOSURE_REPORT_TYPE"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_EXPOSURE_REPORT_TYPE.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_EXPOSURE_VALUE_BAND"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_EXPOSURE_VALUE_BAND.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_FACT_TYPE"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_FACT_TYPE.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_IBNR"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_IBNR.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_IBNR_QTR"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_IBNR_QTR.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_IG_CLAIM_TYPE"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_IG_CLAIM_TYPE.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_IG_CLAIM_TYPE_RESERVE"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_IG_CLAIM_TYPE_RESERVE.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_INCIDENT_RSV_GROUP_ME"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_INCIDENT_RSV_GROUP_ME.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_INCIDENT_RSV_GROUP_PI"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_INCIDENT_RSV_GROUP_PI.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_JOB_SENIORITY_GROUP"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_JOB_SENIORITY_GROUP.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_LOH_SCALE"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_LOH_SCALE.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_MANUAL_RESULT_TRANSACTION"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_MANUAL_RESULT_TRANSACTION.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_MARKET_SHARE_COUNTRY_GROUP"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_MARKET_SHARE_COUNTRY_GROUP.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_PARIS_CLAIM_LEAD"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_PARIS_CLAIM_LEAD.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_PARTNER_GROUP"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_PARTNER_GROUP.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_PERIODICAL_FINANCIAL_PLAN"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_PERIODICAL_FINANCIAL_PLAN.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_PFP_LKP_AMOUNT_TYPE"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_PFP_LKP_AMOUNT_TYPE.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_PFP_LKP_BUSINESS_AREA"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_PFP_LKP_BUSINESS_AREA.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_RISK_GROUP"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_RISK_GROUP.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_SENIORITY_GROUP"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_SENIORITY_GROUP.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_SF_AGR_MARKET_AREA"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_SF_AGR_MARKET_AREA.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_SF_PROD_GROUP"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_SF_PROD_GROUP.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "STA_SOURCE_SYSTEM"
+						},
+						"destination": {
+							"fileName": "STATIC.STA_SOURCE_SYSTEM.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "TOAD_PLAN_TABLE"
+						},
+						"destination": {
+							"fileName": "STATIC.TOAD_PLAN_TABLE.parquet"
+						}
+					}
+				]
+			}
+		},
+		"annotations": []
+	}
+}
