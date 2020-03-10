@@ -10,6 +10,9 @@
 				"type": "String"
 			}
 		},
+		"folder": {
+			"name": "raw/paris_pool"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
