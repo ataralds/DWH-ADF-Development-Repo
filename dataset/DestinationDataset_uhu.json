@@ -1,0 +1,16 @@
+{
+	"name": "DestinationDataset_uhu",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracleAzureDwh",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "AZURE_DWH",
+			"table": "P_PEATABLE"
+		}
+	}
+}
