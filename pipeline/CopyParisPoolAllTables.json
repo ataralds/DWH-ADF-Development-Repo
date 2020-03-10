@@ -333,6 +333,9 @@
 				]
 			}
 		},
+		"folder": {
+			"name": "copy/raw/paris_pool"
+		},
 		"annotations": []
 	}
 }
