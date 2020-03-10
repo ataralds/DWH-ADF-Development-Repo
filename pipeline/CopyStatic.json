@@ -630,6 +630,9 @@
 				]
 			}
 		},
+		"folder": {
+			"name": "copy/static"
+		},
 		"annotations": []
 	}
 }
