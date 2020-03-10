@@ -5,6 +5,9 @@
 			"referenceName": "sql_server_development_connection",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "sql_to_oracle"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [

@@ -1286,7 +1286,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DestinationDataset_uhu",
+						"referenceName": "Oracle_destination_peatable",
 						"type": "DatasetReference"
 					}
 				]

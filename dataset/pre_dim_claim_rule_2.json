@@ -5,6 +5,9 @@
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "dwh_prepare"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
