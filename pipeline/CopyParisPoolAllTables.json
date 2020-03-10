@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ForEach_trj",
+				"name": "ForEach_parispool",
 				"type": "ForEach",
 				"dependsOn": [],
 				"userProperties": [],
