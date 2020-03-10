@@ -26,7 +26,11 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"partitionOption": "None"
+						"partitionOption": "DynamicRange",
+						"partitionSettings": {
+							"partitionUpperBound": "",
+							"partitionLowerBound": ""
+						}
 					},
 					"sink": {
 						"type": "ParquetSink",
