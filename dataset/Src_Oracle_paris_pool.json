@@ -10,6 +10,9 @@
 				"type": "String"
 			}
 		},
+		"folder": {
+			"name": "source/paris_pool"
+		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
