@@ -4,7 +4,7 @@
 		"description": "Copy tables from static oltp05",
 		"activities": [
 			{
-				"name": "ForEach_7hp",
+				"name": "ForEach_Statictables",
 				"type": "ForEach",
 				"dependsOn": [],
 				"userProperties": [],
