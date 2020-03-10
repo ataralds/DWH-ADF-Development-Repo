@@ -493,6 +493,9 @@
 				]
 			}
 		},
+		"folder": {
+			"name": "copy/raw/paris"
+		},
 		"annotations": []
 	}
 }
