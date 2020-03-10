@@ -1,8 +1,8 @@
 {
-	"name": "scr_oracle_sta_tables",
+	"name": "Scr_oracle_static",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "OracelStageITF",
+			"referenceName": "OLTP05",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
@@ -17,7 +17,7 @@
 		"type": "OracleTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "STAGE_ST",
+			"schema": "STATIC",
 			"table": {
 				"value": "@dataset().cw_table",
 				"type": "Expression"

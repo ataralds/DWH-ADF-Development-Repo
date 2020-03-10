@@ -1,0 +1,17 @@
+{
+	"name": "OracleDbParisPoolScrAmster",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "Paris Pool",
+		"annotations": [],
+		"type": "Oracle",
+		"typeProperties": {
+			"connectionString": "host=padazuredb.gard.local;port=1521;servicename=padazure.gard.local;user id=cstage_pool",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIwYzhlOGExZS04MzBlLTQ2YmEtOTNiYi1iMTgzYTQ0YmRmOGIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "AMSSRVRUN01",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

@@ -1,8 +1,8 @@
 {
-	"name": "scr_oracle_sta_tables",
+	"name": "Scr_oracle_paris",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "OracelStageITF",
+			"referenceName": "OracleDbParisScrAmster",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
@@ -11,13 +11,13 @@
 			}
 		},
 		"folder": {
-			"name": "source/static"
+			"name": "source/paris"
 		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "STAGE_ST",
+			"schema": "CSTAGE_PARIS",
 			"table": {
 				"value": "@dataset().cw_table",
 				"type": "Expression"

@@ -1,0 +1,23 @@
+{
+	"name": "pre_dim_claim_type",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dwh_prepare"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Pre_Dim",
+				"fileSystem": "dwh-prepare"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

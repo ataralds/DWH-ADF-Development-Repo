@@ -1,0 +1,1300 @@
+{
+	"name": "CopyAzureToOraclePeatable",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_uhu",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "dwh_stage.p_peatable"
+					},
+					{
+						"name": "Destination",
+						"value": "AZURE_DWH.P_PEATABLE"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource"
+					},
+					"sink": {
+						"type": "OracleSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "peapeaid",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "PEAPEAID",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaccode",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEACCODE",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peacomp2",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEACOMP2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peastopuse",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEASTOPUSE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peainvisible",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAINVISIBLE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peapersid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAPERSID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peacolid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEACOLID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peamdescr",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAMDESCR",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "pealang2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEALANG2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peabirtws",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEABIRTWS",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peasubtype",
+									"type": "Int16"
+								},
+								"sink": {
+									"name": "PEASUBTYPE",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peabirtno",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEABIRTNO",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peasw10",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEASW10",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peapersrfl",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "PEAPERSRFL",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peastopcod",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEASTOPCOD",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "pearesdat",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "PEARESDAT",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "peanopurr",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEANOPURR",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaincreday",
+									"type": "Int16"
+								},
+								"sink": {
+									"name": "PEAINCREDAY",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaingiro",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAINGIRO",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaingirono",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAINGIRONO",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peanotaco",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEANOTACO",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peapurtyp",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAPURTYP",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peanotlay",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEANOTLAY",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peanotsort",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEANOTSORT",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaswink",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEASWINK",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaoutcreday",
+									"type": "Int16"
+								},
+								"sink": {
+									"name": "PEAOUTCREDAY",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaoutgiro",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAOUTGIRO",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaoutgirono",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAOUTGIRONO",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaswrun",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEASWRUN",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaclomet",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEACLOMET",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peanopdue",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEANOPDUE",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peastatyp",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEASTATYP",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peastaamt",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEASTAAMT",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peasttniv",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEASTTNIV",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peastaniv",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEASTANIV",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaprovad",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAPROVAD",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaprotyp",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAPROTYP",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peacloclm",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEACLOCLM",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaclmadv",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEACLMADV",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaaprobo",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAAPROBO",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaaaddbo",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAAADDBO",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaaclobo",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAACLOBO",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaaclmbo",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAACLMBO",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaacorbo",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAACORBO",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peamexcdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "PEAMEXCDATE",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "peamexcurr",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAMEXCURR",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peamexamt",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "PEAMEXAMT",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peamexpro",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "PEAMEXPRO",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peacclcurr",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEACCLCURR",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peacclamt",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "PEACCLAMT",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaccint",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEACCINT",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaccintr",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "PEACCINTR",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peacalcurr",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEACALCURR",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peacalamt",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "PEACALAMT",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaxlcurr",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAXLCURR",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaxlpoin",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "PEAXLPOIN",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaiyear",
+									"type": "Int16"
+								},
+								"sink": {
+									"name": "PEAIYEAR",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peastensw",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEASTENSW",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peastdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "PEASTDATE",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "peaendate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "PEAENDATE",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "peamaxper",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "PEAMAXPER",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaiediv",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAIEDIV",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaiebusndiv",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAIEBUSNDIV",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaie2busndiv",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAIE2BUSNDIV",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaie3busndiv",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAIE3BUSNDIV",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaiesect",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAIESECT",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaiebusnse",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAIEBUSNSE",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaie2busnse",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAIE2BUSNSE",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaie3busnse",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAIE3BUSNSE",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaieint",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAIEINT",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaieint1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAIEINT1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaieint2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAIEINT2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaieint3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAIEINT3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaieint4",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAIEINT4",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaieint5",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAIEINT5",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaiecond",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAIECOND",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaiecon1",
+									"type": "Int16"
+								},
+								"sink": {
+									"name": "PEAIECON1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaiecon2",
+									"type": "Int16"
+								},
+								"sink": {
+									"name": "PEAIECON2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaiecon3",
+									"type": "Int16"
+								},
+								"sink": {
+									"name": "PEAIECON3",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaiecon4",
+									"type": "Int16"
+								},
+								"sink": {
+									"name": "PEAIECON4",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaiecon5",
+									"type": "Int16"
+								},
+								"sink": {
+									"name": "PEAIECON5",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peacrdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "PEACRDATE",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "peacrsign",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEACRSIGN",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "pealudate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "PEALUDATE",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "pealusign",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEALUSIGN",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peasex",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEASEX",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "date_inserted",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "DATE_INSERTED",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "date_last_updated",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "DATE_LAST_UPDATED",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "inserted_by",
+									"type": "String"
+								},
+								"sink": {
+									"name": "INSERTED_BY",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "last_updated_by",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LAST_UPDATED_BY",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "map_date",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "MAP_DATE",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "peaorgno",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAORGNO",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaclosmailfreq",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEACLOSMAILFREQ",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaclmmailfreq",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEACLMMAILFREQ",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peastoppremnote",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEASTOPPREMNOTE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaingiroludate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "PEAINGIROLUDATE",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "peainvnotify",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAINVNOTIFY",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peacorrmailfreq",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEACORRMAILFREQ",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaingirolusign",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAINGIROLUSIGN",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaknvmark",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAKNVMARK",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaprenotify",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAPRENOTIFY",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaclamailfreq",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEACLAMAILFREQ",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaaddbor",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAADDBOR",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaprobor",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAPROBOR",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peapurnotify",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAPURNOTIFY",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaclmbor",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEACLMBOR",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaoutgiroludate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "PEAOUTGIROLUDATE",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "peaclmintynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEACLMINTYNSW",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peamailsizemb",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "PEAMAILSIZEMB",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaclobor",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEACLOBOR",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peacorbo",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEACORBO",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaaclmadv",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAACLMADV",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peausecolfee",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAUSECOLFEE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaoutgirolusign",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAOUTGIROLUSIGN",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaaddmailfreq",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAADDMAILFREQ",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peasttprmclm",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEASTTPRMCLM",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peaprovmailfreq",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEAPROVMAILFREQ",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peadueday",
+									"type": "Byte"
+								},
+								"sink": {
+									"name": "PEADUEDAY",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peanotdays",
+									"type": "Int16"
+								},
+								"sink": {
+									"name": "PEANOTDAYS",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peafromcomp",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "PEAFROMCOMP",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "peacrmid",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "PEACRMID",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "pealeicode",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEALEICODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaextid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAEXTID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "peaextid2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAEXTID2",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Sourceazurepeatable",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Oracle_destination_peatable",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "copy/sql_to_oracle"
+		},
+		"annotations": []
+	}
+}

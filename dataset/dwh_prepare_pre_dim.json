@@ -1,12 +1,9 @@
 {
-	"name": "m_pre_dim_claim_rule",
+	"name": "dwh_prepare_pre_dim",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
-		},
-		"folder": {
-			"name": "Test"
 		},
 		"annotations": [],
 		"type": "Parquet",

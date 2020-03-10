@@ -1,0 +1,24 @@
+{
+	"name": "pre_dim_claim_rule_2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dwh_prepare"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "pre_dim_claim_rule",
+				"folderPath": "Pre_Dim",
+				"fileSystem": "dwh-prepare"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

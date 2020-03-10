@@ -1,0 +1,19 @@
+{
+	"name": "Oracle_destination_peatable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracleAzureDwh",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "sql_to_oracle"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "AZURE_DWH",
+			"table": "P_PEATABLE"
+		}
+	}
+}
