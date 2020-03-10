@@ -27,10 +27,7 @@
 					"source": {
 						"type": "OracleSource",
 						"oracleReaderQuery": "select * from rsatable2 where rsaiyear = '2017'",
-						"partitionOption": "PhysicalPartitionsOfTable",
-						"partitionSettings": {
-							"partitionNames": []
-						}
+						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "ParquetSink",
