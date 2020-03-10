@@ -631,7 +631,7 @@
 			}
 		},
 		"folder": {
-			"name": "copy/static"
+			"name": "copy/raw/static"
 		},
 		"annotations": []
 	}
