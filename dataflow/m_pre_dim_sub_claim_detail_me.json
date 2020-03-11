@@ -1,0 +1,20 @@
+{
+	"name": "m_pre_dim_sub_claim_detail_me",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "lake_raw_paris",
+						"type": "DatasetReference"
+					},
+					"name": "pLgatable"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(output(\n\t\tLGALGAID as string,\n\t\tLGALCAID as string,\n\t\tLGALN2 as decimal(38,18),\n\t\tLGACRCODE as string,\n\t\tLGARECEIVER as decimal(38,18),\n\t\tLGASTATUS as string,\n\t\tLGASTDATE as decimal(38,18),\n\t\tLGAENDATE as decimal(38,18),\n\t\tLGAGUACURR as string,\n\t\tLGAGUAAMT as decimal(38,18),\n\t\tLGAINTNOTE as string,\n\t\tLGAJURISDICTION as string,\n\t\tLGAOBOPEAID as decimal(38,18),\n\t\tLGACLMCAT as string,\n\t\tLGACRLGAID as string,\n\t\tLGAOBOCNAME as string,\n\t\tLGACANDATE as decimal(38,18),\n\t\tLGALCCID as string,\n\t\tLGAINTYNSW as string,\n\t\tLGACRYNSW as string,\n\t\tLGALUDATE as decimal(38,18),\n\t\tLGACRDATE as decimal(38,18),\n\t\tLGALUSIGN as string,\n\t\tLGACRSIGN as string,\n\t\tLGACRCRDATE as decimal(38,18),\n\t\tLGACRCRSIGN as string,\n\t\tLGAKNVMARK as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> pLgatable"
+		}
+	}
+}
