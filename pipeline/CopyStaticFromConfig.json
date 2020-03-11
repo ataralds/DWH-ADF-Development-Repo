@@ -66,11 +66,7 @@
 								"sink": {
 									"type": "ParquetSink",
 									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings",
-										"copyBehavior": {
-											"value": "@item().destination.fileName",
-											"type": "Expression"
-										}
+										"type": "AzureBlobFSWriteSettings"
 									}
 								},
 								"enableStaging": false
