@@ -5,6 +5,11 @@
 			"referenceName": "OLTP05",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"FileName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
