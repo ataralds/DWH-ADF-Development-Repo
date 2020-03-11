@@ -22,7 +22,13 @@
 					},
 					"dataset": {
 						"referenceName": "TableListStatic",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"fileName": {
+								"value": "@fileName",
+								"type": "Expression"
+							}
+						}
 					},
 					"firstRowOnly": false
 				}
