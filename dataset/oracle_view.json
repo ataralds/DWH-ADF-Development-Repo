@@ -1,0 +1,16 @@
+{
+	"name": "oracle_view",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracelStageITF",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "STAGE_ITF",
+			"table": "v_p_agatable"
+		}
+	}
+}
