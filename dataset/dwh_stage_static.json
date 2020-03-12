@@ -23,7 +23,7 @@
 					"type": "Expression"
 				},
 				"folderPath": "Static",
-				"fileSystem": "dwh-stage"
+				"fileSystem": "raw"
 			},
 			"compressionCodec": "snappy"
 		},
