@@ -61,11 +61,11 @@
 							"userProperties": [
 								{
 									"name": "Source",
-									"value": "@{pipeline().parameters.SourceContainer}/@{pipeline().parameters.SourceDirectory}/@{concat(item().Prop_0,'.parquet')}"
+									"value": "dwh-stage/Static/@{item().table_name}"
 								},
 								{
 									"name": "Destination",
-									"value": "dwh_stage.@{toLower(concat('p_',item().Prop_0))}"
+									"value": "dwh_stage.@{item().table_name}"
 								}
 							],
 							"typeProperties": {
@@ -87,7 +87,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "@item().table_name",
+											"value": "@trim(item().TABLE_NAME)",
 											"type": "Expression"
 										}
 									}
@@ -99,7 +99,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"SinkDataset": {
-											"value": "@item().table_name",
+											"value": "@item().TABLE_NAME",
 											"type": "Expression"
 										}
 									}
