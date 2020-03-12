@@ -10,6 +10,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "raw/static"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
