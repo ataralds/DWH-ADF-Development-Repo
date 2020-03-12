@@ -5,13 +5,21 @@
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"dataset": {
+				"type": "String"
+			},
+			"testFile": {
+				"type": "String"
+			}
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@dataset",
+					"value": "@dataset().testFile",
 					"type": "Expression"
 				},
 				"fileSystem": "test"
