@@ -1,0 +1,8 @@
+{
+	"name": "OracleAllTablesStatic",
+	"properties": {
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
