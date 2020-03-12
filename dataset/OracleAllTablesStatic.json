@@ -7,6 +7,10 @@
 		},
 		"annotations": [],
 		"type": "OracleTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "AZURE_READ",
+			"table": "sta_claim_process"
+		}
 	}
 }

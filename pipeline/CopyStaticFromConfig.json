@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select table_name table_name from azure_read.azure_config",
+						"oracleReaderQuery": "select table_name table_name from azure_config",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
