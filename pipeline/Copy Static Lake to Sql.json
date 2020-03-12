@@ -88,7 +88,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "@trim(item().TABLE_NAME)",
+											"value": "SELECT * FROM @{item().TABLE_NAME} ",
 											"type": "Expression"
 										}
 									}
