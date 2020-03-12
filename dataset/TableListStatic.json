@@ -5,6 +5,9 @@
 			"referenceName": "OLTP05",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "source/static"
+		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
