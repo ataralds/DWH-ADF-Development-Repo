@@ -61,11 +61,11 @@
 							"userProperties": [
 								{
 									"name": "Source",
-									"value": "dwh-stage/Static/@{item().table_name}"
+									"value": "dwh-stage/Static/@{item().TABLE_NAME}"
 								},
 								{
 									"name": "Destination",
-									"value": "dwh_stage.@{item().table_name}"
+									"value": "dwh_stage.@{item().TABLE_NAME}"
 								}
 							],
 							"typeProperties": {
@@ -73,7 +73,8 @@
 									"type": "ParquetSource",
 									"storeSettings": {
 										"type": "AzureBlobFSReadSettings",
-										"recursive": true
+										"recursive": true,
+										"enablePartitionDiscovery": false
 									}
 								},
 								"sink": {
