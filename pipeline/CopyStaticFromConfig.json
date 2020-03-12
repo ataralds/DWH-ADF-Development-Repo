@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
+						"oracleReaderQuery": "select table_name table_name from azure_read.azure_config",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
@@ -60,6 +61,7 @@
 							"typeProperties": {
 								"source": {
 									"type": "OracleSource",
+									"oracleReaderQuery": "SELECT * FROM @{item().table_name} ",
 									"partitionOption": "None",
 									"queryTimeout": "02:00:00"
 								},
@@ -73,14 +75,8 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "TableListStatic",
-									"type": "DatasetReference",
-									"parameters": {
-										"fileName": {
-											"value": "@item.fileName",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "OracleAllTablesStatic",
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
@@ -89,7 +85,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "@item()",
+											"value": "@item().table_name",
 											"type": "Expression"
 										}
 									}
