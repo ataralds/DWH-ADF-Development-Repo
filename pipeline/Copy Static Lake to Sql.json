@@ -84,13 +84,25 @@
 							"inputs": [
 								{
 									"referenceName": "all_tables_static",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"fileName": {
+											"value": "@item().table_name",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
 								{
 									"referenceName": "AzureSqlFromLakeStatic",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"SinkDataset": {
+											"value": "@item().table_name",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
