@@ -1,6 +1,10 @@
 {
 	"name": "OracleAllTablesStatic",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLTP05",
+			"type": "LinkedServiceReference"
+		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": []
