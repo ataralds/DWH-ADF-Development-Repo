@@ -68,6 +68,9 @@
 										"wildcardFileName": "*.parquet"
 									}
 								},
+								"sink": {
+									"type": "AzureSqlSink"
+								},
 								"enableStaging": false
 							},
 							"inputs": [
@@ -76,10 +79,16 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "@item()",
+											"value": "@{item().TABLE_NAME}",
 											"type": "Expression"
 										}
 									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "AzureDestination",
+									"type": "DatasetReference"
 								}
 							]
 						}
