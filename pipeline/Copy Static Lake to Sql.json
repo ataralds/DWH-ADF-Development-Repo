@@ -61,7 +61,7 @@
 							"userProperties": [
 								{
 									"name": "Source",
-									"value": "dwh-stage/Static/@{concat(item().TABLE_NAME, ' ')}"
+									"value": "dwh-stage/Static/@(item().TABLE_NAME)"
 								},
 								{
 									"name": "Destination",
