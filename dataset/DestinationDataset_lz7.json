@@ -1,0 +1,101 @@
+{
+	"name": "DestinationDataset_lz7",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "business_area_code",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "updated_by",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "date_inserted",
+				"type": "date",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "main_claim_type",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "claim_process_desc",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "date_updated",
+				"type": "date",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "claim_process_code",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "pk_claim_process",
+				"type": "bigint",
+				"precision": 19,
+				"scale": 0
+			},
+			{
+				"name": "main_claim_type_desc",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "main_claim_detail_desc",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "main_claim_detail_code",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "risk_group_desc",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "risk_group_code",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": "sta_claim_process"
+		}
+	}
+}

@@ -1,0 +1,204 @@
+{
+	"name": "CopyStaticFromRawToSQL",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_lz7",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "dwh-stage/Static/\"sta_claim_process\""
+					},
+					{
+						"name": "Destination",
+						"value": "dwh_stage.sta_claim_process"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings",
+							"skipLineCount": 16
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "business_area_code",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "business_area_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "inserted_by",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "inserted_by",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "updated_by",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "updated_by",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "date_inserted",
+									"type": "INT96"
+								},
+								"sink": {
+									"name": "date_inserted",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "main_claim_type",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "main_claim_type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "claim_process_desc",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "claim_process_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "date_updated",
+									"type": "INT96"
+								},
+								"sink": {
+									"name": "date_updated",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "claim_process_code",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "claim_process_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "pk_claim_process",
+									"type": "DOUBLE"
+								},
+								"sink": {
+									"name": "pk_claim_process",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "main_claim_type_desc",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "main_claim_type_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "main_claim_detail_desc",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "main_claim_detail_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "main_claim_detail_code",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "main_claim_detail_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "risk_group_desc",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "risk_group_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "risk_group_code",
+									"type": "UTF8"
+								},
+								"sink": {
+									"name": "risk_group_code",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_lz7",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_lz7",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
