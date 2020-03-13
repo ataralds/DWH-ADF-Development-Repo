@@ -1,0 +1,64 @@
+{
+	"name": "SourceDataset_lz7",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "\"sta_claim_process\"",
+				"folderPath": "Static",
+				"fileSystem": "dwh-stage"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "pk_claim_process"
+			},
+			{
+				"name": "claim_process_code"
+			},
+			{
+				"name": "claim_process_desc"
+			},
+			{
+				"name": "business_area_code"
+			},
+			{
+				"name": "risk_group_code"
+			},
+			{
+				"name": "risk_group_desc"
+			},
+			{
+				"name": "main_claim_type"
+			},
+			{
+				"name": "main_claim_type_desc"
+			},
+			{
+				"name": "main_claim_detail_code"
+			},
+			{
+				"name": "main_claim_detail_desc"
+			},
+			{
+				"name": "date_inserted"
+			},
+			{
+				"name": "date_updated"
+			},
+			{
+				"name": "inserted_by"
+			},
+			{
+				"name": "updated_by"
+			}
+		]
+	}
+}
