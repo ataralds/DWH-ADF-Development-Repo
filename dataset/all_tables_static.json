@@ -28,14 +28,8 @@
 					"value": "@dataset().fileName",
 					"type": "Expression"
 				},
-				"folderPath": {
-					"value": "@dataset().folder",
-					"type": "Expression"
-				},
-				"fileSystem": {
-					"value": "@dataset().container",
-					"type": "Expression"
-				}
+				"folderPath": "Static",
+				"fileSystem": "dwh-stage"
 			},
 			"compressionCodec": "snappy"
 		},
