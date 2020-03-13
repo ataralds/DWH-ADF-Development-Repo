@@ -83,7 +83,14 @@
 											"value": "@{item().TABLE_NAME}",
 											"type": "Expression"
 										},
-										"SourceContainer": "Source"
+										"SourceContainer": {
+											"value": "@pipeline().parameters.sourceContainer",
+											"type": "Expression"
+										},
+										"SourceDirectory": {
+											"value": "@pipeline().parameters.sourceDirectory",
+											"type": "Expression"
+										}
 									}
 								}
 							],
