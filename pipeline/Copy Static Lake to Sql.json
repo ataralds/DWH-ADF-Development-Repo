@@ -85,7 +85,13 @@
 							"inputs": [
 								{
 									"referenceName": "all_tables_static",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"fileName": {
+											"value": "@item().TABEL_NAME",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
