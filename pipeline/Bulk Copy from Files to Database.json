@@ -76,7 +76,13 @@
 							"inputs": [
 								{
 									"referenceName": "Lake_lookup_file_Static",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"fileName": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [

@@ -64,10 +64,7 @@
 				"inputs": [
 					{
 						"referenceName": "all_tables_static",
-						"type": "DatasetReference",
-						"parameters": {
-							"fileName": "@Item"
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
