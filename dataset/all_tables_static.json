@@ -8,12 +8,6 @@
 		"parameters": {
 			"fileName": {
 				"type": "string"
-			},
-			"container": {
-				"type": "string"
-			},
-			"folder": {
-				"type": "string"
 			}
 		},
 		"folder": {
