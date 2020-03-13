@@ -87,8 +87,14 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "AzureDestination",
-									"type": "DatasetReference"
+									"referenceName": "Destination",
+									"type": "DatasetReference",
+									"parameters": {
+										"sinkDataset": {
+											"value": "@replace(item().TABLE_NAME,'\"',' ')",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
