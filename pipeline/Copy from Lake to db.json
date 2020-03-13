@@ -73,7 +73,13 @@
 							"inputs": [
 								{
 									"referenceName": "Lake_All_tables",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"fileName": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
