@@ -29,10 +29,6 @@
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings",
-							"skipLineCount": 16
 						}
 					},
 					"sink": {
@@ -45,7 +41,7 @@
 							{
 								"source": {
 									"name": "business_area_code",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "business_area_code",
@@ -55,7 +51,7 @@
 							{
 								"source": {
 									"name": "inserted_by",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "inserted_by",
@@ -65,7 +61,7 @@
 							{
 								"source": {
 									"name": "updated_by",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "updated_by",
@@ -75,7 +71,7 @@
 							{
 								"source": {
 									"name": "date_inserted",
-									"type": "INT96"
+									"type": "DateTime"
 								},
 								"sink": {
 									"name": "date_inserted",
@@ -85,7 +81,7 @@
 							{
 								"source": {
 									"name": "main_claim_type",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "main_claim_type",
@@ -95,7 +91,7 @@
 							{
 								"source": {
 									"name": "claim_process_desc",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "claim_process_desc",
@@ -105,7 +101,7 @@
 							{
 								"source": {
 									"name": "date_updated",
-									"type": "INT96"
+									"type": "DateTime"
 								},
 								"sink": {
 									"name": "date_updated",
@@ -115,7 +111,7 @@
 							{
 								"source": {
 									"name": "claim_process_code",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "claim_process_code",
@@ -125,7 +121,7 @@
 							{
 								"source": {
 									"name": "pk_claim_process",
-									"type": "DOUBLE"
+									"type": "Double"
 								},
 								"sink": {
 									"name": "pk_claim_process",
@@ -135,7 +131,7 @@
 							{
 								"source": {
 									"name": "main_claim_type_desc",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "main_claim_type_desc",
@@ -145,7 +141,7 @@
 							{
 								"source": {
 									"name": "main_claim_detail_desc",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "main_claim_detail_desc",
@@ -155,7 +151,7 @@
 							{
 								"source": {
 									"name": "main_claim_detail_code",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "main_claim_detail_code",
@@ -165,7 +161,7 @@
 							{
 								"source": {
 									"name": "risk_group_desc",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "risk_group_desc",
@@ -175,7 +171,7 @@
 							{
 								"source": {
 									"name": "risk_group_code",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "risk_group_code",
