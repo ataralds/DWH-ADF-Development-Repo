@@ -1,0 +1,12 @@
+{
+	"name": "M_PRE_DIM_GUARANTEE_ME",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
