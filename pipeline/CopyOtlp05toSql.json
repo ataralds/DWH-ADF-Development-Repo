@@ -69,7 +69,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"SinkDataset": {
-											"value": "@trim(replace(item().TABLE_NAME,'\"',' ')) ",
+											"value": "@trim(replace(item().table_name,'\"',' ')) ",
 											"type": "Expression"
 										}
 									}
