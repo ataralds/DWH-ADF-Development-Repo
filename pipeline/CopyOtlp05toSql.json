@@ -59,7 +59,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "oracle_table_list_static",
+									"referenceName": "OracleAllTablesStatic",
 									"type": "DatasetReference"
 								}
 							],
