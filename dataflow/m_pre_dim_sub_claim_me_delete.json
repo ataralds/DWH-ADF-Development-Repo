@@ -1,0 +1,20 @@
+{
+	"name": "m_pre_dim_sub_claim_me_delete",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "lake_raw_paris",
+						"type": "DatasetReference"
+					},
+					"name": "LCATABLE"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> LCATABLE"
+		}
+	}
+}
