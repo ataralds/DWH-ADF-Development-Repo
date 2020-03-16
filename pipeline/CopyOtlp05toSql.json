@@ -46,7 +46,7 @@
 								"source": {
 									"type": "OracleSource",
 									"oracleReaderQuery": {
-										"value": "SELECT * FROM @{item().table_name} ",
+										"value": "SELECT * FROM @item().table_name",
 										"type": "Expression"
 									},
 									"partitionOption": "None",
