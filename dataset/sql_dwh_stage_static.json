@@ -70,6 +70,13 @@
 				"name": "risk_group_code",
 				"type": "varchar"
 			}
-		]
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": {
+				"value": "@dataset().SinkDataset",
+				"type": "Expression"
+			}
+		}
 	}
 }
