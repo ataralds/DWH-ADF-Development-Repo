@@ -5,6 +5,9 @@
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Lookup dataset"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
