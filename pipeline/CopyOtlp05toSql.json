@@ -32,7 +32,16 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": [],
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "AZURE_READ.AZURE_CONFIG"
+								},
+								{
+									"name": "Destination",
+									"value": "dwh_stage.@{item().TABLE_NAME}"
+								}
+							],
 							"typeProperties": {
 								"source": {
 									"type": "OracleSource",
