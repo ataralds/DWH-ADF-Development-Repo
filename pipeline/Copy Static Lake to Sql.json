@@ -61,11 +61,11 @@
 							"userProperties": [
 								{
 									"name": "Source",
-									"value": "dwh-stage/Static/@(item().TABLE_NAME)"
+									"value": "dwh-stage/Static/@{item().TABLE_NAME}"
 								},
 								{
 									"name": "Destination",
-									"value": "dwh_stage.@{item().TABLE_NAME}"
+									"value": "dwh_stage.@{trim(replace(item().TABLE_NAME,'\"',' ')) }"
 								}
 							],
 							"typeProperties": {
