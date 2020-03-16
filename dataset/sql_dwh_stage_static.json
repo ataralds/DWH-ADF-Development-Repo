@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"sinkDataset": {
+			"SinkDataset": {
 				"type": "string"
 			}
 		},
