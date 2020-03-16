@@ -1,11 +1,6 @@
 {
 	"name": "oracle_table_list_static",
 	"properties": {
-		"parameters": {
-			"fileName": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": []
