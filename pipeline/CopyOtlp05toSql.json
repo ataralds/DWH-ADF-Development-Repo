@@ -22,7 +22,7 @@
 					},
 					"activities": [
 						{
-							"name": "Copy Static",
+							"name": "Copy Static to Sql",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
