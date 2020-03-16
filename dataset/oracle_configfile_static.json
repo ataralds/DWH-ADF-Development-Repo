@@ -1,0 +1,19 @@
+{
+	"name": "oracle_configfile_static",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLTP05",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Lookup dataset"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "AZURE_READ",
+			"table": "AZURE_CONFIG"
+		}
+	}
+}

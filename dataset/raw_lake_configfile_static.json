@@ -1,27 +1,19 @@
 {
-	"name": "dwh_stage_static",
+	"name": "raw_lake_configfile_static",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"cw_fileName": {
-				"type": "String"
-			}
-		},
 		"folder": {
-			"name": "temp_dwh_stage_lake/static"
+			"name": "Lookup dataset"
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().cw_fileName",
-					"type": "Expression"
-				},
+				"fileName": "config_file.parquet",
 				"folderPath": "Static",
 				"fileSystem": "raw"
 			},

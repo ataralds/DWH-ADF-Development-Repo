@@ -1,17 +1,17 @@
 {
-	"name": "dwh_stage_static",
+	"name": "all_tables_static",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"cw_fileName": {
-				"type": "String"
+			"fileName": {
+				"type": "string"
 			}
 		},
 		"folder": {
-			"name": "temp_dwh_stage_lake/static"
+			"name": "raw/static"
 		},
 		"annotations": [],
 		"type": "Parquet",
@@ -19,11 +19,11 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@dataset().cw_fileName",
+					"value": "@dataset().fileName",
 					"type": "Expression"
 				},
 				"folderPath": "Static",
-				"fileSystem": "raw"
+				"fileSystem": "dwh-stage"
 			},
 			"compressionCodec": "snappy"
 		},

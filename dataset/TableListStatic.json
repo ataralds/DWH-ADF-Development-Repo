@@ -1,0 +1,19 @@
+{
+	"name": "TableListStatic",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLTP05",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "source/static"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "AZURE_READ",
+			"table": "AZURE_CONFIG"
+		}
+	}
+}
