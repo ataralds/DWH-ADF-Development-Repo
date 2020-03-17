@@ -1,0 +1,65 @@
+{
+	"name": "SqlStaticTables",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"DWTableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pk_key_pty",
+				"type": "varchar"
+			},
+			{
+				"name": "pty_description",
+				"type": "varchar"
+			},
+			{
+				"name": "pty_source_system",
+				"type": "varchar"
+			},
+			{
+				"name": "pty_source_column",
+				"type": "varchar"
+			},
+			{
+				"name": "pty_source_code",
+				"type": "varchar"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "pty_code",
+				"type": "varchar"
+			},
+			{
+				"name": "date_last_updated",
+				"type": "date"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "date_inserted",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": {
+				"value": "@dataset().DWTableName",
+				"type": "Expression"
+			}
+		}
+	}
+}
