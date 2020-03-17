@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
+				"name": "new lookup",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -32,7 +32,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "new lookup",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -41,7 +41,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup1').output",
+						"value": "@activity('new lookup').output.value",
 						"type": "Expression"
 					},
 					"activities": [
@@ -60,7 +60,7 @@
 							"typeProperties": {
 								"source": {
 									"type": "OracleSource",
-									"oracleReaderQuery": "SELECT * FROM @{item().table_name}",
+									"oracleReaderQuery": "SELECT * FROM @{item().table_name} ",
 									"partitionOption": "None",
 									"queryTimeout": "02:00:00"
 								},
