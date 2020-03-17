@@ -1,0 +1,24 @@
+{
+	"name": "m_idx_source_system",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "lake_raw_static",
+						"type": "DatasetReference"
+					},
+					"name": "SourceSystem"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "DeriveConstants"
+				}
+			],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> SourceSystem\nSourceSystem derive(DATE_AMENDED = currentDate(),\n\t\tDATE_CREATED = currentDate(),\n\t\tAMENDOR = 'Manreg',\n\t\tCREATOR = 'Manreg') ~> DeriveConstants"
+		}
+	}
+}
