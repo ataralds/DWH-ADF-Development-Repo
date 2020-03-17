@@ -16,17 +16,13 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"recursive": true
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+						"type": "OracleSource",
+						"oracleReaderQuery": "select table_name table_name from azure_config",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "GetConfigSource",
+						"referenceName": "Paris",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
@@ -73,11 +69,10 @@
 							],
 							"typeProperties": {
 								"source": {
-									"type": "ParquetSource",
-									"storeSettings": {
-										"type": "AzureBlobFSReadSettings",
-										"recursive": true
-									}
+									"type": "OracleSource",
+									"oracleReaderQuery": "SELECT * FROM @{item().table_name}",
+									"partitionOption": "None",
+									"queryTimeout": "02:00:00"
 								},
 								"sink": {
 									"type": "AzureSqlSink"
@@ -86,22 +81,8 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "ParquetSourceDataset",
-									"type": "DatasetReference",
-									"parameters": {
-										"fileName": {
-											"value": "@(item().Prop_0)",
-											"type": "Expression"
-										},
-										"SourceContainer": {
-											"value": "@pipeline().parameters.SourceContainer",
-											"type": "Expression"
-										},
-										"SourceDirectory": {
-											"value": "@pipeline().parameters.SourceDirectory",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "OracleTable2",
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
@@ -110,7 +91,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"SinkDataset": {
-											"value": "@toLower(concat('p_',item().Prop_0))",
+											"value": "@trim(replace(item().table_name,'\"',' '))",
 											"type": "Expression"
 										}
 									}
