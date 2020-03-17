@@ -102,14 +102,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"SourceContainer": {
-				"type": "string"
-			},
-			"SourceDirectory": {
-				"type": "string"
-			}
-		},
 		"folder": {
 			"name": "copy/raw"
 		},
