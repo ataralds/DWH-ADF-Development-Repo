@@ -24,12 +24,21 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": [],
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "STATIC.STA_SOURCE_SYSTEM"
+								},
+								{
+									"name": "Destination",
+									"value": "dwh_stage.@{concat(item().TABLE_SCHEMA, '].[', item().TABLE_NAME)}"
+								}
+							],
 							"typeProperties": {
 								"source": {
 									"type": "OracleSource",
 									"oracleReaderQuery": {
-										"value": "SELECT * FROM [@{item().TABLE_SCHEMA}].[@{item().TABLE_NAME}]",
+										"value": "SELECT * FROM [@{item().TABLE_NAME}] ",
 										"type": "Expression"
 									},
 									"partitionOption": "None",
