@@ -1,0 +1,17 @@
+{
+	"name": "OracleOltp05StaticScr",
+	"properties": {
+		"description": "Dataset for test av å laste fra oracle til sql. Dette er dataset for static orltp5 ",
+		"linkedServiceName": {
+			"referenceName": "OLTP05",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "STATIC",
+			"table": "STA_SOURCE_SYSTEM"
+		}
+	}
+}
