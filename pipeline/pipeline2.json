@@ -24,7 +24,8 @@
 					"dataset": {
 						"referenceName": "Paris",
 						"type": "DatasetReference"
-					}
+					},
+					"firstRowOnly": false
 				}
 			},
 			{
@@ -41,7 +42,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('new_lookup').output",
+						"value": "@activity('new_lookup').output.value",
 						"type": "Expression"
 					},
 					"activities": [
