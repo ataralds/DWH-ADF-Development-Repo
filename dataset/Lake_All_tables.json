@@ -8,12 +8,6 @@
 		"parameters": {
 			"fileName": {
 				"type": "string"
-			},
-			"SourceContainer": {
-				"type": "string"
-			},
-			"SourceDirectory": {
-				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -25,14 +19,8 @@
 					"value": "@dataset().fileName",
 					"type": "Expression"
 				},
-				"folderPath": {
-					"value": "@dataset().SourceDirectory",
-					"type": "Expression"
-				},
-				"fileSystem": {
-					"value": "@dataset().SourceContainer",
-					"type": "Expression"
-				}
+				"folderPath": "Static",
+				"fileSystem": "dwh-stage"
 			},
 			"compressionCodec": "snappy"
 		},
