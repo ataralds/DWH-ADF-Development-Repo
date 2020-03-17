@@ -1,6 +1,9 @@
 {
 	"name": "m_pre_dim_sub_claimMe",
 	"properties": {
+		"folder": {
+			"name": "Henrik"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

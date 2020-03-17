@@ -1,0 +1,45 @@
+{
+	"name": "m_pre_dim_sub_claim_me",
+	"properties": {
+		"activities": [
+			{
+				"name": "m_pre_dim_sub_claimMe",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "m_pre_dim_sub_claimMe",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"LCATABLE": {
+								"cw_fileName": "CSTAGE_PARISLCATABLE.parquet"
+							},
+							"LDATABLE": {
+								"cw_fileName": "CSTAGE_PARISLDATABLE.parquet"
+							},
+							"TcrossReference": {
+								"cw_fileName": "stage_itf_t_crossreference.parquet"
+							},
+							"HlpExchangeRateToUDS": {
+								"dataset": "STAGE_ITF.HLP_EXCHANGE_RATE_TO_USD.parquet"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}

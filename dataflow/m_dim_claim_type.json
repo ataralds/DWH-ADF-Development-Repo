@@ -24,7 +24,7 @@
 					"name": "Select1"
 				}
 			],
-			"script": "source(output(\n\t\tclm_source_system as string,\n\t\tclm_code as string,\n\t\tclm_source_key as string,\n\t\tinserted_by as string,\n\t\tlast_updated_by as string,\n\t\tdate_inserted as timestamp,\n\t\tdate_last_updated as timestamp,\n\t\tpk_key_clm as string,\n\t\tclm_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source1\nsource1 aggregate(groupBy(clm_description,\n\t\tpk_key_clm,\n\t\tclm_source_system,\n\t\tclm_source_key),\n\tclm_code = first(clm_code)) ~> Aggregate1\nAggregate1 select(mapColumn(\n\t\tclm_description,\n\t\tclm_key = pk_key_clm,\n\t\tclm_source_system,\n\t\tclm_source_key,\n\t\tclm_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1"
+			"script": "source(output(\n\t\tclm_source_system as string,\n\t\tclm_code as string,\n\t\tclm_source_key as string,\n\t\tinserted_by as string,\n\t\tlast_updated_by as string,\n\t\tdate_inserted as timestamp,\n\t\tdate_last_updated as timestamp,\n\t\tpk_key_clm as string,\n\t\tclm_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source1\nsource1 aggregate(groupBy(clm_description = clm_description,\n\t\tpk_key_clm = pk_key_clm,\n\t\tclm_source_system = clm_source_system,\n\t\tclm_source_key = clm_source_key),\n\tclm_code = first(clm_code)) ~> Aggregate1\nAggregate1 select(mapColumn(\n\t\tclm_description,\n\t\tclm_key = pk_key_clm,\n\t\tclm_source_system,\n\t\tclm_source_key,\n\t\tclm_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1"
 		}
 	}
 }

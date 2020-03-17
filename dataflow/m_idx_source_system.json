@@ -1,6 +1,9 @@
 {
 	"name": "m_idx_source_system",
 	"properties": {
+		"folder": {
+			"name": "Henrik"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
