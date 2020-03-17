@@ -13,8 +13,8 @@
 		"type": "OracleTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "STATIC",
-			"table": "STA_SOURCE_SYSTEM"
+			"schema": "Azure_read",
+			"table": "\"sta_risk_group\""
 		}
 	}
 }
