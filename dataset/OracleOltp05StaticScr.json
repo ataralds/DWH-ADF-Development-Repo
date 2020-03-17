@@ -6,6 +6,9 @@
 			"referenceName": "OLTP05",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Lookup dataset"
+		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
