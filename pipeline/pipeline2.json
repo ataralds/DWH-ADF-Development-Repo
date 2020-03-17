@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "new lookup",
+				"name": "new_lookup",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -32,7 +32,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "new lookup",
+						"activity": "new_lookup",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -40,10 +40,6 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"items": {
-						"value": "@activity('new lookup').output.value",
-						"type": "Expression"
-					},
 					"activities": [
 						{
 							"name": "Copy data1",
@@ -78,10 +74,7 @@
 							"outputs": [
 								{
 									"referenceName": "DWHStage",
-									"type": "DatasetReference",
-									"parameters": {
-										"SinkDataset": "@trim(replace(item().table_name,'\"',' '))"
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}
