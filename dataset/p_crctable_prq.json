@@ -1,0 +1,82 @@
+{
+	"name": "p_crctable_prq",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "CRCTABLE.parquet",
+				"folderPath": "Paris",
+				"fileSystem": "raw"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "CRCRATCOD",
+				"type": "UTF8"
+			},
+			{
+				"name": "CRCMDESCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "CRCSDESCR",
+				"type": "UTF8"
+			},
+			{
+				"name": "CRCPERINC",
+				"type": "UTF8"
+			},
+			{
+				"name": "CRCCCODE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "CRCCPERS2",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "CRCCPERS3",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "CRCCPERS4",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "CRCLOSPRO",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "CRCSW5",
+				"type": "UTF8"
+			},
+			{
+				"name": "CRCSTOPUSE",
+				"type": "UTF8"
+			},
+			{
+				"name": "CRCRATCOMP",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			}
+		]
+	}
+}

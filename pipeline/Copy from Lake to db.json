@@ -1,9 +1,9 @@
 {
-	"name": "Copy Lake to Table",
+	"name": "Copy from Lake to db",
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
+				"name": "sourceread",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -16,12 +16,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "OracleSource",
-						"partitionOption": "None",
-						"queryTimeout": "02:00:00"
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						}
 					},
 					"dataset": {
-						"referenceName": "OracleTable1",
+						"referenceName": "Read_copy_table",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
@@ -32,7 +34,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "sourceread",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -41,7 +43,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup1').output.value",
+						"value": "@activity('sourceread').output.value",
 						"type": "Expression"
 					},
 					"activities": [
@@ -56,22 +58,15 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": [
-								{
-									"name": "Source",
-									"value": "@{pipeline().parameters.SourceContainer}/@{pipeline().parameters.SourceDirectory}/@{concat(item().Prop_0,'.parquet')}"
-								},
-								{
-									"name": "Destination",
-									"value": "dwh_stage.@{toLower(concat('p_',item().Prop_0))}"
-								}
-							],
+							"userProperties": [],
 							"typeProperties": {
 								"source": {
 									"type": "ParquetSource",
 									"storeSettings": {
 										"type": "AzureBlobFSReadSettings",
-										"recursive": true
+										"recursive": true,
+										"wildcardFileName": "*.parquet",
+										"enablePartitionDiscovery": false
 									}
 								},
 								"sink": {
@@ -81,19 +76,11 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "ParquetSourceDataset",
+									"referenceName": "Lake_All_tables",
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "@concat(item().Prop_0,'.parquet')",
-											"type": "Expression"
-										},
-										"SourceContainer": {
-											"value": "@pipeline().parameters.SourceContainer",
-											"type": "Expression"
-										},
-										"SourceDirectory": {
-											"value": "@pipeline().parameters.SourceDirectory",
+											"value": "@{item().TABLE_NAME}",
 											"type": "Expression"
 										}
 									}
@@ -101,11 +88,11 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "DWHStage",
+									"referenceName": "Destination",
 									"type": "DatasetReference",
 									"parameters": {
-										"SinkDataset": {
-											"value": "@toLower(concat('p_',item().Prop_0))",
+										"sinkDataset": {
+											"value": "@trim(replace(item().TABLE_NAME,'\"',' '))",
 											"type": "Expression"
 										}
 									}
@@ -117,15 +104,15 @@
 			}
 		],
 		"parameters": {
-			"SourceContainer": {
+			"sourceContainer": {
 				"type": "string"
 			},
-			"SourceDirectory": {
+			"sourceDirectory": {
 				"type": "string"
 			}
 		},
 		"folder": {
-			"name": "copy/dwh_stage/paris"
+			"name": "copy/raw"
 		},
 		"annotations": []
 	}

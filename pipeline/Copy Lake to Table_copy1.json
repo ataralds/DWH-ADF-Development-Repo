@@ -1,5 +1,5 @@
 {
-	"name": "Copy Lake to Table",
+	"name": "Copy Lake to Table_copy1",
 	"properties": {
 		"activities": [
 			{
@@ -16,12 +16,17 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "OracleSource",
-						"partitionOption": "None",
-						"queryTimeout": "02:00:00"
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
 					},
 					"dataset": {
-						"referenceName": "OracleTable1",
+						"referenceName": "GetConfigSource",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
@@ -85,7 +90,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "@concat(item().Prop_0,'.parquet')",
+											"value": "@(item().Prop_0)",
 											"type": "Expression"
 										},
 										"SourceContainer": {
@@ -125,7 +130,7 @@
 			}
 		},
 		"folder": {
-			"name": "copy/dwh_stage/paris"
+			"name": "copy/raw"
 		},
 		"annotations": []
 	}
