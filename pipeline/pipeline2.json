@@ -40,6 +40,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@activity('new_lookup').output",
+						"type": "Expression"
+					},
 					"activities": [
 						{
 							"name": "Copy data1",
@@ -74,7 +78,13 @@
 							"outputs": [
 								{
 									"referenceName": "DWHStage",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"SinkDataset": {
+											"value": "@{item().table_name} ",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
