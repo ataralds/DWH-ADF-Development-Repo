@@ -1,0 +1,38 @@
+{
+	"name": "m_idx_source_system",
+	"properties": {
+		"folder": {
+			"name": "Henrik"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "lake_raw_static",
+						"type": "DatasetReference"
+					},
+					"name": "SourceSystem"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dwh_prepare_pre_dim",
+						"type": "DatasetReference"
+					},
+					"name": "idxSourceSystem"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DeriveConstants"
+				},
+				{
+					"name": "RemoveUnusedRows"
+				}
+			],
+			"script": "source(output(\n\t\tPK_SOURCE_SYSTEM as string,\n\t\tDESCRIPTION as string,\n\t\tACTIVE as string,\n\t\tINSERTED_DATE as timestamp,\n\t\tUPDATED_DATE as timestamp,\n\t\tINSERTED_BY as string,\n\t\tUPDATED_BY as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> SourceSystem\nRemoveUnusedRows derive(DATE_AMENDED = currentDate(),\n\t\tDATE_CREATED = currentDate(),\n\t\tAMENDOR = 'Manreg',\n\t\tCREATOR = 'Manreg') ~> DeriveConstants\nSourceSystem select(mapColumn(\n\t\tPK_SOURCE_SYSTEM,\n\t\tDESCRIPTION,\n\t\tACTIVE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedRows\nDeriveConstants sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['idx_source_system'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> idxSourceSystem"
+		}
+	}
+}

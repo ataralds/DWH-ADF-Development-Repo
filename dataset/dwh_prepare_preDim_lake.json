@@ -1,0 +1,32 @@
+{
+	"name": "dwh_prepare_preDim_lake",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"cw_fileName": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "dwh_prepare"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().cw_fileName",
+					"type": "Expression"
+				},
+				"folderPath": "Pre_Dim",
+				"fileSystem": "dwh-prepare"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
