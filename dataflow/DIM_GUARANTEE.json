@@ -9,7 +9,7 @@
 						"referenceName": "dwh_prepare_dim_guarantee",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "PreDimGuaranteePipelineOutput"
 				}
 			],
 			"sinks": [],
