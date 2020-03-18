@@ -18,7 +18,15 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "M_PRE_DIM_GUARANTEE_ME",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"ADLPpeatable": {
+								"cw_fileName": "CSTAGE_PARISPEATABLE.parquet"
+							},
+							"ADLPlgatable": {
+								"cw_fileName": "CSTAGE_PARISLGATABLE.parquet"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
