@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "dwh_prepare_preDim_lake",
+						"referenceName": "dwh_prepare_pre_dim",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
