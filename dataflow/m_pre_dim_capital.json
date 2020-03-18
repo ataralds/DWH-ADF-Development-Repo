@@ -1,12 +1,34 @@
 {
 	"name": "m_pre_dim_capital",
 	"properties": {
+		"folder": {
+			"name": "Henrik"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dwh_stage_mapsys",
+						"type": "DatasetReference"
+					},
+					"name": "TCrossReference"
+				},
+				{
+					"dataset": {
+						"referenceName": "lake_raw_static",
+						"type": "DatasetReference"
+					},
+					"name": "StaCapitalNumber"
+				}
+			],
 			"sinks": [],
-			"transformations": [],
-			"script": ""
+			"transformations": [
+				{
+					"name": "Filter1"
+				}
+			],
+			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nsource(output(\n\t\tcapital_code as string,\n\t\tcapital_desc as string,\n\t\tcapital_account_number as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaCapitalNumber\nTCrossReference filter(ERROR_FUNCTION('')) ~> Filter1"
 		}
 	}
 }
