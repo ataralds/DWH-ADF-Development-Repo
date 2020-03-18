@@ -4,7 +4,7 @@
 		"description": "Kopiere Sta_capital_number som er laget på SQL server",
 		"activities": [
 			{
-				"name": "Copy_41v",
+				"name": "Copy_sta_capital_number",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
