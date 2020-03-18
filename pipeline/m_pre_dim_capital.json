@@ -1,0 +1,42 @@
+{
+	"name": "m_pre_dim_capital",
+	"properties": {
+		"activities": [
+			{
+				"name": "m_pre_dim_capital",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "m_pre_dim_capital",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"TCrossReference": {
+								"cw_fileName": "stage_itf_t_crossreference.parquet"
+							},
+							"StaCapitalNumber": {
+								"cw_fileName": "sta_capital_number.parquet"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Henrik"
+		},
+		"annotations": []
+	}
+}
