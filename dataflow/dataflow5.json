@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "sta_risk_group",
+						"referenceName": "dwh_prepare_preDim_lake",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
