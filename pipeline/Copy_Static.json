@@ -1,5 +1,5 @@
 {
-	"name": "CopyOtlp05toSql",
+	"name": "Copy_Static",
 	"properties": {
 		"description": "Kopiere direkte til SQL. Men ser ut til at det er begresninger på Integration runtime pga. sikkerthet og firewall. ",
 		"activities": [
