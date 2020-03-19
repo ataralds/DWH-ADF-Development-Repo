@@ -1,14 +1,14 @@
 {
-	"name": "Copy_Static",
+	"name": "Copy_ParisPool",
 	"properties": {
-		"description": "Kopiere direkte til SQL. Men ser ut til at det er begresninger på Integration runtime pga. sikkerthet og firewall. ",
+		"description": "Copy tables via configfile from Paris pool",
 		"activities": [
 			{
-				"name": "ForEach_Static",
+				"name": "ForEach_ParisPool",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup_Static",
+						"activity": "Lookup_ParisPool",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -17,12 +17,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup_Static').output.value",
+						"value": "@activity('Lookup_ParisPool').output.value",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "Copy Static to Sql",
+							"name": "Copy ParisPool to Sql",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -80,7 +80,7 @@
 				}
 			},
 			{
-				"name": "Lookup_Static",
+				"name": "Lookup_ParisPool",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -107,7 +107,7 @@
 			}
 		],
 		"folder": {
-			"name": "copy/raw/static"
+			"name": "copy/raw/paris_pool"
 		},
 		"annotations": []
 	}
