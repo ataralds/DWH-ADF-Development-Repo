@@ -1,6 +1,9 @@
 {
 	"name": "m_pre_dim_premium_type",
 	"properties": {
+		"folder": {
+			"name": "dwh_prepare/paris"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
