@@ -17,7 +17,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "M_PRE_DIM_GUARANTEE_ME",
+						"referenceName": "M_PRE_DIM_GUARANTEE_ME_copy1",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"ADLPpeatable": {
