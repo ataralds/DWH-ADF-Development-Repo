@@ -1,0 +1,23 @@
+{
+	"name": "m_dim_premium_type",
+	"properties": {
+		"folder": {
+			"name": "marts/paris"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_premium_type",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(output(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source1"
+		}
+	}
+}
