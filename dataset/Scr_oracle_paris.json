@@ -2,7 +2,7 @@
 	"name": "Scr_oracle_paris",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "OracleDbParisScrAmster",
+			"referenceName": "OracleCStage",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
