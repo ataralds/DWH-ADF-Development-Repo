@@ -26,6 +26,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
+						"oracleReaderQuery": "select * from cstage_paris.faptable\nwhere fapiyear >2019",
 						"partitionOption": "None"
 					},
 					"sink": {
