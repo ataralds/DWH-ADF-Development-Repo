@@ -5,12 +5,20 @@
 			"referenceName": "OLTP05",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"fileName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "STATIC",
-			"table": "PILL_SCR_CURRENCY"
+			"schema": "AZURE_READ",
+			"table": {
+				"value": "@dataset().fileName",
+				"type": "Expression"
+			}
 		}
 	}
 }
