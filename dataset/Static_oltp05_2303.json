@@ -1,0 +1,16 @@
+{
+	"name": "Static_oltp05_2303",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLTP05",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "STATIC",
+			"table": "PILL_SCR_CURRENCY"
+		}
+	}
+}
