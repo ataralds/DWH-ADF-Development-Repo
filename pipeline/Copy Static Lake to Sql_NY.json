@@ -1,5 +1,5 @@
 {
-	"name": "Copy Static Lake to Sql_kopi",
+	"name": "Copy Static Lake to Sql_NY",
 	"properties": {
 		"activities": [
 			{
@@ -84,11 +84,11 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "all_tables_static",
+									"referenceName": "tables_static_lake_2303",
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "@item().TABLE_NAME",
+											"value": "@item().table_name",
 											"type": "Expression"
 										}
 									}
