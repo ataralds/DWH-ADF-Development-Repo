@@ -51,7 +51,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "t_cross_parq",
+						"referenceName": "CROSS_REF",
 						"type": "DatasetReference"
 					},
 					"name": "tcrossreference"
