@@ -26,9 +26,12 @@
 				},
 				{
 					"name": "Aggregate1"
+				},
+				{
+					"name": "Select1"
 				}
 			],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> LCATABLE\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> LCCTABLE\nLCATABLE, LCCTABLE union(byName: true)~> Union1\nUnion1 aggregate() ~> Aggregate1"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> LCATABLE\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> LCCTABLE\nLCATABLE, LCCTABLE union(byName: true)~> Union1\nUnion1 aggregate() ~> Aggregate1\nAggregate1 select(skipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1"
 		}
 	}
 }
