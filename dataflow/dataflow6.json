@@ -1,0 +1,27 @@
+{
+	"name": "dataflow6",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "raw_paris",
+						"type": "DatasetReference"
+					},
+					"name": "LCATABLE"
+				},
+				{
+					"dataset": {
+						"referenceName": "raw_paris",
+						"type": "DatasetReference"
+					},
+					"name": "LCCTABLE"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> LCATABLE\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> LCCTABLE"
+		}
+	}
+}

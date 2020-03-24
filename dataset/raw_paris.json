@@ -22,7 +22,7 @@
 					"value": "@dataset().cw_fileName",
 					"type": "Expression"
 				},
-				"folderPath": "Mapping_System",
+				"folderPath": "Paris",
 				"fileSystem": "raw"
 			},
 			"compressionCodec": "snappy"
