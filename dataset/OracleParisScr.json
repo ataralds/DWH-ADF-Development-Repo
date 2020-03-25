@@ -1,0 +1,9 @@
+{
+	"name": "OracleParisScr",
+	"properties": {
+		"description": "This is the scr dataset for Paris tables",
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
