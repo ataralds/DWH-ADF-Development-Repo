@@ -43,7 +43,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup_Static').output.value",
+						"value": "@activity('Lookup_Paris').output.value",
 						"type": "Expression"
 					},
 					"activities": [
@@ -79,7 +79,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "OracleAllTablesStatic",
+									"referenceName": "OracleParisTables",
 									"type": "DatasetReference"
 								}
 							],
