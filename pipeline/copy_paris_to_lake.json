@@ -18,7 +18,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select table_name table_name from\nazure_config where oracle_table_name in ('INATABLE','CARTABLE')\n--oracle_table_name not in ('FAPTABLE','RSATABLE','FILTABLE','FILTABLE_COR')",
+						"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where table_name like '\"p_peatable\"'",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
@@ -89,7 +89,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "@item().table_name",
+											"value": "@{item().table_name}",
 											"type": "Expression"
 										}
 									}
