@@ -2,8 +2,16 @@
 	"name": "OracleParisScr",
 	"properties": {
 		"description": "This is the scr dataset for Paris tables",
+		"linkedServiceName": {
+			"referenceName": "OracleCStage",
+			"type": "LinkedServiceReference"
+		},
 		"annotations": [],
 		"type": "OracleTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "CSTAGE_PARIS",
+			"table": "p_pectable"
+		}
 	}
 }
