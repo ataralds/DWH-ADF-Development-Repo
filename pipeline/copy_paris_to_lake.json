@@ -18,7 +18,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select table_name table_name from\nazure_config\n",
+						"oracleReaderQuery": "select table_name table_name from\nazure_config where oracle_table_name not in ('FAPTABLE','RSATABLE','FILTABLE','FILTABLE_COR')",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
