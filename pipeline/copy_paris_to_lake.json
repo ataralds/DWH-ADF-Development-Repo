@@ -18,7 +18,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select table_name table_name from\nazure_config where oracle_table_name not in ('FAPTABLE','RSATABLE','FILTABLE','FILTABLE_COR')",
+						"oracleReaderQuery": "select table_name table_name from\nazure_config where oracle_table_name in ('INATABLE','CARTABLE')\n--oracle_table_name not in ('FAPTABLE','RSATABLE','FILTABLE','FILTABLE_COR')",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
@@ -86,7 +86,13 @@
 							"outputs": [
 								{
 									"referenceName": "paris_tables",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"fileName": {
+											"value": "@item().table_name",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
