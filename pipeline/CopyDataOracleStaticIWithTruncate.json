@@ -1,5 +1,5 @@
 {
-	"name": "CopyDataOracleStatic",
+	"name": "CopyDataOracleStaticIWithTruncate",
 	"properties": {
 		"activities": [
 			{
@@ -55,6 +55,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "copy/Test Lookup"
+		},
 		"annotations": []
 	}
 }
