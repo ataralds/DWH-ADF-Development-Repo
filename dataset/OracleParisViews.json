@@ -3,7 +3,7 @@
 	"properties": {
 		"description": "This dataset is pointing to the cinfig file in stage_itf. Temp solution",
 		"linkedServiceName": {
-			"referenceName": "OracelStageITF",
+			"referenceName": "OracleCStage",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
