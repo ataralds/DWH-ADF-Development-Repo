@@ -1,0 +1,8 @@
+{
+	"name": "OracleParisTablesScr",
+	"properties": {
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
