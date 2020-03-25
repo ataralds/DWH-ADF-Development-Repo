@@ -22,7 +22,7 @@
 					},
 					"activities": [
 						{
-							"name": "Copy Static to Sql",
+							"name": "Copy Paris to Sql",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -59,7 +59,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "OracleAllTablesStatic",
+									"referenceName": "OracleParisScr",
 									"type": "DatasetReference"
 								}
 							],
