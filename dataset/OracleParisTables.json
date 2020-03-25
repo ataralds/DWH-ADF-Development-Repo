@@ -1,0 +1,17 @@
+{
+	"name": "OracleParisTables",
+	"properties": {
+		"description": "All the views in paris",
+		"linkedServiceName": {
+			"referenceName": "OracleCStage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "CSTAGE_PARIS",
+			"table": "ACOTABLE"
+		}
+	}
+}
