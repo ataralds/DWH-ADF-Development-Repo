@@ -1,0 +1,108 @@
+{
+	"name": "copy_paris_to_lake",
+	"properties": {
+		"description": "This copy job is getting the views from config on paris c_stage. Temp, before we get SQL up running. ",
+		"activities": [
+			{
+				"name": "Lookup_Paris",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "select table_name table_name from azure_config where load_ind = 'Y' \nand oracle_schema_name not like 'AGRINT'",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "OracleParisViews",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEachStatic",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup_Paris",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup_Static').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy Static",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"oracleReaderQuery": {
+										"value": "SELECT * FROM @{item().table_name} ",
+										"type": "Expression"
+									},
+									"partitionOption": "None",
+									"queryTimeout": "02:00:00"
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "OracleAllTablesStatic",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "all_tables_static",
+									"type": "DatasetReference",
+									"parameters": {
+										"fileName": {
+											"value": "@item().table_name",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "copy/Test Lookup/paris"
+		},
+		"annotations": []
+	}
+}
