@@ -65,13 +65,10 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "sql_dwh_stage_static",
+									"referenceName": "azure_sql_paris_tables",
 									"type": "DatasetReference",
 									"parameters": {
-										"SinkDataset": {
-											"value": "@trim(replace(item().table_name,'\"',' ')) ",
-											"type": "Expression"
-										}
+										"SinkDataset": "@trim(replace(item().table_name,'\"',' ')) "
 									}
 								}
 							]
