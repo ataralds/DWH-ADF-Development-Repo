@@ -68,7 +68,10 @@
 									"referenceName": "azure_sql_paris_tables",
 									"type": "DatasetReference",
 									"parameters": {
-										"SinkDataset": "@trim(replace(item().table_name,'\"',' ')) "
+										"SinkDataset": {
+											"value": "@trim(replace(item().table_name,'\"',' '))",
+											"type": "Expression"
+										}
 									}
 								}
 							]
