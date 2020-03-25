@@ -26,19 +26,22 @@
 			],
 			"transformations": [
 				{
-					"name": "FilterCodeTypeID"
+					"name": "FilterCodeTypeID802",
+					"description": "Filtering codetypeid 802"
 				},
 				{
-					"name": "Constant"
+					"name": "Constant",
+					"description": "Creating/updating the columns 'target_code, date_inserted, date_last_updated, inserted_by, last_updated_by, source_system, source_column'"
 				},
 				{
-					"name": "Aggregate1"
+					"name": "Aggregate1",
+					"description": "Aggregating data by 'target_code' producing columns 'target_description'"
 				},
 				{
 					"name": "Select1"
 				}
 			],
-			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossreference\nTCrossreference filter(CODE_TYPE_ID == 802) ~> FilterCodeTypeID\nAggregate1 derive(date_inserted = currentTimestamp(),\n\t\tdate_last_updated = currentTimestamp(),\n\t\tinserted_by = 'M_PRE_DIM_PREMIUM_TYPE',\n\t\tlast_updated_by = 'M_PRE_DIM_PREMIUM_TYPE',\n\t\tsource_system = 'MAPPINGSYSTEM',\n\t\tsource_column = 'TARGET_CODE') ~> Constant\nFilterCodeTypeID aggregate(groupBy(TARGET_CODE),\n\tTARGET_DESCRIPTION = first(TARGET_DESCRIPTION)) ~> Aggregate1\nConstant select(mapColumn(\n\t\tpk_key_pty = TARGET_CODE,\n\t\tpty_code = TARGET_CODE,\n\t\tpty_description = TARGET_DESCRIPTION,\n\t\tpty_source_column = source_column,\n\t\tpty_source_system = source_system,\n\t\tinserted_by,\n\t\tdate_inserted,\n\t\tlast_updated_by,\n\t\tdate_last_updated\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_premium_type'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SinkPreDimPremiumType"
+			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossreference\nTCrossreference filter(CODE_TYPE_ID == 802) ~> FilterCodeTypeID802\nAggregate1 derive(date_inserted = currentTimestamp(),\n\t\tdate_last_updated = currentTimestamp(),\n\t\tinserted_by = 'M_PRE_DIM_PREMIUM_TYPE',\n\t\tlast_updated_by = 'M_PRE_DIM_PREMIUM_TYPE',\n\t\tsource_system = 'MAPPINGSYSTEM',\n\t\tsource_column = 'TARGET_CODE') ~> Constant\nFilterCodeTypeID802 aggregate(groupBy(TARGET_CODE),\n\tTARGET_DESCRIPTION = first(TARGET_DESCRIPTION)) ~> Aggregate1\nConstant select(mapColumn(\n\t\tpk_key_pty = TARGET_CODE,\n\t\tpty_code = TARGET_CODE,\n\t\tpty_description = TARGET_DESCRIPTION,\n\t\tpty_source_column = source_column,\n\t\tpty_source_system = source_system,\n\t\tinserted_by,\n\t\tdate_inserted,\n\t\tlast_updated_by,\n\t\tdate_last_updated\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_premium_type'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SinkPreDimPremiumType"
 		}
 	}
 }
