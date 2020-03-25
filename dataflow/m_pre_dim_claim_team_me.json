@@ -1,5 +1,5 @@
 {
-	"name": "dataflow6",
+	"name": "m_pre_dim_claim_team_me",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
