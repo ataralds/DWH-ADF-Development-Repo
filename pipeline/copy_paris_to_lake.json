@@ -30,7 +30,7 @@
 				}
 			},
 			{
-				"name": "ForEachStatic",
+				"name": "ForEachParis",
 				"type": "ForEach",
 				"dependsOn": [
 					{
