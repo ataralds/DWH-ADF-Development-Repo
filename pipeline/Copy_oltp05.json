@@ -1,0 +1,114 @@
+{
+	"name": "Copy_oltp05",
+	"properties": {
+		"description": "Kopiere direkte til SQL. Men ser ut til at det er begresninger på Integration runtime pga. sikkerthet og firewall. ",
+		"activities": [
+			{
+				"name": "ForEach_oltp05",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup_oltp05",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup_oltp05').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy Static to Sql",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "AZURE_READ.AZURE_CONFIG"
+								},
+								{
+									"name": "Destination",
+									"value": "dwh_stage.@{trim(replace(item().table_name,'\"',' ')) }"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"oracleReaderQuery": {
+										"value": "SELECT * FROM @{item().table_name} ",
+										"type": "Expression"
+									},
+									"partitionOption": "None",
+									"queryTimeout": "02:00:00"
+								},
+								"sink": {
+									"type": "AzureSqlSink"
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "OracleAllTablesStatic",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "sql_dwh_stage_static",
+									"type": "DatasetReference",
+									"parameters": {
+										"SinkDataset": {
+											"value": "@trim(replace(item().table_name,'\"',' ')) ",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "Lookup_oltp05",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "select table_name table_name from azure_config where load_ind = 'Y' \nand oracle_schema_name not like 'AGRINT'",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "TableListStatic",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			}
+		],
+		"folder": {
+			"name": "copy/Test Lookup"
+		},
+		"annotations": []
+	}
+}

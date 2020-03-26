@@ -1,0 +1,63 @@
+{
+	"name": "CopyDataOracleStaticIWithTruncate",
+	"properties": {
+		"activities": [
+			{
+				"name": "LookupTableList",
+				"description": " Retrieve the table list from Oracle to Azure SQL database",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "select TABLE_NAME table_name from azure_read.AZURE_CONFIG",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "oracle_configfile_static",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "TriggerCopy",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "LookupTableList",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "TestPipeline",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"tableList": {
+							"value": "@activity('LookupTableList').output",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "copy/Test Lookup"
+		},
+		"annotations": []
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"name": "dwh_stage_static_lake",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Static",
+				"fileSystem": "dwh-stage"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

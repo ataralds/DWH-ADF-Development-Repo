@@ -1,9 +1,9 @@
 {
-	"name": "Copy Static Lake to Sql",
+	"name": "CopyStaticFromConfigToLake",
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
+				"name": "Lookup_Static",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -16,25 +16,24 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "ParquetSource",
-						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"recursive": true
-						}
+						"type": "OracleSource",
+						"oracleReaderQuery": "select table_name table_name from azure_config where load_ind = 'Y' \nand oracle_schema_name not like 'AGRINT'",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "Lake_static_configfile",
+						"referenceName": "TableListStatic",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
 			},
 			{
-				"name": "ForEach_statictables",
+				"name": "ForEachStatic",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "Lookup_Static",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -43,7 +42,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup1').output.value",
+						"value": "@activity('Lookup_Static').output.value",
 						"type": "Expression"
 					},
 					"activities": [
@@ -58,49 +57,38 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": [
-								{
-									"name": "Source",
-									"value": "dwh-stage/Static/@{item().TABLE_NAME}"
-								},
-								{
-									"name": "Destination",
-									"value": "dwh_stage.@{trim(replace(item().TABLE_NAME,'\"',' ')) }"
-								}
-							],
+							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "ParquetSource",
-									"storeSettings": {
-										"type": "AzureBlobFSReadSettings",
-										"recursive": true,
-										"enablePartitionDiscovery": false
-									}
+									"type": "OracleSource",
+									"oracleReaderQuery": {
+										"value": "SELECT * FROM @{item().table_name} ",
+										"type": "Expression"
+									},
+									"partitionOption": "None",
+									"queryTimeout": "02:00:00"
 								},
 								"sink": {
-									"type": "AzureSqlSink"
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									}
 								},
 								"enableStaging": false
 							},
 							"inputs": [
 								{
-									"referenceName": "all_tables_static",
-									"type": "DatasetReference",
-									"parameters": {
-										"fileName": {
-											"value": "@item().TABLE_NAME",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "OracleAllTablesStatic",
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "AzureSqlFromLakeStatic",
+									"referenceName": "all_tables_static",
 									"type": "DatasetReference",
 									"parameters": {
-										"SinkDataset": {
-											"value": "@trim(replace(item().TABLE_NAME,'\"',' ')) ",
+										"fileName": {
+											"value": "@item().table_name",
 											"type": "Expression"
 										}
 									}
@@ -111,14 +99,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"SourceContainer": {
-				"type": "string"
-			},
-			"SourceDirectory": {
-				"type": "string"
-			}
-		},
 		"folder": {
 			"name": "copy/Test Lookup"
 		},

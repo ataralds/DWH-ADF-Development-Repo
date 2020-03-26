@@ -1,14 +1,14 @@
 {
-	"name": "CopyOtlp05toSql",
+	"name": "Copy_Paris",
 	"properties": {
-		"description": "Kopiere direkte til SQL. Men ser ut til at det er begresninger på Integration runtime pga. sikkerthet og firewall. ",
+		"description": "This is the official copy job from paris to SQL. Kopiere direkte til SQL. Men ser ut til at det er begresninger på Integration runtime pga. sikkerthet og firewall. ",
 		"activities": [
 			{
-				"name": "ForEach1",
+				"name": "ForEach_Paris",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup_Static",
+						"activity": "Lookup_Paris",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -17,12 +17,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup_Static').output.value",
+						"value": "@activity('Lookup_Paris').output.value",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "Copy Static",
+							"name": "Copy Paris to Sql",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -35,11 +35,11 @@
 							"userProperties": [
 								{
 									"name": "Source",
-									"value": "dwh-stage/Static/@(item().TABLE_NAME)"
+									"value": "AZURE_READ.AZURE_CONFIG"
 								},
 								{
 									"name": "Destination",
-									"value": "dwh_stage.@{item().TABLE_NAME}"
+									"value": "dwh_stage.@{trim(replace(item().table_name,'\"',' ')) }"
 								}
 							],
 							"typeProperties": {
@@ -59,17 +59,17 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "OracleAllTablesStatic",
+									"referenceName": "OracleParisScr",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "AzureSqlFromLakeStatic",
+									"referenceName": "azure_sql_paris_tables",
 									"type": "DatasetReference",
 									"parameters": {
 										"SinkDataset": {
-											"value": "@trim(replace(item().table_name,'\"',' ')) ",
+											"value": "@trim(replace(item().table_name,'\"',' '))",
 											"type": "Expression"
 										}
 									}
@@ -80,7 +80,7 @@
 				}
 			},
 			{
-				"name": "Lookup_Static",
+				"name": "Lookup_Paris",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -94,12 +94,12 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select table_name table_name from azure_config",
+						"oracleReaderQuery": "select table_name table_name from\nazure_config where oracle_table_name not in ('FAPTABLE','RSATABLE','FILTABLE','FILTABLE_COR')",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "TableListStatic",
+						"referenceName": "OracleParisTablesScr",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
@@ -107,7 +107,7 @@
 			}
 		],
 		"folder": {
-			"name": "copy/Test Lookup"
+			"name": "copy/Test Lookup/paris"
 		},
 		"annotations": []
 	}

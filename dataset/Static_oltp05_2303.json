@@ -1,25 +1,22 @@
 {
-	"name": "Scr_oracle_paris",
+	"name": "Static_oltp05_2303",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "OracleCStage",
+			"referenceName": "OLTP05",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"cw_table": {
-				"type": "String"
+			"fileName": {
+				"type": "string"
 			}
-		},
-		"folder": {
-			"name": "source/paris"
 		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "CSTAGE_PARIS",
+			"schema": "AZURE_READ",
 			"table": {
-				"value": "@dataset().cw_table",
+				"value": "@dataset().fileName",
 				"type": "Expression"
 			}
 		}

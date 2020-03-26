@@ -1,5 +1,5 @@
 {
-	"name": "Copy Static Lake to Sql",
+	"name": "Copy Static Lake to Sql_NY",
 	"properties": {
 		"activities": [
 			{
@@ -19,7 +19,8 @@
 						"type": "ParquetSource",
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
-							"recursive": true
+							"recursive": false,
+							"enablePartitionDiscovery": false
 						}
 					},
 					"dataset": {
@@ -84,11 +85,11 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "all_tables_static",
+									"referenceName": "tables_static_lake_2303",
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "@item().TABLE_NAME",
+											"value": "@item().table_name",
 											"type": "Expression"
 										}
 									}

@@ -1,27 +1,17 @@
 {
-	"name": "Scr_oracle_paris",
+	"name": "OracleParisViews",
 	"properties": {
+		"description": "This dataset is pointing to the cinfig file in stage_itf. Temp solution",
 		"linkedServiceName": {
 			"referenceName": "OracleCStage",
 			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"cw_table": {
-				"type": "String"
-			}
-		},
-		"folder": {
-			"name": "source/paris"
 		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
 		"typeProperties": {
 			"schema": "CSTAGE_PARIS",
-			"table": {
-				"value": "@dataset().cw_table",
-				"type": "Expression"
-			}
+			"table": "AZURE_CONFIG"
 		}
 	}
 }

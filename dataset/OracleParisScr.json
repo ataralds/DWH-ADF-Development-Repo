@@ -1,27 +1,17 @@
 {
-	"name": "Scr_oracle_paris",
+	"name": "OracleParisScr",
 	"properties": {
+		"description": "This is the scr dataset for Paris tables",
 		"linkedServiceName": {
 			"referenceName": "OracleCStage",
 			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"cw_table": {
-				"type": "String"
-			}
-		},
-		"folder": {
-			"name": "source/paris"
 		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
 		"typeProperties": {
 			"schema": "CSTAGE_PARIS",
-			"table": {
-				"value": "@dataset().cw_table",
-				"type": "Expression"
-			}
+			"table": "p_pectable"
 		}
 	}
 }

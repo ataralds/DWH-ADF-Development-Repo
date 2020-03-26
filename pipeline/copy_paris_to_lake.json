@@ -1,9 +1,10 @@
 {
-	"name": "CopyStaticFromConfig",
+	"name": "copy_paris_to_lake",
 	"properties": {
+		"description": "This copy job is getting the views from config on paris c_stage. Temp, before we get SQL up running. ",
 		"activities": [
 			{
-				"name": "Lookup_Static",
+				"name": "Lookup_Paris",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -17,23 +18,23 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select table_name table_name from azure_config",
+						"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where table_name like '\"p_peatable\"'",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "TableListStatic",
+						"referenceName": "OracleParisViews",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
 			},
 			{
-				"name": "ForEachStatic",
+				"name": "ForEachParis",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup_Static",
+						"activity": "Lookup_Paris",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -42,12 +43,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup_Static').output.value",
+						"value": "@activity('Lookup_Paris').output.value",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "Copy Static",
+							"name": "Copy Paris",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -78,17 +79,17 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "OracleAllTablesStatic",
+									"referenceName": "OracleParisTables",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "all_tables_static",
+									"referenceName": "paris_tables",
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "@item().table_name",
+											"value": "@{item().table_name}",
 											"type": "Expression"
 										}
 									}
@@ -100,7 +101,7 @@
 			}
 		],
 		"folder": {
-			"name": "copy/Test Lookup"
+			"name": "copy/Test Lookup/paris"
 		},
 		"annotations": []
 	}

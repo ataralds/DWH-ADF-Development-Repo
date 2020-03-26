@@ -1,0 +1,114 @@
+{
+	"name": "Copy_ParisPool",
+	"properties": {
+		"description": "Copy tables via configfile from Paris pool",
+		"activities": [
+			{
+				"name": "ForEach_ParisPool",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup_ParisPool",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup_ParisPool').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy ParisPool to Sql",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "AZURE_READ.AZURE_CONFIG"
+								},
+								{
+									"name": "Destination",
+									"value": "dwh_stage.@{trim(replace(item().table_name,'\"',' ')) }"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"oracleReaderQuery": {
+										"value": "SELECT * FROM @item().table_name",
+										"type": "Expression"
+									},
+									"partitionOption": "None",
+									"queryTimeout": "02:00:00"
+								},
+								"sink": {
+									"type": "AzureSqlSink"
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "OracleAllTablesStatic",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "sql_dwh_stage_static",
+									"type": "DatasetReference",
+									"parameters": {
+										"SinkDataset": {
+											"value": "@trim(replace(item().table_name,'\"',' ')) ",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "Lookup_ParisPool",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "select TABLE_NAME table_name from azure_read.AZURE_CONFIG",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "TableListStatic",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			}
+		],
+		"folder": {
+			"name": "copy/raw/paris_pool"
+		},
+		"annotations": []
+	}
+}
