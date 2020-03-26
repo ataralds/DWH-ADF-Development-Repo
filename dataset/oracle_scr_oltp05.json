@@ -1,5 +1,5 @@
 {
-	"name": "OracleAllTablesStatic",
+	"name": "oracle_scr_oltp05",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OLTP05",
