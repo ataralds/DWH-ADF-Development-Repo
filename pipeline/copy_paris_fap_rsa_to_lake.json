@@ -62,10 +62,7 @@
 							"typeProperties": {
 								"source": {
 									"type": "OracleSource",
-									"oracleReaderQuery": {
-										"value": "SELECT * FROM @{item().table_name} ",
-										"type": "Expression"
-									},
+									"oracleReaderQuery": "select * from \"p_faptable\" \n--where fapiyear ='2015'",
 									"partitionOption": "None",
 									"queryTimeout": "02:00:00"
 								},
@@ -85,14 +82,8 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "paris_tables",
-									"type": "DatasetReference",
-									"parameters": {
-										"fileName": {
-											"value": "@{item().table_name}",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "faptable_rsatable",
+									"type": "DatasetReference"
 								}
 							]
 						}
