@@ -18,7 +18,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where table_name like '\"p_peatable\"'",
+						"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where load_ind = 'Y'",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
