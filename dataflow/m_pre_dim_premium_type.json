@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "TCrossReferenceParquet",
+						"referenceName": "TCross",
 						"type": "DatasetReference"
 					},
 					"name": "TCrossreference"
