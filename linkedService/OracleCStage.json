@@ -8,10 +8,10 @@
 		"type": "Oracle",
 		"typeProperties": {
 			"connectionString": "host=areoda03-scan.gard.local;port=1521;servicename=dwprd.gard.local;user id=CSTAGE_PARIS",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJiYmQ4N2JiYy0xMTY4LTRhZjItYWFiZS05NzA5YmVhNjI2YzMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI1NzE0NThhMS1iMWRjLTQ0YmQtYWZlMS1mMDY0OTIwM2YxZDQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
-			"referenceName": "AMSSRV049",
+			"referenceName": "AMSSRVRUN01",
 			"type": "IntegrationRuntimeReference"
 		}
 	}
