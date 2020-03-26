@@ -1,5 +1,5 @@
 {
-	"name": "copy_paris_fap_rsa_to_lake_",
+	"name": "copy_paris_fap_rsa_to_lake",
 	"properties": {
 		"description": "This copy job is getting the views from config on paris c_stage. Testing the fap/rsa loading time. ",
 		"activities": [
@@ -18,7 +18,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where load_ind = 'N'\nand table_name not like '\"p_filtable_cor\"'",
+						"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where load_ind = 'N'\nand table_name not in ('\"p_filtable_cor\"','\"p_rsatable\"')",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
@@ -79,7 +79,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "OracleParisTables",
+									"referenceName": "oracle_paris_fap_rsa",
 									"type": "DatasetReference"
 								}
 							],
