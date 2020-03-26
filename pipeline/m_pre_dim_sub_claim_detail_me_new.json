@@ -27,6 +27,9 @@
 							},
 							"TCrossReference": {
 								"cw_fileName": "stage_itf_t_crossreference.parquet"
+							},
+							"PreDimSubClaimDetailSource": {
+								"cw_fileName": "pre_dim_sub_claim_detail_new.parquet"
 							}
 						}
 					},
