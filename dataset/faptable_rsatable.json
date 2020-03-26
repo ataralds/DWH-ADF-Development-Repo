@@ -1,0 +1,21 @@
+{
+	"name": "faptable_rsatable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "faptabletest.parquet",
+				"folderPath": "Paris",
+				"fileSystem": "dwh-stage"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
