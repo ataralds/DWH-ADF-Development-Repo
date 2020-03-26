@@ -1,6 +1,7 @@
 {
-	"name": "CopyTestRunde",
+	"name": "CopyRsatablePartition",
 	"properties": {
+		"description": "Morten made partition on RSATABLE, trying to use this to load",
 		"activities": [
 			{
 				"name": "Copy_sv2",
