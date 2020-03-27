@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup_Static",
+				"name": "Lookup_oltp05",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -29,11 +29,11 @@
 				}
 			},
 			{
-				"name": "ForEachStatic",
+				"name": "ForEachOltp05",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup_Static",
+						"activity": "Lookup_oltp05",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -42,7 +42,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup_Static').output.value",
+						"value": "@activity('Lookup_oltp05').output.value",
 						"type": "Expression"
 					},
 					"activities": [
