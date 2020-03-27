@@ -1,5 +1,5 @@
 {
-	"name": "CopyOltp05FromConfigToLake",
+	"name": "copy_oltp05_to_lake",
 	"properties": {
 		"activities": [
 			{
@@ -100,7 +100,7 @@
 			}
 		],
 		"folder": {
-			"name": "copy/Test Lookup"
+			"name": "copy job/dwh_stage/oltp05"
 		},
 		"annotations": []
 	}
