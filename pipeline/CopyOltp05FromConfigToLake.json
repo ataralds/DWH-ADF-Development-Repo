@@ -84,7 +84,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "all_tables_static",
+									"referenceName": "all_tables_oltp05",
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
