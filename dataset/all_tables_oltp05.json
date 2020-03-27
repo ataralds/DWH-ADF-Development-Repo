@@ -1,5 +1,5 @@
 {
-	"name": "all_tables_static",
+	"name": "all_tables_oltp05",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
