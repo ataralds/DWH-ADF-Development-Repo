@@ -1,5 +1,5 @@
 {
-	"name": "CopyStaticFromConfigToLake",
+	"name": "CopyOltp05FromConfigToLake",
 	"properties": {
 		"activities": [
 			{
