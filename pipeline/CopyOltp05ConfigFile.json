@@ -1,5 +1,5 @@
 {
-	"name": "CopyStaticConfigFile",
+	"name": "CopyOltp05ConfigFile",
 	"properties": {
 		"activities": [
 			{
