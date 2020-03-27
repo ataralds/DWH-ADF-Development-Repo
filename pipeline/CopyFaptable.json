@@ -4,7 +4,8 @@
 		"description": "test time to load",
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Copy Faptable",
+				"description": "Copy faptable 2 years",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
