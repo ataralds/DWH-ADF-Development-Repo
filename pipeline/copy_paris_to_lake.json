@@ -18,7 +18,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where load_ind = 'Y'\nand table_name in('\"p_agatable\"','\"p_peatable\"')",
+						"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where load_ind = 'Y'\n",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
