@@ -22,7 +22,6 @@
 					"value": "@dataset().fileName",
 					"type": "Expression"
 				},
-				"folderPath": "Static",
 				"fileSystem": "dwh-stage"
 			},
 			"compressionCodec": "snappy"
