@@ -100,7 +100,7 @@
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "TableListStatic",
+						"referenceName": "oracle_configfile_static",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
