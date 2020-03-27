@@ -1,5 +1,5 @@
 {
-	"name": "OracleParisViews",
+	"name": "azure_config_paris",
 	"properties": {
 		"description": "This dataset is pointing to the cinfig file in stage_itf. Temp solution",
 		"linkedServiceName": {
