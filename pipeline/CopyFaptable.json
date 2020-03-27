@@ -44,6 +44,9 @@
 				]
 			}
 		],
+		"folder": {
+			"name": "copy/Test Lookup"
+		},
 		"annotations": []
 	}
 }
