@@ -18,7 +18,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where load_ind = 'N'\nand table_name not in ('\"p_filtable_cor\"','\"p_rsatable\"')",
+						"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where load_ind = 'N'\nand table_name not in ('\"p_filtable_cor\"','\"p_faptable\"')",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
@@ -62,7 +62,10 @@
 							"typeProperties": {
 								"source": {
 									"type": "OracleSource",
-									"oracleReaderQuery": "select * from \"p_faptable\" \n--where fapiyear ='2015'",
+									"oracleReaderQuery": {
+										"value": "SELECT * FROM @{item().table_name} ",
+										"type": "Expression"
+									},
 									"partitionOption": "None",
 									"queryTimeout": "02:00:00"
 								},
