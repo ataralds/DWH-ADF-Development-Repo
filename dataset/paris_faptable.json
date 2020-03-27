@@ -1,0 +1,8 @@
+{
+	"name": "paris_faptable",
+	"properties": {
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
