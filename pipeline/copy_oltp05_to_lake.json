@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select table_name table_name from azure_config where load_ind = 'Y' and oracle_schema_name not like  'AGRINT'\n",
+						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name not like  'AGRINT'\n",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},

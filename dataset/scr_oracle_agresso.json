@@ -1,5 +1,5 @@
 {
-	"name": "SourceParisLoadtwotables",
+	"name": "scr_oracle_agresso",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OracelStageITF",
@@ -9,9 +9,6 @@
 			"cw_table": {
 				"type": "String"
 			}
-		},
-		"folder": {
-			"name": "dwh_stage/paris"
 		},
 		"annotations": [],
 		"type": "OracleTable",

@@ -1,21 +1,26 @@
 {
-	"name": "pre_dim_claim_rule_2",
+	"name": "agresso",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
-		"folder": {
-			"name": "dwh_prepare"
+		"parameters": {
+			"cw_fileName": {
+				"type": "String"
+			}
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "pre_dim_claim_rule",
-				"folderPath": "Pre_Dim",
-				"fileSystem": "dwh-prepare"
+				"fileName": {
+					"value": "@dataset().cw_fileName",
+					"type": "Expression"
+				},
+				"folderPath": "Agresso",
+				"fileSystem": "dwh-stage"
 			},
 			"compressionCodec": "snappy"
 		},

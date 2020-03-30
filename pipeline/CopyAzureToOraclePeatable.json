@@ -1293,7 +1293,7 @@
 			}
 		],
 		"folder": {
-			"name": "copy/sql_to_oracle"
+			"name": "copy job/marts_to_oracle"
 		},
 		"annotations": []
 	}
