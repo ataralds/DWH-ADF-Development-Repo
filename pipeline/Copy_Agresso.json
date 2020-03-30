@@ -15,7 +15,7 @@
 					},
 					"activities": [
 						{
-							"name": "Copy_m85",
+							"name": "Copy_Agresso",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
