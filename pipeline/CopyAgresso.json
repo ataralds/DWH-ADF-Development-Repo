@@ -1,0 +1,107 @@
+{
+	"name": "CopyAgresso",
+	"properties": {
+		"description": "Temp copy job to get the Agresso data",
+		"activities": [
+			{
+				"name": "ForEach_m85",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_m85",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "STAGE_ITF.@{item().source.table}"
+								},
+								{
+									"name": "Destination",
+									"value": "dwh-stage/Agresso/@{item().destination.fileName}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "scr_oracle_agresso",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().source.table"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "agresso",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_fileName": "@item().destination.fileName"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"table": "S_UDV_EMPLOYEE"
+						},
+						"destination": {
+							"fileName": "udv_employee.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "S_UDV_OFFICE"
+						},
+						"destination": {
+							"fileName": "udv_office.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "S_UDV_ORGUNIT"
+						},
+						"destination": {
+							"fileName": "udv_orgunit.parquet"
+						}
+					}
+				]
+			}
+		},
+		"annotations": []
+	}
+}
