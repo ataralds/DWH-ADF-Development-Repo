@@ -1,5 +1,5 @@
 {
-	"name": "Copy_oltp05",
+	"name": "copy_oltp05",
 	"properties": {
 		"description": "Kopiere direkte til SQL. Men ser ut til at det er begresninger på Integration runtime pga. sikkerthet og firewall. ",
 		"activities": [
