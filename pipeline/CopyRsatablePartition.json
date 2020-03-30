@@ -1,10 +1,10 @@
 {
-	"name": "FromSQLToLake",
+	"name": "CopyRsatablePartition",
 	"properties": {
-		"description": "Kopiere Sta_capital_number som er laget på SQL server",
+		"description": "Morten made partition on RSATABLE, trying to use this to load",
 		"activities": [
 			{
-				"name": "Copy_sta_capital_number",
+				"name": "Copy_sv2",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -17,16 +17,18 @@
 				"userProperties": [
 					{
 						"name": "Source",
-						"value": "dwh_stage.sta_capital_number"
+						"value": "CSTAGE_PARIS.RSATABLE"
 					},
 					{
 						"name": "Destination",
-						"value": "raw/Static/sta_capital_number.parquet"
+						"value": "test//Rsatable.parquet"
 					}
 				],
 				"typeProperties": {
 					"source": {
-						"type": "AzureSqlSource"
+						"type": "OracleSource",
+						"oracleReaderQuery": "select * from rsatable2 where rsaiyear = '2017'",
+						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "ParquetSink",
@@ -38,18 +40,21 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SourceSQLCaptialNumber",
+						"referenceName": "SourceDatasetRsatable",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "raw_lake_sta_capital_number",
+						"referenceName": "DestinationDatasetRsatable",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
+		"folder": {
+			"name": "copy/Test Lookup"
+		},
 		"annotations": []
 	}
 }

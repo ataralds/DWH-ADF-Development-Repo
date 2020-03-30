@@ -1,17 +1,14 @@
 {
-	"name": "lake_raw_paris_pool",
+	"name": "faptable_rsatable",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"cw_fileName": {
-				"type": "String"
+			"fileName": {
+				"type": "string"
 			}
-		},
-		"folder": {
-			"name": "raw/paris_pool"
 		},
 		"annotations": [],
 		"type": "Parquet",
@@ -19,11 +16,11 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@dataset().cw_fileName",
+					"value": "@dataset().fileName",
 					"type": "Expression"
 				},
-				"folderPath": "Paris_Pool",
-				"fileSystem": "raw"
+				"folderPath": "Paris",
+				"fileSystem": "dwh-stage"
 			},
 			"compressionCodec": "snappy"
 		},

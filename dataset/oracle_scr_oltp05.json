@@ -1,19 +1,19 @@
 {
-	"name": "TableListStatic",
+	"name": "oracle_scr_oltp05",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OLTP05",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "source/static"
+			"name": "Lookup dataset"
 		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
 		"typeProperties": {
 			"schema": "AZURE_READ",
-			"table": "AZURE_CONFIG"
+			"table": "sta_claim_process"
 		}
 	}
 }

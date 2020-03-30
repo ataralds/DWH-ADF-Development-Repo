@@ -1,9 +1,9 @@
 {
-	"name": "Run_pre_dim_premium_type",
+	"name": "run_pre_dim_claim_type",
 	"properties": {
 		"activities": [
 			{
-				"name": "m_pre_dim_premium_type",
+				"name": "m_pre_dim_claim_type",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_premium_type",
+						"referenceName": "m_pre_dim_claim_type",
 						"type": "DataFlowReference"
 					},
 					"compute": {

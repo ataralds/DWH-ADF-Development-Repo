@@ -1,10 +1,9 @@
 {
-	"name": "copy_paris_to_lake",
+	"name": "copy_oltp05_to_lake",
 	"properties": {
-		"description": "This copy job is getting the views from config on paris c_stage. Temp, before we get SQL up running. ",
 		"activities": [
 			{
-				"name": "Lookup_Paris",
+				"name": "Lookup_oltp05",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -18,23 +17,23 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where load_ind = 'Y'\n",
+						"oracleReaderQuery": "select table_name table_name from azure_config where load_ind = 'Y' and oracle_schema_name not like  'AGRINT'\n",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "azure_config_paris",
+						"referenceName": "oracle_configfile_static",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
 			},
 			{
-				"name": "ForEachParis",
+				"name": "ForEachOltp05",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup_Paris",
+						"activity": "Lookup_oltp05",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -43,12 +42,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup_Paris').output.value",
+						"value": "@activity('Lookup_oltp05').output.value",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "Copy Paris",
+							"name": "Copy Oltp05",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -79,17 +78,17 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "OracleParisTables",
+									"referenceName": "oracle_scr_oltp05",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "paris_tables",
+									"referenceName": "all_tables_oltp05",
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "@{item().table_name}",
+											"value": "@item().table_name",
 											"type": "Expression"
 										}
 									}
@@ -101,7 +100,7 @@
 			}
 		],
 		"folder": {
-			"name": "copy job/dwh_stage/paris"
+			"name": "copy job/dwh_stage/oltp05"
 		},
 		"annotations": []
 	}

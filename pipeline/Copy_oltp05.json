@@ -22,7 +22,8 @@
 					},
 					"activities": [
 						{
-							"name": "Copy Static to Sql",
+							"name": "Copy Oltp05 to Sql",
+							"description": "Copy job for OLTP05 to Sql server",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -59,13 +60,13 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "OracleAllTablesStatic",
+									"referenceName": "oracle_scr_oltp05",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "sql_dwh_stage_static",
+									"referenceName": "sql_dwh_stage_oltp05",
 									"type": "DatasetReference",
 									"parameters": {
 										"SinkDataset": {
@@ -99,7 +100,7 @@
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "TableListStatic",
+						"referenceName": "oracle_configfile_static",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
@@ -107,7 +108,7 @@
 			}
 		],
 		"folder": {
-			"name": "copy/Test Lookup"
+			"name": "copy job/dwh_stage/oltp05"
 		},
 		"annotations": []
 	}

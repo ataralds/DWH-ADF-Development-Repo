@@ -1,9 +1,11 @@
 {
 	"name": "CopyFaptable",
 	"properties": {
+		"description": "test time to load",
 		"activities": [
 			{
-				"name": "Copy_faptable",
+				"name": "Copy Faptable",
+				"description": "Copy faptable 2 years",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -13,21 +15,12 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "Source",
-						"value": "CSTAGE_PARIS.FAPTABLE"
-					},
-					{
-						"name": "Destination",
-						"value": "test//FAPTABLE.parquet"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select * from cstage_paris.faptable\nwhere fapiyear >2019",
-						"partitionOption": "None"
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
 					},
 					"sink": {
 						"type": "ParquetSink",
@@ -39,20 +32,20 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Oracle_Paris_Faptable",
+						"referenceName": "paris_faptable",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Azure_Lake_Faptable",
+						"referenceName": "ParquetFaptable",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
 		"folder": {
-			"name": "copy/raw/paris"
+			"name": "copy/Test Lookup"
 		},
 		"annotations": []
 	}

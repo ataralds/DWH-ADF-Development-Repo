@@ -1,20 +1,29 @@
 {
-	"name": "Azure_Lake_Faptable",
+	"name": "all_tables_oltp05",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"fileName": {
+				"type": "string"
+			}
+		},
 		"folder": {
-			"name": "raw/paris"
+			"name": "raw/static"
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "FAPTABLE.parquet",
-				"fileSystem": "test"
+				"fileName": {
+					"value": "@dataset().fileName",
+					"type": "Expression"
+				},
+				"folderPath": "Oltp05",
+				"fileSystem": "dwh-stage"
 			},
 			"compressionCodec": "snappy"
 		},

@@ -1,9 +1,9 @@
 {
-	"name": "CopyTestRunde",
+	"name": "CopyOltp05ConfigFile",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_sv2",
+				"name": "Copy_Configfile",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -16,17 +16,17 @@
 				"userProperties": [
 					{
 						"name": "Source",
-						"value": "CSTAGE_PARIS.RSATABLE"
+						"value": "AZURE_READ.AZURE_CONFIG"
 					},
 					{
 						"name": "Destination",
-						"value": "test//Rsatable.parquet"
+						"value": "raw/Static/config_file.parquet"
 					}
 				],
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select * from rsatable2 where rsaiyear = '2017'",
+						"oracleReaderQuery": "select table_name table_name from azure_config where load_ind = 'Y' \nand oracle_schema_name not like 'AGRINT'",
 						"partitionOption": "None"
 					},
 					"sink": {
@@ -39,18 +39,21 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SourceDatasetRsatable",
+						"referenceName": "oracle_configfile_static",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DestinationDatasetRsatable",
+						"referenceName": "raw_lake_configfile_static",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
+		"folder": {
+			"name": "copy/Test Lookup"
+		},
 		"annotations": []
 	}
 }
