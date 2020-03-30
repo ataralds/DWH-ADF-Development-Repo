@@ -1,6 +1,9 @@
 {
 	"name": "M_PRE_DIM_GUARANTEE_ME",
 	"properties": {
+		"folder": {
+			"name": "Henrik"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
