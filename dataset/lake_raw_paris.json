@@ -11,7 +11,7 @@
 			}
 		},
 		"folder": {
-			"name": "raw"
+			"name": "temp_dwh_stage_lake/mapsys"
 		},
 		"annotations": [],
 		"type": "Parquet",
