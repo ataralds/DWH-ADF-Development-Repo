@@ -1,5 +1,5 @@
 {
-	"name": "m_pre_dim_sub_claim_me",
+	"name": "m_pre_dim_sub_claim_me_new",
 	"properties": {
 		"activities": [
 			{
@@ -16,20 +16,17 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_sub_claimMe",
+						"referenceName": "m_pre_dim_sub_claim_Me_new",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"LCATABLE": {
 								"cw_fileName": "CSTAGE_PARISLCATABLE.parquet"
 							},
-							"LDATABLE": {
-								"cw_fileName": "CSTAGE_PARISLDATABLE.parquet"
+							"LCCTABLE": {
+								"cw_fileName": "LCCTABLE.parquet"
 							},
-							"TcrossReference": {
-								"cw_fileName": "stage_itf_t_crossreference.parquet"
-							},
-							"HlpExchangeRateToUDS": {
-								"dataset": "STAGE_ITF.HLP_EXCHANGE_RATE_TO_USD.parquet"
+							"ClaimType": {
+								"cw_fileName": "pre_dim_claim_type.parquet"
 							}
 						}
 					},

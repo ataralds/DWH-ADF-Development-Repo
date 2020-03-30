@@ -1,9 +1,9 @@
 {
-	"name": "m_pre_dim_sub_claim_me",
+	"name": "m_pre_dim_capital",
 	"properties": {
 		"activities": [
 			{
-				"name": "m_pre_dim_sub_claimMe",
+				"name": "m_pre_dim_capital",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,20 +16,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_sub_claimMe",
+						"referenceName": "m_pre_dim_capital",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"LCATABLE": {
-								"cw_fileName": "CSTAGE_PARISLCATABLE.parquet"
-							},
-							"LDATABLE": {
-								"cw_fileName": "CSTAGE_PARISLDATABLE.parquet"
-							},
-							"TcrossReference": {
+							"TCrossReference": {
 								"cw_fileName": "stage_itf_t_crossreference.parquet"
 							},
-							"HlpExchangeRateToUDS": {
-								"dataset": "STAGE_ITF.HLP_EXCHANGE_RATE_TO_USD.parquet"
+							"StaCapitalNumber": {
+								"cw_fileName": "sta_capital_number.parquet"
 							}
 						}
 					},

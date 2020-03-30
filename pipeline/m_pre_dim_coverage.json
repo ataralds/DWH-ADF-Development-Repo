@@ -1,9 +1,9 @@
 {
-	"name": "dim_business_area",
+	"name": "m_pre_dim_coverage",
 	"properties": {
 		"activities": [
 			{
-				"name": "Simplify_M_DIM_BUSINESS_AREA",
+				"name": "m_pre_dim_coverage_test",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,8 +16,16 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "M_DIM_BUSINESS_AREA",
-						"type": "DataFlowReference"
+						"referenceName": "m_pre_dim_coverage_test",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"TCrossReference": {
+								"cw_fileName": "stage_itf_t_crossreference.parquet"
+							},
+							"CoverageGroup": {
+								"cw_fileName": "STATIC.STA_COVERAGE_GROUP.parquet"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
