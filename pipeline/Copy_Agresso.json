@@ -1,10 +1,10 @@
 {
-	"name": "CopyAgresso",
+	"name": "Copy_Agresso",
 	"properties": {
 		"description": "Temp copy job to get the Agresso data",
 		"activities": [
 			{
-				"name": "ForEach_m85",
+				"name": "ForEach_Agresso",
 				"type": "ForEach",
 				"dependsOn": [],
 				"userProperties": [],
@@ -101,6 +101,9 @@
 					}
 				]
 			}
+		},
+		"folder": {
+			"name": "copy job/dwh_stage/Agresso"
 		},
 		"annotations": []
 	}
