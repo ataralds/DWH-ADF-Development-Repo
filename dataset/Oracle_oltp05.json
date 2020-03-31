@@ -11,7 +11,7 @@
 			}
 		},
 		"folder": {
-			"name": "Lookup dataset"
+			"name": "Test"
 		},
 		"annotations": [],
 		"type": "OracleTable",
