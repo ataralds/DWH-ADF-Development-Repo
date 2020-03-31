@@ -85,7 +85,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "paris_tables",
+									"referenceName": "paris",
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
