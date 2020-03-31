@@ -10,6 +10,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "Copy job/Paris"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
