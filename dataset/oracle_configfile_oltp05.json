@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "Lookup dataset"
+			"name": "Copy job/Oltp05"
 		},
 		"annotations": [],
 		"type": "OracleTable",
