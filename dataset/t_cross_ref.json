@@ -1,5 +1,5 @@
 {
-	"name": "t_cross_parq",
+	"name": "t_cross_ref",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",

@@ -1,9 +1,9 @@
 {
-	"name": "Copy Lake to Table_copy1",
+	"name": "pipeline2",
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
+				"name": "new_lookup",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -33,7 +33,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "new_lookup",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -42,7 +42,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup1').output.value",
+						"value": "@activity('new_lookup').output.value",
 						"type": "Expression"
 					},
 					"activities": [
@@ -57,20 +57,11 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": [
-								{
-									"name": "Source",
-									"value": "@{pipeline().parameters.SourceContainer}/@{pipeline().parameters.SourceDirectory}/@{concat(item().Prop_0,'.parquet')}"
-								},
-								{
-									"name": "Destination",
-									"value": "dwh_stage.@{toLower(concat('p_',item().Prop_0))}"
-								}
-							],
+							"userProperties": [],
 							"typeProperties": {
 								"source": {
 									"type": "OracleSource",
-									"oracleReaderQuery": "SELECT * FROM @{item().table_name}",
+									"oracleReaderQuery": "SELECT * FROM @{item().table_name} ",
 									"partitionOption": "None",
 									"queryTimeout": "02:00:00"
 								},
@@ -91,7 +82,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"SinkDataset": {
-											"value": "@trim(replace(item().table_name,'\"',' '))",
+											"value": "@trim(replace(item().table_name,'\"',' ')) ",
 											"type": "Expression"
 										}
 									}
@@ -102,9 +93,6 @@
 				}
 			}
 		],
-		"folder": {
-			"name": "copy/raw"
-		},
 		"annotations": []
 	}
 }
