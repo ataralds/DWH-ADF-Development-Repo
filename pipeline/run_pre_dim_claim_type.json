@@ -27,7 +27,7 @@
 			}
 		],
 		"folder": {
-			"name": "pipeline/pre_dim"
+			"name": "pipeline"
 		},
 		"annotations": []
 	}
