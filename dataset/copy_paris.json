@@ -1,5 +1,5 @@
 {
-	"name": "paris",
+	"name": "copy_paris",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
