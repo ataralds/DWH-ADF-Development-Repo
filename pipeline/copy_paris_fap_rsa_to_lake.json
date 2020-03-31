@@ -23,7 +23,7 @@
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "azure_config_paris",
+						"referenceName": "oracle_config_paris",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
@@ -101,7 +101,7 @@
 			}
 		],
 		"folder": {
-			"name": "copy/Test Lookup"
+			"name": "Test"
 		},
 		"annotations": []
 	}

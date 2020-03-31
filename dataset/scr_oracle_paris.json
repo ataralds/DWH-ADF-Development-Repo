@@ -1,17 +1,20 @@
 {
-	"name": "azure_config_paris",
+	"name": "scr_oracle_paris",
 	"properties": {
-		"description": "This dataset is pointing to the cinfig file in stage_itf. Temp solution",
+		"description": "All the views in paris",
 		"linkedServiceName": {
 			"referenceName": "OracleCStage",
 			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Copy job/Paris"
 		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
 		"typeProperties": {
 			"schema": "CSTAGE_PARIS",
-			"table": "AZURE_CONFIG"
+			"table": "ACOTABLE"
 		}
 	}
 }

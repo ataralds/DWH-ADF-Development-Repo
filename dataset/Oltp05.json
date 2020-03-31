@@ -1,20 +1,29 @@
 {
-	"name": "pre_dim_claim_rule",
+	"name": "Oltp05",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"fileName": {
+				"type": "string"
+			}
+		},
 		"folder": {
-			"name": "Test"
+			"name": "Copy job/Oltp05"
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "Pre_Dim",
-				"fileSystem": "dwh-prepare"
+				"fileName": {
+					"value": "@dataset().fileName",
+					"type": "Expression"
+				},
+				"folderPath": "Oltp05",
+				"fileSystem": "dwh-stage"
 			},
 			"compressionCodec": "snappy"
 		},

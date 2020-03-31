@@ -1,6 +1,7 @@
 {
-	"name": "Copy Static Lake to Sql_NY",
+	"name": "Copy_oltp05_from_Lake_Sql",
 	"properties": {
+		"description": "temp copy job from lake to sql. This was used in the test when the db was not up running.",
 		"activities": [
 			{
 				"name": "Lookup1",
@@ -85,7 +86,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "tables_static_lake_2303",
+									"referenceName": "tables_oltp05_lake",
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
@@ -121,7 +122,7 @@
 			}
 		},
 		"folder": {
-			"name": "copy/Test Lookup"
+			"name": "Test"
 		},
 		"annotations": []
 	}

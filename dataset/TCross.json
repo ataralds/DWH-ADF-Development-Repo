@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "Test"
+			"name": "temp_dwh_stage_lake/mapsys"
 		},
 		"annotations": [],
 		"type": "Parquet",

@@ -23,7 +23,7 @@
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "azure_config_paris",
+						"referenceName": "oracle_config_paris",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
@@ -79,13 +79,13 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "OracleParisTables",
+									"referenceName": "scr_oracle_paris",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "paris_tables",
+									"referenceName": "paris",
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {

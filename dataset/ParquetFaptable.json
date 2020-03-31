@@ -5,6 +5,9 @@
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Copy job/Paris"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {

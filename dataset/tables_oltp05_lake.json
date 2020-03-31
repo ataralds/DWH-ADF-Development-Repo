@@ -1,5 +1,5 @@
 {
-	"name": "tables_static_lake_2303",
+	"name": "tables_oltp05_lake",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",

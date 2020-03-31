@@ -1,12 +1,12 @@
 {
-	"name": "oracle_configfile_static",
+	"name": "oracle_configfile_oltp05",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OLTP05",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "Lookup dataset"
+			"name": "Copy job/Oltp05"
 		},
 		"annotations": [],
 		"type": "OracleTable",

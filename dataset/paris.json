@@ -1,5 +1,5 @@
 {
-	"name": "all_tables_oltp05",
+	"name": "paris",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
@@ -11,7 +11,7 @@
 			}
 		},
 		"folder": {
-			"name": "raw/static"
+			"name": "Copy job/Paris"
 		},
 		"annotations": [],
 		"type": "Parquet",
@@ -22,7 +22,7 @@
 					"value": "@dataset().fileName",
 					"type": "Expression"
 				},
-				"folderPath": "Oltp05",
+				"folderPath": "Paris",
 				"fileSystem": "dwh-stage"
 			},
 			"compressionCodec": "snappy"
