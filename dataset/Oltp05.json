@@ -1,6 +1,7 @@
 {
 	"name": "Oltp05",
 	"properties": {
+		"description": "Static, Exact, Mapsys, Salesforce, Lloyds",
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
