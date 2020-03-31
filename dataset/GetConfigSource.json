@@ -5,9 +5,6 @@
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
-		"folder": {
-			"name": "Copy Ankit"
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
