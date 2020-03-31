@@ -22,7 +22,7 @@
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "oracle_configfile_static",
+						"referenceName": "oracle_configfile_oltp05",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false

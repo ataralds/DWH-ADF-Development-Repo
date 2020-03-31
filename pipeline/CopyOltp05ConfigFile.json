@@ -39,7 +39,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "oracle_configfile_static",
+						"referenceName": "oracle_configfile_oltp05",
 						"type": "DatasetReference"
 					}
 				],
