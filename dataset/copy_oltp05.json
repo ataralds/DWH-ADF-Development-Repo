@@ -1,5 +1,5 @@
 {
-	"name": "Oltp05",
+	"name": "copy_oltp05",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
