@@ -2,7 +2,7 @@
 	"name": "m_dim_claim_type",
 	"properties": {
 		"folder": {
-			"name": "marts"
+			"name": "marts/pre_dim"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
