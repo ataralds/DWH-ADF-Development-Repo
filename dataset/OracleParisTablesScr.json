@@ -5,6 +5,9 @@
 			"referenceName": "OracleCStage",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Copy job/Paris"
+		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
