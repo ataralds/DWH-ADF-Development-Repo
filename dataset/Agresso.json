@@ -19,7 +19,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@dataset().cw_fileName",
+					"value": "@dataset().fileName",
 					"type": "Expression"
 				},
 				"folderPath": "Agresso",
