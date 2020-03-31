@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "Copy job/Paris"
+			"name": "Copy job/dwh-stage/Paris"
 		},
 		"annotations": [],
 		"type": "OracleTable",

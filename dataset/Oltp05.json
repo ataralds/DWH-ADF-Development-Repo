@@ -11,7 +11,7 @@
 			}
 		},
 		"folder": {
-			"name": "Copy job/Oltp05"
+			"name": "Copy job/dwh-stage/Oltp05"
 		},
 		"annotations": [],
 		"type": "Parquet",
