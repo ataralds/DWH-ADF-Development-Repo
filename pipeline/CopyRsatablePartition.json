@@ -43,17 +43,11 @@
 						"referenceName": "SourceDatasetRsatable",
 						"type": "DatasetReference"
 					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DestinationDatasetRsatable",
-						"type": "DatasetReference"
-					}
 				]
 			}
 		],
 		"folder": {
-			"name": "copy/Test Lookup"
+			"name": "Test"
 		},
 		"annotations": []
 	}
