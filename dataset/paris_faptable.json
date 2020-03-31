@@ -13,7 +13,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "CSTAGE_PARIS",
-			"table": "p_faptable"
+			"table": "p_rsatable"
 		}
 	}
 }
