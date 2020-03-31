@@ -1,5 +1,5 @@
 {
-	"name": "copy_agresso",
+	"name": "agresso",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
