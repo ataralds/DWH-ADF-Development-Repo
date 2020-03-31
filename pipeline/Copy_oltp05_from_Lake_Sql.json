@@ -86,7 +86,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "tables_static_lake_2303",
+									"referenceName": "tables_oltp05_lake",
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
