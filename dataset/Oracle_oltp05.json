@@ -1,5 +1,5 @@
 {
-	"name": "Static_oltp05_2303",
+	"name": "Oracle_oltp05",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OLTP05",
