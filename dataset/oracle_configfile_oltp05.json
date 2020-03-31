@@ -1,5 +1,5 @@
 {
-	"name": "oracle_configfile_static",
+	"name": "oracle_configfile_oltp05",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OLTP05",
