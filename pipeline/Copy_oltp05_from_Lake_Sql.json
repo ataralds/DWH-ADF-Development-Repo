@@ -25,7 +25,7 @@
 						}
 					},
 					"dataset": {
-						"referenceName": "Lake_static_configfile",
+						"referenceName": "lake_Oltp05_configfile",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
@@ -98,7 +98,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "AzureSqlFromLakeStatic",
+									"referenceName": "dwh_stage_oltp05_sql",
 									"type": "DatasetReference",
 									"parameters": {
 										"SinkDataset": {
