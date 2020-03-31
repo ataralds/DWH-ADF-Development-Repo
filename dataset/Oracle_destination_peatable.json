@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "sql_to_oracle"
+			"name": "Copy job/marts_to_oracle"
 		},
 		"annotations": [],
 		"type": "OracleTable",
