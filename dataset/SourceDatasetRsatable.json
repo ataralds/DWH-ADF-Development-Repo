@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "Test"
+			"name": "Lookup dataset"
 		},
 		"annotations": [],
 		"type": "OracleTable",
