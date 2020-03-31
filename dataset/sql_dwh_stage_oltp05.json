@@ -12,7 +12,7 @@
 			}
 		},
 		"folder": {
-			"name": "Lookup dataset"
+			"name": "Copy job/Oltp05"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",

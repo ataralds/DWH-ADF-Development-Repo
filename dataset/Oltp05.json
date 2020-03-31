@@ -10,6 +10,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "Copy job/Oltp05"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
