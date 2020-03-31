@@ -5,6 +5,9 @@
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "dwh-stage"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {

@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "dwh-stage/Paris"
+			"name": "dwh-stage"
 		},
 		"annotations": [],
 		"type": "Parquet",
