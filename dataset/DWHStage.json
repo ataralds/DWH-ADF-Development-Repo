@@ -10,9 +10,6 @@
 				"type": "string"
 			}
 		},
-		"folder": {
-			"name": "Copy Ankit"
-		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
