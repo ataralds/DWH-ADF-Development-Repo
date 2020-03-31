@@ -1,29 +1,20 @@
 {
-	"name": "lake_raw_paris",
+	"name": "Paris",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"cw_fileName": {
-				"type": "String"
-			}
-		},
 		"folder": {
-			"name": "temp_dwh_stage_lake/mapsys"
+			"name": "dwh-stage"
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().cw_fileName",
-					"type": "Expression"
-				},
 				"folderPath": "Paris",
-				"fileSystem": "raw"
+				"fileSystem": "dwh-stage"
 			},
 			"compressionCodec": "snappy"
 		},

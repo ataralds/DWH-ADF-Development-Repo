@@ -11,7 +11,7 @@
 			}
 		},
 		"folder": {
-			"name": "Copy job/Agresso"
+			"name": "Copy job/dwh-stage/Agresso"
 		},
 		"annotations": [],
 		"type": "OracleTable",

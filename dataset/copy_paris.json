@@ -1,21 +1,29 @@
 {
-	"name": "raw_lake_configfile_static",
+	"name": "copy_paris",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"fileName": {
+				"type": "string"
+			}
+		},
 		"folder": {
-			"name": "Lookup dataset"
+			"name": "Copy job/dwh-stage/Paris"
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "config_file.parquet",
-				"folderPath": "Static",
-				"fileSystem": "raw"
+				"fileName": {
+					"value": "@dataset().fileName",
+					"type": "Expression"
+				},
+				"folderPath": "Paris",
+				"fileSystem": "dwh-stage"
 			},
 			"compressionCodec": "snappy"
 		},

@@ -1,5 +1,5 @@
 {
-	"name": "AzureSqlFromLakeStatic",
+	"name": "dwh_stage_oltp05_sql",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_server_development_connection",
@@ -11,7 +11,7 @@
 			}
 		},
 		"folder": {
-			"name": "Lookup dataset"
+			"name": "Test"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",

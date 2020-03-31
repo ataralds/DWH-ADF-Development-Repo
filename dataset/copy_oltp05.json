@@ -1,5 +1,5 @@
 {
-	"name": "Lake_lookup_file_Static",
+	"name": "copy_oltp05",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
@@ -11,7 +11,7 @@
 			}
 		},
 		"folder": {
-			"name": "Lookup dataset"
+			"name": "Copy job/dwh-stage/Oltp05"
 		},
 		"annotations": [],
 		"type": "Parquet",
@@ -22,7 +22,7 @@
 					"value": "@dataset().fileName",
 					"type": "Expression"
 				},
-				"folderPath": "Static",
+				"folderPath": "Oltp05",
 				"fileSystem": "dwh-stage"
 			},
 			"compressionCodec": "snappy"

@@ -11,7 +11,7 @@
 			}
 		},
 		"folder": {
-			"name": "Lookup dataset"
+			"name": "Copy job/dwh-stage/Oltp05"
 		},
 		"annotations": [],
 		"type": "OracleTable",

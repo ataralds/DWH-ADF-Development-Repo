@@ -1,27 +1,19 @@
 {
 	"name": "Oltp05",
 	"properties": {
+		"description": "Static, Exact, Mapsys, Salesforce, Lloyds",
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"fileName": {
-				"type": "string"
-			}
-		},
 		"folder": {
-			"name": "Copy job/Oltp05"
+			"name": "dwh-stage"
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().fileName",
-					"type": "Expression"
-				},
 				"folderPath": "Oltp05",
 				"fileSystem": "dwh-stage"
 			},

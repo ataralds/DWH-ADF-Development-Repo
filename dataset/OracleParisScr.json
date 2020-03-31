@@ -6,6 +6,9 @@
 			"referenceName": "OracleCStage",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Copy job/dwh-stage/Paris"
+		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],

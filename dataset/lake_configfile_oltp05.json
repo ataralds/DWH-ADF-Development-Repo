@@ -1,17 +1,21 @@
 {
-	"name": "dwh_prepare_pre_dim",
+	"name": "lake_configfile_oltp05",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Test"
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "Pre_Dim",
-				"fileSystem": "dwh-prepare"
+				"fileName": "config_file.parquet",
+				"folderPath": "Static",
+				"fileSystem": "raw"
 			},
 			"compressionCodec": "snappy"
 		},

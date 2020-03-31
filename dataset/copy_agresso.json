@@ -1,5 +1,5 @@
 {
-	"name": "dwh_stage_static",
+	"name": "copy_agresso",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
@@ -11,7 +11,7 @@
 			}
 		},
 		"folder": {
-			"name": "temp_dwh_stage_lake/static"
+			"name": "Copy job/dwh-stage/Agresso"
 		},
 		"annotations": [],
 		"type": "Parquet",
@@ -22,8 +22,8 @@
 					"value": "@dataset().cw_fileName",
 					"type": "Expression"
 				},
-				"folderPath": "Static",
-				"fileSystem": "raw"
+				"folderPath": "Agresso",
+				"fileSystem": "dwh-stage"
 			},
 			"compressionCodec": "snappy"
 		},

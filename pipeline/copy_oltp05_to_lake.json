@@ -84,7 +84,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "Oltp05",
+									"referenceName": "copy_oltp05",
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {

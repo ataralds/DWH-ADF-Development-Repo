@@ -85,7 +85,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "paris",
+									"referenceName": "copy_paris",
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {

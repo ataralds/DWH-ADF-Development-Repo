@@ -1,32 +1,33 @@
 {
-	"name": "paris",
+	"name": "lake_Oltp05_configfile",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"fileName": {
-				"type": "string"
-			}
-		},
 		"folder": {
-			"name": "Copy job/Paris"
+			"name": "Test"
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().fileName",
-					"type": "Expression"
-				},
-				"folderPath": "Paris",
-				"fileSystem": "dwh-stage"
+				"fileName": "config_file.parquet",
+				"folderPath": "Static",
+				"fileSystem": "raw"
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "TABLE_NAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "LOAD_IND",
+				"type": "UTF8"
+			}
+		]
 	}
 }
