@@ -1,5 +1,5 @@
 {
-	"name": "OracleParisTables",
+	"name": "scr_oracle_paris",
 	"properties": {
 		"description": "All the views in paris",
 		"linkedServiceName": {
