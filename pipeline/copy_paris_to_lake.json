@@ -79,7 +79,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "OracleParisTables",
+									"referenceName": "scr_oracle_paris",
 									"type": "DatasetReference"
 								}
 							],
