@@ -1,5 +1,5 @@
 {
-	"name": "Lake_static_configfile",
+	"name": "lake_Oltp05_configfile",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
