@@ -59,10 +59,13 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "copy_agresso",
+									"referenceName": "Agresso",
 									"type": "DatasetReference",
 									"parameters": {
-										"cw_fileName": "@item().destination.fileName"
+										"fileName": {
+											"value": "@item().destination.fileName",
+											"type": "Expression"
+										}
 									}
 								}
 							]

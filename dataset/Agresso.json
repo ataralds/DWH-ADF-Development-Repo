@@ -5,160 +5,28 @@
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"fileName": {
+				"type": "String"
+			}
+		},
 		"folder": {
-			"name": "dwh-stage"
+			"name": "Copy job/dwh-stage/Agresso"
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().fileName",
+					"type": "Expression"
+				},
 				"folderPath": "Agresso",
 				"fileSystem": "dwh-stage"
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": [
-			{
-				"name": "EMPLOYEE_ID",
-				"type": "UTF8"
-			},
-			{
-				"name": "COMPANY",
-				"type": "UTF8"
-			},
-			{
-				"name": "COMPANY_NAME",
-				"type": "UTF8"
-			},
-			{
-				"name": "MAIN_EMPLOYER",
-				"type": "DECIMAL",
-				"precision": 38,
-				"scale": 18
-			},
-			{
-				"name": "CONTRACT_TYPE",
-				"type": "UTF8"
-			},
-			{
-				"name": "CONTRACT_DESC",
-				"type": "UTF8"
-			},
-			{
-				"name": "FIRST_NAME",
-				"type": "UTF8"
-			},
-			{
-				"name": "LAST_NAME",
-				"type": "UTF8"
-			},
-			{
-				"name": "AD_NAME",
-				"type": "UTF8"
-			},
-			{
-				"name": "JOBPHONE",
-				"type": "UTF8"
-			},
-			{
-				"name": "SHORTPHONE",
-				"type": "UTF8"
-			},
-			{
-				"name": "JOBMOBILE",
-				"type": "UTF8"
-			},
-			{
-				"name": "EMAIL",
-				"type": "UTF8"
-			},
-			{
-				"name": "COSTC",
-				"type": "UTF8"
-			},
-			{
-				"name": "LAST_UPDATE",
-				"type": "INT96"
-			},
-			{
-				"name": "POSITION",
-				"type": "UTF8"
-			},
-			{
-				"name": "POSITION_TITLE",
-				"type": "UTF8"
-			},
-			{
-				"name": "SENIORITY",
-				"type": "UTF8"
-			},
-			{
-				"name": "SEN_TITLE",
-				"type": "UTF8"
-			},
-			{
-				"name": "DISPLAY_NAME",
-				"type": "UTF8"
-			},
-			{
-				"name": "OFFICE",
-				"type": "UTF8"
-			},
-			{
-				"name": "STATUS",
-				"type": "UTF8"
-			},
-			{
-				"name": "STATUS_DESC",
-				"type": "UTF8"
-			},
-			{
-				"name": "CONTR_DATE_FROM",
-				"type": "INT96"
-			},
-			{
-				"name": "CONTR_DATE_TO",
-				"type": "INT96"
-			},
-			{
-				"name": "GARD_NO",
-				"type": "DECIMAL",
-				"precision": 38,
-				"scale": 18
-			},
-			{
-				"name": "THE_BRIDGE",
-				"type": "DECIMAL",
-				"precision": 38,
-				"scale": 18
-			},
-			{
-				"name": "P_GARD_NO",
-				"type": "DECIMAL",
-				"precision": 38,
-				"scale": 18
-			},
-			{
-				"name": "P_THE_BRIDGE",
-				"type": "DECIMAL",
-				"precision": 38,
-				"scale": 18
-			},
-			{
-				"name": "NICKNAME",
-				"type": "UTF8"
-			},
-			{
-				"name": "COSTC_STATUS",
-				"type": "UTF8"
-			},
-			{
-				"name": "P_MYGARD_FX",
-				"type": "DECIMAL",
-				"precision": 38,
-				"scale": 18
-			}
-		]
+		"schema": []
 	}
 }
