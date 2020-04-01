@@ -78,20 +78,14 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "oracle_scr_oltp05",
+									"referenceName": "Oracle_lloyds",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "Oltp05",
-									"type": "DatasetReference",
-									"parameters": {
-										"fileName": {
-											"value": "@{item().table_name}",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "Lloyds",
+									"type": "DatasetReference"
 								}
 							]
 						}
