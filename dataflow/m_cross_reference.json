@@ -1,0 +1,34 @@
+{
+	"name": "m_cross_reference",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Oltp05",
+						"type": "DatasetReference"
+					},
+					"name": "OmMapCodeValues"
+				},
+				{
+					"dataset": {
+						"referenceName": "Oltp05",
+						"type": "DatasetReference"
+					},
+					"name": "OmMapCodeType"
+				},
+				{
+					"dataset": {
+						"referenceName": "Oltp05",
+						"type": "DatasetReference"
+					},
+					"name": "tProductGroup"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(output(\n\t\tactive_flag as string,\n\t\tcode2 as string,\n\t\tcode2_description as string,\n\t\tcreated_by as string,\n\t\tcreated_date as timestamp,\n\t\tgard_comments as string,\n\t\tintech_comments as string,\n\t\tmap_code_status as string,\n\t\tmap_code_type_id as double,\n\t\tmap_code_val_id as double,\n\t\tmap_rule as string,\n\t\tmodified_by as string,\n\t\tmodified_date as timestamp,\n\t\tom_x_ref as string,\n\t\tpredefined_om_code as string,\n\t\tsource_code_action as string,\n\t\tsource_code_descr as string,\n\t\tsource_code_field1 as string,\n\t\tsource_code_field1_value as string,\n\t\tsource_code_field2 as string,\n\t\tsource_code_field2_value as string,\n\t\tsource_code_field3 as string,\n\t\tsource_code_field3_value as string,\n\t\tsource_code_field4 as string,\n\t\tsource_code_field4_value as string,\n\t\tsource_code_key as string,\n\t\tsource_code_table as string,\n\t\tsource_system as string,\n\t\tsource_table2_id as double,\n\t\tsource_table_id as double,\n\t\tsource_tab_col_id as double,\n\t\ttarget_code as string,\n\t\ttarget_long_descr as string,\n\t\ttarget_short_descr as string,\n\t\ttarget_table_id as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> OmMapCodeValues\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> OmMapCodeType\nsource(output(\n\t\tbusiness_area as string,\n\t\tcoverage_code as string,\n\t\tcoverage_desc as string,\n\t\tinserted_by as string,\n\t\tinserted_date as timestamp,\n\t\tpk_sf_prod_group as double,\n\t\trisk_group_code as string,\n\t\trisk_group_desc as string,\n\t\tsalesforce_prod_code as string,\n\t\tsalesforce_prod_desc as string,\n\t\tupdated_by as string,\n\t\tupdated_date as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> tProductGroup"
+		}
+	}
+}
