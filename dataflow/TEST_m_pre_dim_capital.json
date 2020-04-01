@@ -1,40 +1,24 @@
 {
-	"name": "m_pre_dim_capital",
+	"name": "TEST_m_pre_dim_capital",
 	"properties": {
 		"folder": {
-			"name": "Henrik"
+			"name": "dwh_prepare/pre_dim"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "dwh_stage_mapsys",
-						"type": "DatasetReference"
-					},
 					"name": "TCrossReference"
 				},
 				{
-					"dataset": {
-						"referenceName": "lake_raw_static",
-						"type": "DatasetReference"
-					},
 					"name": "StaCapitalNumber"
 				},
 				{
-					"dataset": {
-						"referenceName": "dwh_prepare_preDim_lake",
-						"type": "DatasetReference"
-					},
 					"name": "PreDimCaptialSource"
 				}
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "dwh_prepare_pre_dim",
-						"type": "DatasetReference"
-					},
 					"name": "PreDimCapital"
 				}
 			],
@@ -58,7 +42,7 @@
 					"name": "NotExists"
 				}
 			],
-			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nsource(output(\n\t\tcapital_code as string,\n\t\tcapital_desc as string,\n\t\tcapital_account_number as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaCapitalNumber\nsource(output(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> PreDimCaptialSource\nTCrossReference filter(CODE_TYPE_ID == 116 && SOURCE_SYSTEM == 'NT') ~> FilterCodeTypeIDandSourceSystem\nFilterCodeTypeIDandSourceSystem, StaCapitalNumber join(TARGET_CODE == capital_code,\n\tjoinType:'outer',\n\tbroadcast: 'none')~> JoinStaCapitalNumber\nJoinStaCapitalNumber derive(MAPPING_NAME = 'M_PRE_DIM_CAPITAL',\n\t\tLOAD_DATE = currentTimestamp()) ~> DerivedMappingNameAndLoadDate\nDerivedMappingNameAndLoadDate select(mapColumn(\n\t\tPK_KEY = TARGET_CODE,\n\t\tCPT_DESCRIPTION = TARGET_DESCRIPTION,\n\t\tCPT_NUMBER = capital_account_number,\n\t\tINSERTED_BY = MAPPING_NAME,\n\t\tLAST_UPDATED_BY = MAPPING_NAME,\n\t\tDATE_INSERTED = LOAD_DATE,\n\t\tDATE_LAST_UPDATED = LOAD_DATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectoUTPUTcOLUMNS\nSelectoUTPUTcOLUMNS, PreDimCaptialSource exists(SelectoUTPUTcOLUMNS@PK_KEY == PreDimCaptialSource@PK_KEY,\n\tnegate:false,\n\tbroadcast: 'none')~> Exists\nSelectoUTPUTcOLUMNS, PreDimCaptialSource exists(SelectoUTPUTcOLUMNS@PK_KEY == PreDimCaptialSource@PK_KEY,\n\tnegate:true,\n\tbroadcast: 'none')~> NotExists\nExists sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_capital.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> PreDimCapital"
+			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> TCrossReference\nsource(output(\n\t\tcapital_code as string,\n\t\tcapital_desc as string,\n\t\tcapital_account_number as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> StaCapitalNumber\nsource(output(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> PreDimCaptialSource\nTCrossReference filter(CODE_TYPE_ID == 116 && SOURCE_SYSTEM == 'NT') ~> FilterCodeTypeIDandSourceSystem\nFilterCodeTypeIDandSourceSystem, StaCapitalNumber join(TARGET_CODE == capital_code,\n\tjoinType:'outer',\n\tbroadcast: 'none')~> JoinStaCapitalNumber\nJoinStaCapitalNumber derive(MAPPING_NAME = 'M_PRE_DIM_CAPITAL',\n\t\tLOAD_DATE = currentTimestamp()) ~> DerivedMappingNameAndLoadDate\nDerivedMappingNameAndLoadDate select(mapColumn(\n\t\tPK_KEY = TARGET_CODE,\n\t\tCPT_DESCRIPTION = TARGET_DESCRIPTION,\n\t\tCPT_NUMBER = capital_account_number,\n\t\tINSERTED_BY = MAPPING_NAME,\n\t\tLAST_UPDATED_BY = MAPPING_NAME,\n\t\tDATE_INSERTED = LOAD_DATE,\n\t\tDATE_LAST_UPDATED = LOAD_DATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectoUTPUTcOLUMNS\nSelectoUTPUTcOLUMNS, PreDimCaptialSource exists(SelectoUTPUTcOLUMNS@PK_KEY == PreDimCaptialSource@PK_KEY,\n\tnegate:false,\n\tbroadcast: 'none')~> Exists\nSelectoUTPUTcOLUMNS, PreDimCaptialSource exists(SelectoUTPUTcOLUMNS@PK_KEY == PreDimCaptialSource@PK_KEY,\n\tnegate:true,\n\tbroadcast: 'none')~> NotExists\nExists sink(partitionFileNames:['pre_dim_capital.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> PreDimCapital"
 		}
 	}
 }
