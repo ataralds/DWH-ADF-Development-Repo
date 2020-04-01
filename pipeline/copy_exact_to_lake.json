@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name not like  'AGRINT'\n",
+						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name = 'EXACT_SRC'\n",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
@@ -78,20 +78,14 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "oracle_scr_oltp05",
+									"referenceName": "oracle_exact",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "Oltp05",
-									"type": "DatasetReference",
-									"parameters": {
-										"fileName": {
-											"value": "@{item().table_name}",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "Exact",
+									"type": "DatasetReference"
 								}
 							]
 						}
