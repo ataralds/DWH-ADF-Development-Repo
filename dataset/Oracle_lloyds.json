@@ -1,5 +1,5 @@
 {
-	"name": "oracle_exact",
+	"name": "Oracle_lloyds",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OLTP05",
@@ -13,7 +13,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "AZURE_READ",
-			"table": "map_code_values"
+			"table": "sta_exchange_rate"
 		}
 	}
 }

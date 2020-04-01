@@ -1,5 +1,5 @@
 {
-	"name": "Exact",
+	"name": "Lloyds",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
@@ -22,7 +22,7 @@
 					"value": "@dataset().fileName",
 					"type": "Expression"
 				},
-				"folderPath": "Exact",
+				"folderPath": "Lloyds",
 				"fileSystem": "dwh-stage"
 			},
 			"compressionCodec": "snappy"

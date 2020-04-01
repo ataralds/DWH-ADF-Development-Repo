@@ -61,10 +61,6 @@
 							"typeProperties": {
 								"source": {
 									"type": "OracleSource",
-									"oracleReaderQuery": {
-										"value": "SELECT * FROM @{item().table_name} ",
-										"type": "Expression"
-									},
 									"partitionOption": "None",
 									"queryTimeout": "02:00:00"
 								},
@@ -78,20 +74,20 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "oracle_scr_oltp05",
-									"type": "DatasetReference"
+									"referenceName": "Oracle_oltp05",
+									"type": "DatasetReference",
+									"parameters": {
+										"fileName": {
+											"value": "SELECT * FROM @{item().table_name} ",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "Oltp05",
-									"type": "DatasetReference",
-									"parameters": {
-										"fileName": {
-											"value": "@{item().table_name}",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "mapsys",
+									"type": "DatasetReference"
 								}
 							]
 						}
