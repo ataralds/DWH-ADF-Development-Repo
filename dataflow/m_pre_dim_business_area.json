@@ -1,0 +1,15 @@
+{
+	"name": "m_pre_dim_business_area",
+	"properties": {
+		"folder": {
+			"name": "dwh_prepare/pre_dim"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
