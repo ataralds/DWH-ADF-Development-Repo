@@ -1,0 +1,81 @@
+{
+	"name": "LOAD_STAGE_LLOYDS",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lkp_rowcount_lloyds",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "select count(*) count_row from azure_config where azure_table_name='lloyds_vessel1'",
+						"partitionOption": "None",
+						"queryTimeout": "00:05:00"
+					},
+					"dataset": {
+						"referenceName": "oracle_configfile_oltp05",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "If_table_is_load",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Lkp_rowcount_lloyds",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('Lkp_rowcount_lloyds').output.firstRow.COUNT_ROW,0)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Set variable2",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "vTableLoaded",
+								"value": "'Table Loaded'"
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "vTableLoaded",
+								"value": "'Empty Table'"
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"vTableLoaded": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
