@@ -1,0 +1,63 @@
+{
+	"name": "Other",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"fileName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Copy job/dwh-stage/Other"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().fileName",
+					"type": "Expression"
+				},
+				"folderPath": "Other",
+				"fileSystem": "dwh-stage"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "FROM_CURRENCY_ID",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "TO_CURRENCY_ID",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "EXCHANGE_FROM_DATE",
+				"type": "INT96"
+			},
+			{
+				"name": "EXCHANGE_RATE",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "EXCHANGE_TO_DATE",
+				"type": "INT96"
+			},
+			{
+				"name": "FROM_CURRENCY_CODE",
+				"type": "UTF8"
+			},
+			{
+				"name": "TO_CURRENCY_CODE",
+				"type": "UTF8"
+			}
+		]
+	}
+}
