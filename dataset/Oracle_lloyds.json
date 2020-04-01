@@ -1,8 +1,16 @@
 {
 	"name": "Oracle_lloyds",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLTP05",
+			"type": "LinkedServiceReference"
+		},
 		"annotations": [],
 		"type": "OracleTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "AZURE_READ",
+			"table": "sta_exchange_rate"
+		}
 	}
 }
