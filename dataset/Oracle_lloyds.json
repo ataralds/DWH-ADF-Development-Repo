@@ -1,0 +1,8 @@
+{
+	"name": "Oracle_lloyds",
+	"properties": {
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
