@@ -10,6 +10,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "Copy job/dwh-stage/Oltp05"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
