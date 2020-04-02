@@ -1,7 +1,7 @@
 {
-	"name": "Oracle_lloyds_vessel",
+	"name": "Oracle_oltp05_dummy_table",
 	"properties": {
-		"description": "This is used to check if there is any data in the source table.",
+		"description": "This is used to check if there is any data in the Oracle source table.",
 		"linkedServiceName": {
 			"referenceName": "OLTP05",
 			"type": "LinkedServiceReference"
@@ -14,7 +14,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "AZURE_READ",
-			"table": "lloyds_vessel"
+			"table": "DUMMY_TABLE_DATASET"
 		}
 	}
 }
