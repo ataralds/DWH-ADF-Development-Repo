@@ -13,8 +13,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "Pre_Dim",
-				"fileSystem": "dwh-prepare"
+				"folderPath": "dim",
+				"fileSystem": "marts"
 			},
 			"compressionCodec": "snappy"
 		},
