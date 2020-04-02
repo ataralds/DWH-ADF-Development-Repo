@@ -1,0 +1,12 @@
+{
+	"name": "m_pre_dim_premium_line",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
