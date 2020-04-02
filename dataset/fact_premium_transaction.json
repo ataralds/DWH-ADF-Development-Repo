@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "dim",
+				"folderPath": "fact",
 				"fileSystem": "marts"
 			},
 			"compressionCodec": "snappy"
