@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select count(*) count_row from \"lloyds_vessel\"",
+						"oracleReaderQuery": "select fn_check_lloyds_source_load from dual",
 						"partitionOption": "None",
 						"queryTimeout": "00:05:00"
 					},
@@ -41,7 +41,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(activity('Lkp_rowcount_lloyds').output.firstRow.COUNT_ROW,0)",
+						"value": "@equals(activity('Lkp_rowcount_lloyds').output.firstRow.COUNT_ROW,'N')",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
