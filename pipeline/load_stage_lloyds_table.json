@@ -1,5 +1,5 @@
 {
-	"name": "LOAD_STAGE_LLOYDS",
+	"name": "load_stage_lloyds_table",
 	"properties": {
 		"activities": [
 			{
