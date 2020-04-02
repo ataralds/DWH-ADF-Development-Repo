@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "dwh-prepare/pre-dim"
+			"name": "marts/dim"
 		},
 		"annotations": [],
 		"type": "Parquet",
