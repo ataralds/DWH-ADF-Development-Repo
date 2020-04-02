@@ -85,7 +85,10 @@
 							"outputs": [
 								{
 									"referenceName": "Lloyds",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"fileName": "@{item().table_name}"
+									}
 								}
 							]
 						}
