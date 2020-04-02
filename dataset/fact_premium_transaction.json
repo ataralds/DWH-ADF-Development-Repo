@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "marts/dim"
+			"name": "marts/fact"
 		},
 		"annotations": [],
 		"type": "Parquet",
