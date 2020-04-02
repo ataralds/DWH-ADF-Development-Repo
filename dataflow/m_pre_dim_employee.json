@@ -24,7 +24,7 @@
 			],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(output(\n\t\tFROM_CURRENCY_ID as double,\n\t\tTO_CURRENCY_ID as double,\n\t\tEXCHANGE_FROM_DATE as timestamp,\n\t\tEXCHANGE_RATE as decimal(38,18),\n\t\tEXCHANGE_TO_DATE as timestamp,\n\t\tFROM_CURRENCY_CODE as string,\n\t\tTO_CURRENCY_CODE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nsource(output(\n\t\tFROM_CURRENCY_ID as double,\n\t\tTO_CURRENCY_ID as double,\n\t\tEXCHANGE_FROM_DATE as timestamp,\n\t\tEXCHANGE_RATE as decimal(38,18),\n\t\tEXCHANGE_TO_DATE as timestamp,\n\t\tFROM_CURRENCY_CODE as string,\n\t\tTO_CURRENCY_CODE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference1"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nsource(output(\n\t\tFROM_CURRENCY_ID as double,\n\t\tTO_CURRENCY_ID as double,\n\t\tEXCHANGE_FROM_DATE as timestamp,\n\t\tEXCHANGE_RATE as decimal(38,18),\n\t\tEXCHANGE_TO_DATE as timestamp,\n\t\tFROM_CURRENCY_CODE as string,\n\t\tTO_CURRENCY_CODE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference1"
 		}
 	}
 }
