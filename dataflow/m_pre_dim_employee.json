@@ -39,9 +39,21 @@
 				},
 				{
 					"name": "Aggregate1"
+				},
+				{
+					"name": "SelectOnlyTargets"
+				},
+				{
+					"name": "Join1"
+				},
+				{
+					"name": "ConvertToString"
+				},
+				{
+					"name": "SelectSourceAndTargets"
 				}
 			],
-			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nsource(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference1\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaSeniorClaimHandler\nTCrossReference filter(CODE_TYPE_ID == 329) ~> FilterEmployee\nTCrossReference1 filter(CODE_TYPE_ID == 329) ~> Filter0Employee\nFilterEmployee aggregate(groupBy(TARGET_CODE,\n\t\tTARGET_DESCRIPTION),\n\teach(match(!in([TARGET_CODE,TARGET_DESCRIPTION], name)), $$ = first($$))) ~> Aggregate1"
+			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nsource(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference1\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaSeniorClaimHandler\nTCrossReference filter(CODE_TYPE_ID == 329) ~> FilterEmployee\nTCrossReference1 filter(CODE_TYPE_ID == 329) ~> Filter0Employee\nSelectOnlyTargets aggregate(groupBy(TARGET_CODE,\n\t\tTARGET_DESCRIPTION),\n\teach(match(!in(['TARGET_CODE','TARGET_DESCRIPTION'],name)), $$ = first($$))) ~> Aggregate1\nFilterEmployee select(mapColumn(\n\t\tTARGET_CODE,\n\t\tTARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectOnlyTargets\nSelectSourceAndTargets, ConvertToString join(SOURCE_CODE_KEY == {STA_SENIOR_CL_HND.EMP_ID},\n\tjoinType:'inner',\n\tbroadcast: 'none')~> Join1\nStaSeniorClaimHandler derive({STA_SENIOR_CL_HND.EMP_ID} = toString(0),\n\t\tEMP_ID = 0,\n\t\tEFFECTIVE_FROM_DATE = fromUTC(currentTimestamp(), 'CET'),\n\t\tEXPIRATION_TO_DATE = fromUTC(currentTimestamp(), 'CET')) ~> ConvertToString\nFilter0Employee select(mapColumn(\n\t\tSOURCE_CODE_KEY,\n\t\tTARGET_CODE,\n\t\tTARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectSourceAndTargets"
 		}
 	}
 }
