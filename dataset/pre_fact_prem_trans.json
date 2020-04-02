@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "dwh-prepare/pre-dim"
+			"name": "dwh-prepare/pre-fact"
 		},
 		"annotations": [],
 		"type": "Parquet",
