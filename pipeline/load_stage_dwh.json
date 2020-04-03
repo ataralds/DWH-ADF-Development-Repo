@@ -27,6 +27,26 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "error_in_pipeline_resolved",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "copy_static_to_lake",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "error_in_pipeline_resolved",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"variables": {
