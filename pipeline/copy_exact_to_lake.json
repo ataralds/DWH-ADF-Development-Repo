@@ -85,10 +85,7 @@
 							"outputs": [
 								{
 									"referenceName": "Exact",
-									"type": "DatasetReference",
-									"parameters": {
-										"fileName": "@{item().table_name}"
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}
