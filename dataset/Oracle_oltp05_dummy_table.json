@@ -1,0 +1,20 @@
+{
+	"name": "Oracle_oltp05_dummy_table",
+	"properties": {
+		"description": "This is used to check if there is any data in the Oracle source table.",
+		"linkedServiceName": {
+			"referenceName": "OLTP05",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "pipeline/dwh_stage"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "AZURE_READ",
+			"table": "DUMMY_TABLE_DATASET"
+		}
+	}
+}
