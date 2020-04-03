@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select fn_check_lloyds_source_load  LOAD_STATUS from dual",
+						"oracleReaderQuery": "select fn_check_lloyds_source_load  LOAD_STATUS from dummy_table_dataset",
 						"partitionOption": "None",
 						"queryTimeout": "00:05:00"
 					},
