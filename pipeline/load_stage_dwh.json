@@ -16,19 +16,24 @@
 				}
 			},
 			{
-				"name": "load_stage_exact_table",
+				"name": "copy_static_to_lake",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "load_stage_exact_table",
+						"referenceName": "copy_static_to_lake",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
 				}
 			}
 		],
+		"variables": {
+			"vInnerFailStatus": {
+				"type": "String"
+			}
+		},
 		"folder": {
 			"name": "pipeline/dwh_stage"
 		},

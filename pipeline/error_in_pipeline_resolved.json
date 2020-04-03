@@ -1,0 +1,23 @@
+{
+	"name": "error_in_pipeline_resolved",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "vResolved",
+					"value": "'The error is resolved'"
+				}
+			}
+		],
+		"variables": {
+			"vResolved": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
