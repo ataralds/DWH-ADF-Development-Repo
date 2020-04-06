@@ -15,10 +15,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "m_pre_dim_claim_type_test",
-						"type": "DataFlowReference"
-					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
@@ -27,7 +23,7 @@
 			}
 		],
 		"folder": {
-			"name": "pipeline"
+			"name": "pipeline/dwh_stage/run_pre_dim"
 		},
 		"annotations": []
 	}
