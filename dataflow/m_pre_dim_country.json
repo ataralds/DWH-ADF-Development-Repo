@@ -12,12 +12,23 @@
 						"referenceName": "Other",
 						"type": "DatasetReference"
 					},
-					"name": "TCrossReference"
+					"name": "TCrossReferenceAREA"
+				},
+				{
+					"dataset": {
+						"referenceName": "Other",
+						"type": "DatasetReference"
+					},
+					"name": "VCrossReference"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
-			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference"
+			"transformations": [
+				{
+					"name": "Filter1"
+				}
+			],
+			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReferenceAREA\nsource(output(\n\t\tFROM_CURRENCY_ID as double,\n\t\tTO_CURRENCY_ID as double,\n\t\tEXCHANGE_FROM_DATE as timestamp,\n\t\tEXCHANGE_RATE as decimal(38,18),\n\t\tEXCHANGE_TO_DATE as timestamp,\n\t\tFROM_CURRENCY_CODE as string,\n\t\tTO_CURRENCY_CODE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> VCrossReference\nTCrossReferenceAREA filter(ERROR_FUNCTION('')) ~> Filter1"
 		}
 	}
 }
