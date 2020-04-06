@@ -85,7 +85,13 @@
 							"outputs": [
 								{
 									"referenceName": "Oltp05UpperCase",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"fileName": {
+											"value": "@toLower(item().table_name)",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
