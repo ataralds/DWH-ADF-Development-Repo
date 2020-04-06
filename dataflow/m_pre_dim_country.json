@@ -1,6 +1,9 @@
 {
 	"name": "m_pre_dim_country",
 	"properties": {
+		"folder": {
+			"name": "dwh_prepare"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [],
