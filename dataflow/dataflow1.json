@@ -9,12 +9,12 @@
 						"referenceName": "Paris",
 						"type": "DatasetReference"
 					},
-					"name": "p_uiwtable"
+					"name": "puiwtable"
 				}
 			],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> p_uiwtable"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> puiwtable"
 		}
 	}
 }
