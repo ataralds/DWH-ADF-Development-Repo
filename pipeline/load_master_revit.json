@@ -1,0 +1,26 @@
+{
+	"name": "load_master_revit",
+	"properties": {
+		"activities": [
+			{
+				"name": "load_master_pre",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "load_master_pre",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"variables": {
+			"vMasterRevitErrorStatus": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
