@@ -1,0 +1,19 @@
+{
+	"name": "oracle_exact",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLTP05",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Copy job/dwh-stage/Oltp05"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "AZURE_READ",
+			"table": "map_code_values"
+		}
+	}
+}
