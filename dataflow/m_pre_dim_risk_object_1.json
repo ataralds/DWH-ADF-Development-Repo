@@ -11,6 +11,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "PIuwtable"
+				},
+				{
+					"dataset": {
+						"referenceName": "Other",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
 				}
 			],
 			"sinks": [],
@@ -22,7 +29,7 @@
 					"name": "DerivedColumn1"
 				}
 			],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> PIuwtable\nPIuwtable filter(ERROR_FUNCTION('')) ~> Filter1\nFilter1 derive() ~> DerivedColumn1"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> PIuwtable\nsource(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source1\nPIuwtable filter(ERROR_FUNCTION('')) ~> Filter1\nFilter1 derive() ~> DerivedColumn1"
 		}
 	}
 }
