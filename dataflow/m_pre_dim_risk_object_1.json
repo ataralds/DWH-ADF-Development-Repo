@@ -14,8 +14,15 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> PIuwtable"
+			"transformations": [
+				{
+					"name": "Filter1"
+				},
+				{
+					"name": "DerivedColumn1"
+				}
+			],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> PIuwtable\nPIuwtable filter(ERROR_FUNCTION('')) ~> Filter1\nFilter1 derive() ~> DerivedColumn1"
 		}
 	}
 }
