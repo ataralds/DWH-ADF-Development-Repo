@@ -4,10 +4,18 @@
 		"description": "Start testing how to make the risk_object. Starting on PA",
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Paris",
+						"type": "DatasetReference"
+					},
+					"name": "PIuwtable"
+				}
+			],
 			"sinks": [],
 			"transformations": [],
-			"script": ""
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> PIuwtable"
 		}
 	}
 }
