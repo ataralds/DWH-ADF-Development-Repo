@@ -1,0 +1,87 @@
+{
+	"name": "load_stage_lloyds_table",
+	"properties": {
+		"activities": [
+			{
+				"name": "LkpSourceLoadStatusLloyds",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.00:03:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "select fn_check_lloyds_source_load  LOAD_STATUS from dummy_table_dataset",
+						"partitionOption": "None",
+						"queryTimeout": "00:05:00"
+					},
+					"dataset": {
+						"referenceName": "Oracle_oltp05_dummy_table",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "If_table_is_loaded",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "LkpSourceLoadStatusLloyds",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('LkpSourceLoadStatusLloyds').output.firstRow.LOAD_STATUS,'N')",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "copy_lloyds_to_lake",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "copy_lloyds_to_lake",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "vTableLoaded",
+								"value": "'Empty Table'"
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"vTableLoaded": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "pipeline/dwh_stage"
+		},
+		"annotations": []
+	}
+}

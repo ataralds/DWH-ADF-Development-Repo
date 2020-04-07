@@ -1,0 +1,44 @@
+{
+	"name": "fact_premium_transaction",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "marts/fact"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "fact",
+				"fileSystem": "marts"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "PK_KEY",
+				"type": "UTF8"
+			},
+			{
+				"name": "CPT_DESCRIPTION",
+				"type": "UTF8"
+			},
+			{
+				"name": "CPT_NUMBER",
+				"type": "INT32"
+			},
+			{
+				"name": "INSERTED_BY",
+				"type": "UTF8"
+			},
+			{
+				"name": "DATE_INSERTED",
+				"type": "DATE"
+			}
+		]
+	}
+}
