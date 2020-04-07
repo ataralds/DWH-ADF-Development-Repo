@@ -8,7 +8,7 @@
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "vResolved",
+					"variableName": "vErrorMessage",
 					"value": {
 						"value": "@pipeline().parameters.pErrorPipelineStatus",
 						"type": "Expression"
@@ -22,7 +22,7 @@
 			}
 		},
 		"variables": {
-			"vResolved": {
+			"vErrorMessage": {
 				"type": "String"
 			}
 		},
