@@ -1,0 +1,28 @@
+{
+	"name": "load_pre_dim",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "vPreDim",
+					"value": "'This is inside load_pre_dim'"
+				}
+			}
+		],
+		"parameters": {
+			"pErrorStatus": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"vPreDim": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
