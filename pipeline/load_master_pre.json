@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "load_stage_dwh",
+				"name": "load_static_stage_dwh",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
@@ -20,7 +20,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "load_stage_dwh",
+						"activity": "load_static_stage_dwh",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -40,7 +40,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "load_stage_dwh",
+						"activity": "load_static_stage_dwh",
 						"dependencyConditions": [
 							"Failed"
 						]
