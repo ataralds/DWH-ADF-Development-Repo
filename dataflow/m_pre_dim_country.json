@@ -25,43 +25,28 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "TVCrossRefCOUNTRY"
-				},
-				{
-					"name": "TVCrossRefREGION"
-				},
-				{
-					"name": "Join1COUNTRYogREGION"
-				},
-				{
-					"name": "JoinCtryRegArea"
-				},
-				{
-					"name": "FilterREGION219"
-				},
-				{
-					"name": "FilterAREA219"
+					"name": "TVCrossRef"
 				},
 				{
 					"name": "COUNTRY50"
 				},
 				{
-					"name": "TVCrossRefREGA"
+					"name": "AREA219"
 				},
 				{
-					"name": "FilterREGIONA374"
+					"name": "REGIONA374"
 				},
 				{
-					"name": "FilterREGION367"
+					"name": "REGION367"
+				},
+				{
+					"name": "REGION219"
 				},
 				{
 					"name": "Join1"
-				},
-				{
-					"name": "AREA219"
 				}
 			],
-			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tPARENT_CODE_TYPE_ID as double,\n\t\tPARENT_TARGET_CODE as string,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> VCrossReference\nsource(output(\n\t\tFROM_CURRENCY_ID as double,\n\t\tTO_CURRENCY_ID as double,\n\t\tEXCHANGE_FROM_DATE as timestamp,\n\t\tEXCHANGE_RATE as decimal(38,18),\n\t\tEXCHANGE_TO_DATE as timestamp,\n\t\tFROM_CURRENCY_CODE as string,\n\t\tTO_CURRENCY_CODE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nVCrossReference, TCrossReference union(byName: true)~> TVCrossRefCOUNTRY\nVCrossReference, TCrossReference union(byName: true)~> TVCrossRefREGION\nCOUNTRY50, FilterREGION219 join(TVCrossRefCOUNTRY@PARENT_TARGET_CODE == TVCrossRefREGION@PARENT_TARGET_CODE\n\t&& TVCrossRefCOUNTRY@PARENT_CODE_TYPE_ID == TVCrossRefREGION@PARENT_CODE_TYPE_ID,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> Join1COUNTRYogREGION\nJoin1COUNTRYogREGION, FilterAREA219 join(TVCrossRefCOUNTRY@PARENT_TARGET_CODE == TVCrossRefAREA@TARGET_CODE\n\t&& TVCrossRefCOUNTRY@PARENT_CODE_TYPE_ID == TVCrossRefAREA@CODE_TYPE_ID,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> JoinCtryRegArea\nTVCrossRefREGION filter(CODE_TYPE_ID==219) ~> FilterREGION219\nTCrossReference filter(CODE_TYPE_ID==219) ~> FilterAREA219\nTVCrossRefCOUNTRY filter(CODE_TYPE_ID==50) ~> COUNTRY50\nVCrossReference, TCrossReference union(byName: true)~> TVCrossRefREGA\nTVCrossRefREGA filter(CODE_TYPE_ID==374) ~> FilterREGIONA374\nTVCrossRefREGION filter(CODE_TYPE_ID==367) ~> FilterREGION367\nCOUNTRY50, TVCrossRefREGA join(TVCrossRefCOUNTRY@PARENT_CODE_TYPE_ID == ERROR_FUNCTION(''),\n\tjoinType:'inner',\n\tbroadcast: 'none')~> Join1\nTVCrossRefCOUNTRY filter(CODE_TYPE_ID==219) ~> AREA219"
+			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tPARENT_CODE_TYPE_ID as double,\n\t\tPARENT_TARGET_CODE as string,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> VCrossReference\nsource(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nVCrossReference, TCrossReference union(byName: true)~> TVCrossRef\nTVCrossRef filter(CODE_TYPE_ID==50) ~> COUNTRY50\nTVCrossRef filter(CODE_TYPE_ID==219) ~> AREA219\nTVCrossRef filter(CODE_TYPE_ID==374) ~> REGIONA374\nTVCrossRef filter(CODE_TYPE_ID==367) ~> REGION367\nTVCrossRef filter(CODE_TYPE_ID==219) ~> REGION219\nCOUNTRY50, REGION219 join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),\n\tjoinType:'inner',\n\tbroadcast: 'none')~> Join1"
 		}
 	}
 }
