@@ -9,10 +9,18 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "vResolved",
-					"value": "'The error is resolved'"
+					"value": {
+						"value": "@pipeline().parameters.pErrorPipelineStatus",
+						"type": "Expression"
+					}
 				}
 			}
 		],
+		"parameters": {
+			"pErrorPipelineStatus": {
+				"type": "string"
+			}
+		},
 		"variables": {
 			"vResolved": {
 				"type": "String"

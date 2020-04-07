@@ -16,7 +16,7 @@
 				}
 			},
 			{
-				"name": "copy_static_to_lake",
+				"name": "pl_copy_static_to_lake",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
@@ -33,7 +33,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "copy_static_to_lake",
+						"activity": "pl_copy_static_to_lake",
 						"dependencyConditions": [
 							"Failed"
 						]
@@ -45,7 +45,13 @@
 						"referenceName": "error_in_pipeline_resolved",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"pErrorPipelineStatus": {
+							"value": "@activity('pl_copy_static_to_lake').error.message",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
