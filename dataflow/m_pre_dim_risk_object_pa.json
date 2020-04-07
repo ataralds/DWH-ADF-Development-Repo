@@ -1,5 +1,5 @@
 {
-	"name": "m_pre_dim_risk_object_1",
+	"name": "m_pre_dim_risk_object_pa",
 	"properties": {
 		"description": "Start testing how to make the risk_object. Starting on PA",
 		"type": "MappingDataFlow",
