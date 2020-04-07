@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "load_stage_dwh",
+						"referenceName": "load_static_stage_dwh",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true

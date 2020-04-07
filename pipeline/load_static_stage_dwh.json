@@ -1,5 +1,5 @@
 {
-	"name": "load_stage_dwh",
+	"name": "load_static_stage_dwh",
 	"properties": {
 		"activities": [
 			{
