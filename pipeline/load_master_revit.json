@@ -16,8 +16,8 @@
 				}
 			},
 			{
-				"name": "If Condition1",
-				"type": "IfCondition",
+				"name": "load_pre_dim",
+				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
 						"activity": "load_master_pre",
@@ -26,7 +26,14 @@
 						]
 					}
 				],
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "load_pre_dim",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"variables": {
