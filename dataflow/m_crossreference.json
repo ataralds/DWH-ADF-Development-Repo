@@ -1,5 +1,5 @@
 {
-	"name": "m_cross_reference",
+	"name": "m_crossreference",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
