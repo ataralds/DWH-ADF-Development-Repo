@@ -41,6 +41,9 @@
 				"type": "String"
 			}
 		},
+		"folder": {
+			"name": "pipeline/dwh_stage"
+		},
 		"annotations": []
 	}
 }
