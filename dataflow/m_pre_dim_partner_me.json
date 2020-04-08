@@ -1,5 +1,5 @@
 {
-	"name": "m_pre_dim_partner_me_parquet",
+	"name": "m_pre_dim_partner_me",
 	"properties": {
 		"folder": {
 			"name": "dwh_prepare/paris"
