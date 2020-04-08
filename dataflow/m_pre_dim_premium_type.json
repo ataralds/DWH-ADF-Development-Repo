@@ -21,7 +21,7 @@
 					"name": "DerivedColumn1"
 				}
 			],
-			"script": "source(output(\n\t\tFROM_CURRENCY_ID as double,\n\t\tTO_CURRENCY_ID as double,\n\t\tEXCHANGE_FROM_DATE as timestamp,\n\t\tEXCHANGE_RATE as decimal(38,18),\n\t\tEXCHANGE_TO_DATE as timestamp,\n\t\tFROM_CURRENCY_CODE as string,\n\t\tTO_CURRENCY_CODE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossref\nsource(output(\n\t\tdummy_column as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> Dummy\nDummy derive({Date Inserted} = currentDate(),\n\t\t{Map Date} = toDate(case(1!=1,1)),\n\t\t{Last Updated By} = 'M_PRE_DIM_PREMIUM_TYPE') ~> DerivedColumn1"
+			"script": "source(output(\n\t\tFROM_CURRENCY_ID as double,\n\t\tTO_CURRENCY_ID as double,\n\t\tEXCHANGE_FROM_DATE as timestamp,\n\t\tEXCHANGE_RATE as decimal(38,18),\n\t\tEXCHANGE_TO_DATE as timestamp,\n\t\tFROM_CURRENCY_CODE as string,\n\t\tTO_CURRENCY_CODE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossref\nsource(output(\n\t\tdummy_column as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> Dummy\nDummy derive({Date Inserted} = currentDate(),\n\t\t{Map Date} = toDate(case(1!=1,1)),\n\t\t{Last Updated By} = 'M_PRE_DIM_PREMIUM_TYPE',\n\t\t{Source Column} = 'TARGET_CODE') ~> DerivedColumn1"
 		}
 	}
 }
