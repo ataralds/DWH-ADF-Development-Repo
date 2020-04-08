@@ -32,7 +32,8 @@
 					"name": "Currency"
 				},
 				{
-					"name": "SelectExhangeRate"
+					"name": "SelectExhangeRate",
+					"description": "Removing unused columns"
 				},
 				{
 					"name": "GetNewestExchangeDates",
