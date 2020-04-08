@@ -15,25 +15,37 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_development_connection'"
 		},
+		"OLTP05_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OLTP05'"
+		},
 		"OracelStageITF_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'OracelStageITF'"
+		},
+		"OracleAzureDwh_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OracleAzureDwh'"
 		},
 		"OracleCStage_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'OracleCStage'"
 		},
+		"OracleDbParisPoolScrAmster_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OracleDbParisPoolScrAmster'"
+		},
 		"OracleDbParisScrAmster_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'OracleDbParisScrAmster'"
 		},
-		"dwhdatalakedevelopment_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'dwhdatalakedevelopment'"
-		},
 		"sql_server_development_connection_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'sql_server_development_connection'"
+		},
+		"sql_server_operations_connection_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'sql_server_operations_connection'"
 		},
 		"ADF_dev_linked_service_properties_typeProperties_baseUrl": {
 			"type": "string",
@@ -46,6 +58,10 @@
 		"ARESRV476_Arendal_properties_typeProperties_userId": {
 			"type": "string",
 			"defaultValue": "audun.taraldsen@gard.no"
+		},
+		"AzureDataLakeStorage_test_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://dwhdatalakedevelopment.dfs.core.windows.net"
 		},
 		"dwhdatalakedevelopment_properties_typeProperties_url": {
 			"type": "string",
@@ -81,14 +97,17 @@
 					"AzureDatabricks_development_connection_accessToken": {
 						"value": "[parameters('AzureDatabricks_development_connection_accessToken')]"
 					},
-					"dwhdatalakedevelopment_accountKey": {
-						"value": "[parameters('dwhdatalakedevelopment_accountKey')]"
-					},
 					"sql_server_development_connection_connectionString": {
 						"value": "[parameters('sql_server_development_connection_connectionString')]"
 					},
+					"sql_server_operations_connection_connectionString": {
+						"value": "[parameters('sql_server_operations_connection_connectionString')]"
+					},
 					"ADF_dev_linked_service_properties_typeProperties_baseUrl": {
 						"value": "[parameters('ADF_dev_linked_service_properties_typeProperties_baseUrl')]"
+					},
+					"AzureDataLakeStorage_test_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage_test_properties_typeProperties_url')]"
 					},
 					"dwhdatalakedevelopment_properties_typeProperties_url": {
 						"value": "[parameters('dwhdatalakedevelopment_properties_typeProperties_url')]"
@@ -134,14 +153,11 @@
 					"ARESRV476_Arendal_password": {
 						"value": "[parameters('ARESRV476_Arendal_password')]"
 					},
+					"OLTP05_connectionString": {
+						"value": "[parameters('OLTP05_connectionString')]"
+					},
 					"OracelStageITF_connectionString": {
 						"value": "[parameters('OracelStageITF_connectionString')]"
-					},
-					"OracleCStage_connectionString": {
-						"value": "[parameters('OracleCStage_connectionString')]"
-					},
-					"OracleDbParisScrAmster_connectionString": {
-						"value": "[parameters('OracleDbParisScrAmster_connectionString')]"
 					},
 					"ARESRV476_Arendal_properties_typeProperties_host": {
 						"value": "[parameters('ARESRV476_Arendal_properties_typeProperties_host')]"
@@ -168,6 +184,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"OracleAzureDwh_connectionString": {
+						"value": "[parameters('OracleAzureDwh_connectionString')]"
+					},
+					"OracleCStage_connectionString": {
+						"value": "[parameters('OracleCStage_connectionString')]"
+					},
+					"OracleDbParisPoolScrAmster_connectionString": {
+						"value": "[parameters('OracleDbParisPoolScrAmster_connectionString')]"
+					},
+					"OracleDbParisScrAmster_connectionString": {
+						"value": "[parameters('OracleDbParisScrAmster_connectionString')]"
 					}
 				}
 			},
@@ -193,26 +221,6 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_3')]"
-			]
-		},
-		{
-			"name": "ArmTemplate_5",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_5.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_4')]"
 			]
 		}
 	]

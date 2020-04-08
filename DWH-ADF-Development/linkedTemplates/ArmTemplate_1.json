@@ -13,7 +13,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_6we')]",
+			"name": "[concat(parameters('factoryName'), '/dim_agreement_type')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -22,1009 +22,45 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "perben"
+					"name": "marts/dim"
 				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "sta_coverage_group.parquet",
-						"fileSystem": "test"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_e6n')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "perben3.parquet",
-						"fileSystem": "test"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_fa7')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_fileName": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileSystem": "test"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_kbz')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "perben_tcross.parquet",
-						"fileSystem": "test"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_lnm')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_fileName": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().cw_fileName",
-							"type": "Expression"
-						},
-						"fileSystem": "test"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_sm5')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_fileName": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().cw_fileName",
-							"type": "Expression"
-						},
-						"fileSystem": "test"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_xmp')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_fileName": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().cw_fileName",
-							"type": "Expression"
-						},
-						"fileSystem": "test"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_yef')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "mapsys1.parquet",
-						"fileSystem": "test"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_zra')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "STAGE_ITFT_CROSSREFERENCE.txt",
-						"fileSystem": "test"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HDestinationDatasetParquet')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "T_CROSSREFERENCE",
-						"fileSystem": "test"
+						"folderPath": "dim",
+						"fileSystem": "marts"
 					},
 					"compressionCodec": "snappy"
 				},
 				"schema": [
 					{
-						"name": "SOURCE_CODE_KEY",
+						"name": "PK_KEY",
 						"type": "UTF8"
 					},
 					{
-						"name": "SOURCE_SYSTEM",
+						"name": "CPT_DESCRIPTION",
 						"type": "UTF8"
 					},
 					{
-						"name": "TARGET_CODE",
-						"type": "UTF8"
-					},
-					{
-						"name": "TARGET_DESCRIPTION",
-						"type": "UTF8"
-					},
-					{
-						"name": "CODE_TYPE",
-						"type": "UTF8"
-					},
-					{
-						"name": "CODE_TYPE_ID",
-						"type": "DOUBLE"
-					},
-					{
-						"name": "CODE2",
-						"type": "UTF8"
-					},
-					{
-						"name": "OM_X_REF",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PRE_DIM_CLAIM_TEAM')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileSystem": "test"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Parquet1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "STAGE_ITF.G_EMPLOYEE.txt",
-						"fileSystem": "test"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "EMP_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LOGIN_NAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "FULL_NAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "EMP_TYPE_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "GROUP_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "DEPT_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LOC_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SYND_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "DISABLED_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LOGGING_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "UNDERWRITER_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "CLAIMS_ADJUSTER_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "REMINDER_RESP_IND",
-						"type": "UTF8"
-					},
-					{
-						"name": "PASSWORD_DATE",
-						"type": "INT96"
-					},
-					{
-						"name": "CREATED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "CREATED_WHEN",
-						"type": "INT96"
-					},
-					{
-						"name": "UPDATED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "UPDATED_WHEN",
-						"type": "INT96"
-					},
-					{
-						"name": "PERSONAL_CLAIMS_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "NEW_LOGIN_NAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "E_MAIL",
-						"type": "UTF8"
-					},
-					{
-						"name": "PROMAN_EKEY",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "JOBNAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "UNDERWRITER_ASSISTANT_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "OLD_LOGIN_NAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "AUTHORIZED_PAYMENT_LEVEL_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Parquet10')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileSystem": "test"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Parquet11')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "STAGE_ITFP_LCATABLE.parquet",
-						"fileSystem": "test"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "LCALCAID",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAICAID",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCACLMN3",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCACLMDATE",
-						"type": "INT96"
-					},
-					{
-						"name": "LCACYEAR",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCATRTMCO",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCAACSTAT",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCALOSSCO",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAOUTSTM",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAUWSIGN",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAOFFICE",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCALDESCR",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCACLODATE",
-						"type": "INT96"
-					},
-					{
-						"name": "LCACEFOCC",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCACEFOCM",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCACLMCAC",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAECAUSECO",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCACLINTC",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCATCAUSECO",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCABONYNSW",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAIMPEXP",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCANCAUSECO",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCANMCLEF",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCACCOD2",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAAREACD",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCACEFOUC",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAONOFFS",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCAENINTRST",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAENASSSHR",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCAMPLCURR",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAMPLAMT",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCAXLMREF",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAREPDATE",
-						"type": "INT96"
-					},
-					{
-						"name": "LCALIMCURR",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCALIMAMT",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCABIGEVENT",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCALODESCR",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAINTNOTE",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCALTDATE",
-						"type": "INT96"
-					},
-					{
-						"name": "LCACRSIGN",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCACRDATE",
-						"type": "INT96"
-					},
-					{
-						"name": "LCALUSIGN",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCALUDATE",
-						"type": "INT96"
-					},
-					{
-						"name": "LCAKNVMARK",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCALABID",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAAGAID",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAOBNO",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCACROBBID",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAWRKCLAIM",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCAFPAREACD",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCATOAREACD",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAJURISDICTION",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAFILEREF",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCANEXTSIGN",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAAREADESCR",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCALRGCLMYNSW",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAFROMAREACD",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCANEXTDATE",
-						"type": "INT96"
-					},
-					{
-						"name": "LCAWORKPLACE",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCAOCCOFFDATE",
-						"type": "INT96"
-					},
-					{
-						"name": "LCAWRKPLCCOD",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCAREGNDATE",
-						"type": "INT96"
-					},
-					{
-						"name": "LCAOCCOFFYNSW",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAREGRESS",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCACLMPEAID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCAOCCOWNYNSW",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAREGNSIGN",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAMUOFFPROS",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCAREGCURR",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAREGAMT",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCAMUOWNPROS",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCALIMDAYS",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCAREGTEXT70",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCAEUOFFPROS",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCAMUOFFGRP",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCAEUOWNPROS",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCABIRTNO",
-						"type": "UTF8"
-					},
-					{
-						"name": "DATE_INSERTED",
-						"type": "INT96"
-					},
-					{
-						"name": "DATE_LAST_UPDATED",
-						"type": "INT96"
+						"name": "CPT_NUMBER",
+						"type": "INT32"
 					},
 					{
 						"name": "INSERTED_BY",
 						"type": "UTF8"
 					},
 					{
-						"name": "LAST_UPDATED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "MAP_DATE",
-						"type": "INT96"
-					},
-					{
-						"name": "LCAADJSIGN",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCACLMID",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCALOADATE",
-						"type": "INT96"
-					},
-					{
-						"name": "LCAEXTCLMID",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCATLOTYPE",
-						"type": "DOUBLE"
-					},
-					{
-						"name": "LCACATEGORYTYPE",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCARECOVPOTAMT",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCARECOVCCVID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LCARECOVREMDATE",
-						"type": "INT96"
-					},
-					{
-						"name": "LCARECOVACHCURR",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCARECOVPOTINTNOTE",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCARECOVACHYNSW",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCARECOVACHINTNOTE",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCARECOVACHDATE",
-						"type": "INT96"
-					},
-					{
-						"name": "LCARECOVPOTCURR",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCARECOVACHSIGN",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCARECOVPOTYNSW",
-						"type": "UTF8"
-					},
-					{
-						"name": "LCARECOVACHAMT",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
+						"name": "DATE_INSERTED",
+						"type": "DATE"
 					}
 				]
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Parquet12')]",
+			"name": "[concat(parameters('factoryName'), '/dim_business_area')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1033,335 +69,45 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "perben"
+					"name": "marts/dim"
 				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "STAGE_ITFP_SIGTABLE.parquet",
-						"fileSystem": "test"
+						"folderPath": "dim",
+						"fileSystem": "marts"
 					},
 					"compressionCodec": "snappy"
 				},
 				"schema": [
 					{
-						"name": "SIGSIGN",
+						"name": "PK_KEY",
 						"type": "UTF8"
 					},
 					{
-						"name": "SIGMDESCR",
+						"name": "CPT_DESCRIPTION",
 						"type": "UTF8"
 					},
 					{
-						"name": "SIGLDESCR",
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
 						"type": "UTF8"
 					},
 					{
-						"name": "SIGCPHONE",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGCFAX",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGCMAIL",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGPEAID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGMAINSIGN",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGHIERARC",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGORGPLACE",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGFUNC",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGBPRTPL",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGCOMP2",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGDEFCCODE",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGDEFAGTYPE",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGDEFOBRT",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGOFFICE",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGBUSNDIV",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGBUSNSEC",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGBUSNCLA",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGBUSNTYP",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGLANG2",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGIYEAR",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGCURR",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGPWDATE",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGSQLSEQ",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGGENSEC",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGMAISEC",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGPERSSECUR",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGCREATEFUNC",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGCLOSEFUNC",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGCLAIMFUNC",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGELREMITFUNC",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGPLTRANSFUNC",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGLOCDEFTAB",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGLOCSWITCHES",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGCREATESWITCHES",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGPREMSWITCHES",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGCLMDEFUPDATE",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGCLMSWITCHES",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGACCOACCG",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGACCOSREF",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGACCOSUBREF",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGACCOSWITCHES",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGPOLPRLABEL",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGLETTERPRLABEL",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGNOTEPRLABEL",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGMISCPRLABEL",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGSTOPUSE",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGNAMEID",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGEFILEDOMAIN",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGAACYNSW",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGACCYNSW",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGEFILEPLACE",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGEFILELIBRARY",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGEFILEPASSWORD",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGEFILEUSERID",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGACLYNSW",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGAUWYNSW",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGUWAYNSW",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGCLMYNSW",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGFRYEAR",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGSPECIALVERSION",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGTOYEAR",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SIGINTSELECTION",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGDEBUGMACRO",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGINTAIE",
-						"type": "UTF8"
-					},
-					{
-						"name": "SIGDEBUGIDENTIFY",
-						"type": "UTF8"
+						"name": "DATE_INSERTED",
+						"type": "DATE"
 					}
 				]
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Parquet13')]",
+			"name": "[concat(parameters('factoryName'), '/dim_capital')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1370,57 +116,45 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "perben"
+					"name": "marts/dim"
 				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "mapsys1.parquet",
-						"fileSystem": "test"
+						"folderPath": "dim",
+						"fileSystem": "marts"
 					},
 					"compressionCodec": "snappy"
 				},
 				"schema": [
 					{
-						"name": "SOURCE_CODE_KEY",
+						"name": "PK_KEY",
 						"type": "UTF8"
 					},
 					{
-						"name": "SOURCE_SYSTEM",
+						"name": "CPT_DESCRIPTION",
 						"type": "UTF8"
 					},
 					{
-						"name": "TARGET_CODE",
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
 						"type": "UTF8"
 					},
 					{
-						"name": "TARGET_DESCRIPTION",
-						"type": "UTF8"
-					},
-					{
-						"name": "CODE_TYPE",
-						"type": "UTF8"
-					},
-					{
-						"name": "CODE_TYPE_ID",
-						"type": "DOUBLE"
-					},
-					{
-						"name": "CODE2",
-						"type": "UTF8"
-					},
-					{
-						"name": "OM_X_REF",
-						"type": "UTF8"
+						"name": "DATE_INSERTED",
+						"type": "DATE"
 					}
 				]
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Parquet2')]",
+			"name": "[concat(parameters('factoryName'), '/dim_capital_branch')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1429,14 +163,665 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "perben"
+					"name": "marts/dim"
 				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileSystem": "test"
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_country')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_coverage')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_currency')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_employee')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_partner')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_premium_line')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_premium_type')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_risk_object')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_source_system')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_time')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_vessel_type_group')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dwh_stage_oltp05_sql')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "sql_server_development_connection",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"SinkDataset": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Test"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dwh_stage",
+					"table": {
+						"value": "@dataset().SinkDataset",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/fact_premium_transaction')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/fact"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "fact",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/faptable_rsatable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"fileName": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Paris"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().fileName",
+							"type": "Expression"
+						},
+						"folderPath": "Paris",
+						"fileSystem": "dwh-stage"
 					},
 					"compressionCodec": "snappy"
 				},
@@ -1445,7 +830,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Parquet3')]",
+			"name": "[concat(parameters('factoryName'), '/lake_Oltp05_configfile')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1454,157 +839,34 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "perben"
+					"name": "Test"
 				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "STAGE_ITF.G_EMPLOYEE.parquet",
-						"fileSystem": "test"
+						"fileName": "config_file.parquet",
+						"folderPath": "Static",
+						"fileSystem": "raw"
 					},
 					"compressionCodec": "snappy"
 				},
 				"schema": [
 					{
-						"name": "EMP_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LOGIN_NAME",
+						"name": "TABLE_NAME",
 						"type": "UTF8"
 					},
 					{
-						"name": "FULL_NAME",
+						"name": "LOAD_IND",
 						"type": "UTF8"
-					},
-					{
-						"name": "EMP_TYPE_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "GROUP_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "DEPT_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LOC_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SYND_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "DISABLED_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LOGGING_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "UNDERWRITER_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "CLAIMS_ADJUSTER_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "REMINDER_RESP_IND",
-						"type": "UTF8"
-					},
-					{
-						"name": "PASSWORD_DATE",
-						"type": "INT96"
-					},
-					{
-						"name": "CREATED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "CREATED_WHEN",
-						"type": "INT96"
-					},
-					{
-						"name": "UPDATED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "UPDATED_WHEN",
-						"type": "INT96"
-					},
-					{
-						"name": "PERSONAL_CLAIMS_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "NEW_LOGIN_NAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "E_MAIL",
-						"type": "UTF8"
-					},
-					{
-						"name": "PROMAN_EKEY",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "JOBNAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "UNDERWRITER_ASSISTANT_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "OLD_LOGIN_NAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "AUTHORIZED_PAYMENT_LEVEL_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
 					}
 				]
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Parquet4')]",
+			"name": "[concat(parameters('factoryName'), '/lake_configfile_oltp05')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1613,403 +875,20 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "perben"
+					"name": "Test"
 				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "STAGE_ITF.G_EMPLOYEE.txt",
-						"fileSystem": "test"
+						"fileName": "config_file.parquet",
+						"folderPath": "Static",
+						"fileSystem": "raw"
 					},
 					"compressionCodec": "snappy"
 				},
-				"schema": [
-					{
-						"name": "EMP_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LOGIN_NAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "FULL_NAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "EMP_TYPE_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "GROUP_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "DEPT_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LOC_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "SYND_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "DISABLED_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "LOGGING_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "UNDERWRITER_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "CLAIMS_ADJUSTER_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "REMINDER_RESP_IND",
-						"type": "UTF8"
-					},
-					{
-						"name": "PASSWORD_DATE",
-						"type": "INT96"
-					},
-					{
-						"name": "CREATED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "CREATED_WHEN",
-						"type": "INT96"
-					},
-					{
-						"name": "UPDATED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "UPDATED_WHEN",
-						"type": "INT96"
-					},
-					{
-						"name": "PERSONAL_CLAIMS_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "NEW_LOGIN_NAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "E_MAIL",
-						"type": "UTF8"
-					},
-					{
-						"name": "PROMAN_EKEY",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "JOBNAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "UNDERWRITER_ASSISTANT_IND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "OLD_LOGIN_NAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "AUTHORIZED_PAYMENT_LEVEL_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Parquet5')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "STAGE_ITF.G_INCIDENT.parquet",
-						"fileSystem": "test"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "INCIDENT_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "UNIQUE_ENTRY_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "INCIDENT_FILE_NUMBER",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "CLAIM_TYPE_ID_MAIN_CLAIM_TYPE",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "EMPLOYEE_ID_MAIN_ADJUSTER",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "MEMBERS_REFERENCE",
-						"type": "UTF8"
-					},
-					{
-						"name": "ARCHIVE_NUMBER",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "ARCHIVE_DATE",
-						"type": "INT96"
-					},
-					{
-						"name": "OLD_ARCHIVE_NUMBER",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "OLD_ARCHIVE_DATE",
-						"type": "INT96"
-					},
-					{
-						"name": "GEOGRAPHICAL_AREA_ID_PLACE",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "GEOGRAPHICAL_AREA_ID_VOY_FROM",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "GEOGRAPHICAL_AREA_ID_VOY_TO",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "DATE_OF_INCIDENT",
-						"type": "INT96"
-					},
-					{
-						"name": "MONTH_OR_PERIOD_OF_INCIDENT",
-						"type": "UTF8"
-					},
-					{
-						"name": "CASUALTY_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "MAIN_CAUSE_ID",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "GEOGRAPHICAL_AREA_ID_MAIN_JUR",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "CURRENCY_ID_MAIN_CURRENCY",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "INCIDENT_TEXT",
-						"type": "UTF8"
-					},
-					{
-						"name": "EMPLOYEE_ID_REGISTERED_BY",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "REGISTERED_DATE",
-						"type": "INT96"
-					},
-					{
-						"name": "LAST_REVIEWED_DATE",
-						"type": "INT96"
-					},
-					{
-						"name": "LARGE_CLAIMS_GROUP_INDICATOR",
-						"type": "UTF8"
-					},
-					{
-						"name": "TOTAL_CURRENT_RESERVE_USD",
-						"type": "DOUBLE"
-					},
-					{
-						"name": "TOTAL_CURRENT_COMP_USD",
-						"type": "DOUBLE"
-					},
-					{
-						"name": "CREATED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "CREATED_WHEN",
-						"type": "INT96"
-					},
-					{
-						"name": "UPDATED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "UPDATED_WHEN",
-						"type": "INT96"
-					},
-					{
-						"name": "TIMESTAMP_",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "OFFICE_ROLE_ID_REFUND",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "REFUND_PERCENT",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "REFUND_MAPPER_NUMBER",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "PHYSICAL_FILE_CREATED",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "GEOGRAPHICAL_AREA_ID_1ST_PORT",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "TIMEBAR",
-						"type": "INT96"
-					},
-					{
-						"name": "DEALT_WITH",
-						"type": "UTF8"
-					},
-					{
-						"name": "OM_CLAIM_TYPE",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "COMPLEXITY_ID",
-						"type": "DOUBLE"
-					},
-					{
-						"name": "NO_ICR_REMINDER_DATE",
-						"type": "INT96"
-					},
-					{
-						"name": "EVENT_ID",
-						"type": "DOUBLE"
-					},
-					{
-						"name": "EVENT_DETAIL_ID",
-						"type": "DOUBLE"
-					},
-					{
-						"name": "MAIN_CLAIM_DETAIL_ID",
-						"type": "DOUBLE"
-					},
-					{
-						"name": "MYGARD_CLAIM_ID",
-						"type": "UTF8"
-					}
-				]
+				"schema": []
 			},
 			"dependsOn": []
 		}

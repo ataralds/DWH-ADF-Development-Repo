@@ -6,6 +6,22 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "DWH-ADF-Development"
+		},
+		"OracleAzureDwh_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OracleAzureDwh'"
+		},
+		"OracleCStage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OracleCStage'"
+		},
+		"OracleDbParisPoolScrAmster_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OracleDbParisPoolScrAmster'"
+		},
+		"OracleDbParisScrAmster_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OracleDbParisScrAmster'"
 		}
 	},
 	"variables": {
@@ -13,396 +29,237 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/Oracel_Paris_Amster_All_Tables')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
+			"name": "[concat(parameters('factoryName'), '/OracleAzureDwh')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracleDbParisScrAmster",
-					"type": "LinkedServiceReference"
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('OracleAzureDwh_connectionString')]"
 				},
-				"parameters": {
-					"cw_table": {
-						"type": "String"
+				"connectVia": {
+					"referenceName": "AMSSRV049",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OracleCStage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [
+					"IR AMSSRV049"
+				],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('OracleCStage_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AMSSRVRUN01",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OracleDbParisPoolScrAmster')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Paris Pool",
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('OracleDbParisPoolScrAmster_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AMSSRVRUN01",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OracleDbParisScrAmster')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Source to Paris data in amsterdam set up by Morten. This is only an copy of production. ",
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('OracleDbParisScrAmster_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AMSSRVRUN01",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Copy_oltp05_from_Lake_Sql')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "temp copy job from lake to sql. This was used in the test when the db was not up running.",
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": false,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"dataset": {
+								"referenceName": "lake_Oltp05_configfile",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach_statictables",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup1').output.value",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Copy Static",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [
+										{
+											"name": "Source",
+											"value": "dwh-stage/Static/@{item().TABLE_NAME}"
+										},
+										{
+											"name": "Destination",
+											"value": "dwh_stage.@{trim(replace(item().TABLE_NAME,'\"',' ')) }"
+										}
+									],
+									"typeProperties": {
+										"source": {
+											"type": "ParquetSource",
+											"storeSettings": {
+												"type": "AzureBlobFSReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink"
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "tables_oltp05_lake",
+											"type": "DatasetReference",
+											"parameters": {
+												"fileName": {
+													"value": "@item().table_name",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "dwh_stage_oltp05_sql",
+											"type": "DatasetReference",
+											"parameters": {
+												"SinkDataset": {
+													"value": "@trim(replace(item().TABLE_NAME,'\"',' ')) ",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
 					}
-				},
-				"folder": {
-					"name": "Test"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "CSTAGE_PARIS",
-					"table": {
-						"value": "@dataset().cw_table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OracleFaptableDate2019')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracleDbParisScrAmster",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Test"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OracleParisFaptableCopy')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracleDbParisScrAmster",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Test"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "CSTAGE_PARIS",
-					"table": "FAPTABLE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OracleTable1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "CSTAGE_PARIS",
-					"table": "PEATABLE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ScrParisTest')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracleCStage",
-					"type": "LinkedServiceReference"
-				},
+				],
 				"parameters": {
-					"OracleParis": {
+					"SourceContainer": {
+						"type": "string"
+					},
+					"SourceDirectory": {
 						"type": "string"
 					}
 				},
 				"folder": {
 					"name": "Test"
 				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OracleParisScr')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This is the scr dataset for Paris tables",
+				"linkedServiceName": {
+					"referenceName": "OracleCStage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Paris"
+				},
 				"annotations": [],
 				"type": "OracleTable",
 				"schema": [],
 				"typeProperties": {
 					"schema": "CSTAGE_PARIS",
-					"table": {
-						"value": "@dataset().OracleParis",
-						"type": "Expression"
-					}
+					"table": "p_pectable"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OracleCStage')]"
+			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_6we')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "STAGE_ST",
-					"table": "STA_COVERAGE_GROUP"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_e6n')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "STAGE_ITF",
-					"table": "T_CROSSREFERENCE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_fa7')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_table": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "STAGE_ITF",
-					"table": {
-						"value": "@dataset().cw_table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_kbz')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "STAGE_ITF",
-					"table": "T_CROSSREFERENCE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_lnm')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_table": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "STAGE_ITF",
-					"table": {
-						"value": "@dataset().cw_table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_rg9')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_table": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "STAGE_ITF",
-					"table": {
-						"value": "@dataset().cw_table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_sm5')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_schema": {
-						"type": "String"
-					},
-					"cw_table": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": {
-						"value": "@dataset().cw_schema",
-						"type": "Expression"
-					},
-					"table": {
-						"value": "@dataset().cw_table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_xmp')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_table": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "STAGE_ITF",
-					"table": {
-						"value": "@dataset().cw_table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_yef')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "STAGE_ITF",
-					"table": "T_CROSSREFERENCE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_zra')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracelStageITF",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "perben"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "STAGE_ITF",
-					"table": "T_CROSSREFERENCE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Sourcepeatable')]",
+			"name": "[concat(parameters('factoryName'), '/OracleParisTablesScr')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -411,219 +268,1820 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "perben"
+					"name": "Copy job/dwh-stage/Paris"
 				},
 				"annotations": [],
 				"type": "OracleTable",
 				"schema": [],
 				"typeProperties": {
 					"schema": "CSTAGE_PARIS",
-					"table": "PEATABLE"
+					"table": "AZURE_CONFIG"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OracleCStage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Oracle_destination_peatable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracleAzureDwh",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Copy job/marts_to_oracle"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "AZURE_DWH",
+					"table": "P_PEATABLE"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OracleAzureDwh')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Oracle_lloyds')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP05",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Oltp05"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "AZURE_READ",
+					"table": "sta_exchange_rate"
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Dim_Business_Area')]",
+			"name": "[concat(parameters('factoryName'), '/Oracle_oltp05')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP05",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"fileName": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Oltp05"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "AZURE_READ",
+					"table": {
+						"value": "@dataset().fileName",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Oracle_oltp05_dummy_table')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This is used to check if there is any data in the Oracle source table.",
+				"linkedServiceName": {
+					"referenceName": "OLTP05",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "pipeline/dwh_stage"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "AZURE_READ",
+					"table": "DUMMY_TABLE_DATASET"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/oracle_config_paris')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This dataset is pointing to the cinfig file in stage_itf. Temp solution",
+				"linkedServiceName": {
+					"referenceName": "OracleCStage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Paris"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CSTAGE_PARIS",
+					"table": "AZURE_CONFIG"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OracleCStage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/oracle_configfile_oltp05')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP05",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Oltp05"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "AZURE_READ",
+					"table": "AZURE_CONFIG"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/oracle_exact')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP05",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Oltp05"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "AZURE_READ",
+					"table": "map_code_values"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/oracle_paris_fap_rsa')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracleCStage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Paris"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CSTAGE_PARIS",
+					"table": "CBSTABLE"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OracleCStage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/oracle_scr_oltp05')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP05",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Oltp05"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "AZURE_READ",
+					"table": "sta_claim_process"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/scr_oracle_agresso')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracelStageITF",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"cw_table": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Agresso"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "STAGE_ITF",
+					"table": {
+						"value": "@dataset().cw_table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/scr_oracle_paris')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "All the views in paris",
+				"linkedServiceName": {
+					"referenceName": "OracleCStage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Paris"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CSTAGE_PARIS",
+					"table": "ACOTABLE"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OracleCStage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_partner_me')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"folder": {
-					"name": "Test"
+					"name": "dwh_prepare/paris"
 				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "ParquetTCROSS",
+								"referenceName": "Paris",
 								"type": "DatasetReference"
 							},
-							"name": "source1",
-							"typeProperties": {}
+							"name": "paatable"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "peatable"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "pebtable"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "peztable"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "qtbtable"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "crctable"
+						},
+						{
+							"dataset": {
+								"referenceName": "Other",
+								"type": "DatasetReference"
+							},
+							"name": "tcrossreference"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "pectable"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "cbsttable"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "cbstable2"
+						},
+						{
+							"dataset": {
+								"referenceName": "Oltp05",
+								"type": "DatasetReference"
+							},
+							"name": "SfCompany"
 						}
 					],
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "SqldimBusinessArea",
+								"referenceName": "pre_dim_partner",
 								"type": "DatasetReference"
 							},
-							"name": "Sink"
+							"name": "sink1"
 						}
 					],
 					"transformations": [
 						{
-							"name": "Filter1"
+							"name": "maxpeb"
+						},
+						{
+							"name": "Join1"
+						},
+						{
+							"name": "pebdunco"
+						},
+						{
+							"name": "Prtstatusjoin"
+						},
+						{
+							"name": "Peaselected"
+						},
+						{
+							"name": "Prtstatus"
+						},
+						{
+							"name": "Join2"
+						},
+						{
+							"name": "crcselected"
+						},
+						{
+							"name": "Join3"
+						},
+						{
+							"name": "paaselected"
+						},
+						{
+							"name": "Paafiltered"
+						},
+						{
+							"name": "Join4"
+						},
+						{
+							"name": "Pezselected"
+						},
+						{
+							"name": "Join5"
+						},
+						{
+							"name": "LookupState"
+						},
+						{
+							"name": "Pebselected"
+						},
+						{
+							"name": "Expression1"
+						},
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "LookupCapital"
+						},
+						{
+							"name": "Select2"
+						},
+						{
+							"name": "LookupCompSubtype"
+						},
+						{
+							"name": "Select3"
+						},
+						{
+							"name": "LookupCountry"
+						},
+						{
+							"name": "Select4"
+						},
+						{
+							"name": "lookupContractType"
+						},
+						{
+							"name": "Select5"
+						},
+						{
+							"name": "DerivedColumn1"
+						},
+						{
+							"name": "Lookup2"
+						},
+						{
+							"name": "Select6"
+						},
+						{
+							"name": "DerivedColumn3"
+						},
+						{
+							"name": "ConstantBroker"
+						},
+						{
+							"name": "DerivedColumn4"
+						},
+						{
+							"name": "Select7"
+						},
+						{
+							"name": "Union1"
 						},
 						{
 							"name": "Aggregate1"
 						},
 						{
-							"name": "DerivedColumn1"
+							"name": "CodeTypeState368"
 						},
 						{
-							"name": "Select1"
+							"name": "CodeTypeCapital116"
+						},
+						{
+							"name": "Filter1"
+						},
+						{
+							"name": "Select8"
+						},
+						{
+							"name": "Select9"
 						}
 					],
-					"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source1\nsource1 filter(CODE_TYPE_ID == 106.0  && TARGET_CODE !='PI') ~> Filter1\nFilter1 aggregate(groupBy(TARGET_CODE),\n\tTARGET_DESCRIPTION = first(TARGET_DESCRIPTION)) ~> Aggregate1\nAggregate1 derive(GRP_CODE = case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'EG', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE)),\n\t\tGRP_DESCRIPTION = case(TARGET_CODE =='EN' || TARGET_CODE =='BU', 'Energy+', case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE)),\n\t\tBUA_DESCRIPTION = case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'P&I', TARGET_CODE),\n\t\tBUA_CODE = case( TARGET_CODE =='PM' || TARGET_CODE =='PF', 'PI', TARGET_CODE)) ~> DerivedColumn1\nDerivedColumn1 select(mapColumn(\n\t\tBUS_KEY = TARGET_CODE,\n\t\tBUS_DESCRIPTION = TARGET_DESCRIPTION,\n\t\tGRP_KEY = GRP_CODE,\n\t\tGRP_DESCRIPTION,\n\t\tBUA_DESCRIPTION,\n\t\tBUA_KEY = BUA_CODE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 sink(input(\n\t\tGRP_DESCRIPTION as string,\n\t\tGRP_KEY as string,\n\t\tBUA_DESCRIPTION as string,\n\t\tBUA_KEY as string,\n\t\tBUS_KEY as string,\n\t\tBUS_DESCRIPTION as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Sink"
+					"script": "source(output(\n\t\tpaabusncla as decimal(38,18),\n\t\tpaabusnsec as decimal(38,18),\n\t\tpaacaddrcountry as string,\n\t\tpaacaddress1 as string,\n\t\tpaacaddress2 as string,\n\t\tpaacaddress3 as string,\n\t\tpaacaddress4 as string,\n\t\tpaacaddress5 as string,\n\t\tpaacaddrpostal as string,\n\t\tpaaccmail as string,\n\t\tpaacfax as string,\n\t\tpaacname as string,\n\t\tpaacname2 as string,\n\t\tpaacontcname as string,\n\t\tpaacontcphone as string,\n\t\tpaacontemail as string,\n\t\tpaacontmobcphone as string,\n\t\tpaacontpeaid as decimal(38,18),\n\t\tpaacphone as string,\n\t\tpaactelex as string,\n\t\tpaafunct as decimal(38,18),\n\t\tpaaintnet as string,\n\t\tpaaintnote as string,\n\t\tpaalcname as string,\n\t\tpaalongname as string,\n\t\tpaamail as string,\n\t\tpaapeaid as decimal(38,18),\n\t\tpaarevcname as string,\n\t\tpaascname as string,\n\t\tpaaspbusndiv as decimal(38,18),\n\t\tpaawww as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> paatable\nsource(output(\n\t\tpeaaaddbo as decimal(38,18),\n\t\tpeaaccaddynsw as string,\n\t\tpeaaclmadv as decimal(38,18),\n\t\tpeaaclmbo as decimal(38,18),\n\t\tpeaaclobo as decimal(38,18),\n\t\tpeaacorbo as decimal(38,18),\n\t\tpeaaddbor as decimal(38,18),\n\t\tpeaaddmailfreq as decimal(38,18),\n\t\tpeaalternatepayer as decimal(38,18),\n\t\tpeaaprobo as decimal(38,18),\n\t\tpeabirtno as string,\n\t\tpeabirtws as decimal(38,18),\n\t\tpeacalamt as decimal(38,18),\n\t\tpeacalcurr as string,\n\t\tpeaccint as string,\n\t\tpeaccintr as decimal(38,18),\n\t\tpeacclamt as decimal(38,18),\n\t\tpeacclcurr as string,\n\t\tpeaccode as decimal(38,18),\n\t\tpeaclamailfreq as decimal(38,18),\n\t\tpeaclmadv as decimal(38,18),\n\t\tpeaclmbor as decimal(38,18),\n\t\tpeaclmintynsw as string,\n\t\tpeaclmmailfreq as decimal(38,18),\n\t\tpeaclobor as decimal(38,18),\n\t\tpeaclomet as decimal(38,18),\n\t\tpeaclosmailfreq as decimal(38,18),\n\t\tpeacolid as string,\n\t\tpeacomp2 as decimal(38,18),\n\t\tpeacorbo as decimal(38,18),\n\t\tpeacorrmailfreq as decimal(38,18),\n\t\tpeacrdate as timestamp,\n\t\tpeacrmid as decimal(38,18),\n\t\tpeacrsign as string,\n\t\tpeacruser as decimal(38,18),\n\t\tpeacustomerid as string,\n\t\tpeadueday as decimal(38,18),\n\t\tpeaendate as timestamp,\n\t\tpeaextid as string,\n\t\tpeaextid2 as string,\n\t\tpeaexttransfer as string,\n\t\tpeaexttransfer2 as string,\n\t\tpeafromcomp as decimal(38,18),\n\t\tpeaie2busndiv as decimal(38,18),\n\t\tpeaie2busnse as decimal(38,18),\n\t\tpeaie3busndiv as decimal(38,18),\n\t\tpeaie3busnse as decimal(38,18),\n\t\tpeaiebusndiv as decimal(38,18),\n\t\tpeaiebusnse as decimal(38,18),\n\t\tpeaiecon1 as decimal(38,18),\n\t\tpeaiecon2 as decimal(38,18),\n\t\tpeaiecon3 as decimal(38,18),\n\t\tpeaiecon4 as decimal(38,18),\n\t\tpeaiecon5 as decimal(38,18),\n\t\tpeaiecond as string,\n\t\tpeaiediv as string,\n\t\tpeaieint as string,\n\t\tpeaieint1 as string,\n\t\tpeaieint2 as string,\n\t\tpeaieint3 as string,\n\t\tpeaieint4 as string,\n\t\tpeaieint5 as string,\n\t\tpeaiesect as string,\n\t\tpeaincreday as decimal(38,18),\n\t\tpeaingiro as decimal(38,18),\n\t\tpeaingiroludate as timestamp,\n\t\tpeaingirolusign as string,\n\t\tpeaingirono as string,\n\t\tpeainvisible as string,\n\t\tpeaiselectronic as string,\n\t\tpeaiyear as decimal(38,18),\n\t\tpeaknvmark as string,\n\t\tpealang2 as string,\n\t\tpealeicode as string,\n\t\tpealudate as timestamp,\n\t\tpealusign as string,\n\t\tpealuuser as decimal(38,18),\n\t\tpeamailcndnsplit as string,\n\t\tpeamailsizemb as decimal(38,18),\n\t\tpeamailuseservadress as string,\n\t\tpeamasked as string,\n\t\tpeamaxper as decimal(38,18),\n\t\tpeamdescr as string,\n\t\tpeamexamt as decimal(38,18),\n\t\tpeamexcdate as timestamp,\n\t\tpeamexcurr as string,\n\t\tpeamexpro as decimal(38,18),\n\t\tpeanopdue as decimal(38,18),\n\t\tpeanopurr as string,\n\t\tpeanotaco as decimal(38,18),\n\t\tpeanotdays as decimal(38,18),\n\t\tpeanotlay as decimal(38,18),\n\t\tpeanotsort as decimal(38,18),\n\t\tpeaorgno as string,\n\t\tpeaorigmemberfrom as decimal(38,18),\n\t\tpeaoutcreday as decimal(38,18),\n\t\tpeaoutgiro as decimal(38,18),\n\t\tpeaoutgiroludate as timestamp,\n\t\tpeaoutgirolusign as string,\n\t\tpeaoutgirono as string,\n\t\tpeapeaid as decimal(38,18),\n\t\tpeapersid as string,\n\t\tpeapersrfl as decimal(38,18),\n\t\tpeapibregsign as string,\n\t\tpeaprobor as decimal(38,18),\n\t\tpeaprovmailfreq as decimal(38,18),\n\t\tpeapurtyp as decimal(38,18),\n\t\tpearesdat as timestamp,\n\t\tpeasex as string,\n\t\tpeastaamt as decimal(38,18),\n\t\tpeastaniv as decimal(38,18),\n\t\tpeastatyp as decimal(38,18),\n\t\tpeastdate as timestamp,\n\t\tpeastensw as decimal(38,18),\n\t\tpeastopcod as decimal(38,18),\n\t\tpeastoppremnote as string,\n\t\tpeastopuse as string,\n\t\tpeasttniv as decimal(38,18),\n\t\tpeasttprmclm as decimal(38,18),\n\t\tpeasubtype as decimal(38,18),\n\t\tpeasw10 as string,\n\t\tpeaswink as decimal(38,18),\n\t\tpeaswrun as decimal(38,18),\n\t\tpeausecolfee as string,\n\t\tpeavatno as string,\n\t\tpeavendorid as string,\n\t\tpeaxlcurr as string,\n\t\tpeaxlpoin as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> peatable\nsource(output(\n\t\tpebbrdate as timestamp,\n\t\tpebcivilstatus as decimal(38,18),\n\t\tpebconbusncla as decimal(38,18),\n\t\tpebconbusndiv as decimal(38,18),\n\t\tpebconbusnsec as decimal(38,18),\n\t\tpebconcomp2 as decimal(38,18),\n\t\tpebconoffice as decimal(38,18),\n\t\tpebdistrict as string,\n\t\tpebdunco as decimal(38,18),\n\t\tpebemlcurr as string,\n\t\tpebemlmdescr as string,\n\t\tpebetcbroker as string,\n\t\tpebfortsector as decimal(38,18),\n\t\tpebforttrade as string,\n\t\tpebgeneml as decimal(38,18),\n\t\tpebgroup as decimal(38,18),\n\t\tpebhourprice as decimal(38,18),\n\t\tpebinstadynz as string,\n\t\tpebisolan as string,\n\t\tpebkycapprdate as timestamp,\n\t\tpebkycapproved as string,\n\t\tpebkyccompany as decimal(38,18),\n\t\tpebkyccompdescr as string,\n\t\tpebkycid as string,\n\t\tpebludate as timestamp,\n\t\tpeblusign as string,\n\t\tpebmacheml as decimal(38,18),\n\t\tpebmansanctdescr as string,\n\t\tpebmansanction as string,\n\t\tpebmdescr as string,\n\t\tpebmvaynsw as string,\n\t\tpebnmisic as string,\n\t\tpebnmnyk as string,\n\t\tpeboffsanctdescr as string,\n\t\tpeboffsanction as string,\n\t\tpebonrisk as string,\n\t\tpebonriskdate as timestamp,\n\t\tpebpaylevel as decimal(38,18),\n\t\tpebpeaid as decimal(38,18),\n\t\tpebpebid as string,\n\t\tpebpeoid as string,\n\t\tpebpeoopeaid as decimal(38,18),\n\t\tpebpersacc as decimal(38,18),\n\t\tpebpever as decimal(38,18),\n\t\tpebpibregdate as timestamp,\n\t\tpebpibregsign as string,\n\t\tpebpidcname as string,\n\t\tpebpidid as decimal(38,18),\n\t\tpebpricecurr as string,\n\t\tpebqadate as timestamp,\n\t\tpebqasign as string,\n\t\tpebqastatus as string,\n\t\tpebratcod as string,\n\t\tpebratcomp as decimal(38,18),\n\t\tpebratedate as timestamp,\n\t\tpebratludate as timestamp,\n\t\tpebratsign as string,\n\t\tpebreason as string,\n\t\tpebressign as string,\n\t\tpebsitid as string,\n\t\tpebsupporter as string,\n\t\tpebtaxno as string,\n\t\tpebtypelevel as decimal(38,18),\n\t\tpebusstate as string,\n\t\tpebvaldate as timestamp,\n\t\tpebverstat as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> pebtable\nsource(output(\n\t\tpezdefaccrebynsw as string,\n\t\tpezdefagtnol as decimal(38,18),\n\t\tpezdefbusnbranch as decimal(38,18),\n\t\tpezdefbusncla as decimal(38,18),\n\t\tpezdefbusndiv as decimal(38,18),\n\t\tpezdefbusnsec as decimal(38,18),\n\t\tpezdefccpid as string,\n\t\tpezdefcomcod as string,\n\t\tpezdefcurr as string,\n\t\tpezdefinstcalctype as decimal(38,18),\n\t\tpezdefmortg as decimal(38,18),\n\t\tpezdefncomm as decimal(38,18),\n\t\tpezdefoffice as decimal(38,18),\n\t\tpezdeftarcodof as string,\n\t\tpezpezid as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> peztable\nsource(output(\n\t\tqtbdispynsw as string,\n\t\tqtbfieldn as string,\n\t\tqtbmdescr as string,\n\t\tqtbsdescr as string,\n\t\tqtbvalue as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> qtbtable\nsource(output(\n\t\tcrcccode as decimal(38,18),\n\t\tcrccpers2 as decimal(38,18),\n\t\tcrccpers3 as decimal(38,18),\n\t\tcrccpers4 as decimal(38,18),\n\t\tcrclospro as decimal(38,18),\n\t\tcrcmdescr as string,\n\t\tcrcperinc as string,\n\t\tcrcratcod as string,\n\t\tcrcratcomp as decimal(38,18),\n\t\tcrcsdescr as string,\n\t\tcrcstopuse as string,\n\t\tcrcsw5 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> crctable\nsource(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> tcrossreference\nsource(output(\n\t\tpeccofobl as string,\n\t\tpeccofopt as decimal(38,18),\n\t\tpecconpeaid as decimal(38,18),\n\t\tpeccontyp as string,\n\t\tpecdepint as decimal(38,18),\n\t\tpecdepity as string,\n\t\tpecduedate as timestamp,\n\t\tpecextkey as string,\n\t\tpecibnrpr as decimal(38,18),\n\t\tpeciyear as decimal(38,18),\n\t\tpecmanfee as decimal(38,18),\n\t\tpecnoofyr as decimal(38,18),\n\t\tpecnoufyr as decimal(38,18),\n\t\tpecpcaid as string,\n\t\tpecpecid as decimal(38,18),\n\t\tpecprocom as decimal(38,18),\n\t\tpecprosw1 as string,\n\t\tpecprosw2 as string,\n\t\tpecsw5 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> pectable\nsource(output(\n\t\tcbsaddper as decimal(38,18),\n\t\tcbsagform as string,\n\t\tcbsaowreb as decimal(38,18),\n\t\tcbsautocl as decimal(38,18),\n\t\tcbsbusnbranch as decimal(38,18),\n\t\tcbsbusnsec as decimal(38,18),\n\t\tcbscnform as string,\n\t\tcbscrewform as string,\n\t\tcbsdefcondco as decimal(38,18),\n\t\tcbsdefpayer as string,\n\t\tcbsdnform as string,\n\t\tcbsetcpremium as string,\n\t\tcbslang2 as string,\n\t\tcbsmdescr as string,\n\t\tcbsmutual as string,\n\t\tcbspitype as string,\n\t\tcbsrefcod as string,\n\t\tcbsrenew as decimal(38,18),\n\t\tcbsrenewendrule as decimal(38,18),\n\t\tcbsrenewperiod as decimal(38,18),\n\t\tcbssdescr as string,\n\t\tcbssiidef as string,\n\t\tcbsstopuse as string,\n\t\tcbssw10 as string,\n\t\tcbstarynsw as string,\n\t\tcbstaxappl as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> cbsttable\nsource(output(\n\t\tcbsaddper as decimal(38,18),\n\t\tcbsagform as string,\n\t\tcbsaowreb as decimal(38,18),\n\t\tcbsautocl as decimal(38,18),\n\t\tcbsbusnbranch as decimal(38,18),\n\t\tcbsbusnsec as decimal(38,18),\n\t\tcbscnform as string,\n\t\tcbscrewform as string,\n\t\tcbsdefcondco as decimal(38,18),\n\t\tcbsdefpayer as string,\n\t\tcbsdnform as string,\n\t\tcbsetcpremium as string,\n\t\tcbslang2 as string,\n\t\tcbsmdescr as string,\n\t\tcbsmutual as string,\n\t\tcbspitype as string,\n\t\tcbsrefcod as string,\n\t\tcbsrenew as decimal(38,18),\n\t\tcbsrenewendrule as decimal(38,18),\n\t\tcbsrenewperiod as decimal(38,18),\n\t\tcbssdescr as string,\n\t\tcbssiidef as string,\n\t\tcbsstopuse as string,\n\t\tcbssw10 as string,\n\t\tcbstarynsw as string,\n\t\tcbstaxappl as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> cbstable2\nsource(output(\n\t\taccount_resp_me as string,\n\t\taccount_resp_pi as string,\n\t\taccount_status as string,\n\t\tclient_lost_reason as string,\n\t\tcompany_email as string,\n\t\tcompany_id as double,\n\t\tcompany_name as string,\n\t\tcompany_owner_full_name as string,\n\t\tcompany_owner_id as string,\n\t\tcountry as string,\n\t\tcuo_full_name as string,\n\t\tcuo_user_id as string,\n\t\tdate_inserted as timestamp,\n\t\tdate_updated as timestamp,\n\t\tgard_contact_id as string,\n\t\tmarket_area_code as string,\n\t\tmarket_area_description as string,\n\t\tmarket_area_id as string,\n\t\tparent_company_id as double,\n\t\tparent_company_name as string,\n\t\tparis_gic_id as double,\n\t\tprimary_contact_email as string,\n\t\tprimary_contact_name as string,\n\t\tsf_last_updated_date as timestamp,\n\t\tsource_system as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> SfCompany\npebtable aggregate(groupBy(pebpeaid),\n\tMAXPEBPEVER = max(pebpever)) ~> maxpeb\nPebselected, maxpeb join(Pebselected@pebpeaid == maxpeb@pebpeaid\n\t&& pebpever == MAXPEBPEVER,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> Join1\nqtbtable filter(qtbfieldn=='pebdunco') ~> pebdunco\nJoin1, pebdunco join(pebdunco == toInteger(qtbvalue),\n\tjoinType:'left',\n\tbroadcast: 'none')~> Prtstatusjoin\npeatable select(mapColumn(\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Peaselected\nPrtstatusjoin select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid = Pebselected@pebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever = pebpever,\n\t\tpebdunco,\n\t\tpebpeaid = maxpeb@pebpeaid,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN = qtbfieldn,\n\t\tQTBVALUE = qtbvalue,\n\t\tQTBMDESCR = qtbmdescr,\n\t\tQTBSDESCR = qtbsdescr,\n\t\tQTBDISPYNSW = qtbdispynsw\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Prtstatus\nPrtstatus, Peaselected join(pebpeaid == peapeaid,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> Join2\ncrctable select(mapColumn(\n\t\tcrcratcod,\n\t\tcrcmdescr\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> crcselected\nJoin2, crcselected join(pebratcod == crcratcod,\n\tjoinType:'left',\n\tbroadcast: 'none')~> Join3\npaatable select(mapColumn(\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> paaselected\npaaselected filter(iifNull(paafunct,0) ==0) ~> Paafiltered\nJoin3, Paafiltered join(peapeaid == paapeaid,\n\tjoinType:'left',\n\tbroadcast: 'none')~> Join4\npeztable select(mapColumn(\n\t\tpezpezid,\n\t\tpezdefbusnbranch\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Pezselected\nJoin4, Pezselected join(peapeaid == pezpezid,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> Join5\nExpression1, CodeTypeState368 lookup(pebtaxno == SOURCE_CODE_KEY,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> LookupState\npebtable select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tpebpever,\n\t\tpebdunco\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Pebselected\nJoin5 derive(Key = concat('P',toString(peapeaid)),\n\t\t{Partner Name} = iifNull(trim(paalongname),iifNull(trim(paacname, peamdescr))),\n\t\tAddress = concat(trim(paacaddress1),iif(isNull((concat(trim(paacaddress2),concat(trim(paacaddress3), trim(paacaddress4))))),' ',paacaddress2)),\n\t\t{Rating Code} = case(isNull(pebratcod),'N/A',pebratcod),\n\t\t{Rating Code desc} = case(isNull(crcmdescr),'N/A',crcmdescr),\n\t\t{Partner Short Name} = peamdescr,\n\t\tPezdefbusnbranch = toString(pezdefbusnbranch),\n\t\tpeasubtype = toString(peasubtype),\n\t\t{Source System} = 'PARIS',\n\t\t{Code Type State} = 368,\n\t\t{Code Type Capital} = 116,\n\t\t{Code Type Comp Sub} = 795,\n\t\t{Code Type Country} = 50) ~> Expression1\nLookupState select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever,\n\t\tpebdunco,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN,\n\t\tQTBVALUE,\n\t\tQTBMDESCR,\n\t\tQTBSDESCR,\n\t\tQTBDISPYNSW,\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2,\n\t\tcrcratcod,\n\t\tcrcmdescr,\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex,\n\t\tpezpezid,\n\t\tKey,\n\t\t{Partner Name},\n\t\tAddress,\n\t\t{Rating Code},\n\t\t{Rating Code desc},\n\t\t{Partner Short Name},\n\t\tPezdefbusnbranch = Expression1@Pezdefbusnbranch,\n\t\t{Source System},\n\t\t{Code Type State},\n\t\t{Code Type Capital},\n\t\t{Code Type Comp Sub},\n\t\t{Code Type Country},\n\t\tSOURCE_CODE_KEY,\n\t\tSOURCE_SYSTEM,\n\t\t{State Code} = TARGET_CODE,\n\t\t{State Description} = TARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1, CodeTypeCapital116 lookup(Pezdefbusnbranch == tcrossreference@SOURCE_CODE_KEY,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> LookupCapital\nLookupCapital select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever,\n\t\tpebdunco,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN,\n\t\tQTBVALUE,\n\t\tQTBMDESCR,\n\t\tQTBSDESCR,\n\t\tQTBDISPYNSW,\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2,\n\t\tcrcratcod,\n\t\tcrcmdescr,\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex,\n\t\tpezpezid,\n\t\tKey,\n\t\t{Partner Name},\n\t\tAddress,\n\t\t{Rating Code},\n\t\t{Rating Code desc},\n\t\t{Partner Short Name},\n\t\tPezdefbusnbranch,\n\t\t{Source System},\n\t\t{Code Type State},\n\t\t{Code Type Capital},\n\t\t{Code Type Comp Sub},\n\t\t{Code Type Country},\n\t\t{State Code},\n\t\t{State Description},\n\t\t{Capital Code} = TARGET_CODE,\n\t\t{Capital Description} = TARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSelect2, tcrossreference lookup({Source System} == SOURCE_SYSTEM\n\t&& {Code Type Comp Sub} == CODE_TYPE_ID\n\t&& peasubtype == SOURCE_CODE_KEY,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> LookupCompSubtype\nLookupCompSubtype select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever,\n\t\tpebdunco,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN,\n\t\tQTBVALUE,\n\t\tQTBMDESCR,\n\t\tQTBSDESCR,\n\t\tQTBDISPYNSW,\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2,\n\t\tcrcratcod,\n\t\tcrcmdescr,\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex,\n\t\tpezpezid,\n\t\tKey,\n\t\t{Partner Name},\n\t\tAddress,\n\t\t{Rating Code},\n\t\t{Rating Code desc},\n\t\t{Partner Short Name},\n\t\tPezdefbusnbranch,\n\t\t{Source System},\n\t\t{Code Type State},\n\t\t{Code Type Capital},\n\t\t{Code Type Comp Sub},\n\t\t{Code Type Country},\n\t\t{State Code},\n\t\t{State Description},\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Company Sub Code} = TARGET_CODE,\n\t\t{Company Sub Description} = TARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nSelect3, tcrossreference lookup({Source System} == SOURCE_SYSTEM\n\t&& {Code Type Country} == CODE_TYPE_ID\n\t&& pebisolan == SOURCE_CODE_KEY,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> LookupCountry\nLookupCountry select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever,\n\t\tpebdunco,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN,\n\t\tQTBVALUE,\n\t\tQTBMDESCR,\n\t\tQTBSDESCR,\n\t\tQTBDISPYNSW,\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2,\n\t\tcrcratcod,\n\t\tcrcmdescr,\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex,\n\t\tpezpezid,\n\t\tKey,\n\t\t{Partner Name},\n\t\tAddress,\n\t\t{Rating Code},\n\t\t{Rating Code desc},\n\t\t{Partner Short Name},\n\t\tPezdefbusnbranch,\n\t\t{Source System},\n\t\t{Code Type State},\n\t\t{Code Type Capital},\n\t\t{Code Type Comp Sub},\n\t\t{Code Type Country},\n\t\t{State Code},\n\t\t{State Description},\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Domicile Code} = TARGET_CODE,\n\t\t{Domicile Description} = TARGET_DESCRIPTION,\n\t\t{Company Sub Code},\n\t\t{Company Sub Description}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nSelect4, pectable lookup(peapeaid == pecpecid,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> lookupContractType\nlookupContractType select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever,\n\t\tpebdunco,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN,\n\t\tQTBVALUE,\n\t\tQTBMDESCR,\n\t\tQTBSDESCR,\n\t\tQTBDISPYNSW,\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2,\n\t\tcrcratcod,\n\t\tcrcmdescr,\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex,\n\t\tpezpezid,\n\t\tKey,\n\t\t{Partner Name},\n\t\tAddress,\n\t\t{Rating Code},\n\t\t{Rating Code desc},\n\t\t{Partner Short Name},\n\t\tPezdefbusnbranch,\n\t\t{Source System},\n\t\t{Code Type State},\n\t\t{Code Type Capital},\n\t\t{Code Type Comp Sub},\n\t\t{Code Type Country},\n\t\t{State Code},\n\t\t{State Description},\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Domicile Code},\n\t\t{Domicile Description},\n\t\tpeccontype = peccontyp,\n\t\t{Company Sub Code},\n\t\t{Company Sub Description}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select5\nSelect5 derive({Contract Type} = case(peccontype == '0' , 'NORMAL',case(peccontype == '1','WAR',case(peccontype == '9','XL','OTHER')))) ~> DerivedColumn1\nDerivedColumn1, paatable lookup(pebratcomp == paatable@paapeaid,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> Lookup2\nLookup2 select(mapColumn(\n\t\tkey = Key,\n\t\t{Partner Name},\n\t\tAddress,\n\t\tpebdunco,\n\t\tQtbmdescr = QTBMDESCR,\n\t\tAddress1 = Select5@paacaddress1,\n\t\tAddress2 = Select5@paacaddress2,\n\t\tAddress3 = Select5@paacaddress3,\n\t\tAddress4 = Select5@paacaddress4,\n\t\tpaacaddress3 = Select5@paacaddress3,\n\t\t{Rating Company} = paatable@paacname,\n\t\tPebratcod = pebratcod,\n\t\t{Rating Code desc},\n\t\tPebratedate = pebratedate,\n\t\t{Domicile Code},\n\t\t{Domicile Description},\n\t\tPeaccode = peaccode,\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Company Sub code} = {Company Sub Code},\n\t\t{Company Sub Description},\n\t\tState = {State Description},\n\t\t{Paacname RatingComp} = paatable@paacname,\n\t\tPeaextid2 = peaextid2,\n\t\t{Contract Type}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select6\ncbsttable derive(Key = 'PDIR99',\n\t\t{Partner Name} = 'Direct Placed',\n\t\tAddress = 'Not Applicable',\n\t\tpebdunco = toDecimal(null()),\n\t\tDuncodesc = 'Not Applicable',\n\t\tAddress1 = 'Not Applicable',\n\t\tAddress2 = 'Not Applicable',\n\t\tAddress3 = 'Not Applicable',\n\t\tAddress4 = 'Not Applicable',\n\t\t{Rating Company} = 'Not Applicable',\n\t\t{Rating Code} = 'N/A',\n\t\t{Rating Code Description} = 'Not Applicable',\n\t\t{Rating Date} = toTimestamp(case(1!=1,1)),\n\t\t{Domicile Code} = 'N/A',\n\t\t{Domicile Description} = 'Not Applicable',\n\t\tPeacode = toDecimal(null()),\n\t\t{Capital Code} = toString(null()),\n\t\t{Capital Description} = toString(null()),\n\t\t{Company Sub code} = toString(null()),\n\t\t{Company Sub Desc} = toString(null()),\n\t\tState = 'N/A',\n\t\tPeaextid2 = toString(null()),\n\t\t{Contract Type} = toString(null())) ~> DerivedColumn3\nDerivedColumn3 select(mapColumn(\n\t\tkey = Key,\n\t\t{Partner Name},\n\t\tAddress,\n\t\tpebdunco,\n\t\tQtbmdescr = Duncodesc,\n\t\tAddress1,\n\t\tAddress2,\n\t\tAddress3,\n\t\tAddress4,\n\t\t{Rating Company},\n\t\tPebratcod = {Rating Code},\n\t\t{Rating Code desc} = {Rating Code Description},\n\t\tPebratedate = {Rating Date},\n\t\t{Domicile Code},\n\t\t{Domicile Description},\n\t\tPeaccode = Peacode,\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Company Sub code},\n\t\t{Company Sub Description} = {Company Sub Desc},\n\t\tState,\n\t\tPeaextid2,\n\t\t{Contract Type}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> ConstantBroker\ncbstable2 derive({Partner Name} = 'Facultativ',\n\t\t{Pk Key} = 'PFACULTATIV',\n\t\tAddress = 'Not Applicable',\n\t\tAddress1 = 'Not Applicable',\n\t\tAddress2 = 'Not Applicable',\n\t\tAddress3 = 'Not Applicable',\n\t\tAddress4 = 'Not Applicable',\n\t\t{Rating Company} = 'Not Applicable',\n\t\t{Rating Code} = 'N/A',\n\t\t{Rating Code desc} = 'Not Applicable',\n\t\t{Domicile Description} = 'Not Applicable',\n\t\tPebratedate = toTimestamp(case(1!=1,1)),\n\t\tCity = 'N/A',\n\t\tState = 'N/A',\n\t\tPebdunco = toDecimal(null()),\n\t\tDuncodesc = 'Not Applicable',\n\t\t{Pea Lei Code} = toString(null()),\n\t\tPeaccode = toDecimal(null()),\n\t\t{Contract Type} = 'OTHER') ~> DerivedColumn4\nDerivedColumn4 select(mapColumn(\n\t\tkey = {Pk Key},\n\t\t{Partner Name},\n\t\tAddress,\n\t\tpebdunco = Pebdunco,\n\t\tQtbmdescr = Duncodesc,\n\t\tAddress1,\n\t\tAddress2,\n\t\tAddress3,\n\t\tAddress4,\n\t\t{Rating Company},\n\t\tPebratcod = {Rating Company},\n\t\t{Rating Code desc},\n\t\tPebratedate,\n\t\t{Domicile Code} = City,\n\t\t{Domicile Description},\n\t\tPeaccode,\n\t\t{Capital Code} = {Pea Lei Code},\n\t\t{Capital Description} = {Pea Lei Code},\n\t\t{Company Sub code} = {Pea Lei Code},\n\t\t{Company Sub Description} = {Pea Lei Code},\n\t\tState,\n\t\t{Contract Type},\n\t\tPeaextid2 = {Pea Lei Code}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select7\nSelect6, ConstantBroker, Select7 union(byName: true)~> Union1\nUnion1 aggregate(groupBy(Key = key),\n\teach(match(name!='key'), $$ = first($$))) ~> Aggregate1\ntcrossreference filter(CODE_TYPE_ID == 368 && SOURCE_SYSTEM == 'PARIS') ~> CodeTypeState368\ntcrossreference filter(CODE_TYPE_ID == 116 && SOURCE_SYSTEM == 'PARIS') ~> CodeTypeCapital116\ntcrossreference filter(CODE_TYPE_ID == 116 && SOURCE_SYSTEM == 'PARIS') ~> Filter1\nSfCompany select(mapColumn(\n\t\taccount_resp_me,\n\t\taccount_resp_pi,\n\t\taccount_status,\n\t\tclient_lost_reason,\n\t\tcompany_email,\n\t\tcompany_id,\n\t\tcompany_name,\n\t\tcompany_owner_full_name,\n\t\tcompany_owner_id,\n\t\tcountry,\n\t\tcuo_full_name,\n\t\tcuo_user_id,\n\t\tdate_inserted,\n\t\tdate_updated,\n\t\tgard_contact_id,\n\t\tmarket_area_code,\n\t\tmarket_area_description,\n\t\tmarket_area_id,\n\t\tparent_company_id,\n\t\tparent_company_name,\n\t\tparis_gic_id,\n\t\tprimary_contact_email,\n\t\tprimary_contact_name,\n\t\tsf_last_updated_date,\n\t\tsource_system\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select8\nAggregate1 select(mapColumn(\n\t\tKey,\n\t\tPartner_Name = {Partner Name},\n\t\tAddress,\n\t\tpebdunco,\n\t\tQtbmdescr,\n\t\tAddress1,\n\t\tAddress2,\n\t\tAddress3,\n\t\tAddress4,\n\t\tRating_Company = {Rating Company},\n\t\tPebratcod,\n\t\tRating_Code_desc = {Rating Code desc},\n\t\tPebratedate,\n\t\tDomicile_Code = {Domicile Code},\n\t\tDomicile_Description = {Domicile Description},\n\t\tPeaccode,\n\t\tCapital_Code = {Capital Code},\n\t\tCapital_Description = {Capital Description},\n\t\tCompany_Sub_code = {Company Sub code},\n\t\tCompany_Sub_Description = {Company Sub Description},\n\t\tState,\n\t\tPeaextid = Peaextid2,\n\t\tContract_Type = {Contract Type}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select9\nSelect9 sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/T_Crossrefrence')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
+			"name": "[concat(parameters('factoryName'), '/CopyAzureToOraclePeatable')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"activities": [
+					{
+						"name": "Copy_uhu",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "dwh_stage.p_peatable"
+							},
+							{
+								"name": "Destination",
+								"value": "AZURE_DWH.P_PEATABLE"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource"
+							},
+							"sink": {
+								"type": "OracleSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "peapeaid",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEAPEAID",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaccode",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACCODE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacomp2",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACOMP2",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastopuse",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEASTOPUSE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peainvisible",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAINVISIBLE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peapersid",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAPERSID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peacolid",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACOLID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peamdescr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAMDESCR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "pealang2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEALANG2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peabirtws",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEABIRTWS",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peasubtype",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEASUBTYPE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peabirtno",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEABIRTNO",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peasw10",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEASW10",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peapersrfl",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEAPERSRFL",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastopcod",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTOPCOD",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "pearesdat",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEARESDAT",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peanopurr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEANOPURR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaincreday",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAINCREDAY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaingiro",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAINGIRO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaingirono",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAINGIRONO",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peanotaco",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEANOTACO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peapurtyp",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPURTYP",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peanotlay",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEANOTLAY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peanotsort",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEANOTSORT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaswink",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASWINK",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaoutcreday",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAOUTCREDAY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaoutgiro",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAOUTGIRO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaoutgirono",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAOUTGIRONO",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaswrun",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASWRUN",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclomet",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLOMET",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peanopdue",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEANOPDUE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastatyp",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTATYP",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastaamt",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTAAMT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peasttniv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTTNIV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastaniv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTANIV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaprovad",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPROVAD",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaprotyp",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPROTYP",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacloclm",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLOCLM",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclmadv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLMADV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaprobo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAAPROBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaaddbo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAAADDBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaclobo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAACLOBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaclmbo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAACLMBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaacorbo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAACORBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peamexcdate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEAMEXCDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peamexcurr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAMEXCURR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peamexamt",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEAMEXAMT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peamexpro",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "PEAMEXPRO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacclcurr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACCLCURR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peacclamt",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEACCLAMT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaccint",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACCINT",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaccintr",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "PEACCINTR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacalcurr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACALCURR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peacalamt",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEACALAMT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaxlcurr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAXLCURR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaxlpoin",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEAXLPOIN",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiyear",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIYEAR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastensw",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTENSW",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastdate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEASTDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peaendate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEAENDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peamaxper",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "PEAMAXPER",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiediv",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEDIV",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiebusndiv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIEBUSNDIV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaie2busndiv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIE2BUSNDIV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaie3busndiv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIE3BUSNDIV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiesect",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIESECT",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiebusnse",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIEBUSNSE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaie2busnse",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIE2BUSNSE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaie3busnse",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIE3BUSNSE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT3",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint4",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT4",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint5",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT5",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecond",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIECOND",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecon1",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIECON1",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecon2",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIECON2",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecon3",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIECON3",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecon4",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIECON4",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecon5",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIECON5",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacrdate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEACRDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peacrsign",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACRSIGN",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "pealudate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEALUDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "pealusign",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEALUSIGN",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peasex",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEASEX",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "date_inserted",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "DATE_INSERTED",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "date_last_updated",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "DATE_LAST_UPDATED",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "inserted_by",
+											"type": "String"
+										},
+										"sink": {
+											"name": "INSERTED_BY",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "last_updated_by",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LAST_UPDATED_BY",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "map_date",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "MAP_DATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peaorgno",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAORGNO",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclosmailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLOSMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclmmailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLMMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastoppremnote",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEASTOPPREMNOTE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaingiroludate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEAINGIROLUDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peainvnotify",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAINVNOTIFY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacorrmailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACORRMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaingirolusign",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAINGIROLUSIGN",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaknvmark",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAKNVMARK",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaprenotify",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPRENOTIFY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclamailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLAMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaddbor",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAADDBOR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaprobor",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPROBOR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peapurnotify",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPURNOTIFY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclmbor",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLMBOR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaoutgiroludate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEAOUTGIROLUDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclmintynsw",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACLMINTYNSW",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peamailsizemb",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "PEAMAILSIZEMB",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclobor",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLOBOR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacorbo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACORBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaclmadv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAACLMADV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peausecolfee",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAUSECOLFEE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaoutgirolusign",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAOUTGIROLUSIGN",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaddmailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAADDMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peasttprmclm",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTTPRMCLM",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaprovmailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPROVMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peadueday",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEADUEDAY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peanotdays",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEANOTDAYS",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peafromcomp",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEAFROMCOMP",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacrmid",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEACRMID",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "pealeicode",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEALEICODE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaextid",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAEXTID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaextid2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAEXTID2",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Sourceazurepeatable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Oracle_destination_peatable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
 				"folder": {
-					"name": "Test"
+					"name": "copy job/marts_to_oracle"
 				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ParquetTCROSS",
-								"type": "DatasetReference"
-							},
-							"name": "ParquetTcross",
-							"typeProperties": {}
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "AzureTCrossdwhStage",
-								"type": "DatasetReference"
-							},
-							"name": "TCrossRefrence"
-						}
-					],
-					"transformations": [],
-					"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> ParquetTcross\nParquetTcross sink(input(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as decimal(38,0),\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> TCrossRefrence"
-				}
+				"annotations": []
 			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/datetest')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "perben"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "AzureSqlTable5",
-								"type": "DatasetReference"
-							},
-							"name": "dato",
-							"typeProperties": {}
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "AzureSqlTable6",
-								"type": "DatasetReference"
-							},
-							"name": "insert"
-						},
-						{
-							"dataset": {
-								"referenceName": "AzureSqlTable6",
-								"type": "DatasetReference"
-							},
-							"name": "update"
-						}
-					],
-					"transformations": [
-						{
-							"name": "ConditionalSplit1"
-						},
-						{
-							"name": "DerivedColumn1"
-						},
-						{
-							"name": "DerivedColumn2"
-						},
-						{
-							"name": "AlterRow1"
-						}
-					],
-					"script": "source(output(\n\t\tdimension_key as integer,\n\t\tins as timestamp,\n\t\tupd as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> dato\ndato split(isNull(ins)==true(),\n\tdisjoint: false) ~> ConditionalSplit1@(null, notnull)\nConditionalSplit1@null derive(ins = currentTimestamp(),\n\t\tupd = currentTimestamp()) ~> DerivedColumn1\nConditionalSplit1@notnull derive(upd = currentTimestamp()) ~> DerivedColumn2\nDerivedColumn2 alterRow(updateIf(isNull(ins)==false())) ~> AlterRow1\nDerivedColumn1 sink(input(\n\t\tdimension_key as integer,\n\t\tins as timestamp,\n\t\tlast_upd as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> insert\nAlterRow1 sink(input(\n\t\tdimension_key as integer,\n\t\tins as timestamp,\n\t\tlast_upd as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:true,\n\tupsertable:false,\n\tkeys:['dimension_key'],\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> update"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/insert update test')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "perben"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "test1",
-								"type": "DatasetReference"
-							},
-							"name": "source1",
-							"typeProperties": {}
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "test2",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						},
-						{
-							"dataset": {
-								"referenceName": "test2",
-								"type": "DatasetReference"
-							},
-							"name": "sink2"
-						}
-					],
-					"transformations": [
-						{
-							"name": "ConditionalSplit1"
-						},
-						{
-							"name": "DerivedColumn1"
-						},
-						{
-							"name": "DerivedColumn2"
-						},
-						{
-							"name": "AlterRow1"
-						},
-						{
-							"name": "AlterRow2"
-						},
-						{
-							"name": "SurrogateKey1"
-						},
-						{
-							"name": "Select1"
-						}
-					],
-					"script": "source(output(\n\t\tdate_inserted as timestamp,\n\t\tdate_last_updated as timestamp,\n\t\tintint as integer,\n\t\tcharchar as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource1 split(isNull(date_inserted)==true(),\n\tdisjoint: false) ~> ConditionalSplit1@(en, to)\nConditionalSplit1@en derive(date_inserted = currentTimestamp(),\n\t\tdate_last_updated = currentTimestamp()) ~> DerivedColumn1\nConditionalSplit1@to derive(date_last_updated = currentTimestamp()) ~> DerivedColumn2\nDerivedColumn2 alterRow(updateIf(isNull(date_inserted)==false())) ~> AlterRow1\nSelect1 alterRow(insertIf(isNull(date_inserted)==true())) ~> AlterRow2\nDerivedColumn1 keyGenerate(output(intint as long),\n\tstartAt: 100L) ~> SurrogateKey1\nSurrogateKey1 select(skipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nAlterRow2 sink(input(\n\t\tdate_inserted as timestamp,\n\t\tdate_last_updated as timestamp,\n\t\tintint as integer,\n\t\tcharchar as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1\nAlterRow1 sink(input(\n\t\tdate_inserted as timestamp,\n\t\tdate_last_updated as timestamp,\n\t\tintint as integer,\n\t\tcharchar as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:true,\n\tupsertable:false,\n\tkeys:['intint'],\n\tformat: 'table',\n\tmapColumn(\n\t\tdate_inserted,\n\t\tdate_last_updated,\n\t\tintint,\n\t\tcharchar\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink2"
-				}
-			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Oracle_destination_peatable')]"
+			]
 		}
 	]
 }

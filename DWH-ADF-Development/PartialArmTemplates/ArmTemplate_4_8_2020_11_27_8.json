@@ -6,66 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "DWH-ADF-Development"
-		},
-		"ARESRV476_Arendal_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'ARESRV476_Arendal'"
-		},
-		"AzureDatabricks_development_connection_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_development_connection'"
-		},
-		"OLTP05_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'OLTP05'"
-		},
-		"OracelStageITF_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'OracelStageITF'"
-		},
-		"OracleAzureDwh_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'OracleAzureDwh'"
-		},
-		"OracleCStage_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'OracleCStage'"
-		},
-		"OracleDbParisPoolScrAmster_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'OracleDbParisPoolScrAmster'"
-		},
-		"OracleDbParisScrAmster_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'OracleDbParisScrAmster'"
-		},
-		"sql_server_development_connection_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'sql_server_development_connection'"
-		},
-		"sql_server_operations_connection_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'sql_server_operations_connection'"
-		},
-		"ADF_dev_linked_service_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://dwh-development-keyvault.vault.azure.net/"
-		},
-		"ARESRV476_Arendal_properties_typeProperties_host": {
-			"type": "string",
-			"defaultValue": "\\\\ARESRV476\\Arendal\\"
-		},
-		"ARESRV476_Arendal_properties_typeProperties_userId": {
-			"type": "string",
-			"defaultValue": "audun.taraldsen@gard.no"
-		},
-		"AzureDataLakeStorage_test_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://dwhdatalakedevelopment.dfs.core.windows.net"
-		},
-		"dwhdatalakedevelopment_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://dwhdatalakedevelopment.dfs.core.windows.net"
 		}
 	},
 	"variables": {
@@ -1357,15 +1297,13 @@
 						"inputs": [
 							{
 								"referenceName": "Sourceazurepeatable",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "Oracle_destination_peatable",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
@@ -1424,15 +1362,13 @@
 						"inputs": [
 							{
 								"referenceName": "oracle_configfile_oltp05",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "lake_configfile_oltp05",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
@@ -1596,8 +1532,7 @@
 							},
 							"dataset": {
 								"referenceName": "lake_Oltp05_configfile",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							},
 							"firstRowOnly": false
 						}
@@ -1730,8 +1665,7 @@
 							},
 							"dataset": {
 								"referenceName": "oracle_configfile_oltp05",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							},
 							"firstRowOnly": false
 						}
@@ -1787,8 +1721,7 @@
 									"inputs": [
 										{
 											"referenceName": "oracle_exact",
-											"type": "DatasetReference",
-											"parameters": {}
+											"type": "DatasetReference"
 										}
 									],
 									"outputs": [
@@ -1846,8 +1779,7 @@
 							},
 							"dataset": {
 								"referenceName": "oracle_configfile_oltp05",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							},
 							"firstRowOnly": false
 						}
@@ -1903,8 +1835,7 @@
 									"inputs": [
 										{
 											"referenceName": "Oracle_lloyds",
-											"type": "DatasetReference",
-											"parameters": {}
+											"type": "DatasetReference"
 										}
 									],
 									"outputs": [
@@ -1962,8 +1893,7 @@
 							},
 							"dataset": {
 								"referenceName": "oracle_configfile_oltp05",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							},
 							"firstRowOnly": false
 						}
@@ -2079,8 +2009,7 @@
 							},
 							"dataset": {
 								"referenceName": "oracle_configfile_oltp05",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							},
 							"firstRowOnly": false
 						}
@@ -2136,8 +2065,7 @@
 									"inputs": [
 										{
 											"referenceName": "oracle_scr_oltp05",
-											"type": "DatasetReference",
-											"parameters": {}
+											"type": "DatasetReference"
 										}
 									],
 									"outputs": [
@@ -2196,8 +2124,7 @@
 							},
 							"dataset": {
 								"referenceName": "oracle_config_paris",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							},
 							"firstRowOnly": false
 						}
@@ -2253,8 +2180,7 @@
 									"inputs": [
 										{
 											"referenceName": "oracle_paris_fap_rsa",
-											"type": "DatasetReference",
-											"parameters": {}
+											"type": "DatasetReference"
 										}
 									],
 									"outputs": [
@@ -2313,8 +2239,7 @@
 							},
 							"dataset": {
 								"referenceName": "oracle_config_paris",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							},
 							"firstRowOnly": false
 						}
@@ -2370,8 +2295,7 @@
 									"inputs": [
 										{
 											"referenceName": "scr_oracle_paris",
-											"type": "DatasetReference",
-											"parameters": {}
+											"type": "DatasetReference"
 										}
 									],
 									"outputs": [
@@ -2429,8 +2353,7 @@
 							},
 							"dataset": {
 								"referenceName": "oracle_configfile_oltp05",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							},
 							"firstRowOnly": false
 						}
@@ -2486,8 +2409,7 @@
 									"inputs": [
 										{
 											"referenceName": "oracle_scr_oltp05",
-											"type": "DatasetReference",
-											"parameters": {}
+											"type": "DatasetReference"
 										}
 									],
 									"outputs": [
@@ -2545,8 +2467,7 @@
 							},
 							"dataset": {
 								"referenceName": "oracle_configfile_oltp05",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							},
 							"firstRowOnly": false
 						}
@@ -2602,8 +2523,7 @@
 									"inputs": [
 										{
 											"referenceName": "oracle_scr_oltp05",
-											"type": "DatasetReference",
-											"parameters": {}
+											"type": "DatasetReference"
 										}
 									],
 									"outputs": [
@@ -2687,8 +2607,7 @@
 								"referenceName": "load_static_stage_dwh",
 								"type": "PipelineReference"
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
+							"waitOnCompletion": true
 						}
 					},
 					{
@@ -2708,8 +2627,7 @@
 								"referenceName": "copy_exact_to_lake",
 								"type": "PipelineReference"
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
+							"waitOnCompletion": true
 						}
 					},
 					{
@@ -2761,8 +2679,7 @@
 								"referenceName": "load_master_pre",
 								"type": "PipelineReference"
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
+							"waitOnCompletion": true
 						}
 					},
 					{
@@ -2782,8 +2699,7 @@
 								"referenceName": "load_pre_dim",
 								"type": "PipelineReference"
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
+							"waitOnCompletion": true
 						}
 					}
 				],
@@ -2863,8 +2779,7 @@
 							},
 							"dataset": {
 								"referenceName": "Oracle_oltp05_dummy_table",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						}
 					},
@@ -2896,8 +2811,7 @@
 											"referenceName": "copy_exact_to_lake",
 											"type": "PipelineReference"
 										},
-										"waitOnCompletion": true,
-										"parameters": {}
+										"waitOnCompletion": true
 									}
 								}
 							],
@@ -2958,8 +2872,7 @@
 							},
 							"dataset": {
 								"referenceName": "Oracle_oltp05_dummy_table",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						}
 					},
@@ -2991,8 +2904,7 @@
 											"referenceName": "copy_lloyds_to_lake",
 											"type": "PipelineReference"
 										},
-										"waitOnCompletion": true,
-										"parameters": {}
+										"waitOnCompletion": true
 									}
 								}
 							],
@@ -3042,8 +2954,7 @@
 								"referenceName": "load_stage_lloyds_table",
 								"type": "PipelineReference"
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
+							"waitOnCompletion": true
 						}
 					},
 					{
@@ -3056,8 +2967,7 @@
 								"referenceName": "copy_static_to_lake",
 								"type": "PipelineReference"
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
+							"waitOnCompletion": true
 						}
 					},
 					{
@@ -3272,9 +3182,7 @@
 					"table": "p_pectable"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracleCStage')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/OracleParisTablesScr')]",
@@ -3296,9 +3204,7 @@
 					"table": "AZURE_CONFIG"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracleCStage')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Oracle_destination_peatable')]",
@@ -3320,9 +3226,7 @@
 					"table": "P_PEATABLE"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracleAzureDwh')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Oracle_lloyds')]",
@@ -3344,9 +3248,7 @@
 					"table": "sta_exchange_rate"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OLTP05')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Oracle_oltp05')]",
@@ -3376,9 +3278,7 @@
 					}
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OLTP05')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Oracle_oltp05_dummy_table')]",
@@ -3401,9 +3301,7 @@
 					"table": "DUMMY_TABLE_DATASET"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OLTP05')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Other')]",
@@ -4312,9 +4210,7 @@
 					"table": "p_peatable"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/sql_server_development_connection')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Static')]",
@@ -5165,9 +5061,7 @@
 					}
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/sql_server_development_connection')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/fact_premium_transaction')]",
@@ -5413,9 +5307,7 @@
 					"table": "AZURE_CONFIG"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracleCStage')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/oracle_configfile_oltp05')]",
@@ -5437,9 +5329,7 @@
 					"table": "AZURE_CONFIG"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OLTP05')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/oracle_exact')]",
@@ -5461,9 +5351,7 @@
 					"table": "map_code_values"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OLTP05')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/oracle_paris_fap_rsa')]",
@@ -5485,9 +5373,7 @@
 					"table": "CBSTABLE"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracleCStage')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/oracle_scr_oltp05')]",
@@ -5509,9 +5395,7 @@
 					"table": "sta_claim_process"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OLTP05')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pre_dim_agreement')]",
@@ -6227,9 +6111,7 @@
 					}
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracelStageITF')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/scr_oracle_paris')]",
@@ -6252,9 +6134,7 @@
 					"table": "ACOTABLE"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracleCStage')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/t_crossreference')]",
@@ -6343,43 +6223,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ADF_dev_linked_service')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('ADF_dev_linked_service_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ARESRV476_Arendal')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "FileServer",
-				"typeProperties": {
-					"host": "[parameters('ARESRV476_Arendal_properties_typeProperties_host')]",
-					"userId": "[parameters('ARESRV476_Arendal_properties_typeProperties_userId')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('ARESRV476_Arendal_password')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "AMSSRV049",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AMSSRV049')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage_test')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -6387,153 +6230,10 @@
 				"annotations": [],
 				"type": "AzureBlobFS",
 				"typeProperties": {
-					"url": "[parameters('AzureDataLakeStorage_test_properties_typeProperties_url')]"
+					"url": "https://dwhdatalakedevelopment.dfs.core.windows.net"
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureDatabricks_development_connection')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Connection to DataBricks Development",
-				"annotations": [
-					"databricks development connection"
-				],
-				"type": "AzureDatabricks",
-				"typeProperties": {
-					"domain": "https://westeurope.azuredatabricks.net",
-					"accessToken": {
-						"type": "SecureString",
-						"value": "[parameters('AzureDatabricks_development_connection_accessToken')]"
-					},
-					"newClusterNodeType": "Standard_DS3_v2",
-					"newClusterNumOfWorker": "1",
-					"newClusterVersion": "5.5.x-scala2.11"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OLTP05')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Oracle",
-				"typeProperties": {
-					"connectionString": "[parameters('OLTP05_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "AMSSRVRUN01",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AMSSRVRUN01')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OracelStageITF')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [
-					"IR AMSSRV049"
-				],
-				"type": "Oracle",
-				"typeProperties": {
-					"connectionString": "[parameters('OracelStageITF_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "AMSSRV049",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AMSSRV049')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OracleAzureDwh')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Oracle",
-				"typeProperties": {
-					"connectionString": "[parameters('OracleAzureDwh_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "AMSSRV049",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AMSSRV049')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OracleCStage')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [
-					"IR AMSSRV049"
-				],
-				"type": "Oracle",
-				"typeProperties": {
-					"connectionString": "[parameters('OracleCStage_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "AMSSRVRUN01",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AMSSRVRUN01')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OracleDbParisPoolScrAmster')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Paris Pool",
-				"annotations": [],
-				"type": "Oracle",
-				"typeProperties": {
-					"connectionString": "[parameters('OracleDbParisPoolScrAmster_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "AMSSRVRUN01",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AMSSRVRUN01')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OracleDbParisScrAmster')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Source to Paris data in amsterdam set up by Morten. This is only an copy of production. ",
-				"annotations": [],
-				"type": "Oracle",
-				"typeProperties": {
-					"connectionString": "[parameters('OracleDbParisScrAmster_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "AMSSRVRUN01",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AMSSRVRUN01')]"
-			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dwhdatalakedevelopment')]",
@@ -6546,58 +6246,8 @@
 				],
 				"type": "AzureBlobFS",
 				"typeProperties": {
-					"url": "[parameters('dwhdatalakedevelopment_properties_typeProperties_url')]"
+					"url": "https://dwhdatalakedevelopment.dfs.core.windows.net"
 				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/sql_server_development_connection')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "ADF connection to SQL server Development ",
-				"annotations": [
-					"sql server development connection"
-				],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('sql_server_development_connection_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/sql_server_operations_connection')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('sql_server_operations_connection_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AMSSRV049')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"description": "Integration runtime hosted on AMSSRV049",
-				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AMSSRVRUN01')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
 			},
 			"dependsOn": []
 		},

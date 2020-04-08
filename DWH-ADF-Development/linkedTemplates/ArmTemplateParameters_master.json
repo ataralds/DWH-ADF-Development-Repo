@@ -11,19 +11,28 @@
 		"AzureDatabricks_development_connection_accessToken": {
 			"value": ""
 		},
+		"OLTP05_connectionString": {
+			"value": ""
+		},
 		"OracelStageITF_connectionString": {
+			"value": ""
+		},
+		"OracleAzureDwh_connectionString": {
 			"value": ""
 		},
 		"OracleCStage_connectionString": {
 			"value": ""
 		},
+		"OracleDbParisPoolScrAmster_connectionString": {
+			"value": ""
+		},
 		"OracleDbParisScrAmster_connectionString": {
 			"value": ""
 		},
-		"dwhdatalakedevelopment_accountKey": {
+		"sql_server_development_connection_connectionString": {
 			"value": ""
 		},
-		"sql_server_development_connection_connectionString": {
+		"sql_server_operations_connection_connectionString": {
 			"value": ""
 		},
 		"ADF_dev_linked_service_properties_typeProperties_baseUrl": {
@@ -34,6 +43,9 @@
 		},
 		"ARESRV476_Arendal_properties_typeProperties_userId": {
 			"value": "audun.taraldsen@gard.no"
+		},
+		"AzureDataLakeStorage_test_properties_typeProperties_url": {
+			"value": "https://dwhdatalakedevelopment.dfs.core.windows.net"
 		},
 		"dwhdatalakedevelopment_properties_typeProperties_url": {
 			"value": "https://dwhdatalakedevelopment.dfs.core.windows.net"
