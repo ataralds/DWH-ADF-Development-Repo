@@ -16,9 +16,12 @@
 			"transformations": [
 				{
 					"name": "DeriveTopLevel"
+				},
+				{
+					"name": "DimKey"
 				}
 			],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_currency.parquet']) ~> preDimCurrency\npreDimCurrency derive(top_code = 'ALL',\n\t\ttop_description = 'All Currencies') ~> DeriveTopLevel"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_currency.parquet']) ~> preDimCurrency\npreDimCurrency derive(top_code = 'ALL',\n\t\ttop_description = 'All Currencies') ~> DeriveTopLevel\nDeriveTopLevel keyGenerate(output(Dim_key as long),\n\tstartAt: 1L) ~> DimKey"
 		}
 	}
 }
