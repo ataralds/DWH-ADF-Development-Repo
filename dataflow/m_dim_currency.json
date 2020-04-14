@@ -1,0 +1,24 @@
+{
+	"name": "m_dim_currency",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_currency",
+						"type": "DatasetReference"
+					},
+					"name": "preDimCurrency"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "DeriveTopLevel"
+				}
+			],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_currency.parquet']) ~> preDimCurrency\npreDimCurrency derive(top_code = 'ALL',\n\t\ttop_description = 'All Currencies') ~> DeriveTopLevel"
+		}
+	}
+}
