@@ -1,34 +1,46 @@
 {
-	"name": "load_stage_dwh",
+	"name": "load_master_revit",
 	"properties": {
 		"activities": [
 			{
-				"name": "load_stage_lloyds_table",
+				"name": "load_master_pre",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "load_stage_lloyds_table",
+						"referenceName": "load_master_pre",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
 				}
 			},
 			{
-				"name": "load_stage_exact_table",
+				"name": "load_pre_dim",
 				"type": "ExecutePipeline",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "load_master_pre",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "load_stage_exact_table",
+						"referenceName": "load_pre_dim",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
 				}
 			}
 		],
+		"variables": {
+			"vMasterRevitErrorStatus": {
+				"type": "String"
+			}
+		},
 		"folder": {
 			"name": "pipeline/dwh_stage"
 		},
