@@ -1,0 +1,17 @@
+{
+	"name": "integrationRuntimeHanne",
+	"properties": {
+		"type": "Managed",
+		"description": "Testing the integration runtime speed for debug",
+		"typeProperties": {
+			"computeProperties": {
+				"location": "AutoResolve",
+				"dataFlowProperties": {
+					"computeType": "General",
+					"coreCount": 8,
+					"timeToLive": 0
+				}
+			}
+		}
+	}
+}
