@@ -29,8 +29,8 @@
 				}
 			},
 			{
-				"name": "error_in_pipeline_resolved",
-				"type": "ExecutePipeline",
+				"name": "Web1",
+				"type": "WebActivity",
 				"dependsOn": [
 					{
 						"activity": "pl_copy_static_to_lake",
@@ -39,18 +39,26 @@
 						]
 					}
 				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
 				"userProperties": [],
 				"typeProperties": {
-					"pipeline": {
-						"referenceName": "error_in_pipeline_resolved",
-						"type": "PipelineReference"
+					"url": "https://prod-111.westeurope.logic.azure.com:443/workflows/854a1b1a7a70443ea407fcc8ad02a8d6/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xI0dgmzlPJOnVcQ4PjxydVz2E5UIM0Qke2J4gC8Mkbo",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
 					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"pErrorPipelineStatus": {
-							"value": "@activity('pl_copy_static_to_lake').error.message",
-							"type": "Expression"
-						}
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"Subject": "Azure DWH alert! Error in Pipeline",
+						"ErrorMessage": "The ADF pipeline has error. Please check the logs.",
+						"EmailTo": "sudipta.dutta@gard.no"
 					}
 				}
 			}
