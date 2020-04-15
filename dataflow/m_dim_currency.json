@@ -10,6 +10,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "preDimCurrency"
+				},
+				{
+					"dataset": {
+						"referenceName": "dim_currency",
+						"type": "DatasetReference"
+					},
+					"name": "dimCurrencyInput"
 				}
 			],
 			"sinks": [
@@ -18,7 +25,14 @@
 						"referenceName": "dim_currency",
 						"type": "DatasetReference"
 					},
-					"name": "dimCurrency"
+					"name": "dimCurrencyInsert"
+				},
+				{
+					"dataset": {
+						"referenceName": "dim_currency",
+						"type": "DatasetReference"
+					},
+					"name": "dimCurrencyUpdate"
 				}
 			],
 			"transformations": [
@@ -27,9 +41,30 @@
 				},
 				{
 					"name": "DimKey"
+				},
+				{
+					"name": "MaxDimKey"
+				},
+				{
+					"name": "Join1"
+				},
+				{
+					"name": "DerivedColumn1"
+				},
+				{
+					"name": "LookupExisting"
+				},
+				{
+					"name": "ConditionalSplit1"
+				},
+				{
+					"name": "SelecBusinessKey"
+				},
+				{
+					"name": "RemoveDuplicateColumn"
 				}
 			],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_currency.parquet']) ~> preDimCurrency\npreDimCurrency derive(top_code = 'ALL',\n\t\ttop_description = 'All Currencies') ~> DeriveTopLevel\nDeriveTopLevel keyGenerate(output(Dim_key as long),\n\tstartAt: 1L) ~> DimKey\nDimKey sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_currency.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimCurrency"
+			"script": "source(output(\n\t\tcur_code as string,\n\t\tcur_description as string,\n\t\tfrom_currency_code as string,\n\t\texchange_rate as decimal(12,2),\n\t\tcurr_last_exchange_rate_to_usd as decimal(12,2),\n\t\tlast_updatet_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_currency.parquet']) ~> preDimCurrency\nsource(output(\n\t\tcur_code as string,\n\t\tcur_description as string,\n\t\tfrom_currency_code as string,\n\t\texchange_rate as decimal(12,2),\n\t\tcurr_last_exchange_rate_to_usd as decimal(12,2),\n\t\tlast_updatet_by as string,\n\t\ttop_code as string,\n\t\ttop_description as string,\n\t\tDim_key as long\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> dimCurrencyInput\npreDimCurrency derive(top_code = 'ALL',\n\t\ttop_description = 'All Currencies') ~> DeriveTopLevel\nConditionalSplit1@new keyGenerate(output(Dim_key as long),\n\tstartAt: 1L) ~> DimKey\ndimCurrencyInput aggregate(maxKey = max(Dim_key)) ~> MaxDimKey\nDimKey, MaxDimKey join(!(top_code == '') && maxKey !=0,\n\tjoinType:'cross',\n\tbroadcast: 'none')~> Join1\nJoin1 derive(newDimKey = Dim_key+maxKey) ~> DerivedColumn1\nDeriveTopLevel, SelecBusinessKey lookup(preDimCurrency@cur_code == SelecBusinessKey@cur_code,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> LookupExisting\nRemoveDuplicateColumn split(isMatch(),\n\tdisjoint: false) ~> ConditionalSplit1@(exists, new)\ndimCurrencyInput select(mapColumn(\n\t\tcur_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelecBusinessKey\nLookupExisting select(mapColumn(\n\t\tcur_code = preDimCurrency@cur_code,\n\t\tcur_description,\n\t\tfrom_currency_code,\n\t\texchange_rate,\n\t\tcurr_last_exchange_rate_to_usd,\n\t\tlast_updatet_by,\n\t\ttop_code,\n\t\ttop_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveDuplicateColumn\nDerivedColumn1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_currency.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimCurrencyInsert\nConditionalSplit1@exists sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimCurrencyUpdate"
 		}
 	}
 }
