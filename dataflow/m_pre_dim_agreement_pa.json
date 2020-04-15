@@ -1,0 +1,12 @@
+{
+	"name": "m_pre_dim_agreement_pa",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
