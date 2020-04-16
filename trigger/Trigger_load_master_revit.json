@@ -1,13 +1,19 @@
 {
-	"name": "load_master_revit",
+	"name": "Trigger_load_master_revit",
 	"properties": {
-		"description": "load_master_revit",
+		"description": "This is to trigger load_master_revit",
 		"annotations": [],
 		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
 					"referenceName": "load_master_revit",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "error_in_pipeline_resolved",
 					"type": "PipelineReference"
 				}
 			}
@@ -18,7 +24,7 @@
 				"frequency": "Day",
 				"interval": 1,
 				"startTime": "2020-04-16T12:58:00.000Z",
-				"endTime": "2020-04-18T12:58:00.000Z",
+				"endTime": "2020-04-18T14:58:00.000Z",
 				"timeZone": "UTC",
 				"schedule": {
 					"minutes": [
