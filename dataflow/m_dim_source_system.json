@@ -10,6 +10,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "StaSourceSystem"
+				},
+				{
+					"dataset": {
+						"referenceName": "dim_source_system",
+						"type": "DatasetReference"
+					},
+					"name": "DimSourceSystemInput"
 				}
 			],
 			"sinks": [
@@ -41,7 +48,7 @@
 					"name": "DimKeyIncrement"
 				}
 			],
-			"script": "source(output(\n\t\tactive as string,\n\t\tdescription as string,\n\t\tinserted_by as string,\n\t\tinserted_date as timestamp,\n\t\tpk_source_system as string,\n\t\tupdated_by as string,\n\t\tupdated_date as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaSourceSystem\nStaSourceSystem select(mapColumn(\n\t\tsou_key = pk_source_system,\n\t\tsou_description = description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nRemoveUnusedColumns derive(sou_key = 'N/A',\n\t\tsou_description = 'Not Applicable') ~> NotApplicable\nNotApplicable aggregate(groupBy(sou_key),\n\tsou_description = first(sou_description)) ~> NotApplicableRow\nRemoveUnusedColumns, NotApplicableRow union(byName: true)~> UnionWithNotApplicable\nUnionWithNotApplicable derive(top_key = 'ALL',\n\t\ttop_description = 'All Source Systems') ~> DeriveTopLevel\nDeriveTopLevel keyGenerate(output(dim_key as long),\n\tstartAt: 1L) ~> DimKeyIncrement\nDimKeyIncrement sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['m_dim_source_system'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimSourceSystem"
+			"script": "source(output(\n\t\tactive as string,\n\t\tdescription as string,\n\t\tinserted_by as string,\n\t\tinserted_date as timestamp,\n\t\tpk_source_system as string,\n\t\tupdated_by as string,\n\t\tupdated_date as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaSourceSystem\nsource(output(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Dim/m_dim_source_system.parquet']) ~> DimSourceSystemInput\nStaSourceSystem select(mapColumn(\n\t\tsou_key = pk_source_system,\n\t\tsou_description = description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nRemoveUnusedColumns derive(sou_key = 'N/A',\n\t\tsou_description = 'Not Applicable') ~> NotApplicable\nNotApplicable aggregate(groupBy(sou_key),\n\tsou_description = first(sou_description)) ~> NotApplicableRow\nRemoveUnusedColumns, NotApplicableRow union(byName: true)~> UnionWithNotApplicable\nUnionWithNotApplicable derive(top_key = 'ALL',\n\t\ttop_description = 'All Source Systems') ~> DeriveTopLevel\nDeriveTopLevel keyGenerate(output(dim_key as long),\n\tstartAt: 1L) ~> DimKeyIncrement\nDimKeyIncrement sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['m_dim_source_system.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimSourceSystem"
 		}
 	}
 }
