@@ -10,12 +10,6 @@
 					"referenceName": "load_master_revit",
 					"type": "PipelineReference"
 				}
-			},
-			{
-				"pipelineReference": {
-					"referenceName": "error_in_pipeline_resolved",
-					"type": "PipelineReference"
-				}
 			}
 		],
 		"type": "ScheduleTrigger",
