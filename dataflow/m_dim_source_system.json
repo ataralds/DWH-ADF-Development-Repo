@@ -25,24 +25,36 @@
 						"referenceName": "dim_source_system",
 						"type": "DatasetReference"
 					},
-					"name": "DimSourceSystem"
+					"name": "DimSourceSystemInsert"
+				},
+				{
+					"dataset": {
+						"referenceName": "dim_source_system",
+						"type": "DatasetReference"
+					},
+					"name": "DimSourceSystemUpdate"
 				}
 			],
 			"transformations": [
 				{
-					"name": "RemoveUnusedColumns"
+					"name": "RemoveUnusedColumns",
+					"description": "Removing and renaming columns"
 				},
 				{
-					"name": "NotApplicable"
+					"name": "NotApplicable",
+					"description": "Adding N/A and Not applicable values"
 				},
 				{
-					"name": "NotApplicableRow"
+					"name": "NotApplicableRow",
+					"description": "Getting distinct N/A row"
 				},
 				{
-					"name": "UnionWithNotApplicable"
+					"name": "UnionWithNotApplicable",
+					"description": "Union with N/A row"
 				},
 				{
-					"name": "DeriveTopLevel"
+					"name": "DeriveTopLevel",
+					"description": "Adding top level columns"
 				},
 				{
 					"name": "DimKeyIncrement"
@@ -52,9 +64,18 @@
 				},
 				{
 					"name": "SelectBusinessKey"
+				},
+				{
+					"name": "LookupExistingRows"
+				},
+				{
+					"name": "RemoveDuplicateColumn"
+				},
+				{
+					"name": "ConditionalSplit1"
 				}
 			],
-			"script": "source(output(\n\t\tactive as string,\n\t\tdescription as string,\n\t\tinserted_by as string,\n\t\tinserted_date as timestamp,\n\t\tpk_source_system as string,\n\t\tupdated_by as string,\n\t\tupdated_date as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaSourceSystem\nsource(output(\n\t\tsou_key as string,\n\t\tsou_description as string,\n\t\ttop_key as string,\n\t\ttop_description as string,\n\t\tdim_key as long\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['dim/m_dim_source_system.parquet']) ~> DimSourceSystemInput\nStaSourceSystem select(mapColumn(\n\t\tsou_key = pk_source_system,\n\t\tsou_description = description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nRemoveUnusedColumns derive(sou_key = 'N/A',\n\t\tsou_description = 'Not Applicable') ~> NotApplicable\nNotApplicable aggregate(groupBy(sou_key),\n\tsou_description = first(sou_description)) ~> NotApplicableRow\nRemoveUnusedColumns, NotApplicableRow union(byName: true)~> UnionWithNotApplicable\nUnionWithNotApplicable derive(top_key = 'ALL',\n\t\ttop_description = 'All Source Systems') ~> DeriveTopLevel\nDeriveTopLevel keyGenerate(output(dim_key as long),\n\tstartAt: 1L) ~> DimKeyIncrement\nDimSourceSystemInput aggregate(maxDimKey = max(dim_key)) ~> maxDimKey\nDimSourceSystemInput select(mapColumn(\n\t\tsou_key,\n\t\tdim_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectBusinessKey\nDimKeyIncrement sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['m_dim_source_system.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimSourceSystem"
+			"script": "source(output(\n\t\tactive as string,\n\t\tdescription as string,\n\t\tinserted_by as string,\n\t\tinserted_date as timestamp,\n\t\tpk_source_system as string,\n\t\tupdated_by as string,\n\t\tupdated_date as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaSourceSystem\nsource(output(\n\t\tsou_key as string,\n\t\tsou_description as string,\n\t\ttop_key as string,\n\t\ttop_description as string,\n\t\tdim_key as long\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['dim/m_dim_source_system.parquet']) ~> DimSourceSystemInput\nStaSourceSystem select(mapColumn(\n\t\tsou_key = pk_source_system,\n\t\tsou_description = description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nRemoveUnusedColumns derive(sou_key = 'N/A',\n\t\tsou_description = 'Not Applicable') ~> NotApplicable\nNotApplicable aggregate(groupBy(sou_key),\n\tsou_description = first(sou_description)) ~> NotApplicableRow\nRemoveUnusedColumns, NotApplicableRow union(byName: true)~> UnionWithNotApplicable\nUnionWithNotApplicable derive(top_key = 'ALL',\n\t\ttop_description = 'All Source Systems') ~> DeriveTopLevel\nConditionalSplit1@newRows keyGenerate(output(dim_key as long),\n\tstartAt: 1L) ~> DimKeyIncrement\nDimSourceSystemInput aggregate(maxDimKey = max(dim_key)) ~> maxDimKey\nDimSourceSystemInput select(mapColumn(\n\t\tsou_key,\n\t\tdim_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectBusinessKey\nDeriveTopLevel, SelectBusinessKey lookup(UnionWithNotApplicable@sou_key == SelectBusinessKey@sou_key,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> LookupExistingRows\nLookupExistingRows select(mapColumn(\n\t\tsou_key = UnionWithNotApplicable@sou_key,\n\t\tsou_description,\n\t\ttop_key,\n\t\ttop_description,\n\t\tdim_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveDuplicateColumn\nRemoveDuplicateColumn split(!isMatch(),\n\tdisjoint: false) ~> ConditionalSplit1@(newRows, existingRows)\nDimKeyIncrement sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['m_dim_source_system.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimSourceSystemInsert\nConditionalSplit1@existingRows sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['m_dim_source_system.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimSourceSystemUpdate"
 		}
 	}
 }
