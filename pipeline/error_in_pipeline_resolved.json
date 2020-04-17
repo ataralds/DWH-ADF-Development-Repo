@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Web1",
+				"name": "Send email",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {

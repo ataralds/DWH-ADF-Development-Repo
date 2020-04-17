@@ -57,6 +57,36 @@
 						}
 					}
 				}
+			},
+			{
+				"name": "error_in_pipeline_resolved_copy1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_stage_lloyds_table",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "error_in_pipeline_resolved",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": {
+							"value": "load_stage_lloyds_table",
+							"type": "Expression"
+						},
+						"pPipelineErrorMsg": {
+							"value": "@activity('load_stage_lloyds_table').error.message",
+							"type": "Expression"
+						}
+					}
+				}
 			}
 		],
 		"variables": {
