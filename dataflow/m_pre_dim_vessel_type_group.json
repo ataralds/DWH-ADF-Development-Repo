@@ -1,6 +1,9 @@
 {
-	"name": "dataflow1",
+	"name": "m_pre_dim_vessel_type_group",
 	"properties": {
+		"folder": {
+			"name": "dwh_prepare/paris"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
