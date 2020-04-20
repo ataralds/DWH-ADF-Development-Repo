@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_agreement_type",
+						"referenceName": "m_pre_dim_agreement_type_firstcopy",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"TCrossReference": {
