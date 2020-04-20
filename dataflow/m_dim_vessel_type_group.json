@@ -1,0 +1,20 @@
+{
+	"name": "m_dim_vessel_type_group",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_vessel_type_group",
+						"type": "DatasetReference"
+					},
+					"name": "VesselTypeGroup"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(output(\n\t\tfp_3_ltr_code as string,\n\t\tfp_level_5_code as string,\n\t\tfp_level_5_decode as string,\n\t\tfp_level_5_desc as string,\n\t\tfp_level_5_hull as double,\n\t\tfp_level_5_sub as string,\n\t\tinsert_date as timestamp,\n\t\tpk_vessel_type_group as double,\n\t\tupdate_date as timestamp,\n\t\tvsl_cefor_group as string,\n\t\tvsl_desc as string,\n\t\tvsl_gard_group as string,\n\t\tvsl_marine_group as string,\n\t\tvsl_risk_group as string,\n\t\tgroup_code1 as string,\n\t\tgroup_desc1 as string,\n\t\tgroup_desc_sort1 as string,\n\t\tgroup_code2 as string,\n\t\tgroup_desc2 as string,\n\t\tgroup_desc_sort2 as string,\n\t\tgroup_code3 as string,\n\t\tgroup_desc3 as string,\n\t\tgroup_desc_sort3 as string,\n\t\tgroup_code4 as string,\n\t\tgroup_desc4 as string,\n\t\tgroup_desc_sort4 as string,\n\t\tgroup_code5 as string,\n\t\tgroup_desc5 as string,\n\t\tgroup_desc_sort5 as string,\n\t\tgroup_code_IV as string,\n\t\tgroup_desc_IV as string,\n\t\tgroup_desc_sort_IV as string,\n\t\tgroup_code_LOH as string,\n\t\tgroup_desc_LOH as string,\n\t\tgroup_desc_sort_LOH as string,\n\t\tgroup_code_Size as string,\n\t\tgroup_desc_Size as string,\n\t\tgroup_Lvl4_code as string,\n\t\tFp_Lvl4_Group as string,\n\t\tgroup_Lvl4_decode as string,\n\t\tgroup_Lvl3_decode as string,\n\t\tFp_Lvl3_Group as string,\n\t\tgroup_desc_Lvl3 as string,\n\t\tVessel_Gard_Group as string,\n\t\tVessel_Group_6 as string,\n\t\tgroup_code_alternative_D6 as string,\n\t\tVessel_Group_6_desc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> VesselTypeGroup"
+		}
+	}
+}
