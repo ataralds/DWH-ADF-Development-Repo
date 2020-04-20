@@ -1,0 +1,21 @@
+{
+	"name": "m_dim_agrement_type",
+	"properties": {
+		"description": "m_pre_dim_agreement_type + constant",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_agreement_type",
+						"type": "DatasetReference"
+					},
+					"name": "PreDimAgreementType"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/m_pre_dim_agreement_type.parquet']) ~> PreDimAgreementType"
+		}
+	}
+}
