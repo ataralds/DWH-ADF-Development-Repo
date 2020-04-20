@@ -13,6 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "pre_dim_agreement_type.parquet",
 				"folderPath": "Pre_Dim",
 				"fileSystem": "dwh-prepare"
 			},
