@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_dim_agrement_type",
+						"referenceName": "m_dim_agrement_type_firstCopyDimKey",
 						"type": "DataFlowReference"
 					},
 					"compute": {
