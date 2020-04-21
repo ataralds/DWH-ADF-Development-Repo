@@ -30,10 +30,10 @@
 					"name": "addConstant"
 				},
 				{
-					"name": "DimKey"
+					"name": "dimKey"
 				}
 			],
-			"script": "source(output(\n\t\tdescription as string,\n\t\tkey as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_agreement_type.parquet']) ~> preDimAgreementType\npreDimAgreementType derive(top_code = 'ALL',\n\t\ttop_desc = 'All Agreement Types') ~> addConstant\naddConstant keyGenerate(output(dimKey as long),\n\tstartAt: 1L) ~> DimKey\nDimKey sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_agreement_type.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimAgreementTypeUpdates"
+			"script": "source(output(\n\t\tagt_description as string,\n\t\tagt_key as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_agreement_type.parquet']) ~> preDimAgreementType\npreDimAgreementType derive(top_key = 'ALL',\n\t\ttop_description = 'All Agreement Types') ~> addConstant\naddConstant keyGenerate(output(dimKey as long),\n\tstartAt: 1L) ~> dimKey\ndimKey sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_agreement_type.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimAgreementTypeUpdates"
 		}
 	}
 }
