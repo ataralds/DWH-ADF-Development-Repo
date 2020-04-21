@@ -1,0 +1,39 @@
+{
+	"name": "m_dim_agrement_type_firstCopyDimKey",
+	"properties": {
+		"description": "m_pre_dim_agreement_type + constant",
+		"folder": {
+			"name": "dwh_prepare"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_agreement_type",
+						"type": "DatasetReference"
+					},
+					"name": "preDimAgreementType"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dim_agreement_type",
+						"type": "DatasetReference"
+					},
+					"name": "DimAgreementTypeUpdates"
+				}
+			],
+			"transformations": [
+				{
+					"name": "addConstant"
+				},
+				{
+					"name": "DimKey"
+				}
+			],
+			"script": "source(output(\n\t\tdescription as string,\n\t\tkey as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_agreement_type.parquet']) ~> preDimAgreementType\npreDimAgreementType derive(top_code = 'ALL',\n\t\ttop_desc = 'All Agreement Types') ~> addConstant\naddConstant keyGenerate(output(dimKey as long),\n\tstartAt: 1L) ~> DimKey\nDimKey sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_agreement_type.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimAgreementTypeUpdates"
+		}
+	}
+}
