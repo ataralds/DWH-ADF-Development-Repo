@@ -13,14 +13,14 @@
 						"referenceName": "pre_dim_agreement_type",
 						"type": "DatasetReference"
 					},
-					"name": "PreDimAgreementType"
+					"name": "preDimAgreementType"
 				},
 				{
 					"dataset": {
 						"referenceName": "dim_agreement_type",
 						"type": "DatasetReference"
 					},
-					"name": "DimAgreementTypeInput"
+					"name": "dimAgreementTypeInput"
 				}
 			],
 			"sinks": [
@@ -34,22 +34,25 @@
 			],
 			"transformations": [
 				{
-					"name": "AddConstant"
+					"name": "addConstant"
 				},
 				{
 					"name": "LookupExisting"
 				},
 				{
-					"name": "InputFromPreviousUpdates"
+					"name": "inputFromPreviousUpdates"
 				},
 				{
 					"name": "ConditionalSplit1"
 				},
 				{
 					"name": "Select1"
+				},
+				{
+					"name": "maxDimKey"
 				}
 			],
-			"script": "source(output(\n\t\tdescription as string,\n\t\tkey as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_agreement_type.parquet']) ~> PreDimAgreementType\nsource(output(\n\t\tdescription as string,\n\t\tkey as string,\n\t\ttop_code as string,\n\t\ttop_desc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['dim/dim_agreement_type.parquet']) ~> DimAgreementTypeInput\nPreDimAgreementType derive(top_code = 'ALL',\n\t\ttop_desc = 'All Agreement Types') ~> AddConstant\nAddConstant, InputFromPreviousUpdates lookup(key == keyFromPreviousUpdates,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> LookupExisting\nDimAgreementTypeInput select(mapColumn(\n\t\tkeyFromPreviousUpdates = key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> InputFromPreviousUpdates\nSelect1 split(isMatch(),\n\tdisjoint: false) ~> ConditionalSplit1@(ExistingRows, NewRows)\nLookupExisting select(mapColumn(\n\t\tagt_description = description,\n\t\tagt_key = key,\n\t\ttop_code,\n\t\ttop_desc,\n\t\tagt_top_key = top_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nConditionalSplit1@ExistingRows sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_agreement_type.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimAgreementTypeUpdates"
+			"script": "source(output(\n\t\tdescription as string,\n\t\tkey as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_agreement_type.parquet']) ~> preDimAgreementType\nsource(output(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['dim/dim_agreement_type.parquet']) ~> dimAgreementTypeInput\npreDimAgreementType derive(top_code = 'ALL',\n\t\ttop_desc = 'All Agreement Types') ~> addConstant\naddConstant, inputFromPreviousUpdates lookup(key == keyFromPreviousUpdates,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> LookupExisting\ndimAgreementTypeInput select(mapColumn(\n\t\tkeyFromPreviousUpdates = key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> inputFromPreviousUpdates\nSelect1 split(isMatch(),\n\tdisjoint: false) ~> ConditionalSplit1@(ExistingRows, NewRows)\nLookupExisting select(mapColumn(\n\t\tagt_description = description,\n\t\tagt_key = key,\n\t\ttop_code,\n\t\ttop_desc,\n\t\tagt_top_key = top_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\ndimAgreementTypeInput aggregate(key = max(key)) ~> maxDimKey\nConditionalSplit1@ExistingRows sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_agreement_type.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimAgreementTypeUpdates"
 		}
 	}
 }
