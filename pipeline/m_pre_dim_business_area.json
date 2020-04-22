@@ -19,7 +19,7 @@
 						"referenceName": "m_pre_dim_business_area",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"TCrossReference": {
+							"tCrossReference": {
 								"fileName": "t_crossreference.parquet"
 							}
 						}
