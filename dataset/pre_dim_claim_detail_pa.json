@@ -1,5 +1,5 @@
 {
-	"name": "pre_dim_guarantee_pa",
+	"name": "pre_dim_claim_detail_pa",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
