@@ -1,5 +1,5 @@
 {
-	"name": "pre_dim_expence_pa",
+	"name": "pre_dim_expense_pa",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
