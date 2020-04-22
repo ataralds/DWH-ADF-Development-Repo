@@ -1,0 +1,41 @@
+{
+	"name": "m_dim_currency_copy1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_currency",
+						"type": "DatasetReference"
+					},
+					"name": "preDimCurrency"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dim_currency",
+						"type": "DatasetReference"
+					},
+					"name": "dimCurrencyInsert"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DeriveTopLevel"
+				},
+				{
+					"name": "DeriveHashed"
+				},
+				{
+					"name": "SurrogateKey1"
+				},
+				{
+					"name": "SelectOutputColumns"
+				}
+			],
+			"script": "source(output(\n\t\tcur_code2 as string,\n\t\tcur_code as string,\n\t\tcur_description as string,\n\t\tcurr_last_exchange_rate_to_usd as decimal(12,2),\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_currency.parquet']) ~> preDimCurrency\npreDimCurrency derive(top_code = 'ALL',\n\t\ttop_description = 'All Currencies') ~> DeriveTopLevel\nDeriveTopLevel derive(hashedValues = sha1(cur_code,cur_description,curr_last_exchange_rate_to_usd)) ~> DeriveHashed\nDeriveHashed keyGenerate(output(dim_key as long),\n\tstartAt: 1L) ~> SurrogateKey1\nSurrogateKey1 select(mapColumn(\n\t\tdim_key,\n\t\ttop_code,\n\t\ttop_description,\n\t\tcur_code,\n\t\tcur_description,\n\t\tcurr_last_exchange_rate_to_usd\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectOutputColumns\nSelectOutputColumns sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_currency.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimCurrencyInsert"
+		}
+	}
+}
