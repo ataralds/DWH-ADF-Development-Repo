@@ -1,0 +1,33 @@
+{
+	"name": "pre_dim_expence_pa",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Pre_Dim",
+				"fileSystem": "dwh-prepare"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "agt_description",
+				"type": "UTF8"
+			},
+			{
+				"name": "agt_key",
+				"type": "UTF8"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "UTF8"
+			}
+		]
+	}
+}
