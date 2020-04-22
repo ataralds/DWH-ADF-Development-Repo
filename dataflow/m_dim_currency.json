@@ -26,13 +26,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "dimCurrencyInsert"
-				},
-				{
-					"dataset": {
-						"referenceName": "dim_currency",
-						"type": "DatasetReference"
-					},
-					"name": "dimCurrencyUpdate"
 				}
 			],
 			"transformations": [
@@ -40,41 +33,23 @@
 					"name": "DeriveTopLevel"
 				},
 				{
-					"name": "DimKeyIncrement"
-				},
-				{
 					"name": "MaxExistingDimKey",
 					"description": "Get max existing dim key"
-				},
-				{
-					"name": "JoinWithMaxDimKey"
-				},
-				{
-					"name": "DimKey"
-				},
-				{
-					"name": "ConditionalSplit1"
-				},
-				{
-					"name": "SelectOutputColumns"
 				},
 				{
 					"name": "LookupExisting"
 				},
 				{
-					"name": "RemoveDuplicateColumns"
-				},
-				{
-					"name": "RemoveDuplicateColumn"
-				},
-				{
 					"name": "ExistingHashed"
 				},
 				{
-					"name": "DerivedColumn1"
+					"name": "DeriveHashed"
+				},
+				{
+					"name": "SelectExisintgHash"
 				}
 			],
-			"script": "source(output(\n\t\tcur_code2 as string,\n\t\tcur_code as string,\n\t\tcur_description as string,\n\t\tcurr_last_exchange_rate_to_usd as decimal(12,2),\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_currency.parquet']) ~> preDimCurrency\nsource(output(\n\t\tcur_code as string,\n\t\tcur_description as string,\n\t\tfrom_currency_code as string,\n\t\texchange_rate as decimal(12,2),\n\t\tcurr_last_exchange_rate_to_usd as decimal(12,2),\n\t\tlast_updatet_by as string,\n\t\ttop_code as string,\n\t\ttop_description as string,\n\t\tDim_key as long\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> dimCurrencyInput\npreDimCurrency derive(top_code = 'ALL',\n\t\ttop_description = 'All Currencies') ~> DeriveTopLevel\nRemoveDuplicateColumns keyGenerate(output(Dim_key as long),\n\tstartAt: 1L) ~> DimKeyIncrement\ndimCurrencyInput aggregate(maxKey = max(Dim_key)) ~> MaxExistingDimKey\nDimKeyIncrement, MaxExistingDimKey join(!(top_code == '') && maxKey !=0,\n\tjoinType:'cross',\n\tbroadcast: 'none')~> JoinWithMaxDimKey\nJoinWithMaxDimKey derive(Dim_key = Dim_key+maxKey) ~> DimKey\nLookupExisting split(isNull(dimCurrencyExisting@cur_code),\n\tdisjoint: false) ~> ConditionalSplit1@(existingRows, newRows)\nDimKey select(mapColumn(\n\t\tDim_key,\n\t\ttop_code,\n\t\ttop_description,\n\t\tcur_iso_code = cur_code,\n\t\tcur_description,\n\t\tcurr_last_exchange_rate_to_usd\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectOutputColumns\nDerivedColumn1, ExistingHashed lookup(preDimCurrency@cur_code == dimCurrencyExisting@cur_code,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> LookupExisting\nConditionalSplit1@newRows select(mapColumn(\n\t\tcur_code,\n\t\tcur_description,\n\t\tcurr_last_exchange_rate_to_usd,\n\t\tlast_updated_by,\n\t\ttop_code,\n\t\ttop_description,\n\t\tDim_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveDuplicateColumns\nConditionalSplit1@existingRows select(mapColumn(\n\t\tcur_code,\n\t\tcur_description,\n\t\tcurr_last_exchange_rate_to_usd,\n\t\tlast_updated_by,\n\t\ttop_code,\n\t\ttop_description,\n\t\tDim_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveDuplicateColumn\ndimCurrencyInput derive(existingHash = sha1(cur_code,cur_description,from_currency_code,exchange_rate,curr_last_exchange_rate_to_usd)) ~> ExistingHashed\nDeriveTopLevel derive(hashedValues = sha1(cur_code,cur_description,from_currency_code,exchange_rate,curr_last_exchange_rate_to_usd)) ~> DerivedColumn1\nSelectOutputColumns sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_currency.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimCurrencyInsert\nRemoveDuplicateColumn sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimCurrencyUpdate"
+			"script": "source(output(\n\t\tcur_code2 as string,\n\t\tcur_code as string,\n\t\tcur_description as string,\n\t\tcurr_last_exchange_rate_to_usd as decimal(12,2),\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_currency.parquet']) ~> preDimCurrency\nsource(output(\n\t\tagt_description as string,\n\t\tagt_key as string,\n\t\tlast_updated_by as string,\n\t\ttop_key as string,\n\t\ttop_description as string,\n\t\tagt_top_key as string,\n\t\tdimKey as long,\n\t\tcur_code as string,\n\t\tcur_description as string,\n\t\tfrom_currency_code as string,\n\t\texchange_rate as decimal(12,2),\n\t\tcurr_last_exchange_rate_to_usd as decimal(12,2),\n\t\tlast_updatet_by as string,\n\t\ttop_code as string,\n\t\tDim_key as long,\n\t\tsou_key as string,\n\t\tsou_description as string,\n\t\tdim_key as long\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> dimCurrencyInput\npreDimCurrency derive(top_code = 'ALL',\n\t\ttop_description = 'All Currencies') ~> DeriveTopLevel\ndimCurrencyInput aggregate(maxKey = max(Dim_key)) ~> MaxExistingDimKey\nDeriveHashed, SelectExisintgHash lookup(hashedValues == existingHash,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> LookupExisting\ndimCurrencyInput derive(existingHash = sha1(cur_code,cur_description,curr_last_exchange_rate_to_usd)) ~> ExistingHashed\nDeriveTopLevel derive(hashedValues = sha1(cur_code,cur_description,curr_last_exchange_rate_to_usd)) ~> DeriveHashed\nExistingHashed select(mapColumn(\n\t\texistingHash\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectExisintgHash\nLookupExisting sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_currency.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimCurrencyInsert"
 		}
 	}
 }
