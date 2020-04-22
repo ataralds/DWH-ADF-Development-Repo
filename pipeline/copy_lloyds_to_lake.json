@@ -85,7 +85,13 @@
 							"outputs": [
 								{
 									"referenceName": "Lloyds",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"fileName": {
+											"value": "@{item().table_name}",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}

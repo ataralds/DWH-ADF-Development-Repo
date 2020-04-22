@@ -1,0 +1,68 @@
+{
+	"name": "load_static_stage_dwh",
+	"properties": {
+		"activities": [
+			{
+				"name": "load_stage_lloyds_table",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "load_stage_lloyds_table",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pl_copy_static_to_lake",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "copy_static_to_lake",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "error_in_pipeline_resolved",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "pl_copy_static_to_lake",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "error_in_pipeline_resolved",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pErrorPipelineStatus": {
+							"value": "@activity('pl_copy_static_to_lake').error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"variables": {
+			"vInnerFailStatus": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "pipeline/dwh_stage"
+		},
+		"annotations": []
+	}
+}
