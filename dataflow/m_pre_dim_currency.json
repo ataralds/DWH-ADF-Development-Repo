@@ -41,25 +41,28 @@
 					"description": "Filtering rows on 'EXCHANGE_FROM_DATE' <= currentTimestamp"
 				},
 				{
-					"name": "ExchangeRateToUSD"
+					"name": "exchrateToUSD",
+					"description": "Removing and renaming of columns"
 				},
 				{
-					"name": "xrefCurrency"
+					"name": "xrefCurrency",
+					"description": "Filtering rows using  on 'code_type_id' = 124 (Currency)"
 				},
 				{
 					"name": "SelectExhangeRate",
 					"description": "Removing unused columns"
 				},
 				{
-					"name": "GetNewestExchangeDates",
+					"name": "NewestExchangeDates",
 					"description": "Get newest ExchangeFromDate for each currency"
 				},
 				{
-					"name": "JoinNewestRateWithDate",
+					"name": "JoinNewestDateWithRate",
 					"description": "Inner join to get newest exchange rate for each currency"
 				},
 				{
-					"name": "LastKnownRate"
+					"name": "LastKnownRate",
+					"description": "Creating/updating columns"
 				},
 				{
 					"name": "RemoveUnusedColumns"
@@ -68,34 +71,46 @@
 					"name": "Deduplicate"
 				},
 				{
-					"name": "RemoveExtraColumn"
+					"name": "RemoveExtraColumn",
+					"description": "Remove duplicated column"
 				},
 				{
-					"name": "ExpUSD"
+					"name": "Expression",
+					"description": "Case currency from is USD, rate equals 1.\nAdd last_updated_by column"
 				},
 				{
 					"name": "LookupAllCurrencies"
 				},
 				{
-					"name": "SelectOutputColums"
+					"name": "SelectOutputColums",
+					"description": "Selecting and renaming relevant columns"
 				},
 				{
-					"name": "AddNAvalues"
+					"name": "ReplaceNull",
+					"description": "Replacing null values with N/A"
 				},
 				{
-					"name": "DeriveExistingHash"
+					"name": "DeriveHashedColumn",
+					"description": "Derive hashed column used to check for updated values"
 				},
 				{
-					"name": "SelectExistingHashed"
+					"name": "preDimCurrencyHashed",
+					"description": "Existing values hashed"
 				},
 				{
-					"name": "HashedValue"
+					"name": "HashedValue",
+					"description": "Creating hashed column from other values, used to check for updates"
 				},
 				{
-					"name": "Exists1"
+					"name": "NewOrUpdatedRows",
+					"description": "Compare with existing rows in sink table to filter on new or updated rows."
+				},
+				{
+					"name": "AlterRow",
+					"description": "Upsert if not null"
 				}
 			],
-			"script": "source(output(\n\t\tFROM_CURRENCY_ID as double,\n\t\tTO_CURRENCY_ID as double,\n\t\tEXCHANGE_FROM_DATE as timestamp,\n\t\tEXCHANGE_RATE as decimal(38,18),\n\t\tEXCHANGE_TO_DATE as timestamp,\n\t\tFROM_CURRENCY_CODE as string,\n\t\tTO_CURRENCY_CODE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> HlpExchangeRateToUsd\nsource(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> tCrossReference\nsource(output(\n\t\tpk_key as string,\n\t\tcur_description as string,\n\t\tcurr_last_exchange_rate_to_usd as decimal(12,2),\n\t\tlast_updated_by as string,\n\t\tHashedValues as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_currency.parquet']) ~> PreDimCurrencyInput\nExchangeRateToUSD filter(exchange_from_date <= currentTimestamp()) ~> FilterDates\nHlpExchangeRateToUsd select(mapColumn(\n\t\texchange_from_date = EXCHANGE_FROM_DATE,\n\t\texchange_rate = EXCHANGE_RATE,\n\t\tfrom_currency_code = FROM_CURRENCY_CODE,\n\t\tto_currency_code = TO_CURRENCY_CODE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> ExchangeRateToUSD\nRemoveUnusedColumns filter(code_type_id == 124) ~> xrefCurrency\nExchangeRateToUSD select(mapColumn(\n\t\texchange_rate,\n\t\tfrom_currency_code,\n\t\texchange_from_date\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectExhangeRate\nFilterDates aggregate(groupBy(from_currency_code),\n\tEXCHANGE_FROM_DATE = max(exchange_from_date)) ~> GetNewestExchangeDates\nGetNewestExchangeDates, SelectExhangeRate join(GetNewestExchangeDates@from_currency_code == SelectExhangeRate@from_currency_code\n\t&& GetNewestExchangeDates@EXCHANGE_FROM_DATE == SelectExhangeRate@exchange_from_date,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> JoinNewestRateWithDate\nRemoveExtraColumn derive(exchange_rate = case(exchange_rate==0, toDecimal(null()),toDecimal(exchange_rate))) ~> LastKnownRate\ntCrossReference select(mapColumn(\n\t\ttarget_code = TARGET_CODE,\n\t\ttarget_description = TARGET_DESCRIPTION,\n\t\tcode_type_id = CODE_TYPE_ID\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nxrefCurrency aggregate(groupBy(target_code),\n\ttarget_description = first(target_description)) ~> Deduplicate\nJoinNewestRateWithDate select(mapColumn(\n\t\tfrom_currency_code = GetNewestExchangeDates@from_currency_code,\n\t\texchange_rate,\n\t\tfrom_currency_code = SelectExhangeRate@from_currency_code,\n\t\texchange_from_date = SelectExhangeRate@exchange_from_date\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveExtraColumn\nAddNAvalues derive(curr_last_exchange_rate_to_usd = case(target_code=='USD', toDecimal(1), exchange_rate),\n\t\tlast_updated_by = 'pre_dim_currency') ~> ExpUSD\nDeduplicate, LastKnownRate lookup(target_code == from_currency_code,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> LookupAllCurrencies\nExpUSD select(mapColumn(\n\t\tpk_key = target_code,\n\t\tcur_description = target_description,\n\t\tcurr_last_exchange_rate_to_usd,\n\t\tlast_updated_by\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectOutputColums\nLookupAllCurrencies derive(from_currency_code = case(isMatch(), from_currency_code, 'N/A')) ~> AddNAvalues\nPreDimCurrencyInput derive(ExistingHashed = sha1(pk_key,cur_description,curr_last_exchange_rate_to_usd)) ~> DeriveExistingHash\nDeriveExistingHash select(mapColumn(\n\t\tExistingHashed\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectExistingHashed\nSelectOutputColums derive(HashedValues = sha1(pk_key,cur_description,curr_last_exchange_rate_to_usd)) ~> HashedValue\nHashedValue, SelectExistingHashed exists(HashedValues == ExistingHashed,\n\tnegate:true,\n\tbroadcast: 'none')~> Exists1\nExists1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_currency.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimCurrency"
+			"script": "source(output(\n\t\tFROM_CURRENCY_ID as double,\n\t\tTO_CURRENCY_ID as double,\n\t\tEXCHANGE_FROM_DATE as timestamp,\n\t\tEXCHANGE_RATE as decimal(38,18),\n\t\tEXCHANGE_TO_DATE as timestamp,\n\t\tFROM_CURRENCY_CODE as string,\n\t\tTO_CURRENCY_CODE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> HlpExchangeRateToUsd\nsource(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> tCrossReference\nsource(output(\n\t\tpk_key as string,\n\t\tcur_description as string,\n\t\tcurr_last_exchange_rate_to_usd as decimal(12,2),\n\t\tlast_updated_by as string,\n\t\tHashedValues as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_currency.parquet']) ~> PreDimCurrencyInput\nexchrateToUSD filter(exchange_from_date <= currentTimestamp()) ~> FilterDates\nHlpExchangeRateToUsd select(mapColumn(\n\t\texchange_from_date = EXCHANGE_FROM_DATE,\n\t\texchange_rate = EXCHANGE_RATE,\n\t\tfrom_currency_code = FROM_CURRENCY_CODE,\n\t\tto_currency_code = TO_CURRENCY_CODE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> exchrateToUSD\nRemoveUnusedColumns filter(code_type_id == 124) ~> xrefCurrency\nexchrateToUSD select(mapColumn(\n\t\texchange_rate,\n\t\tfrom_currency_code,\n\t\texchange_from_date\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectExhangeRate\nFilterDates aggregate(groupBy(from_currency_code),\n\tEXCHANGE_FROM_DATE = max(exchange_from_date)) ~> NewestExchangeDates\nNewestExchangeDates, SelectExhangeRate join(NewestExchangeDates@from_currency_code == SelectExhangeRate@from_currency_code\n\t&& NewestExchangeDates@EXCHANGE_FROM_DATE == SelectExhangeRate@exchange_from_date,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> JoinNewestDateWithRate\nRemoveExtraColumn derive(exchange_rate = case(exchange_rate==0, toDecimal(null()),toDecimal(exchange_rate))) ~> LastKnownRate\ntCrossReference select(mapColumn(\n\t\ttarget_code = TARGET_CODE,\n\t\ttarget_description = TARGET_DESCRIPTION,\n\t\tcode_type_id = CODE_TYPE_ID\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nxrefCurrency aggregate(groupBy(target_code),\n\ttarget_description = first(target_description)) ~> Deduplicate\nJoinNewestDateWithRate select(mapColumn(\n\t\tfrom_currency_code = NewestExchangeDates@from_currency_code,\n\t\texchange_rate,\n\t\tfrom_currency_code = SelectExhangeRate@from_currency_code,\n\t\texchange_from_date = SelectExhangeRate@exchange_from_date\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveExtraColumn\nReplaceNull derive(curr_last_exchange_rate_to_usd = case(from_currency_code=='USD', toDecimal(1), exchange_rate),\n\t\tlast_updated_by = 'pre_dim_currency') ~> Expression\nDeduplicate, LastKnownRate lookup(target_code == from_currency_code,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'none')~> LookupAllCurrencies\nExpression select(mapColumn(\n\t\tpk_key = ReplaceNull@from_currency_code,\n\t\tcur_description = target_description,\n\t\tcurr_last_exchange_rate_to_usd,\n\t\tlast_updated_by\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectOutputColums\nLookupAllCurrencies derive(from_currency_code = case(isNull(from_currency_code),'N/A',from_currency_code)) ~> ReplaceNull\nPreDimCurrencyInput derive(ExistingHashed = sha1(pk_key,cur_description,curr_last_exchange_rate_to_usd)) ~> DeriveHashedColumn\nDeriveHashedColumn select(mapColumn(\n\t\tExistingHashed\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimCurrencyHashed\nSelectOutputColums derive(HashedValues = sha1(pk_key,cur_description,curr_last_exchange_rate_to_usd)) ~> HashedValue\nHashedValue, preDimCurrencyHashed exists(HashedValues == ExistingHashed,\n\tnegate:true,\n\tbroadcast: 'none')~> NewOrUpdatedRows\nNewOrUpdatedRows alterRow(upsertIf(! isNull(pk_key))) ~> AlterRow\nAlterRow sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_currency.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimCurrency"
 		}
 	}
 }
