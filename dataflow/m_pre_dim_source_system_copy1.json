@@ -1,0 +1,48 @@
+{
+	"name": "m_pre_dim_source_system_copy1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Oltp05",
+						"type": "DatasetReference"
+					},
+					"name": "StaSourceSystem"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_source_system",
+						"type": "DatasetReference"
+					},
+					"name": "preDimSourceSystem"
+				}
+			],
+			"transformations": [
+				{
+					"name": "RemoveUnusedColumns",
+					"description": "Removing and renaming columns"
+				},
+				{
+					"name": "NotApplicable",
+					"description": "Adding N/A and Not applicable values"
+				},
+				{
+					"name": "NotApplicableRow",
+					"description": "Getting distinct N/A row"
+				},
+				{
+					"name": "UnionWithNotApplicable",
+					"description": "Union with N/A row"
+				},
+				{
+					"name": "LastUpdatedBy"
+				}
+			],
+			"script": "source(output(\n\t\tactive as string,\n\t\tdescription as string,\n\t\tinserted_by as string,\n\t\tinserted_date as timestamp,\n\t\tpk_source_system as string,\n\t\tupdated_by as string,\n\t\tupdated_date as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaSourceSystem\nStaSourceSystem select(mapColumn(\n\t\tactive,\n\t\tdescription,\n\t\tpk_source_system\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nRemoveUnusedColumns derive(pk_source_system = 'N/A',\n\t\tdescription = 'Not Applicable') ~> NotApplicable\nNotApplicable aggregate(groupBy(pk_source_system),\n\tdescription = first(description)) ~> NotApplicableRow\nRemoveUnusedColumns, NotApplicableRow union(byName: true)~> UnionWithNotApplicable\nUnionWithNotApplicable derive(last_updated_by = 'm_pre_dim_source_system') ~> LastUpdatedBy\nLastUpdatedBy sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_source_system.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimSourceSystem"
+		}
+	}
+}
