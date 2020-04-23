@@ -16,7 +16,7 @@
 						"referenceName": "pre_dim_source_system",
 						"type": "DatasetReference"
 					},
-					"name": "DimSourceSystemInput"
+					"name": "PreDimSourceSystemInput"
 				}
 			],
 			"sinks": [
@@ -46,16 +46,22 @@
 					"description": "Union with N/A row"
 				},
 				{
-					"name": "maxDimKey"
-				},
-				{
-					"name": "SelectBusinessKey"
-				},
-				{
 					"name": "LastUpdatedBy"
+				},
+				{
+					"name": "ExistingHashed"
+				},
+				{
+					"name": "HashedValue"
+				},
+				{
+					"name": "NewOrUpdatedRows"
+				},
+				{
+					"name": "PreDimSourceSystemHashed"
 				}
 			],
-			"script": "source(output(\n\t\tactive as string,\n\t\tdescription as string,\n\t\tinserted_by as string,\n\t\tinserted_date as timestamp,\n\t\tpk_source_system as string,\n\t\tupdated_by as string,\n\t\tupdated_date as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaSourceSystem\nsource(output(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['pre_dim/pre_dim_source_system.parquet']) ~> DimSourceSystemInput\nStaSourceSystem select(mapColumn(\n\t\tactive,\n\t\tdescription,\n\t\tpk_source_system\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nRemoveUnusedColumns derive(pk_source_system = 'N/A',\n\t\tdescription = 'Not Applicable') ~> NotApplicable\nNotApplicable aggregate(groupBy(pk_source_system),\n\tdescription = first(description)) ~> NotApplicableRow\nRemoveUnusedColumns, NotApplicableRow union(byName: true)~> UnionWithNotApplicable\nDimSourceSystemInput aggregate(maxDimKey = max(dim_key)) ~> maxDimKey\nDimSourceSystemInput select(mapColumn(\n\t\tsou_key,\n\t\tdim_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectBusinessKey\nUnionWithNotApplicable derive(last_updated_by = 'm_pre_dim_source_system') ~> LastUpdatedBy\nLastUpdatedBy sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_source_system.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimSourceSystem"
+			"script": "source(output(\n\t\tactive as string,\n\t\tdescription as string,\n\t\tinserted_by as string,\n\t\tinserted_date as timestamp,\n\t\tpk_source_system as string,\n\t\tupdated_by as string,\n\t\tupdated_date as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaSourceSystem\nsource(output(\n\t\tactive as string,\n\t\tdescription as string,\n\t\tpk_source_system as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_source_system.parquet']) ~> PreDimSourceSystemInput\nStaSourceSystem select(mapColumn(\n\t\tactive,\n\t\tdescription,\n\t\tpk_source_system\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nRemoveUnusedColumns derive(pk_source_system = 'N/A',\n\t\tdescription = 'Not Applicable') ~> NotApplicable\nNotApplicable aggregate(groupBy(pk_source_system),\n\tdescription = first(description)) ~> NotApplicableRow\nRemoveUnusedColumns, NotApplicableRow union(byName: true)~> UnionWithNotApplicable\nUnionWithNotApplicable derive(last_updated_by = 'm_pre_dim_source_system') ~> LastUpdatedBy\nPreDimSourceSystemInput derive(existingHashed = sha1(active,description,pk_source_system)) ~> ExistingHashed\nLastUpdatedBy derive(HashedValues = sha1(active,description,pk_source_system)) ~> HashedValue\nHashedValue, PreDimSourceSystemHashed exists(HashedValues == existingHashed,\n\tnegate:true,\n\tbroadcast: 'none')~> NewOrUpdatedRows\nExistingHashed select(mapColumn(\n\t\tactive,\n\t\tdescription,\n\t\tpk_source_system,\n\t\tlast_updated_by,\n\t\texistingHashed\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> PreDimSourceSystemHashed\nNewOrUpdatedRows sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_source_system.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimSourceSystem"
 		}
 	}
 }
