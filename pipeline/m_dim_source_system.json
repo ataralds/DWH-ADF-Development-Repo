@@ -17,12 +17,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_dim_source_system",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"StaSourceSystem": {
-								"fileName": "\"sta_source_system\""
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,

@@ -37,13 +37,25 @@
 					"name": "maxDimKey"
 				},
 				{
-					"name": "SelectBusinessKey"
+					"name": "RemoveUnusedColumns"
 				},
 				{
-					"name": "RemoveUnusedColumns"
+					"name": "ExistingHashed"
+				},
+				{
+					"name": "HashedValues"
+				},
+				{
+					"name": "SelectOutputColumns"
+				},
+				{
+					"name": "NewOrUpdatedRows"
+				},
+				{
+					"name": "DimSourceSystemHashed"
 				}
 			],
-			"script": "source(output(\n\t\tactive as string,\n\t\tdescription as string,\n\t\tpk_source_system as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_source_system.parquet']) ~> PreDimSourceSystem\nsource(output(\n\t\tsou_key as string,\n\t\tsou_description as string,\n\t\ttop_key as string,\n\t\ttop_description as string,\n\t\tdim_key as long\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['dim/m_dim_source_system.parquet']) ~> DimSourceSystemInput\nRemoveUnusedColumns derive(top_key = 'ALL',\n\t\ttop_description = 'All Source Systems') ~> DeriveTopLevel\nDimSourceSystemInput aggregate(maxDimKey = max(dim_key)) ~> maxDimKey\nDimSourceSystemInput select(mapColumn(\n\t\tsou_key,\n\t\tdim_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectBusinessKey\nPreDimSourceSystem select(mapColumn(\n\t\tpk_source_system,\n\t\tdescription\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nDeriveTopLevel sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['m_dim_source_system.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimSourceSystemUpdate"
+			"script": "source(output(\n\t\tactive as string,\n\t\tdescription as string,\n\t\tpk_source_system as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_source_system.parquet']) ~> PreDimSourceSystem\nsource(output(\n\t\tsou_key as string,\n\t\tsou_description as string,\n\t\ttop_key as string,\n\t\ttop_description as string,\n\t\tdim_key as long\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['dim/m_dim_source_system.parquet']) ~> DimSourceSystemInput\nRemoveUnusedColumns derive(top_key = 'ALL',\n\t\ttop_description = 'All Source Systems') ~> DeriveTopLevel\nDimSourceSystemInput aggregate(maxDimKey = max(dim_key)) ~> maxDimKey\nPreDimSourceSystem select(mapColumn(\n\t\tpk_source_system,\n\t\tdescription\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nDimSourceSystemInput derive(existingHashed = sha1(sou_key,sou_description)) ~> ExistingHashed\nSelectOutputColumns derive(hashedValues = sha1(sou_key,sou_description)) ~> HashedValues\nDeriveTopLevel select(mapColumn(\n\t\tsou_key = pk_source_system,\n\t\tsou_description = description,\n\t\ttop_key,\n\t\ttop_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectOutputColumns\nHashedValues, DimSourceSystemHashed exists(hashedValues == existingHashed,\n\tnegate:false,\n\tbroadcast: 'none')~> NewOrUpdatedRows\nExistingHashed select(mapColumn(\n\t\texistingHashed\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimSourceSystemHashed\nNewOrUpdatedRows sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['m_dim_source_system.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimSourceSystemUpdate"
 		}
 	}
 }
