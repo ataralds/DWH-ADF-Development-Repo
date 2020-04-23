@@ -1,9 +1,6 @@
 {
 	"name": "m_dim_business_area",
 	"properties": {
-		"folder": {
-			"name": "dwh_prepare"
-		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
