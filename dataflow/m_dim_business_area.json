@@ -9,7 +9,7 @@
 						"referenceName": "pre_dim_business_area",
 						"type": "DatasetReference"
 					},
-					"name": "predimbusarea"
+					"name": "preDimBusinessArea"
 				}
 			],
 			"sinks": [
@@ -18,7 +18,7 @@
 						"referenceName": "dim_business_area",
 						"type": "DatasetReference"
 					},
-					"name": "dimbusarea"
+					"name": "dimBusinessArea"
 				}
 			],
 			"transformations": [
@@ -29,7 +29,7 @@
 					"name": "alterrow"
 				}
 			],
-			"script": "source(output(\n\t\tgrp_key as string,\n\t\tgrp_description as string,\n\t\tbua_key as string,\n\t\tbua_description as string,\n\t\tbua_grp_key as string,\n\t\tbus_key as string,\n\t\tbus_description as string,\n\t\tbus_bua_key as string,\n\t\tlast_udpated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_business_area.parquet']) ~> predimbusarea\npredimbusarea derive(top_key = 'ALL',\n\t\ttop_description = 'All Business Areas',\n\t\tgrp_top_key = 'ALL') ~> derivedtoplevel\nderivedtoplevel alterRow(upsertIf(!isNull(bus_key))) ~> alterrow\nalterrow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_business_area.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimbusarea"
+			"script": "source(output(\n\t\tbus_description as string,\n\t\tbus_key as string,\n\t\tgrp_key as string,\n\t\tgrp_description as string,\n\t\tbua_key as string,\n\t\tbua_description as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_business_area.parquet']) ~> preDimBusinessArea\npreDimBusinessArea derive(top_key = 'ALL',\n\t\ttop_description = 'All Business Areas') ~> derivedtoplevel\nderivedtoplevel alterRow(upsertIf(!isNull(bus_key))) ~> alterrow\nalterrow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_business_area.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimBusinessArea"
 		}
 	}
 }
