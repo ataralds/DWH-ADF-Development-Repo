@@ -1,0 +1,66 @@
+{
+	"name": "load_master_pre",
+	"properties": {
+		"activities": [
+			{
+				"name": "load_static_stage_dwh",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "load_static_stage_dwh",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "copy_exact_to_lake",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_static_stage_dwh",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "copy_exact_to_lake",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "This should be email",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "load_static_stage_dwh",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "vFailStatus",
+					"value": "'Pipeline failed'"
+				}
+			}
+		],
+		"variables": {
+			"vFailStatus": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "pipeline/dwh_stage"
+		},
+		"annotations": []
+	}
+}
