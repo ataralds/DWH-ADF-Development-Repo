@@ -1,0 +1,24 @@
+{
+	"name": "m_dim_business_area",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_business_area",
+						"type": "DatasetReference"
+					},
+					"name": "predimbusarea"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "DerivedTopLevel"
+				}
+			],
+			"script": "source(output(\n\t\tgrp_key as string,\n\t\tgrp_description as string,\n\t\tbua_key as string,\n\t\tbua_description as string,\n\t\tbua_grp_key as string,\n\t\tbus_key as string,\n\t\tbus_description as string,\n\t\tbus_bua_key as string,\n\t\tlast_udpated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_business_area.parquet']) ~> predimbusarea\npredimbusarea derive(top_key = 'ALL',\n\t\ttop_description = 'All Business Areas',\n\t\tgrp_top_key = 'ALL') ~> DerivedTopLevel"
+		}
+	}
+}
