@@ -8,6 +8,9 @@
 				{
 					"name": "mapsys",
 					"description": "source_system=='PARIS'"
+				},
+				{
+					"name": "source1"
 				}
 			],
 			"sinks": [],
@@ -29,9 +32,12 @@
 				},
 				{
 					"name": "cov"
+				},
+				{
+					"name": "Select1"
 				}
 			],
-			"script": "source(output(\n\t\tcode_type_id as integer,\n\t\tsource_system as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tsource_code_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> mapsys\ncov select(mapColumn(\n\t\teach(match(name=='target_code'||name=='target_description'||name=='source_code_key'),\n\t\t\t$$+'_cov' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefCoverage\nbua select(mapColumn(\n\t\teach(match(name=='target_code'||name=='target_description'||name=='source_code_key'),\n\t\t\t$$+'_bua' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefBusinessarea\npreexpense select(mapColumn(\n\t\teach(match(name=='target_code'||name=='target_description'||name=='source_code_key'),\n\t\t\t$$+'_expense' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefExpense\nmapsys filter(ERROR_FUNCTION('')) ~> preexpense\nmapsys filter(ERROR_FUNCTION('')) ~> bua\nmapsys filter(ERROR_FUNCTION('')) ~> cov"
+			"script": "source(output(\n\t\tcode_type_id as integer,\n\t\tsource_system as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tsource_code_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> mapsys\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1\ncov select(mapColumn(\n\t\teach(match(name=='target_code'||name=='target_description'||name=='source_code_key'),\n\t\t\t$$+'_cov' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefCoverage\nbua select(mapColumn(\n\t\teach(match(name=='target_code'||name=='target_description'||name=='source_code_key'),\n\t\t\t$$+'_bua' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefBusinessarea\npreexpense select(mapColumn(\n\t\teach(match(name=='target_code'||name=='target_description'||name=='source_code_key'),\n\t\t\t$$+'_expense' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefExpense\nmapsys filter(ERROR_FUNCTION('')) ~> preexpense\nmapsys filter(ERROR_FUNCTION('')) ~> bua\nmapsys filter(ERROR_FUNCTION('')) ~> cov\nsource1 select(mapColumn(\n\t\teach(match(name==name),\n\t\t\t$$+'_maxpebver' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1"
 		}
 	}
 }
