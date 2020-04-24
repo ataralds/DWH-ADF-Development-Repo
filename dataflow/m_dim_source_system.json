@@ -9,7 +9,7 @@
 						"referenceName": "pre_dim_source_system",
 						"type": "DatasetReference"
 					},
-					"name": "preDimSourceSystem"
+					"name": "PreDimSourceSystem"
 				}
 			],
 			"sinks": [
@@ -18,11 +18,11 @@
 						"referenceName": "dim_source_system",
 						"type": "DatasetReference"
 					},
-					"name": "dimSourceSystem"
+					"name": "DimSourceSystem"
 				}
 			],
 			"transformations": [],
-			"script": "source(output(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> preDimSourceSystem\npreDimSourceSystem sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimSourceSystem"
+			"script": "source(output(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> PreDimSourceSystem\nPreDimSourceSystem sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimSourceSystem"
 		}
 	}
 }
