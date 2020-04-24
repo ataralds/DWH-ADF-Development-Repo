@@ -7,7 +7,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "load_master_revit",
+					"referenceName": "load_master_dwh",
 					"type": "PipelineReference"
 				}
 			}
