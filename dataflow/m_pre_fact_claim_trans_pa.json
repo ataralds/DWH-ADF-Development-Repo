@@ -7,7 +7,7 @@
 			"sources": [
 				{
 					"name": "mapsys",
-					"description": "filter on source system ='PARIS'"
+					"description": "source_system=='PARIS'"
 				}
 			],
 			"sinks": [],
