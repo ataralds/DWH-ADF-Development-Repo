@@ -10,7 +10,37 @@
 					"description": "source_system=='PARIS'"
 				},
 				{
-					"name": "source1"
+					"name": "ica"
+				},
+				{
+					"name": "obb"
+				},
+				{
+					"name": "oba"
+				},
+				{
+					"name": "aga"
+				},
+				{
+					"name": "agz"
+				},
+				{
+					"name": "fal"
+				},
+				{
+					"name": "lca"
+				},
+				{
+					"name": "lcc"
+				},
+				{
+					"name": "lab"
+				},
+				{
+					"name": "ina"
+				},
+				{
+					"name": "fil"
 				}
 			],
 			"sinks": [],
@@ -25,7 +55,7 @@
 					"name": "xrefExpense"
 				},
 				{
-					"name": "preexpense"
+					"name": "expense"
 				},
 				{
 					"name": "bua"
@@ -34,10 +64,25 @@
 					"name": "cov"
 				},
 				{
-					"name": "Select1"
+					"name": "clmcat"
+				},
+				{
+					"name": "xrefClaimcategory"
+				},
+				{
+					"name": "agttype"
+				},
+				{
+					"name": "xrefAgreementtype"
+				},
+				{
+					"name": "fapcurr"
+				},
+				{
+					"name": "xrefCurrencyFAP"
 				}
 			],
-			"script": "source(output(\n\t\tcode_type_id as integer,\n\t\tsource_system as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tsource_code_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> mapsys\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1\ncov select(mapColumn(\n\t\teach(match(name=='target_code'||name=='target_description'||name=='source_code_key'),\n\t\t\t$$+'_cov' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefCoverage\nbua select(mapColumn(\n\t\teach(match(name=='target_code'||name=='target_description'||name=='source_code_key'),\n\t\t\t$$+'_bua' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefBusinessarea\npreexpense select(mapColumn(\n\t\teach(match(name=='target_code'||name=='target_description'||name=='source_code_key'),\n\t\t\t$$+'_expense' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefExpense\nmapsys filter(ERROR_FUNCTION('')) ~> preexpense\nmapsys filter(ERROR_FUNCTION('')) ~> bua\nmapsys filter(ERROR_FUNCTION('')) ~> cov\nsource1 select(mapColumn(\n\t\teach(match(name==name),\n\t\t\t$$+'_maxpebver' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1"
+			"script": "source(output(\n\t\tcode_type_id as integer,\n\t\tsource_system as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tsource_code_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> mapsys\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> ica\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> obb\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> oba\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> aga\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> agz\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> fal\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> lca\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> lcc\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> lab\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> ina\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> fil\ncov select(mapColumn(\n\t\teach(match(name=='target_code'||name=='target_description'||name=='source_code_key'),\n\t\t\t$$+'_cov' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefCoverage\nbua select(mapColumn(\n\t\teach(match(name=='target_code'||name=='target_description'||name=='source_code_key'),\n\t\t\t$$+'_bua' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefBusinessarea\nexpense select(mapColumn(\n\t\teach(match(name=='target_code'||name=='target_description'||name=='source_code_key'),\n\t\t\t$$+'_expense' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefExpense\nmapsys filter(ERROR_FUNCTION('')) ~> expense\nmapsys filter(code_type_id==106) ~> bua\nmapsys filter(code_type_id==122) ~> cov\nmapsys filter(code_type_id==797) ~> clmcat\nclmcat select(mapColumn(\n\t\teach(match(name=='target_code'||name=='target_description'||name=='source_code_key'),\n\t\t\t$$+'_clmcat' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefClaimcategory\nmapsys filter(code_type_id==113) ~> agttype\nagttype select(mapColumn(\n\t\teach(match(name=='target_code'||name=='target_description'||name=='source_code_key'),\n\t\t\t$$+'_agttype' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefAgreementtype\nmapsys filter(code_type_id==124) ~> fapcurr\nfapcurr select(mapColumn(\n\t\teach(match(name=='target_code'||name=='target_description'||name=='source_code_key'),\n\t\t\t$$+'_fapcurr' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefCurrencyFAP"
 		}
 	}
 }
