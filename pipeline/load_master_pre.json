@@ -36,7 +36,7 @@
 				}
 			},
 			{
-				"name": "error_in_pipeline_resolved",
+				"name": "error_handling",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
@@ -49,7 +49,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "error_in_pipeline_resolved",
+						"referenceName": "error_handling",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
@@ -63,7 +63,7 @@
 				}
 			},
 			{
-				"name": "error_in_pipeline_resolved_copy1",
+				"name": "error_handling_copy1",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
@@ -76,7 +76,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "error_in_pipeline_resolved",
+						"referenceName": "error_handling",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
