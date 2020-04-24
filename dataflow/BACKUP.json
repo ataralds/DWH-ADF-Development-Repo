@@ -1,0 +1,49 @@
+{
+	"name": "BACKUP",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "icatable"
+				},
+				{
+					"name": "obatable"
+				},
+				{
+					"name": "mapsys"
+				},
+				{
+					"name": "obbtable"
+				},
+				{
+					"name": "lcatable"
+				},
+				{
+					"name": "lcctable"
+				},
+				{
+					"name": "labtable"
+				},
+				{
+					"name": "filtable"
+				},
+				{
+					"name": "faltable"
+				},
+				{
+					"name": "inatable"
+				},
+				{
+					"name": "agatable"
+				},
+				{
+					"name": "agztable"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> icatable\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> obatable\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> mapsys\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> obbtable\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> lcatable\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> lcctable\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> labtable\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> filtable\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> faltable\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> inatable\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> agatable\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> agztable"
+		}
+	}
+}
