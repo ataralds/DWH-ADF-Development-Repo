@@ -2,7 +2,7 @@
 	"name": "m_pre_dim_agreement_type",
 	"properties": {
 		"folder": {
-			"name": "dwh_prepare"
+			"name": "dwh_prepare/pre_dim"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
