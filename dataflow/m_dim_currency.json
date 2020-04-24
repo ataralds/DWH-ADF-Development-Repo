@@ -1,5 +1,5 @@
 {
-	"name": "dim_currency",
+	"name": "m_dim_currency",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
