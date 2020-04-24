@@ -1,5 +1,5 @@
 {
-	"name": "dim_country",
+	"name": "m_dim_country",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
