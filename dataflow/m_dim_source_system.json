@@ -18,7 +18,7 @@
 						"referenceName": "dim_source_system",
 						"type": "DatasetReference"
 					},
-					"name": "DimSourceSystemUpdate"
+					"name": "DimSourceSystem"
 				}
 			],
 			"transformations": [
@@ -36,7 +36,7 @@
 					"name": "AlterRow"
 				}
 			],
-			"script": "source(output(\n\t\tactive as string,\n\t\tdescription as string,\n\t\tpk_source_system as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_source_system.parquet']) ~> PreDimSourceSystem\nRemoveUnusedColumns derive(top_key = 'ALL',\n\t\ttop_description = 'All Source Systems') ~> DeriveTopLevel\nPreDimSourceSystem select(mapColumn(\n\t\tpk_source_system,\n\t\tdescription\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nDeriveTopLevel select(mapColumn(\n\t\tsou_key = pk_source_system,\n\t\tsou_description = description,\n\t\ttop_key,\n\t\ttop_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectOutputColumns\nSelectOutputColumns alterRow(upsertIf(!isNull(sou_key))) ~> AlterRow\nAlterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['m_dim_source_system.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimSourceSystemUpdate"
+			"script": "source(output(\n\t\tactive as string,\n\t\tdescription as string,\n\t\tpk_source_system as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_source_system.parquet']) ~> PreDimSourceSystem\nRemoveUnusedColumns derive(top_key = 'ALL',\n\t\ttop_description = 'All Source Systems') ~> DeriveTopLevel\nPreDimSourceSystem select(mapColumn(\n\t\tpk_source_system,\n\t\tdescription\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nDeriveTopLevel select(mapColumn(\n\t\tsou_key = pk_source_system,\n\t\tsou_description = description,\n\t\ttop_key,\n\t\ttop_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectOutputColumns\nSelectOutputColumns alterRow(upsertIf(!isNull(sou_key))) ~> AlterRow\nAlterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['m_dim_source_system.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimSourceSystem"
 		}
 	}
 }
