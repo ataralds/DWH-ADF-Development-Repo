@@ -23,10 +23,12 @@
 			],
 			"transformations": [
 				{
-					"name": "DerivedTopLevel"
+					"name": "DerivedTopLevel",
+					"description": "Derive top_key and top_description"
 				},
 				{
-					"name": "AlterRow"
+					"name": "AlterRow",
+					"description": "Upsert if pk key not null"
 				}
 			],
 			"script": "source(output(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> preDimCountry\npreDimCountry derive(top_key = 'All',\n\t\ttop_description = 'All Countries') ~> DerivedTopLevel\nDerivedTopLevel alterRow(upsertIf(!isNull(PK_KEY))) ~> AlterRow\nAlterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_country.parquet'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimCountry"
