@@ -1,0 +1,28 @@
+{
+	"name": "m_dim_source_system",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_source_system",
+						"type": "DatasetReference"
+					},
+					"name": "preDimSourceSystem"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dim_source_system",
+						"type": "DatasetReference"
+					},
+					"name": "dimSourceSystem"
+				}
+			],
+			"transformations": [],
+			"script": "source(output(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> preDimSourceSystem\npreDimSourceSystem sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimSourceSystem"
+		}
+	}
+}
