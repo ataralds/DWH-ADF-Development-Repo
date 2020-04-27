@@ -10,11 +10,18 @@
 						"type": "DatasetReference"
 					},
 					"name": "hlpExchangeRateToUsd"
+				},
+				{
+					"dataset": {
+						"referenceName": "Paris",
+						"type": "DatasetReference"
+					},
+					"name": "pFilTable"
 				}
 			],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> hlpExchangeRateToUsd"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> hlpExchangeRateToUsd\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> pFilTable"
 		}
 	}
 }
