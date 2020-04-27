@@ -1,0 +1,12 @@
+{
+	"name": "m_pre_dim_risk_object_clim_upd",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
