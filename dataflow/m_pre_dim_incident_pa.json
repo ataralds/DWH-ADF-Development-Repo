@@ -16,12 +16,12 @@
 						"referenceName": "Paris",
 						"type": "DatasetReference"
 					},
-					"name": "pFilTable"
+					"name": "FILTABLE"
 				}
 			],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> hlpExchangeRateToUsd\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> pFilTable"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> hlpExchangeRateToUsd\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> FILTABLE"
 		}
 	}
 }
