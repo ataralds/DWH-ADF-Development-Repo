@@ -17,11 +17,25 @@
 						"type": "DatasetReference"
 					},
 					"name": "FILTABLE"
+				},
+				{
+					"dataset": {
+						"referenceName": "Paris",
+						"type": "DatasetReference"
+					},
+					"name": "FALTABLE"
+				},
+				{
+					"dataset": {
+						"referenceName": "Paris",
+						"type": "DatasetReference"
+					},
+					"name": "LCCTABLE"
 				}
 			],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> hlpExchangeRateToUsd\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> FILTABLE"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> hlpExchangeRateToUsd\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> FILTABLE\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> FALTABLE\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> LCCTABLE"
 		}
 	}
 }
