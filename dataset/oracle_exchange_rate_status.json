@@ -1,0 +1,16 @@
+{
+	"name": "oracle_exchange_rate_status",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLTP05",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "AZURE_READ",
+			"table": "hlp_exchange_rate_status"
+		}
+	}
+}
