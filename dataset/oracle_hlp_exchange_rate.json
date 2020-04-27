@@ -1,5 +1,5 @@
 {
-	"name": "oracle_exchange_rate",
+	"name": "oracle_hlp_exchange_rate",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OLTP05",
