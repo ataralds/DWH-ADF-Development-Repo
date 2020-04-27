@@ -1,6 +1,7 @@
 {
-	"name": "pre_dim_coverage",
+	"name": "pre_dim_claim_rule_pa",
 	"properties": {
+		"description": "unsure if we need this? ",
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
@@ -18,6 +19,19 @@
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "agt_description",
+				"type": "UTF8"
+			},
+			{
+				"name": "agt_key",
+				"type": "UTF8"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "UTF8"
+			}
+		]
 	}
 }
