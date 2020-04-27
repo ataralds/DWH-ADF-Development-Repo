@@ -1,0 +1,20 @@
+{
+	"name": "m_pre_dim_incident_pa",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Oltp05",
+						"type": "DatasetReference"
+					},
+					"name": "hlpExchangeRateToUsd"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> hlpExchangeRateToUsd"
+		}
+	}
+}
