@@ -36,8 +36,35 @@
 				}
 			},
 			{
-				"name": "This should be email",
-				"type": "SetVariable",
+				"name": "error_handling",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "copy_exact_to_lake",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "copy_exact_to_lake",
+						"pPipelineErrorMsg": {
+							"value": "@activity('copy_exact_to_lake').error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "error_handling_copy1",
+				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
 						"activity": "load_static_stage_dwh",
@@ -48,8 +75,18 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "vFailStatus",
-					"value": "'Pipeline failed'"
+					"pipeline": {
+						"referenceName": "error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "load_static_stage_dwh",
+						"pPipelineErrorMsg": {
+							"value": "@activity('load_static_stage_dwh').error.message",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],

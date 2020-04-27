@@ -1,5 +1,5 @@
 {
-	"name": "pre_dim_currency",
+	"name": "pre_dim_category_pa",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
@@ -18,6 +18,19 @@
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "agt_description",
+				"type": "UTF8"
+			},
+			{
+				"name": "agt_key",
+				"type": "UTF8"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "UTF8"
+			}
+		]
 	}
 }

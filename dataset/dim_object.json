@@ -1,5 +1,5 @@
 {
-	"name": "dim_currency",
+	"name": "dim_object",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
@@ -18,6 +18,27 @@
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "PK_KEY",
+				"type": "UTF8"
+			},
+			{
+				"name": "CPT_DESCRIPTION",
+				"type": "UTF8"
+			},
+			{
+				"name": "CPT_NUMBER",
+				"type": "INT32"
+			},
+			{
+				"name": "INSERTED_BY",
+				"type": "UTF8"
+			},
+			{
+				"name": "DATE_INSERTED",
+				"type": "DATE"
+			}
+		]
 	}
 }

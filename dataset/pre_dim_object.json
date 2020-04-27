@@ -1,23 +1,36 @@
 {
-	"name": "dim_currency",
+	"name": "pre_dim_object",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "marts/dim"
+			"name": "dwh-prepare/pre-dim"
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "dim",
-				"fileSystem": "marts"
+				"folderPath": "Pre_Dim",
+				"fileSystem": "dwh-prepare"
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "agt_description",
+				"type": "UTF8"
+			},
+			{
+				"name": "agt_key",
+				"type": "UTF8"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "UTF8"
+			}
+		]
 	}
 }

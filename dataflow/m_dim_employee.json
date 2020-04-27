@@ -1,0 +1,36 @@
+{
+	"name": "m_dim_employee",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_employee",
+						"type": "DatasetReference"
+					},
+					"name": "preDimEmployee"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dim_employee",
+						"type": "DatasetReference"
+					},
+					"name": "dimEmployee"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DeriveTopLevel",
+					"description": "Derive top_key and top_description"
+				},
+				{
+					"name": "AlterRow"
+				}
+			],
+			"script": "source(output(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> preDimEmployee\npreDimEmployee derive(top_key = 'All',\n\t\ttop_description = 'All Employees') ~> DeriveTopLevel\nDeriveTopLevel alterRow(upsertIf(!isNull(PK_KEY))) ~> AlterRow\nAlterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_employee.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimEmployee"
+		}
+	}
+}
