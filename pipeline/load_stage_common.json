@@ -26,6 +26,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "pipeline/dwh_stage"
+		},
 		"annotations": []
 	}
 }
