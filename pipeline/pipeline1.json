@@ -21,6 +21,9 @@
 						"datasetParameters": {
 							"tcrossreference": {
 								"fileName": "t_crossreference.parquet"
+							},
+							"udvAgressoEmployee": {
+								"fileName": "s_udv_ags_employee.parquet"
 							}
 						}
 					},
