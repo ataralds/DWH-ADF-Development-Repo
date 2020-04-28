@@ -88,6 +88,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "copy job/dwh_stage/oltp05"
+		},
 		"annotations": []
 	}
 }
