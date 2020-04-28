@@ -1,0 +1,20 @@
+{
+	"name": "m_hlp_exchange_rate_usd",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "stage_hlp_exchange_rate",
+						"type": "DatasetReference"
+					},
+					"name": "hlpExhangeRate"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> hlpExhangeRate"
+		}
+	}
+}
