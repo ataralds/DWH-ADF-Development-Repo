@@ -6,27 +6,25 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "stage_hlp_exchange_rate",
+						"referenceName": "Other",
 						"type": "DatasetReference"
 					},
-					"name": "hlpExhangeRate"
+					"name": "mapsys"
 				}
 			],
-			"sinks": [
-				{
-					"dataset": {
-						"referenceName": "hlp_exchange_rate_to_usd",
-						"type": "DatasetReference"
-					},
-					"name": "hlpExchangeRateUSD"
-				}
-			],
+			"sinks": [],
 			"transformations": [
 				{
-					"name": "FltrUSDCurrency"
+					"name": "FlrCurrency"
+				},
+				{
+					"name": "Select1"
+				},
+				{
+					"name": "DerivedColumn1"
 				}
 			],
-			"script": "source(output(\n\t\tcurrency_code_from as string,\n\t\tcurrency_code_to as string,\n\t\tcurrency_id_from as decimal(38,18),\n\t\tcurrency_id_to as decimal(38,18),\n\t\tday as timestamp,\n\t\trate as double\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: true,\n\tformat: 'parquet') ~> hlpExhangeRate\nhlpExhangeRate filter(currency_code_to=='USD') ~> FltrUSDCurrency\nFltrUSDCurrency sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tfilePattern:'stage_hlp_exchange_rate_to_usd.parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> hlpExchangeRateUSD"
+			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> mapsys\nmapsys filter(SOURCE_SYSTEM == 'PARIS' && CODE_TYPE_ID==124) ~> FlrCurrency\nFlrCurrency select(mapColumn(\n\t\tTARGET_CODE,\n\t\tTARGET_DESCRIPTION,\n\t\tNEW_TARGET_CODE = TARGET_CODE\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 derive(Derived_NEW_TARGET_CODE = TARGET_CODE+' test',\n\t\tDerived_column = TARGET_CODE+'   dervied test') ~> DerivedColumn1"
 		}
 	}
 }
