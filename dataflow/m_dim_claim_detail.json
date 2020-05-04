@@ -3,10 +3,22 @@
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_claim_detail_pa",
+						"type": "DatasetReference"
+					},
+					"name": "preDimClaimDetailPA"
+				}
+			],
 			"sinks": [],
-			"transformations": [],
-			"script": ""
+			"transformations": [
+				{
+					"name": "DerivedColumn1"
+				}
+			],
+			"script": "source(output(\n\t\tagt_description as string,\n\t\tagt_key as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_claim_detail_pa.parquet']) ~> preDimClaimDetailPA\npreDimClaimDetailPA derive() ~> DerivedColumn1"
 		}
 	}
 }
