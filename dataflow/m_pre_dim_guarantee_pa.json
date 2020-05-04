@@ -1,12 +1,30 @@
 {
 	"name": "m_pre_dim_guarantee_pa",
 	"properties": {
+		"folder": {
+			"name": "dwh_prepare/paris"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Oltp05",
+						"type": "DatasetReference"
+					},
+					"name": "pea"
+				},
+				{
+					"dataset": {
+						"referenceName": "Oltp05",
+						"type": "DatasetReference"
+					},
+					"name": "lga"
+				}
+			],
 			"sinks": [],
 			"transformations": [],
-			"script": ""
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> pea\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> lga"
 		}
 	}
 }
