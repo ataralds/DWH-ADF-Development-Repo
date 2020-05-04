@@ -1,5 +1,5 @@
 {
-	"name": "copy_exchange_rate_to_lake",
+	"name": "check_exchange_rate",
 	"properties": {
 		"activities": [
 			{
@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select \"completetion_status\" from \"hlp_exchange_rate_status\"",
+						"oracleReaderQuery": "select \"load_completion_status\" from \"hlp_exchange_rate_status\"",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
@@ -41,7 +41,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(activity('lookup_exchange_rate_status').output.firstRow.completetion_status,'Y')",
+						"value": "@equals(activity('lookup_exchange_rate_status').output.firstRow.load_completion_status,'Y')",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
