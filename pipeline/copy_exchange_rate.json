@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(activity('inside_lkp_exchange_rate_status').output.firstRow.load_completion_status,'N')",
+						"value": "@equals(activity('inside_lkp_exchange_rate_status').output.firstRow.load_completion_status,'Y')",
 						"type": "Expression"
 					},
 					"activities": [
@@ -53,12 +53,40 @@
 									"type": "DatasetReference"
 								}
 							}
+						},
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "inside_lkp_exchange_rate_status",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "vSourceLoadstatus",
+								"value": {
+									"value": "@activity('inside_lkp_exchange_rate_status').output.firstRow.load_completion_status",
+									"type": "Expression"
+								}
+							}
 						}
 					],
 					"timeout": "0.01:00:00"
 				}
 			}
 		],
+		"variables": {
+			"vSourceLoadstatus": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "copy job/dwh_stage/oltp05"
+		},
 		"annotations": []
 	}
 }
