@@ -43,7 +43,22 @@
 					"expression": {
 						"value": "@equals(activity('lookup_exchange_file_status').output.firstRow.file_arrival_status,'Y')",
 						"type": "Expression"
-					}
+					},
+					"ifTrueActivities": [
+						{
+							"name": "copy_exchange_rate_to_lake",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "copy_exchange_rate_to_lake",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true
+							}
+						}
+					]
 				}
 			}
 		],

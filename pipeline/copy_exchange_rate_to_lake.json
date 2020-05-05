@@ -79,7 +79,7 @@
 				}
 			},
 			{
-				"name": "copy_exchange_rate",
+				"name": "copy_hlp_exchange_rate",
 				"type": "Copy",
 				"dependsOn": [
 					{
