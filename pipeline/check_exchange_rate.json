@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "lookup_exchange_rate_status",
+				"name": "lookup_exchange_file_status",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select \"load_completion_status\" from \"hlp_exchange_rate_status\"",
+						"oracleReaderQuery": "select \"file_arrival_status\" from \"hlp_exchange_rate_status\"",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
@@ -32,7 +32,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "lookup_exchange_rate_status",
+						"activity": "lookup_exchange_file_status",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -41,50 +41,9 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(activity('lookup_exchange_rate_status').output.firstRow.load_completion_status,'Y')",
+						"value": "@equals(activity('lookup_exchange_file_status').output.firstRow.file_arrival_status,'Y')",
 						"type": "Expression"
-					},
-					"ifTrueActivities": [
-						{
-							"name": "copy_exchange_rate",
-							"type": "Copy",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "OracleSource",
-									"partitionOption": "None",
-									"queryTimeout": "02:00:00"
-								},
-								"sink": {
-									"type": "ParquetSink",
-									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings"
-									}
-								},
-								"enableStaging": false
-							},
-							"inputs": [
-								{
-									"referenceName": "oracle_exchange_rate",
-									"type": "DatasetReference"
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "stage_hlp_exchange_rate",
-									"type": "DatasetReference"
-								}
-							]
-						}
-					]
+					}
 				}
 			}
 		],
