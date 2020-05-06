@@ -1,0 +1,16 @@
+{
+	"name": "IRthomasObject",
+	"properties": {
+		"type": "Managed",
+		"typeProperties": {
+			"computeProperties": {
+				"location": "AutoResolve",
+				"dataFlowProperties": {
+					"computeType": "General",
+					"coreCount": 16,
+					"timeToLive": 0
+				}
+			}
+		}
+	}
+}
