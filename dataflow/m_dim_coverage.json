@@ -1,16 +1,20 @@
 {
-	"name": "dataflow1",
+	"name": "m_dim_coverage",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
 				{
-					"name": "source1"
+					"dataset": {
+						"referenceName": "pre_dim_coverage",
+						"type": "DatasetReference"
+					},
+					"name": "preDimCoverage"
 				}
 			],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_coverage.parquet']) ~> preDimCoverage"
 		}
 	}
 }
