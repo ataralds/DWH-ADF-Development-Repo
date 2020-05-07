@@ -605,7 +605,8 @@
 					"name": "LookupExchrateMin"
 				},
 				{
-					"name": "DeriveColumns"
+					"name": "DeriveColumns",
+					"description": "Creating/updating columns:\nldadedcurr_max, ldatext_max, ldadedamt_max, ldadays_max, min_amount_usd, inc:complexity:desc, inc_geotag_reference"
 				},
 				{
 					"name": "incDedAmountUsd"
