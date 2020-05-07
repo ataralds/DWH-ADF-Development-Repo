@@ -3,10 +3,23 @@
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Oltp05",
+						"type": "DatasetReference"
+					},
+					"name": "SfCompanyNew",
+					"description": "Sf Comapny new from Oltp05"
+				}
+			],
 			"sinks": [],
-			"transformations": [],
-			"script": ""
+			"transformations": [
+				{
+					"name": "NotNullCompany"
+				}
+			],
+			"script": "source(output(\n\t\taccount_resp_me as string,\n\t\taccount_resp_pi as string,\n\t\taccount_status as string,\n\t\tclient_lost_reason as string,\n\t\tcompany_email as string,\n\t\tcompany_id as double,\n\t\tcompany_name as string,\n\t\tcompany_owner_full_name as string,\n\t\tcompany_owner_id as string,\n\t\tcountry as string,\n\t\tcuo_full_name as string,\n\t\tcuo_user_id as string,\n\t\tdate_inserted as timestamp,\n\t\tdate_updated as timestamp,\n\t\tgard_contact_id as string,\n\t\tmarket_area_code as string,\n\t\tmarket_area_description as string,\n\t\tmarket_area_id as string,\n\t\tparent_company_id as double,\n\t\tparent_company_name as string,\n\t\tparis_gic_id as double,\n\t\tprimary_contact_email as string,\n\t\tprimary_contact_name as string,\n\t\tsf_last_updated_date as timestamp,\n\t\tsource_system as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> SfCompanyNew\nSfCompanyNew filter(iifNull(company_name,'NULL') != 'NULL' && iifNull(company_id,00) != 00) ~> NotNullCompany"
 		}
 	}
 }
