@@ -1,6 +1,7 @@
 {
 	"name": "m_pre_dim_incident_pa",
 	"properties": {
+		"description": "mangler lookup til claimteam og pre_dim_time",
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
