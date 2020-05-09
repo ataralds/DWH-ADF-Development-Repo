@@ -1,5 +1,5 @@
 {
-	"name": "check_exchange_rate",
+	"name": "load_exchange_rate",
 	"properties": {
 		"activities": [
 			{
