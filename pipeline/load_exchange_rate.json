@@ -63,7 +63,7 @@
 			}
 		],
 		"folder": {
-			"name": "copy job/dwh_stage/oltp05"
+			"name": "pipeline/dwh_stage"
 		},
 		"annotations": []
 	}
