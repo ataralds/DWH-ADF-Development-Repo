@@ -32,7 +32,7 @@
 								"fileName": "\"p_lcctable\""
 							},
 							"tCrossReference": {
-								"fileName": "t_crossreference.parquet"
+								"fileName": "tcrossreference.parquet"
 							},
 							"lcf": {
 								"fileName": "\"p_lcftable\""
