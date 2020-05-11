@@ -13,6 +13,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
+				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_pre_dim_agreement_pa",
@@ -34,7 +35,7 @@
 								"fileName": "\"sf_company\""
 							},
 							"DimTime": {
-								"fileName": "\"dim_time\""
+								"fileName": "\"sta_dim_time\""
 							}
 						}
 					},
