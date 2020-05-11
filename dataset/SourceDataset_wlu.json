@@ -1,0 +1,16 @@
+{
+	"name": "SourceDataset_wlu",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracelStageITF",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "STAGE_LLOYDS",
+			"table": "LLOYDS_VESSEL_HISTORY"
+		}
+	}
+}
