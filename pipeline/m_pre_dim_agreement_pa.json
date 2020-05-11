@@ -13,7 +13,6 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_pre_dim_agreement_pa",
