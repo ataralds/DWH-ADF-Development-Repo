@@ -1,6 +1,7 @@
 {
-	"name": "pre_dim_vessel_type_group",
+	"name": "pre_dim_claim_rule_pa",
 	"properties": {
+		"description": "unsure if we need this? ",
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
@@ -13,7 +14,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "pre_dim_vessel_type_group.parquet",
 				"folderPath": "Pre_Dim",
 				"fileSystem": "dwh-prepare"
 			},
@@ -21,24 +21,16 @@
 		},
 		"schema": [
 			{
-				"name": "PK_KEY",
+				"name": "agt_description",
 				"type": "UTF8"
 			},
 			{
-				"name": "CPT_DESCRIPTION",
+				"name": "agt_key",
 				"type": "UTF8"
 			},
 			{
-				"name": "CPT_NUMBER",
-				"type": "INT32"
-			},
-			{
-				"name": "INSERTED_BY",
+				"name": "last_updated_by",
 				"type": "UTF8"
-			},
-			{
-				"name": "DATE_INSERTED",
-				"type": "DATE"
 			}
 		]
 	}

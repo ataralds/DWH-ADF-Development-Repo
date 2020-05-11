@@ -1,20 +1,19 @@
 {
-	"name": "pre_dim_vessel_type_group",
+	"name": "pre_fact_claim_trans_pa",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "dwh-prepare/pre-dim"
+			"name": "dwh-prepare/pre-fact"
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "pre_dim_vessel_type_group.parquet",
-				"folderPath": "Pre_Dim",
+				"folderPath": "Pre_Fact",
 				"fileSystem": "dwh-prepare"
 			},
 			"compressionCodec": "snappy"

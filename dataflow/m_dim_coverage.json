@@ -1,0 +1,35 @@
+{
+	"name": "m_dim_coverage",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_coverage",
+						"type": "DatasetReference"
+					},
+					"name": "preDimCoverage"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dim_coverage",
+						"type": "DatasetReference"
+					},
+					"name": "dimCoverage"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedTopColumns"
+				},
+				{
+					"name": "alterRow"
+				}
+			],
+			"script": "source(output(\n\t\tpk_key as string,\n\t\tcov_description as string,\n\t\tcov_exposure_group_code as string,\n\t\tcov_exposure_group_desc as string,\n\t\tgrp_key as string,\n\t\tgrp_description as string,\n\t\tcov_energy_exp_group_code as string,\n\t\tcov_energy_exp_group_desc as string,\n\t\tcov_layer_group_code as string,\n\t\tcov_layer_group_descr as string,\n\t\tcov_gic_group_code as string,\n\t\tcov_gic_group_desc as string,\n\t\tcov_3ltr_code as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_coverage.parquet']) ~> preDimCoverage\npreDimCoverage derive(tot_key = 'ALL',\n\t\ttot_description = 'All Coverages') ~> derivedTopColumns\nderivedTopColumns alterRow(upsertIf(!isNull(pk_key))) ~> alterRow\nalterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_coverage.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimCoverage"
+		}
+	}
+}

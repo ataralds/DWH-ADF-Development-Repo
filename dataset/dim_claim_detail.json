@@ -1,21 +1,20 @@
 {
-	"name": "pre_dim_vessel_type_group",
+	"name": "dim_claim_detail",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "dwh-prepare/pre-dim"
+			"name": "marts/dim"
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "pre_dim_vessel_type_group.parquet",
-				"folderPath": "Pre_Dim",
-				"fileSystem": "dwh-prepare"
+				"folderPath": "dim",
+				"fileSystem": "marts"
 			},
 			"compressionCodec": "snappy"
 		},
