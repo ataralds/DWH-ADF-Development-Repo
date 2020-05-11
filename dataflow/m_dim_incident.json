@@ -12,9 +12,24 @@
 					"name": "preDimIncidentPa"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
-			"script": "source(output(\n\t\tagt_description as string,\n\t\tagt_key as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> preDimIncidentPa"
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dim_incident",
+						"type": "DatasetReference"
+					},
+					"name": "dimIncident"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DeriveTopLevel"
+				},
+				{
+					"name": "AlterRow1"
+				}
+			],
+			"script": "source(output(\n\t\trisk_group_code_riskGroup as string,\n\t\taccounting_month_key_yearOfInc as decimal(38,18),\n\t\taccounting_month_key_YearMonthOfReg as decimal(38,18),\n\t\tinc_complexity_desc as string,\n\t\tinc_ded_amount_usd as decimal(38,10),\n\t\tldadedamt_max as decimal(12,2),\n\t\tldadedcurr_max as string,\n\t\tldatext_max as string,\n\t\tldadays_max as decimal(12,2),\n\t\tmin_amount_usd as decimal(38,6),\n\t\tlcacrdate as timestamp,\n\t\tlcaltdate as timestamp,\n\t\tunderwriting_year_number_yearOfInc as double,\n\t\taccounting_year_number_YearMonthOfReg as double,\n\t\tarchive_date as date,\n\t\tlabclmdate as timestamp,\n\t\tlablodescr as string,\n\t\tinc_ind_open as string,\n\t\tlast_renewed_date as integer,\n\t\ttarget_code_clmHandler as string,\n\t\ttarget_description_clmHandler as string,\n\t\tinc_team_description as string,\n\t\tobbname as string,\n\t\tobaimono as decimal(38,18),\n\t\tinc_file_number as string,\n\t\tincident_id as integer,\n\t\ttarget_code_clmProcess as string,\n\t\ttarget_description_clmProcess as string,\n\t\tgrp_key as string,\n\t\tlcalcaid as string,\n\t\ttarget_code_complexity as string,\n\t\ttarget_description_complexity as string,\n\t\tlcaclodate as timestamp,\n\t\ttarget_code_claimAdjuster as string,\n\t\ttarget_description_claimAdjuster as string,\n\t\tldadedcurr_min as string,\n\t\tldadedamt_min as decimal(38,18),\n\t\tldatext_min as string,\n\t\tldadays_min as decimal(38,18),\n\t\ttarget_code_mainEvent as string,\n\t\ttarget_description_mainEvent as string,\n\t\ttarget_code_eventDetail as string,\n\t\ttarget_description_eventDetail as string,\n\t\ttarget_code_mainClmType as string,\n\t\ttarget_description_mainClmType as string,\n\t\ttarget_code_mainClmDetail as string,\n\t\ttarget_description_mainClmDetail as string,\n\t\tbusiness_area as string,\n\t\tagreement_type as string,\n\t\tcoverage_code as string,\n\t\tmutual_fixed as string,\n\t\ttarget_code_immediateCause as string,\n\t\ttarget_description_immediateCause as string,\n\t\tsegment_code_riskGroup as string,\n\t\ttarget_code_registeredBy as string,\n\t\ttarget_description_registeredBy as string,\n\t\tlcaextclmid as string,\n\t\tdeleted_ind as string,\n\t\tqtbmdescr as string,\n\t\tmax_lcrrefname as string,\n\t\tcarmdescr as string,\n\t\tlcalossco as string,\n\t\ttarget_description_tloType as string,\n\t\ttarget_description_claimCategory as string,\n\t\tinc_geotag_reference as string,\n\t\tinc_year_of_incident_calyear as integer,\n\t\tlcaldescr as string,\n\t\tlcfchngtime as date,\n\t\tunlname_voyageFrom as string,\n\t\tunlname_voyageTo as string,\n\t\tunlname_plc_of_incident as string,\n\t\tlcamfkey as string,\n\t\tpk_key_inc as string,\n\t\tint_text_restricted as string,\n\t\tinc_my_guard_claim_id as string,\n\t\tinc_om_claim_rule_code as string,\n\t\tinc_om_claim_rule_desc as string,\n\t\tinc_paris_pool_ind as string,\n\t\tlast_updated_by as string,\n\t\tinc_longitude as integer,\n\t\tinc_latitude as integer,\n\t\tbusiness_area_incRsvGroupMe as string,\n\t\trob_risk_group_code_incRsvGroupMe as string,\n\t\trob_segment_code_incRsvGroupMe as string,\n\t\trsv_group_code_incRsvGroupMe as string,\n\t\trsv_group_desc_incRsvGroupMe as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_incident_pa.parquet']) ~> preDimIncidentPa\npreDimIncidentPa derive(top_key = 'All',\n\t\ttop_description = 'All Incidents') ~> DeriveTopLevel\nDeriveTopLevel alterRow() ~> AlterRow1\nAlterRow1 sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimIncident"
 		}
 	}
 }
