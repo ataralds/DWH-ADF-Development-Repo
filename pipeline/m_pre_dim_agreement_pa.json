@@ -32,7 +32,7 @@
 								"fileName": "tcrossreference.parquet"
 							},
 							"SrcSfCompany": {
-								"fileName": "\"sta_sf_company\""
+								"fileName": "\"sf_company_new\""
 							},
 							"DimTime": {
 								"fileName": "\"sta_dim_time\""
