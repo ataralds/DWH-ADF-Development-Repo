@@ -1,0 +1,35 @@
+{
+	"name": "m_dim_agreement_type",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_agreement_type",
+						"type": "DatasetReference"
+					},
+					"name": "preDimAgreementType"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dim_agreement_type",
+						"type": "DatasetReference"
+					},
+					"name": "dimAgreementTypeInsert"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedTopLevel"
+				},
+				{
+					"name": "alterRow"
+				}
+			],
+			"script": "source(output(\n\t\tagt_description as string,\n\t\tagt_key as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_agreement_type.parquet']) ~> preDimAgreementType\npreDimAgreementType derive(top_key = 'ALL',\n\t\ttop_description = 'All Agreement Types') ~> derivedTopLevel\nderivedTopLevel alterRow(upsertIf(!isNull(agt_key))) ~> alterRow\nalterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_agreement_type.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimAgreementTypeInsert"
+		}
+	}
+}

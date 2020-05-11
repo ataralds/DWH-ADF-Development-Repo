@@ -1,0 +1,58 @@
+{
+	"name": "error_handling",
+	"properties": {
+		"activities": [
+			{
+				"name": "Send email",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-111.westeurope.logic.azure.com:443/workflows/854a1b1a7a70443ea407fcc8ad02a8d6/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xI0dgmzlPJOnVcQ4PjxydVz2E5UIM0Qke2J4gC8Mkbo",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@pipeline().parameters.pPipelineName",
+						"Subject": "@variables('vSubject')",
+						"ErrorMessage": "@pipeline().parameters.pPipelineErrorMsg",
+						"EmailTo": "@variables('vEmailTo')"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"pPipelineName": {
+				"type": "string",
+				"defaultValue": "Pipeline Name"
+			},
+			"pPipelineErrorMsg": {
+				"type": "string",
+				"defaultValue": "Pipeline failed. Please check"
+			}
+		},
+		"variables": {
+			"vEmailTo": {
+				"type": "String",
+				"defaultValue": "sudipta.dutta@gard.no"
+			},
+			"vSubject": {
+				"type": "String",
+				"defaultValue": "ADF DWH Alert ! Pipeline Failed"
+			}
+		},
+		"folder": {
+			"name": "pipeline/dwh_stage"
+		},
+		"annotations": []
+	}
+}
