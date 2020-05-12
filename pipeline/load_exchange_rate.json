@@ -19,7 +19,7 @@
 						"type": "OracleSource",
 						"oracleReaderQuery": "select \"file_arrival_status\" from \"hlp_exchange_rate_status\"",
 						"partitionOption": "None",
-						"queryTimeout": "02:00:00"
+						"queryTimeout": "00:10:00"
 					},
 					"dataset": {
 						"referenceName": "oracle_exchange_rate_status",
