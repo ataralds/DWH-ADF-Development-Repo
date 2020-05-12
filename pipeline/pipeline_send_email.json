@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"url": "https://prod-111.westeurope.logic.azure.com:443/workflows/854a1b1a7a70443ea407fcc8ad02a8d6/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xI0dgmzlPJOnVcQ4PjxydVz2E5UIM0Qke2J4gC8Mkbo",
+					"url": "https://prod-55.westeurope.logic.azure.com:443/workflows/68a9e67bb1dd4c218b0aedeb2cc185d1/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=aCHFbRtDBEqszJgzokENqPEYosNnrAjhSVjDmKSri3A",
 					"method": "POST",
 					"headers": {
 						"Content-Type": "application/json"
