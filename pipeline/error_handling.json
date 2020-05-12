@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Send email",
+				"name": "Send email on error",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
