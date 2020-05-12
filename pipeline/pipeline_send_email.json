@@ -1,0 +1,62 @@
+{
+	"name": "pipeline_send_email",
+	"properties": {
+		"activities": [
+			{
+				"name": "Send email",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.01:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-111.westeurope.logic.azure.com:443/workflows/854a1b1a7a70443ea407fcc8ad02a8d6/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xI0dgmzlPJOnVcQ4PjxydVz2E5UIM0Qke2J4gC8Mkbo",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@pipeline().parameters.pPipelineName",
+						"Subject": "@pipeline().parameters.pEmailSubject",
+						"Message": "@pipeline().parameters.pEmailBody",
+						"EmailTo": "@variables('vEmailTo')"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"pPipelineName": {
+				"type": "string",
+				"defaultValue": "Pipeline Name"
+			},
+			"pPipelineErrorMsg": {
+				"type": "string",
+				"defaultValue": "Pipeline failed. Please check"
+			},
+			"pEmailSubject": {
+				"type": "string",
+				"defaultValue": "Azure DWH Alert ! Exchange rate file not available"
+			},
+			"pEmailBody": {
+				"type": "string",
+				"defaultValue": "Exchange rate file not available"
+			}
+		},
+		"variables": {
+			"vEmailTo": {
+				"type": "String",
+				"defaultValue": "sudipta.dutta@gard.no"
+			}
+		},
+		"folder": {
+			"name": "pipeline/dwh_stage"
+		},
+		"annotations": []
+	}
+}
