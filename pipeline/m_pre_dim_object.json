@@ -1,0 +1,42 @@
+{
+	"name": "m_pre_dim_object",
+	"properties": {
+		"activities": [
+			{
+				"name": "m_pre_dim_object",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "m_pre_dim_object",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"lloydsvesselhistory": {
+								"fileName": "lloyds_vessel_history.parquet"
+							},
+							"lloydscompany": {
+								"fileName": "lloyds_company.parquet"
+							},
+							"tcrossreference": {
+								"fileName": "t_crossreference.parquet"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}
