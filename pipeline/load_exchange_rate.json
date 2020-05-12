@@ -58,7 +58,7 @@
 								"waitOnCompletion": true,
 								"parameters": {
 									"pPipelineName": "Pipeline Name",
-									"pEmailSubject": "Azure DWH Alert ! Exchange rate file not available",
+									"pEmailSubject": "Azure DWH Alert ! Exchange rate file not arrived to load and copy into Azure.",
 									"pEmailBody": "Exchange rate file not available",
 									"pEmailTo": "sudipta.dutta@gard.no;siv.borve@gard.no"
 								}
