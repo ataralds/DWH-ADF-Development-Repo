@@ -13,8 +13,12 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> plgatable"
+			"transformations": [
+				{
+					"name": "lgatable"
+				}
+			],
+			"script": "source(output(\n\t\tlgacandate as timestamp,\n\t\tlgaclmcat as string,\n\t\tlgaclmtype as string,\n\t\tlgacrcode as string,\n\t\tlgacrcrdate as timestamp,\n\t\tlgacrcrsign as string,\n\t\tlgacrdate as timestamp,\n\t\tlgacrlgaid as string,\n\t\tlgacrsign as string,\n\t\tlgacrynsw as string,\n\t\tlgaendate as timestamp,\n\t\tlgaguaamt as decimal(38,18),\n\t\tlgaguacurr as string,\n\t\tlgaintnote as string,\n\t\tlgaintynsw as string,\n\t\tlgajurisdiction as string,\n\t\tlgaknvmark as string,\n\t\tlgalcaid as string,\n\t\tlgalccid as string,\n\t\tlgalgaid as string,\n\t\tlgaln2 as decimal(38,18),\n\t\tlgaludate as timestamp,\n\t\tlgalusign as string,\n\t\tlgaobocname as string,\n\t\tlgaobopeaid as decimal(38,18),\n\t\tlgareceiver as decimal(38,18),\n\t\tlgastatus as string,\n\t\tlgastdate as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> plgatable\nplgatable select(mapColumn(\n\t\tlgacrdate,\n\t\tlgaendate,\n\t\tlgaguaamt,\n\t\tlgaguacurr,\n\t\tlgalcaid,\n\t\tlgalgaid,\n\t\tlgastatus,\n\t\tlgastdate\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> lgatable"
 		}
 	}
 }
