@@ -3,24 +3,11 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "load_master_pre",
-				"type": "ExecutePipeline",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "load_master_pre",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
 				"name": "load_pre_dim",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "load_master_pre",
+						"activity": "load_stage_common",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -30,6 +17,19 @@
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "load_pre_dim",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "load_stage_common",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "load_stage_common",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
