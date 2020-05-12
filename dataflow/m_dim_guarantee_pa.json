@@ -9,12 +9,12 @@
 						"referenceName": "pre_dim_guarantee_pa",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "PreDimGuarantee"
 				}
 			],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(output(\n\t\tagt_description as string,\n\t\tagt_key as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source1"
+			"script": "source(output(\n\t\tagt_description as string,\n\t\tagt_key as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> PreDimGuarantee"
 		}
 	}
 }
