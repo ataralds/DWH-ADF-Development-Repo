@@ -44,6 +44,27 @@
 						"value": "@equals(activity('lookup_exchange_file_status').output.firstRow.file_arrival_status,'Y')",
 						"type": "Expression"
 					},
+					"ifFalseActivities": [
+						{
+							"name": "pipeline_send_email",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "pipeline_send_email",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"pPipelineName": "Pipeline Name",
+									"pEmailSubject": "Azure DWH Alert ! Exchange rate file not available",
+									"pEmailBody": "Exchange rate file not available",
+									"pEmailTo": "sudipta.dutta@gard.no;siv.borve@gard.no"
+								}
+							}
+						}
+					],
 					"ifTrueActivities": [
 						{
 							"name": "copy_exchange_rate_to_lake",
