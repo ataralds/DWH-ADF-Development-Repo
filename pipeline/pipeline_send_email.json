@@ -35,10 +35,6 @@
 				"type": "string",
 				"defaultValue": "Pipeline Name"
 			},
-			"pPipelineErrorMsg": {
-				"type": "string",
-				"defaultValue": "Pipeline failed. Please check"
-			},
 			"pEmailSubject": {
 				"type": "string",
 				"defaultValue": "Azure DWH Alert ! Exchange rate file not available"
