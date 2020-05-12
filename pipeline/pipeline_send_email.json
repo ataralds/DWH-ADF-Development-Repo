@@ -25,7 +25,7 @@
 						"PipelineName": "@pipeline().parameters.pPipelineName",
 						"Subject": "@pipeline().parameters.pEmailSubject",
 						"Message": "@pipeline().parameters.pEmailBody",
-						"EmailTo": "@variables('vEmailTo')"
+						"EmailTo": "@pipeline().parameters.pEmailTo"
 					}
 				}
 			}
@@ -42,11 +42,9 @@
 			"pEmailBody": {
 				"type": "string",
 				"defaultValue": "Exchange rate file not available"
-			}
-		},
-		"variables": {
-			"vEmailTo": {
-				"type": "String",
+			},
+			"pEmailTo": {
+				"type": "string",
 				"defaultValue": "sudipta.dutta@gard.no"
 			}
 		},
