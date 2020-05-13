@@ -29,7 +29,7 @@
 					"name": "alterRow"
 				}
 			],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_dim/pre_dim_object.parquet']) ~> preDimObject\npreDimObject derive(top_key = 'ALL',\n\t\ttop_description = 'All Objects') ~> derivedTopLevel\nderivedTopLevel alterRow(upsertIf(!isNull(top_key))) ~> alterRow\nalterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimObject"
+			"script": "source(output(\n\t\tagt_description as string,\n\t\tagt_key as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_object.parquet']) ~> preDimObject\npreDimObject derive(top_key = 'ALL',\n\t\ttop_description = 'All Objects') ~> derivedTopLevel\nderivedTopLevel alterRow(upsertIf(!isNull(top_key))) ~> alterRow\nalterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimObject"
 		}
 	}
 }
