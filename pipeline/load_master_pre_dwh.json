@@ -1,5 +1,5 @@
 {
-	"name": "load_master_pre",
+	"name": "load_master_pre_dwh",
 	"properties": {
 		"activities": [
 			{
