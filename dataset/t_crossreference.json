@@ -13,6 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "tcrossreference.parquet",
 				"folderPath": "Mapping_System",
 				"fileSystem": "dwh-stage"
 			},
