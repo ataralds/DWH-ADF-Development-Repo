@@ -21,7 +21,7 @@
 						"referenceName": "dim_guarantee",
 						"type": "DatasetReference"
 					},
-					"name": "dim_guarantee"
+					"name": "DimGuarantee"
 				}
 			],
 			"transformations": [
@@ -32,7 +32,7 @@
 					"name": "AlterRow1"
 				}
 			],
-			"script": "source(output(\n\t\tGut_Date_Given as timestamp,\n\t\tGut_Guarantee_Issued_To as string,\n\t\tGut_Guarantee_Remarks as string,\n\t\tGut_Date_Expiry as timestamp,\n\t\tGut_Date_Created as timestamp,\n\t\tGut_Key as string,\n\t\tGut_Type_Description as string,\n\t\tGut_Guarantee_Status as string,\n\t\tGut_Inc_Key as string,\n\t\tGut_open_ind as string,\n\t\tGut_Guarantee_type_Code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_guarantee_pa.parquet']) ~> PreDimGuarantee\nPreDimGuarantee derive(Top_key = 'N/A',\n\t\tTop_Description = 'All Guarantees') ~> DerivedColumn1\nDerivedColumn1 alterRow(upsertIf(1==1)) ~> AlterRow1\nAlterRow1 sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_guarantee.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dim_guarantee"
+			"script": "source(output(\n\t\tGut_Date_Given as timestamp,\n\t\tGut_Guarantee_Issued_To as string,\n\t\tGut_Guarantee_Remarks as string,\n\t\tGut_Date_Expiry as timestamp,\n\t\tGut_Date_Created as timestamp,\n\t\tGut_Key as string,\n\t\tGut_Type_Description as string,\n\t\tGut_Guarantee_Status as string,\n\t\tGut_Inc_Key as string,\n\t\tGut_open_ind as string,\n\t\tGut_Guarantee_type_Code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_guarantee_pa.parquet']) ~> PreDimGuarantee\nPreDimGuarantee derive(Top_key = 'N/A',\n\t\tTop_Description = 'All Guarantees') ~> DerivedColumn1\nDerivedColumn1 alterRow(upsertIf(1==1)) ~> AlterRow1\nAlterRow1 sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_guarantee.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimGuarantee"
 		}
 	}
 }
