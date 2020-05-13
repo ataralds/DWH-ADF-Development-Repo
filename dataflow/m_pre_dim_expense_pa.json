@@ -8,12 +8,26 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"name": "source1"
+					"dataset": {
+						"referenceName": "Other",
+						"type": "DatasetReference"
+					},
+					"name": "TCrossReference"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1"
+			"transformations": [
+				{
+					"name": "FinancialType198"
+				},
+				{
+					"name": "ExpenseGroup827"
+				},
+				{
+					"name": "ExpenseCostGroup828"
+				}
+			],
+			"script": "source(output(\n\t\tsource_code_key as string,\n\t\tsource_system as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tcode_type_id as double,\n\t\tcode2 as string,\n\t\tom_x_ref as string,\n\t\tcode_type as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nTCrossReference filter(source_system=='PARIS' && code_type_id == 198) ~> FinancialType198\nTCrossReference filter(source_system == 'PARIS' && code_type_id == 827) ~> ExpenseGroup827\nTCrossReference filter(source_system == 'PARIS' && code_type_id == 828) ~> ExpenseCostGroup828"
 		}
 	}
 }
