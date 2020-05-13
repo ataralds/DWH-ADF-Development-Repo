@@ -30,13 +30,22 @@
 					"name": "FinancialType"
 				},
 				{
-					"name": "ExpenseCostGroup"
+					"name": "ExpCostGroup"
 				},
 				{
 					"name": "ExpenseGroup"
+				},
+				{
+					"name": "ExpGroup"
+				},
+				{
+					"name": "ExspenseCostGroup"
+				},
+				{
+					"name": "Select1"
 				}
 			],
-			"script": "source(output(\n\t\tsource_code_key as string,\n\t\tsource_system as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tcode_type_id as double,\n\t\tcode2 as string,\n\t\tom_x_ref as string,\n\t\tcode_type as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nTCrossReference filter(source_system=='PARIS' && code_type_id == 198) ~> FinancialType198\nTCrossReference filter(source_system == 'PARIS' && code_type_id == 827) ~> ExpenseGroup827\nTCrossReference filter(source_system == 'PARIS' && code_type_id == 828) ~> ExpenseCostGroup828\nFinancialType198 select(mapColumn(\n\t\tsource_code_key,\n\t\ttarget_code,\n\t\ttarget_description,\n\t\tcode2\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FinancialType\nExpenseCostGroup828 select(mapColumn(\n\t\tsource_code_key,\n\t\ttarget_code,\n\t\ttarget_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> ExpenseCostGroup\nExpenseGroup827 select(mapColumn(\n\t\tsource_code_key,\n\t\ttarget_code,\n\t\ttarget_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> ExpenseGroup"
+			"script": "source(output(\n\t\tsource_code_key as string,\n\t\tsource_system as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tcode_type_id as double,\n\t\tcode2 as string,\n\t\tom_x_ref as string,\n\t\tcode_type as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nTCrossReference filter(source_system=='PARIS' && code_type_id == 198) ~> FinancialType198\nTCrossReference filter(source_system == 'PARIS' && code_type_id == 827) ~> ExpenseGroup827\nTCrossReference filter(source_system == 'PARIS' && code_type_id == 828) ~> ExpenseCostGroup828\nFinancialType198 select(mapColumn(\n\t\tsource_code_key,\n\t\ttarget_code,\n\t\ttarget_description,\n\t\tcode2\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FinancialType\nExpenseCostGroup828 select(mapColumn(\n\t\tsource_code_key,\n\t\ttarget_code,\n\t\ttarget_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> ExpCostGroup\nExpenseGroup827 select(mapColumn(\n\t\tsource_code_key,\n\t\ttarget_code,\n\t\ttarget_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> ExpenseGroup\nFinancialType, ExpenseGroup join(FinancialType@source_code_key == ExpenseGroup@source_code_key,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> ExpGroup\nExpGroup, ExpCostGroup join(FinancialType@source_code_key == ExpCostGroup@source_code_key,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> ExspenseCostGroup\nExspenseCostGroup select(mapColumn(\n\t\tpk_exp_key = FinancialType@source_code_key,\n\t\texp_code = FinancialType@target_code,\n\t\texp_description = FinancialType@target_description,\n\t\tcode2,\n\t\tsource_code_key = ExpenseGroup@source_code_key,\n\t\texg_code = ExpenseGroup@target_code,\n\t\texg_description = ExpenseGroup@target_description,\n\t\tsource_code_key = ExpCostGroup@source_code_key,\n\t\text_code = ExpCostGroup@target_code,\n\t\text_description = ExpCostGroup@target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1"
 		}
 	}
 }
