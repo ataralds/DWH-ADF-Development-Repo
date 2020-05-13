@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "Other",
+						"referenceName": "TCrossref",
 						"type": "DatasetReference"
 					},
 					"name": "TCrossReference"
