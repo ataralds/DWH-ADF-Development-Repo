@@ -37,33 +37,57 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/error_in_pipeline_resolved')]",
+			"name": "[concat(parameters('factoryName'), '/error_handling')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Set variable1",
-						"type": "SetVariable",
+						"name": "Send email on error",
+						"type": "WebActivity",
 						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
 						"userProperties": [],
 						"typeProperties": {
-							"variableName": "vErrorPipelineMessage",
-							"value": {
-								"value": "@pipeline().parameters.pErrorPipelineStatus",
-								"type": "Expression"
+							"url": "https://prod-111.westeurope.logic.azure.com:443/workflows/854a1b1a7a70443ea407fcc8ad02a8d6/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xI0dgmzlPJOnVcQ4PjxydVz2E5UIM0Qke2J4gC8Mkbo",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"DataFactoryName": "@{pipeline().DataFactory}",
+								"PipelineName": "@pipeline().parameters.pPipelineName",
+								"Subject": "@variables('vSubject')",
+								"ErrorMessage": "@pipeline().parameters.pPipelineErrorMsg",
+								"EmailTo": "@variables('vEmailTo')"
 							}
 						}
 					}
 				],
 				"parameters": {
-					"pErrorPipelineStatus": {
-						"type": "string"
+					"pPipelineName": {
+						"type": "string",
+						"defaultValue": "Pipeline Name"
+					},
+					"pPipelineErrorMsg": {
+						"type": "string",
+						"defaultValue": "Pipeline failed. Please check"
 					}
 				},
 				"variables": {
-					"vErrorPipelineMessage": {
-						"type": "String"
+					"vEmailTo": {
+						"type": "String",
+						"defaultValue": "sudipta.dutta@gard.no"
+					},
+					"vSubject": {
+						"type": "String",
+						"defaultValue": "ADF DWH Alert ! Pipeline Failed"
 					}
 				},
 				"folder": {
@@ -74,30 +98,55 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/load_pre_dim')]",
+			"name": "[concat(parameters('factoryName'), '/pipeline_send_email')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Set variable1",
-						"type": "SetVariable",
+						"name": "Send email",
+						"type": "WebActivity",
 						"dependsOn": [],
+						"policy": {
+							"timeout": "0.01:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
 						"userProperties": [],
 						"typeProperties": {
-							"variableName": "vPreDim",
-							"value": "'This is inside load_pre_dim'"
+							"url": "https://prod-55.westeurope.logic.azure.com:443/workflows/68a9e67bb1dd4c218b0aedeb2cc185d1/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=aCHFbRtDBEqszJgzokENqPEYosNnrAjhSVjDmKSri3A",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"DataFactoryName": "@{pipeline().DataFactory}",
+								"PipelineName": "@pipeline().parameters.pPipelineName",
+								"Subject": "@pipeline().parameters.pEmailSubject",
+								"Message": "@pipeline().parameters.pEmailBody",
+								"EmailTo": "@pipeline().parameters.pEmailTo"
+							}
 						}
 					}
 				],
 				"parameters": {
-					"pErrorStatus": {
-						"type": "string"
-					}
-				},
-				"variables": {
-					"vPreDim": {
-						"type": "String"
+					"pPipelineName": {
+						"type": "string",
+						"defaultValue": "Pipeline Name"
+					},
+					"pEmailSubject": {
+						"type": "string",
+						"defaultValue": "Azure DWH Alert ! Exchange rate file not available"
+					},
+					"pEmailBody": {
+						"type": "string",
+						"defaultValue": "Exchange rate file not available"
+					},
+					"pEmailTo": {
+						"type": "string",
+						"defaultValue": "sudipta.dutta@gard.no"
 					}
 				},
 				"folder": {
@@ -219,6 +268,44 @@
 			"properties": {
 				"type": "SelfHosted",
 				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/IRThomasClaimDetails')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 16,
+							"timeToLive": 0
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/IRsiv8core')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 16,
+							"timeToLive": 0
+						}
+					}
+				}
 			},
 			"dependsOn": []
 		},
@@ -1279,92 +1366,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/sql_server_development_connection')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Static')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"fileName": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Copy job/dwh-stage/Oltp05"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().fileName",
-							"type": "Expression"
-						},
-						"folderPath": "Static",
-						"fileSystem": "dwh-stage"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/dwhdatalakedevelopment')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dim_agreement')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "marts/dim"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "dim",
-						"fileSystem": "marts"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "PK_KEY",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_DESCRIPTION",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_NUMBER",
-						"type": "INT32"
-					},
-					{
-						"name": "INSERTED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "DATE_INSERTED",
-						"type": "DATE"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/dwhdatalakedevelopment')]"
 			]
 		}
 	]

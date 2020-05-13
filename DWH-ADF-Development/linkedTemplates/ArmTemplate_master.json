@@ -149,21 +149,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"ARESRV476_Arendal_password": {
-						"value": "[parameters('ARESRV476_Arendal_password')]"
-					},
-					"OLTP05_connectionString": {
-						"value": "[parameters('OLTP05_connectionString')]"
-					},
-					"OracelStageITF_connectionString": {
-						"value": "[parameters('OracelStageITF_connectionString')]"
-					},
-					"ARESRV476_Arendal_properties_typeProperties_host": {
-						"value": "[parameters('ARESRV476_Arendal_properties_typeProperties_host')]"
-					},
-					"ARESRV476_Arendal_properties_typeProperties_userId": {
-						"value": "[parameters('ARESRV476_Arendal_properties_typeProperties_userId')]"
 					}
 				}
 			},
@@ -184,18 +169,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"OracleAzureDwh_connectionString": {
-						"value": "[parameters('OracleAzureDwh_connectionString')]"
-					},
-					"OracleCStage_connectionString": {
-						"value": "[parameters('OracleCStage_connectionString')]"
-					},
-					"OracleDbParisPoolScrAmster_connectionString": {
-						"value": "[parameters('OracleDbParisPoolScrAmster_connectionString')]"
-					},
-					"OracleDbParisScrAmster_connectionString": {
-						"value": "[parameters('OracleDbParisScrAmster_connectionString')]"
 					}
 				}
 			},
@@ -216,11 +189,98 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"ARESRV476_Arendal_password": {
+						"value": "[parameters('ARESRV476_Arendal_password')]"
+					},
+					"OLTP05_connectionString": {
+						"value": "[parameters('OLTP05_connectionString')]"
+					},
+					"OracelStageITF_connectionString": {
+						"value": "[parameters('OracelStageITF_connectionString')]"
+					},
+					"OracleAzureDwh_connectionString": {
+						"value": "[parameters('OracleAzureDwh_connectionString')]"
+					},
+					"OracleCStage_connectionString": {
+						"value": "[parameters('OracleCStage_connectionString')]"
+					},
+					"OracleDbParisPoolScrAmster_connectionString": {
+						"value": "[parameters('OracleDbParisPoolScrAmster_connectionString')]"
+					},
+					"OracleDbParisScrAmster_connectionString": {
+						"value": "[parameters('OracleDbParisScrAmster_connectionString')]"
+					},
+					"ARESRV476_Arendal_properties_typeProperties_host": {
+						"value": "[parameters('ARESRV476_Arendal_properties_typeProperties_host')]"
+					},
+					"ARESRV476_Arendal_properties_typeProperties_userId": {
+						"value": "[parameters('ARESRV476_Arendal_properties_typeProperties_userId')]"
 					}
 				}
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_3')]"
+			]
+		},
+		{
+			"name": "ArmTemplate_5",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_5.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_4')]"
+			]
+		},
+		{
+			"name": "ArmTemplate_6",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_6.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_5')]"
+			]
+		},
+		{
+			"name": "ArmTemplate_7",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_7.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_6')]"
 			]
 		}
 	]

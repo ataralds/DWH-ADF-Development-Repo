@@ -13,6 +13,88 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Static')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"fileName": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Oltp05"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().fileName",
+							"type": "Expression"
+						},
+						"folderPath": "Static",
+						"fileSystem": "dwh-stage"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_agreement')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dim_agreement_type')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -201,6 +283,194 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/dim_category')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_claim_detail')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_claim_rule')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_claim_type')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dim_country')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -316,6 +586,32 @@
 					},
 					"compressionCodec": "snappy"
 				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_employee')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
 				"schema": [
 					{
 						"name": "PK_KEY",
@@ -342,7 +638,101 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dim_employee')]",
+			"name": "[concat(parameters('factoryName'), '/dim_guarantee')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_incident')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "marts/dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dim",
+						"fileSystem": "marts"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dim_object')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -526,369 +916,6 @@
 						"type": "DATE"
 					}
 				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dim_risk_object')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "marts/dim"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "dim",
-						"fileSystem": "marts"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "PK_KEY",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_DESCRIPTION",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_NUMBER",
-						"type": "INT32"
-					},
-					{
-						"name": "INSERTED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "DATE_INSERTED",
-						"type": "DATE"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dim_source_system')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "marts/dim"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "dim",
-						"fileSystem": "marts"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "PK_KEY",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_DESCRIPTION",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_NUMBER",
-						"type": "INT32"
-					},
-					{
-						"name": "INSERTED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "DATE_INSERTED",
-						"type": "DATE"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dim_time')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "marts/dim"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "dim",
-						"fileSystem": "marts"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "PK_KEY",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_DESCRIPTION",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_NUMBER",
-						"type": "INT32"
-					},
-					{
-						"name": "INSERTED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "DATE_INSERTED",
-						"type": "DATE"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dim_vessel_type_group')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "marts/dim"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "dim",
-						"fileSystem": "marts"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "PK_KEY",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_DESCRIPTION",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_NUMBER",
-						"type": "INT32"
-					},
-					{
-						"name": "INSERTED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "DATE_INSERTED",
-						"type": "DATE"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dwh_stage_oltp05_sql')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "sql_server_development_connection",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"SinkDataset": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Test"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dwh_stage",
-					"table": {
-						"value": "@dataset().SinkDataset",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/fact_premium_transaction')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "marts/fact"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "fact",
-						"fileSystem": "marts"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "PK_KEY",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_DESCRIPTION",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_NUMBER",
-						"type": "INT32"
-					},
-					{
-						"name": "INSERTED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "DATE_INSERTED",
-						"type": "DATE"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/faptable_rsatable')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"fileName": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Copy job/dwh-stage/Paris"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().fileName",
-							"type": "Expression"
-						},
-						"folderPath": "Paris",
-						"fileSystem": "dwh-stage"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/lake_Oltp05_configfile')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Test"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "config_file.parquet",
-						"folderPath": "Static",
-						"fileSystem": "raw"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "TABLE_NAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "LOAD_IND",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/lake_configfile_oltp05')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Test"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "config_file.parquet",
-						"folderPath": "Static",
-						"fileSystem": "raw"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
 			},
 			"dependsOn": []
 		}

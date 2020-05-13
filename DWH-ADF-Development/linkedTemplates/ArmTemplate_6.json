@@ -1,0 +1,2937 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "DWH-ADF-Development"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_agreement_type')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "dwh_prepare/pre_dim"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Other",
+								"type": "DatasetReference"
+							},
+							"name": "tcrossreference"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "pre_dim_agreement_type",
+								"type": "DatasetReference"
+							},
+							"name": "preDimAgreementType"
+						}
+					],
+					"transformations": [
+						{
+							"name": "agreementtype"
+						},
+						{
+							"name": "deduplicator"
+						},
+						{
+							"name": "renameOutputColumn"
+						},
+						{
+							"name": "addLastUpdatedBy"
+						},
+						{
+							"name": "alterrow"
+						}
+					],
+					"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> tcrossreference\ntcrossreference filter(CODE_TYPE_ID == 113) ~> agreementtype\nagreementtype aggregate(groupBy(TARGET_DESCRIPTION),\n\tTARGET_CODE = first(TARGET_CODE)) ~> deduplicator\ndeduplicator select(mapColumn(\n\t\tagt_description = TARGET_DESCRIPTION,\n\t\tagt_key = TARGET_CODE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> renameOutputColumn\nrenameOutputColumn derive(last_updated_by = 'pre_dim_agreement_type') ~> addLastUpdatedBy\naddLastUpdatedBy alterRow(upsertIf(!isNull(agt_key))) ~> alterrow\nalterrow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_agreement_type.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimAgreementType"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_business_area')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "dwh_prepare/pre_dim"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Other",
+								"type": "DatasetReference"
+							},
+							"name": "tcrossreference"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "pre_dim_business_area",
+								"type": "DatasetReference"
+							},
+							"name": "preDimBusinessArea"
+						}
+					],
+					"transformations": [
+						{
+							"name": "businessarea"
+						},
+						{
+							"name": "deduplicator"
+						},
+						{
+							"name": "expression"
+						},
+						{
+							"name": "xrefBusarea"
+						},
+						{
+							"name": "predimbusareatable"
+						},
+						{
+							"name": "alterrow"
+						}
+					],
+					"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> tcrossreference\ntcrossreference filter(CODE_TYPE_ID==106 && TARGET_CODE!='PI') ~> businessarea\nxrefBusarea aggregate(groupBy(bus_description),\n\tbus_key = first(bus_key)) ~> deduplicator\ndeduplicator derive(grp_key = case(in(['EN','BU'],bus_key), 'EG', case(in(['PM', 'PF'], bus_key), 'PI', bus_key)),\n\t\tgrp_description = case(in(['EN','BU'],bus_key), 'Energy+', case(in(['PM', 'PF'], bus_key), 'P&I', bus_description)),\n\t\tbua_key = case(in(['PM','PF'],bus_key), 'PI', bus_key),\n\t\tbua_description = case(in(['PM','PF'],bus_key), 'P&I', bus_description),\n\t\tlast_updated_by = 'm_pre_dim_business_area') ~> expression\nbusinessarea select(mapColumn(\n\t\tbus_key = TARGET_CODE,\n\t\tbus_description = TARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefBusarea\nexpression select(mapColumn(\n\t\tbus_description,\n\t\tbus_key,\n\t\tgrp_key,\n\t\tgrp_description,\n\t\tbua_key,\n\t\tbua_description,\n\t\tlast_updated_by\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> predimbusareatable\npredimbusareatable alterRow(upsertIf(!isNull(bus_key))) ~> alterrow\nalterrow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_business_area.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimBusinessArea"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_claim_detail_pa')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Pre DIM claim detail from Paris ",
+				"folder": {
+					"name": "dwh_prepare/pre_dim"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Other",
+								"type": "DatasetReference"
+							},
+							"name": "tcrossreference"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "pre_dim_claim_detail_pa",
+								"type": "DatasetReference"
+							},
+							"name": "preDimClaimPA"
+						}
+					],
+					"transformations": [
+						{
+							"name": "parisClaimDetail"
+						},
+						{
+							"name": "deduplicator"
+						},
+						{
+							"name": "xrefcld"
+						},
+						{
+							"name": "alterRow"
+						},
+						{
+							"name": "lastupdatedby"
+						}
+					],
+					"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> tcrossreference\ntcrossreference filter(SOURCE_SYSTEM=='PARIS' && CODE_TYPE_ID==775) ~> parisClaimDetail\nxrefcld aggregate(groupBy(cld_description),\n\tcld_key = first(cld_key)) ~> deduplicator\nparisClaimDetail select(mapColumn(\n\t\tcld_key = TARGET_CODE,\n\t\tcld_description = TARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefcld\nlastupdatedby alterRow(upsertIf(!isNull(cld_key))) ~> alterRow\ndeduplicator derive(last_updated_by = 'pre_dim_claim_detail') ~> lastupdatedby\nalterRow sink(input(\n\t\tagt_description as string,\n\t\tagt_key as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_claim_detail_pa.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimClaimPA"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_country')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "dwh_prepare/pre_dim"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Other",
+								"type": "DatasetReference"
+							},
+							"name": "vcrossreference"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "pre_dim_country",
+								"type": "DatasetReference"
+							},
+							"name": "preDimCountry"
+						}
+					],
+					"transformations": [
+						{
+							"name": "country50"
+						},
+						{
+							"name": "area219"
+						},
+						{
+							"name": "regionA374"
+						},
+						{
+							"name": "region367"
+						},
+						{
+							"name": "region219"
+						},
+						{
+							"name": "join1xRefCountryRegion"
+						},
+						{
+							"name": "xRefCountry50"
+						},
+						{
+							"name": "xRefRegion219"
+						},
+						{
+							"name": "xRefArea219"
+						},
+						{
+							"name": "Join1"
+						},
+						{
+							"name": "area3"
+						},
+						{
+							"name": "JoinxRefCountryRegionA"
+						},
+						{
+							"name": "xRefRegionA374"
+						},
+						{
+							"name": "JoinxRefCountryRegionARegion"
+						},
+						{
+							"name": "xRefRegion367"
+						},
+						{
+							"name": "Join0"
+						},
+						{
+							"name": "area2"
+						},
+						{
+							"name": "JoinCountryRegion"
+						},
+						{
+							"name": "JoinArea"
+						},
+						{
+							"name": "area1"
+						},
+						{
+							"name": "setOperation"
+						},
+						{
+							"name": "deduplicator"
+						},
+						{
+							"name": "expression"
+						},
+						{
+							"name": "alterRow"
+						},
+						{
+							"name": "predimcountrytable"
+						}
+					],
+					"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tPARENT_CODE_TYPE_ID as double,\n\t\tPARENT_TARGET_CODE as string,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> vcrossreference\nvcrossreference filter(CODE_TYPE_ID==50) ~> country50\nvcrossreference filter(CODE_TYPE_ID==219) ~> area219\nvcrossreference filter(CODE_TYPE_ID==374) ~> regionA374\nvcrossreference filter(CODE_TYPE_ID==367) ~> region367\nvcrossreference filter(CODE_TYPE_ID==219) ~> region219\nxRefCountry50, xRefRegion219 join(country_parent_target_code == region_target_code\n\t&& country_parent_code_type_id == region_code_type_id,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> join1xRefCountryRegion\ncountry50 select(mapColumn(\n\t\tcountry_source_code_key = SOURCE_CODE_KEY,\n\t\tcountry_source_system = SOURCE_SYSTEM,\n\t\tcountry_target_code = TARGET_CODE,\n\t\tcountry_target_description = TARGET_DESCRIPTION,\n\t\tcountry_code_type = CODE_TYPE,\n\t\tcountry_code_type_id = CODE_TYPE_ID,\n\t\tcountry_parent_code_type_id = PARENT_CODE_TYPE_ID,\n\t\tcountry_parent_target_code = PARENT_TARGET_CODE,\n\t\tcountry_code2 = CODE2,\n\t\tcountry_om_x_ref = OM_X_REF\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xRefCountry50\nregion219 select(mapColumn(\n\t\tregion_source_code_key = SOURCE_CODE_KEY,\n\t\tregion_source_system = SOURCE_SYSTEM,\n\t\tregion_target_code = TARGET_CODE,\n\t\tregion_target_description = TARGET_DESCRIPTION,\n\t\tregion_code_type = CODE_TYPE,\n\t\tregion_code_type_id = CODE_TYPE_ID,\n\t\tregion_parent_code_type_id = PARENT_CODE_TYPE_ID,\n\t\tregion_parent_target_code = PARENT_TARGET_CODE,\n\t\tregion_code2 = CODE2,\n\t\tregion_om_x_ref = OM_X_REF\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xRefRegion219\narea219 select(mapColumn(\n\t\tarea_source_code_key = SOURCE_CODE_KEY,\n\t\tarea_source_system = SOURCE_SYSTEM,\n\t\tarea_target_code = TARGET_CODE,\n\t\tarea_target_description = TARGET_DESCRIPTION,\n\t\tarea_code_type = CODE_TYPE,\n\t\tarea_code_type_id = CODE_TYPE_ID,\n\t\tarea_parent_code_type_id = PARENT_CODE_TYPE_ID,\n\t\tarea_parent_target_code = PARENT_TARGET_CODE,\n\t\tarea_code2 = CODE2,\n\t\tarea_om_x_ref = OM_X_REF\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xRefArea219\njoin1xRefCountryRegion, xRefArea219 join(country_parent_target_code == area_target_code\n\t&& country_parent_code_type_id == area_code_type_id,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nJoin1 select(mapColumn(\n\t\tcountry_target_code,\n\t\tcountry_target_description,\n\t\tcountry_code2,\n\t\tcountry_om_x_ref,\n\t\tregion_target_code,\n\t\tregion_target_description,\n\t\tarea_target_code,\n\t\tarea_target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> area3\nxRefCountry50, xRefRegionA374 join(country_parent_code_type_id == region_A_code_type_id\n\t&& country_parent_target_code == region_A_target_code,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinxRefCountryRegionA\nregionA374 select(mapColumn(\n\t\tregion_A_source_code_key = SOURCE_CODE_KEY,\n\t\tregion_A_source_system = SOURCE_SYSTEM,\n\t\tregion_A_target_code = TARGET_CODE,\n\t\tregion_A_target_description = TARGET_DESCRIPTION,\n\t\tregion_A_code_type = CODE_TYPE,\n\t\tregion_A_code_type_id = CODE_TYPE_ID,\n\t\tregion_A_parent_code_type_id = PARENT_CODE_TYPE_ID,\n\t\tregion_A_parent_target_code = PARENT_TARGET_CODE,\n\t\tregion_A_code2 = CODE2,\n\t\tregion_A_om_x_ref = OM_X_REF\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xRefRegionA374\nJoinxRefCountryRegionA, xRefRegion367 join(region_A_parent_code_type_id == region_code_type_id\n\t&& region_A_parent_target_code == region_target_code,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinxRefCountryRegionARegion\nregion367 select(mapColumn(\n\t\tregion_source_code_key = SOURCE_CODE_KEY,\n\t\tregion_source_system = SOURCE_SYSTEM,\n\t\tregion_target_code = TARGET_CODE,\n\t\tregion_target_description = TARGET_DESCRIPTION,\n\t\tregion_code_type = CODE_TYPE,\n\t\tregion_code_type_id = CODE_TYPE_ID,\n\t\tregion_parent_code_type_id = PARENT_CODE_TYPE_ID,\n\t\tregion_parent_target_code = PARENT_TARGET_CODE,\n\t\tregion_code2 = CODE2,\n\t\tregion_om_x_ref = OM_X_REF\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xRefRegion367\nJoinxRefCountryRegionARegion, xRefArea219 join(region_parent_code_type_id == area_code_type_id\n\t&& region_parent_target_code == area_target_code,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join0\nJoin0 select(mapColumn(\n\t\tcountry_target_code,\n\t\tcountry_target_description,\n\t\tcountry_code2,\n\t\tcountry_om_x_ref,\n\t\tregion_target_code,\n\t\tregion_target_description,\n\t\tarea_target_code,\n\t\tarea_target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> area2\nxRefCountry50, xRefRegion367 join(country_parent_code_type_id == region_code_type_id\n\t&& country_parent_target_code == region_target_code,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinCountryRegion\nJoinCountryRegion, xRefArea219 join(region_parent_code_type_id == area_code_type_id\n\t&& region_parent_target_code == area_target_code,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinArea\nJoinArea select(mapColumn(\n\t\tcountry_target_code,\n\t\tcountry_target_description,\n\t\tcountry_code2,\n\t\tcountry_om_x_ref,\n\t\tregion_target_code,\n\t\tregion_target_description,\n\t\tarea_target_code,\n\t\tarea_target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> area1\narea1, area2, area3 union(byName: true)~> setOperation\nsetOperation aggregate(groupBy(country_target_description,\n\t\tcountry_code2,\n\t\tcountry_om_x_ref,\n\t\tregion_target_code,\n\t\tregion_target_description,\n\t\tarea_target_code,\n\t\tarea_target_description),\n\tcountry_target_code = first(country_target_code)) ~> deduplicator\ndeduplicator derive(ar2_target_code = case\n(\n    compare(area_target_code,'AME')==0, area_target_code, \n    (\n        case\n        (\n            compare(area_target_code,'ASI')==0, area_target_code, \n            (\n                case\n                    (\n                        compare(area_target_code,'EUR')==0, \n                        \n                            case\n                                (\n                                    compare(region_target_code,'SCA')==0, region_target_code, area_target_code \n                                ), \n                                case\n                                    (\n                                        compare(area_target_code,'RUS')==0, 'EUR', 'OTH'\n                                    ) \n                        \n                    )\n            )\n        )\n    )\n),\n\t\tar2_target_description = case\n(\n    compare(area_target_code,'AME')==0, area_target_description, \n    (\n        case\n        (\n            compare(area_target_code,'ASI')==0, area_target_description, \n            (\n                case\n                    (\n                        compare(area_target_code,'EUR')==0, \n                        \n                            case\n                                (\n                                    compare(region_target_code,'SCA')==0, region_target_description, area_target_description \n                                ), \n                                case\n                                    (\n                                        compare(area_target_code,'RUS')==0, 'Europe', 'Other'\n                                    ) \n                        \n                    )\n            )\n        )\n    )\n),\n\t\tlast_updated_by = 'm_pre_dim_country',\n\t\tcon_2ltr_code = '',\n\t\tcon_country_name = '',\n\t\tcon_oecd = '',\n\t\tcon_currency_code = '',\n\t\tcon_eu = '') ~> expression\npredimcountrytable alterRow(upsertIf(!isNull(pk_key))) ~> alterRow\nexpression select(mapColumn(\n\t\tpk_key = country_target_code,\n\t\treg_code = region_target_code,\n\t\treg_description = region_target_description,\n\t\tar1_code = area_target_code,\n\t\tar1_description = area_target_description,\n\t\tar2_code = ar2_target_code,\n\t\tar2_description = ar2_target_description,\n\t\tlast_updated_by,\n\t\tcon_2ltr_code,\n\t\tcon_country_name,\n\t\tcon_oecd,\n\t\tcon_currency_code,\n\t\tcon_eu\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> predimcountrytable\nalterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_country.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimCountry"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_coverage')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "dwh_prepare/pre_dim"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Other",
+								"type": "DatasetReference"
+							},
+							"name": "TCrossReference"
+						},
+						{
+							"dataset": {
+								"referenceName": "Oltp05",
+								"type": "DatasetReference"
+							},
+							"name": "CoverageGroup"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "pre_dim_coverage",
+								"type": "DatasetReference"
+							},
+							"name": "preDimCoverageInsert"
+						}
+					],
+					"transformations": [
+						{
+							"name": "FilterProdGroups",
+							"description": "Filtering rows on 'CODE_TYPE_ID' =-3"
+						},
+						{
+							"name": "filterCoverageCodes",
+							"description": "Filtering rows on 'CODE_TYPE_ID' = 122 (Coverage code)"
+						},
+						{
+							"name": "xRefCoverage",
+							"description": "Removing unused columns"
+						},
+						{
+							"name": "xRefprodGroups",
+							"description": "Removing unused columns"
+						},
+						{
+							"name": "CoverageCodeProdGroup"
+						},
+						{
+							"name": "Deduplicate"
+						},
+						{
+							"name": "DerviveProdGroupProdDesc",
+							"description": "Creating prd product_group and pruduct_desc"
+						},
+						{
+							"name": "LookupCoverageGroup"
+						},
+						{
+							"name": "SelectOutputColumns"
+						},
+						{
+							"name": "LastUpdatedBy",
+							"description": "Creating constant 'lastUpdatedBy'"
+						},
+						{
+							"name": "AlterRow"
+						}
+					],
+					"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nsource(output(\n\t\tcoverage_code as string,\n\t\tcoverage_desc as string,\n\t\tdate_inserted as timestamp,\n\t\tdate_updated as timestamp,\n\t\tenergy_exp_group_code as string,\n\t\tenergy_exp_group_desc as string,\n\t\texposure_group_code as string,\n\t\texposure_group_desc as string,\n\t\tgic_group_code as string,\n\t\tgic_group_desc as string,\n\t\tinserted_by as string,\n\t\tlayer_group_code as string,\n\t\tlayer_group_descr as string,\n\t\tpk_coverage_group as double,\n\t\tsort_order as double,\n\t\tupdated_by as string,\n\t\twar_indicator as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> CoverageGroup\nTCrossReference filter(CODE_TYPE_ID == -3) ~> FilterProdGroups\nTCrossReference filter(CODE_TYPE_ID == 122) ~> filterCoverageCodes\nfilterCoverageCodes select(mapColumn(\n\t\tcoverage_source_code = SOURCE_CODE_KEY,\n\t\tsource_system = SOURCE_SYSTEM,\n\t\tcoverage_target_code = TARGET_CODE,\n\t\tcoverage_target_desc = TARGET_DESCRIPTION,\n\t\tcode_type = CODE_TYPE,\n\t\tcode_type_id = CODE_TYPE_ID,\n\t\tcode2 = CODE2\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xRefCoverage\nFilterProdGroups select(mapColumn(\n\t\tcoverage_source_code = SOURCE_CODE_KEY,\n\t\tprd_group_target_code = TARGET_CODE,\n\t\tsource_system = SOURCE_SYSTEM,\n\t\tprd_group_target_desc = TARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xRefprodGroups\nxRefCoverage, xRefprodGroups join(xRefCoverage@coverage_source_code == xRefprodGroups@coverage_source_code\n\t&& xRefCoverage@source_system == xRefprodGroups@source_system,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> CoverageCodeProdGroup\nDerviveProdGroupProdDesc aggregate(groupBy(coverage_target_code,\n\t\tproduct_group,\n\t\tproduct_descr,\n\t\tcode2),\n\tcoverage_target_desc = first(coverage_target_desc)) ~> Deduplicate\nCoverageCodeProdGroup derive(product_group = coalesce(prd_group_target_code,'N/A'),\n\t\tproduct_descr = coalesce(prd_group_target_desc, 'Not Applicable')) ~> DerviveProdGroupProdDesc\nDeduplicate, CoverageGroup lookup(coverage_target_code == coverage_code,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LookupCoverageGroup\nLastUpdatedBy select(mapColumn(\n\t\tpk_key = coverage_target_code,\n\t\tcov_description = coverage_target_desc,\n\t\tcov_exposure_group_code = exposure_group_code,\n\t\tcov_exposure_group_desc = exposure_group_desc,\n\t\tgrp_key = product_group,\n\t\tgrp_description = product_descr,\n\t\tcov_energy_exp_group_code = energy_exp_group_code,\n\t\tcov_energy_exp_group_desc = energy_exp_group_desc,\n\t\tcov_layer_group_code = layer_group_code,\n\t\tcov_layer_group_descr = layer_group_descr,\n\t\tcov_gic_group_code = gic_group_code,\n\t\tcov_gic_group_desc = gic_group_desc,\n\t\tcov_3ltr_code = code2,\n\t\tlast_updated_by\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectOutputColumns\nLookupCoverageGroup derive(last_updated_by = 'm_pre_dim_coverage') ~> LastUpdatedBy\nSelectOutputColumns alterRow(upsertIf(!isNull(pk_key))) ~> AlterRow\nAlterRow sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_coverage.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimCoverageInsert"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_currency')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Other",
+								"type": "DatasetReference"
+							},
+							"name": "HlpExchangeRateToUsd"
+						},
+						{
+							"dataset": {
+								"referenceName": "Other",
+								"type": "DatasetReference"
+							},
+							"name": "tCrossReference"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "pre_dim_currency",
+								"type": "DatasetReference"
+							},
+							"name": "preDimCurrency"
+						}
+					],
+					"transformations": [
+						{
+							"name": "FilterDates",
+							"description": "Filtering rows on 'EXCHANGE_FROM_DATE' <= currentTimestamp"
+						},
+						{
+							"name": "exchrateToUSD",
+							"description": "Removing and renaming of columns"
+						},
+						{
+							"name": "SelectExhangeRate",
+							"description": "Removing unused columns"
+						},
+						{
+							"name": "NewestExchangeDates",
+							"description": "Get newest ExchangeFromDate for each currency"
+						},
+						{
+							"name": "JoinNewestDateWithRate",
+							"description": "Inner join to get newest exchange rate for each currency"
+						},
+						{
+							"name": "LastKnownRate",
+							"description": "Creating/updating columns"
+						},
+						{
+							"name": "RemoveUnusedColumns"
+						},
+						{
+							"name": "Deduplicate"
+						},
+						{
+							"name": "RemoveExtraColumn",
+							"description": "Remove duplicated column"
+						},
+						{
+							"name": "Expression",
+							"description": "Case currency from is USD, rate equals 1.\nAdd last_updated_by column"
+						},
+						{
+							"name": "LookupAllCurrencies"
+						},
+						{
+							"name": "SelectOutputColums",
+							"description": "Selecting and renaming relevant columns"
+						},
+						{
+							"name": "ReplaceNull",
+							"description": "Replacing null values with N/A"
+						},
+						{
+							"name": "AlterRow",
+							"description": "Upsert if not null"
+						},
+						{
+							"name": "xrefCurrency"
+						}
+					],
+					"script": "source(output(\n\t\tFROM_CURRENCY_ID as double,\n\t\tTO_CURRENCY_ID as double,\n\t\tEXCHANGE_FROM_DATE as timestamp,\n\t\tEXCHANGE_RATE as decimal(38,18),\n\t\tEXCHANGE_TO_DATE as timestamp,\n\t\tFROM_CURRENCY_CODE as string,\n\t\tTO_CURRENCY_CODE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> HlpExchangeRateToUsd\nsource(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> tCrossReference\nexchrateToUSD filter(exchange_from_date <= currentTimestamp()) ~> FilterDates\nHlpExchangeRateToUsd select(mapColumn(\n\t\texchange_from_date = EXCHANGE_FROM_DATE,\n\t\texchange_rate = EXCHANGE_RATE,\n\t\tfrom_currency_code = FROM_CURRENCY_CODE,\n\t\tto_currency_code = TO_CURRENCY_CODE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> exchrateToUSD\nexchrateToUSD select(mapColumn(\n\t\texchange_rate,\n\t\tfrom_currency_code,\n\t\texchange_from_date\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectExhangeRate\nFilterDates aggregate(groupBy(from_currency_code),\n\tEXCHANGE_FROM_DATE = max(exchange_from_date)) ~> NewestExchangeDates\nNewestExchangeDates, SelectExhangeRate join(NewestExchangeDates@from_currency_code == SelectExhangeRate@from_currency_code\n\t&& NewestExchangeDates@EXCHANGE_FROM_DATE == SelectExhangeRate@exchange_from_date,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinNewestDateWithRate\nRemoveExtraColumn derive(exchange_rate = case(exchange_rate==0, toDecimal(null()),toDecimal(exchange_rate))) ~> LastKnownRate\nxrefCurrency select(mapColumn(\n\t\ttarget_code = TARGET_CODE,\n\t\ttarget_description = TARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nRemoveUnusedColumns aggregate(groupBy(target_code),\n\ttarget_description = first(target_description)) ~> Deduplicate\nJoinNewestDateWithRate select(mapColumn(\n\t\tfrom_currency_code = NewestExchangeDates@from_currency_code,\n\t\texchange_rate,\n\t\tfrom_currency_code = SelectExhangeRate@from_currency_code,\n\t\texchange_from_date = SelectExhangeRate@exchange_from_date\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveExtraColumn\nReplaceNull derive(curr_last_exchange_rate_to_usd = case(from_currency_code=='USD', toDecimal(1), exchange_rate),\n\t\tlast_updated_by = 'm_pre_dim_currency') ~> Expression\nDeduplicate, LastKnownRate lookup(target_code == from_currency_code,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LookupAllCurrencies\nExpression select(mapColumn(\n\t\tpk_key = target_code,\n\t\tcur_description = target_description,\n\t\tcurr_last_exchange_rate_to_usd,\n\t\tlast_updated_by\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectOutputColums\nLookupAllCurrencies derive(from_currency_code = case(isNull(from_currency_code),'N/A',from_currency_code)) ~> ReplaceNull\nSelectOutputColums alterRow(upsertIf(!isNull(pk_key))) ~> AlterRow\ntCrossReference filter(CODE_TYPE_ID == 124) ~> xrefCurrency\nAlterRow sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_currency.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimCurrency"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_employee')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "dwh_prepare/pre_dim"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Other",
+								"type": "DatasetReference"
+							},
+							"name": "tcrossreference"
+						},
+						{
+							"dataset": {
+								"referenceName": "Agresso",
+								"type": "DatasetReference"
+							},
+							"name": "udvAgressoEmployee"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "pre_dim_employee",
+								"type": "DatasetReference"
+							},
+							"name": "preDimEmployee"
+						}
+					],
+					"transformations": [
+						{
+							"name": "employee"
+						},
+						{
+							"name": "deduplicator"
+						},
+						{
+							"name": "xrefEmployee"
+						},
+						{
+							"name": "empname"
+						},
+						{
+							"name": "LkpUdvAgsEmployee"
+						},
+						{
+							"name": "deduplicator0"
+						},
+						{
+							"name": "alterRow"
+						},
+						{
+							"name": "addLastupdatedby"
+						},
+						{
+							"name": "predimemployeetable"
+						},
+						{
+							"name": "emp1Pos1"
+						}
+					],
+					"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> tcrossreference\nsource(output(\n\t\tEMPLOYEE_ID as string,\n\t\tCOMPANY as string,\n\t\tCOMPANY_NAME as string,\n\t\tMAIN_EMPLOYER as decimal(38,18),\n\t\tCONTRACT_TYPE as string,\n\t\tCONTRACT_DESCRIPTION as string,\n\t\tFIRST_NAME as string,\n\t\tLAST_NAME as string,\n\t\tAD_NAME as string,\n\t\tJOBPHONE as string,\n\t\tSHORTPHONE as string,\n\t\tJOBMOBILE as string,\n\t\tEMAIL as string,\n\t\tCOSTCENTER as string,\n\t\tCOSTCENTER_DATE_FROM as timestamp,\n\t\tCOSTCENTER_DATE_TO as timestamp,\n\t\tCOSTCENTER_DESCRIPTION as string,\n\t\tCOSTCENTER_MANAGER as string,\n\t\tHR_MANAGER as string,\n\t\tLAST_UPDATE as timestamp,\n\t\tPOSITION as string,\n\t\tMAIN_POSITION as decimal(38,18),\n\t\tPOSITION_TITLE as string,\n\t\tPOSTIION_DATE_FROM as timestamp,\n\t\tPOSITION_DATE_TO as timestamp,\n\t\tSENIORITY as string,\n\t\tSENIORITY_TITLE as string,\n\t\tDISPLAY_NAME as string,\n\t\tOFFICE as string,\n\t\tSTATUS as string,\n\t\tSTATUS_DESCRIPTION as string,\n\t\tCONTRACT_DATE_FROM as timestamp,\n\t\tCONTRACT_DATE_TO as timestamp,\n\t\tSTATUS_DATE_FROM as timestamp,\n\t\tSTATUS_DATE_TO as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Agresso/s_udv_ags_employee.parquet']) ~> udvAgressoEmployee\ntcrossreference filter(CODE_TYPE_ID == 329) ~> employee\nxrefEmployee aggregate(groupBy(target_description_employee),\n\ttarget_code_employee = first(target_code_employee)) ~> deduplicator\nemployee select(mapColumn(\n\t\teach(match(name=='TARGET_CODE'||name=='TARGET_DESCRIPTION'),\n\t\t\tlower($$)+'_employee' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefEmployee\nLkpUdvAgsEmployee derive(emp_name = substring(target_description_employee, 1, 40)) ~> empname\ndeduplicator, emp1Pos1 lookup(target_code_employee == AD_NAME,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LkpUdvAgsEmployee\nempname aggregate(groupBy(EMPLOYEE_ID,\n\t\tFIRST_NAME,\n\t\tLAST_NAME,\n\t\tJOBMOBILE,\n\t\tEMAIL,\n\t\tOFFICE,\n\t\temp_name,\n\t\tJOBPHONE),\n\ttarget_code_employee = first(target_code_employee)) ~> deduplicator0\npredimemployeetable alterRow(upsertIf(!isNull(emp_source_key))) ~> alterRow\ndeduplicator0 derive(last_updated_by = 'pre_dim_employee',\n\t\tincident_team_code = '',\n\t\tincident_team_desc = '') ~> addLastupdatedby\naddLastupdatedby select(mapColumn(\n\t\temp_source_key = target_code_employee,\n\t\tagresso_emp_id = EMPLOYEE_ID,\n\t\temp_first_name = FIRST_NAME,\n\t\temp_last_name = LAST_NAME,\n\t\temp_job_mobile = JOBMOBILE,\n\t\temp_job_email = EMAIL,\n\t\tmain_gard_office_location = OFFICE,\n\t\temp_name,\n\t\tlast_updated_by,\n\t\tincident_team_code,\n\t\tincident_team_desc,\n\t\temp_job_phone = JOBPHONE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> predimemployeetable\nudvAgressoEmployee filter(MAIN_EMPLOYER == 1 && MAIN_POSITION == 1 && POSTIION_DATE_FROM <= fromUTC(currentTimestamp(), 'CET')) ~> emp1Pos1\nalterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_employee.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimEmployee"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_guarantee_pa')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "dwh_prepare/paris"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "pea"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "lga"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "pre_dim_guarantee_pa",
+								"type": "DatasetReference"
+							},
+							"name": "PreDimGuarantee"
+						}
+					],
+					"transformations": [
+						{
+							"name": "PeaTable"
+						},
+						{
+							"name": "LgaTable"
+						},
+						{
+							"name": "PeaLga"
+						},
+						{
+							"name": "expression"
+						},
+						{
+							"name": "SelectedColumns"
+						}
+					],
+					"script": "source(output(\n\t\tpeaaaddbo as decimal(38,18),\n\t\tpeaaccaddynsw as string,\n\t\tpeaaclmadv as decimal(38,18),\n\t\tpeaaclmbo as decimal(38,18),\n\t\tpeaaclobo as decimal(38,18),\n\t\tpeaacorbo as decimal(38,18),\n\t\tpeaaddbor as decimal(38,18),\n\t\tpeaaddmailfreq as decimal(38,18),\n\t\tpeaalternatepayer as decimal(38,18),\n\t\tpeaaprobo as decimal(38,18),\n\t\tpeabirtno as string,\n\t\tpeabirtws as decimal(38,18),\n\t\tpeacalamt as decimal(38,18),\n\t\tpeacalcurr as string,\n\t\tpeaccint as string,\n\t\tpeaccintr as decimal(38,18),\n\t\tpeacclamt as decimal(38,18),\n\t\tpeacclcurr as string,\n\t\tpeaccode as decimal(38,18),\n\t\tpeaclamailfreq as decimal(38,18),\n\t\tpeaclmadv as decimal(38,18),\n\t\tpeaclmbor as decimal(38,18),\n\t\tpeaclmintynsw as string,\n\t\tpeaclmmailfreq as decimal(38,18),\n\t\tpeaclobor as decimal(38,18),\n\t\tpeaclomet as decimal(38,18),\n\t\tpeaclosmailfreq as decimal(38,18),\n\t\tpeacolid as string,\n\t\tpeacomp2 as decimal(38,18),\n\t\tpeacorbo as decimal(38,18),\n\t\tpeacorrmailfreq as decimal(38,18),\n\t\tpeacrdate as timestamp,\n\t\tpeacrmid as decimal(38,18),\n\t\tpeacrsign as string,\n\t\tpeacruser as decimal(38,18),\n\t\tpeacustomerid as string,\n\t\tpeadueday as decimal(38,18),\n\t\tpeaendate as timestamp,\n\t\tpeaextid as string,\n\t\tpeaextid2 as string,\n\t\tpeaexttransfer as string,\n\t\tpeaexttransfer2 as string,\n\t\tpeafromcomp as decimal(38,18),\n\t\tpeaie2busndiv as decimal(38,18),\n\t\tpeaie2busnse as decimal(38,18),\n\t\tpeaie3busndiv as decimal(38,18),\n\t\tpeaie3busnse as decimal(38,18),\n\t\tpeaiebusndiv as decimal(38,18),\n\t\tpeaiebusnse as decimal(38,18),\n\t\tpeaiecon1 as decimal(38,18),\n\t\tpeaiecon2 as decimal(38,18),\n\t\tpeaiecon3 as decimal(38,18),\n\t\tpeaiecon4 as decimal(38,18),\n\t\tpeaiecon5 as decimal(38,18),\n\t\tpeaiecond as string,\n\t\tpeaiediv as string,\n\t\tpeaieint as string,\n\t\tpeaieint1 as string,\n\t\tpeaieint2 as string,\n\t\tpeaieint3 as string,\n\t\tpeaieint4 as string,\n\t\tpeaieint5 as string,\n\t\tpeaiesect as string,\n\t\tpeaincreday as decimal(38,18),\n\t\tpeaingiro as decimal(38,18),\n\t\tpeaingiroludate as timestamp,\n\t\tpeaingirolusign as string,\n\t\tpeaingirono as string,\n\t\tpeainvisible as string,\n\t\tpeaiselectronic as string,\n\t\tpeaiyear as decimal(38,18),\n\t\tpeaknvmark as string,\n\t\tpealang2 as string,\n\t\tpealeicode as string,\n\t\tpealudate as timestamp,\n\t\tpealusign as string,\n\t\tpealuuser as decimal(38,18),\n\t\tpeamailcndnsplit as string,\n\t\tpeamailsizemb as decimal(38,18),\n\t\tpeamailuseservadress as string,\n\t\tpeamasked as string,\n\t\tpeamaxper as decimal(38,18),\n\t\tpeamdescr as string,\n\t\tpeamexamt as decimal(38,18),\n\t\tpeamexcdate as timestamp,\n\t\tpeamexcurr as string,\n\t\tpeamexpro as decimal(38,18),\n\t\tpeanopdue as decimal(38,18),\n\t\tpeanopurr as string,\n\t\tpeanotaco as decimal(38,18),\n\t\tpeanotdays as decimal(38,18),\n\t\tpeanotlay as decimal(38,18),\n\t\tpeanotsort as decimal(38,18),\n\t\tpeaorgno as string,\n\t\tpeaorigmemberfrom as decimal(38,18),\n\t\tpeaoutcreday as decimal(38,18),\n\t\tpeaoutgiro as decimal(38,18),\n\t\tpeaoutgiroludate as timestamp,\n\t\tpeaoutgirolusign as string,\n\t\tpeaoutgirono as string,\n\t\tpeapeaid as decimal(38,18),\n\t\tpeapersid as string,\n\t\tpeapersrfl as decimal(38,18),\n\t\tpeapibregsign as string,\n\t\tpeaprobor as decimal(38,18),\n\t\tpeaprovmailfreq as decimal(38,18),\n\t\tpeapurtyp as decimal(38,18),\n\t\tpearesdat as timestamp,\n\t\tpeasex as string,\n\t\tpeastaamt as decimal(38,18),\n\t\tpeastaniv as decimal(38,18),\n\t\tpeastatyp as decimal(38,18),\n\t\tpeastdate as timestamp,\n\t\tpeastensw as decimal(38,18),\n\t\tpeastopcod as decimal(38,18),\n\t\tpeastoppremnote as string,\n\t\tpeastopuse as string,\n\t\tpeasttniv as decimal(38,18),\n\t\tpeasttprmclm as decimal(38,18),\n\t\tpeasubtype as decimal(38,18),\n\t\tpeasw10 as string,\n\t\tpeaswink as decimal(38,18),\n\t\tpeaswrun as decimal(38,18),\n\t\tpeausecolfee as string,\n\t\tpeavatno as string,\n\t\tpeavendorid as string,\n\t\tpeaxlcurr as string,\n\t\tpeaxlpoin as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> pea\nsource(output(\n\t\tlgacandate as timestamp,\n\t\tlgaclmcat as string,\n\t\tlgaclmtype as string,\n\t\tlgacrcode as string,\n\t\tlgacrcrdate as timestamp,\n\t\tlgacrcrsign as string,\n\t\tlgacrdate as timestamp,\n\t\tlgacrlgaid as string,\n\t\tlgacrsign as string,\n\t\tlgacrynsw as string,\n\t\tlgaendate as timestamp,\n\t\tlgaguaamt as decimal(38,18),\n\t\tlgaguacurr as string,\n\t\tlgaintnote as string,\n\t\tlgaintynsw as string,\n\t\tlgajurisdiction as string,\n\t\tlgaknvmark as string,\n\t\tlgalcaid as string,\n\t\tlgalccid as string,\n\t\tlgalgaid as string,\n\t\tlgaln2 as decimal(38,18),\n\t\tlgaludate as timestamp,\n\t\tlgalusign as string,\n\t\tlgaobocname as string,\n\t\tlgaobopeaid as decimal(38,18),\n\t\tlgareceiver as decimal(38,18),\n\t\tlgastatus as string,\n\t\tlgastdate as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> lga\npea select(mapColumn(\n\t\tpeapeaid,\n\t\tpeamdescr\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> PeaTable\nlga select(mapColumn(\n\t\tlgalcaid,\n\t\tlgalgaid,\n\t\tlgacrcode,\n\t\tlgastdate,\n\t\tlgaendate,\n\t\tlgaintnote,\n\t\tlgacrcrdate,\n\t\tlgareceiver,\n\t\tlgastatus\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> LgaTable\nPeaTable, LgaTable join(peapeaid == lgareceiver,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> PeaLga\nPeaLga derive(Gut_Key = concat('P', lgalgaid),\n\t\tGut_Type_Description = case (lgacrcode == 'C','Provided Guarantee',\r\n       case(lgacrcode == 'R','Received Guarantee','Received Counter Guarantee'\r\n           )\r\n     ),\n\t\tGut_Guarantee_Status = case (lgastatus == 'A','Open',\r\n       case(lgastatus == 'R','Closed','Closed'\r\n           )\r\n     ),\n\t\tGut_Inc_Key = concat('P', lgalcaid),\n\t\tGut_open_ind = case (lgastatus == 'A','Y',\r\n       case(lgastatus == 'R','N','N'\r\n           )\r\n     ),\n\t\tGut_Guarantee_type_Code = lgacrcode) ~> expression\nexpression select(mapColumn(\n\t\tGut_Date_Given = lgastdate,\n\t\tGut_Guarantee_Issued_To = peamdescr,\n\t\tGut_Guarantee_Remarks = lgaintnote,\n\t\tGut_Date_Expiry = lgaendate,\n\t\tGut_Date_Created = lgacrcrdate,\n\t\teach(match(left(name,3)=='Gut'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectedColumns\nSelectedColumns sink(input(\n\t\tagt_description as string,\n\t\tagt_key as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_guarantee_pa.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> PreDimGuarantee"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_partner_me')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "dwh_prepare/paris"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "paa"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "pea"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "peb"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "pez"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "qtbtable"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "crctable"
+						},
+						{
+							"dataset": {
+								"referenceName": "Other",
+								"type": "DatasetReference"
+							},
+							"name": "tcrossreference"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "pectable"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "cbsttable"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "cbstable2"
+						},
+						{
+							"dataset": {
+								"referenceName": "Oltp05",
+								"type": "DatasetReference"
+							},
+							"name": "SfCompany"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "pre_dim_partner",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "maxpeb"
+						},
+						{
+							"name": "pebmaxpeb"
+						},
+						{
+							"name": "pebdunco"
+						},
+						{
+							"name": "Prtstatusjoin"
+						},
+						{
+							"name": "peatable"
+						},
+						{
+							"name": "Prtstatus"
+						},
+						{
+							"name": "prtpea"
+						},
+						{
+							"name": "crcselected"
+						},
+						{
+							"name": "peacrc"
+						},
+						{
+							"name": "paatable"
+						},
+						{
+							"name": "Paafiltered"
+						},
+						{
+							"name": "crcpaa"
+						},
+						{
+							"name": "peztable"
+						},
+						{
+							"name": "paapez"
+						},
+						{
+							"name": "lookupState"
+						},
+						{
+							"name": "pebtable"
+						},
+						{
+							"name": "Expression1"
+						},
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "lookupCapital"
+						},
+						{
+							"name": "Select2"
+						},
+						{
+							"name": "lookupCompSubtype"
+						},
+						{
+							"name": "Select3"
+						},
+						{
+							"name": "lookupCountry"
+						},
+						{
+							"name": "Select4"
+						},
+						{
+							"name": "lookupContractType"
+						},
+						{
+							"name": "Select5"
+						},
+						{
+							"name": "DerivedColumn1"
+						},
+						{
+							"name": "Lookup2"
+						},
+						{
+							"name": "partner"
+						},
+						{
+							"name": "DerivedColumn3"
+						},
+						{
+							"name": "constantBroker"
+						},
+						{
+							"name": "DerivedColumn4"
+						},
+						{
+							"name": "constantcontract"
+						},
+						{
+							"name": "Union1"
+						},
+						{
+							"name": "deduplicate"
+						},
+						{
+							"name": "state"
+						},
+						{
+							"name": "capital"
+						},
+						{
+							"name": "country"
+						},
+						{
+							"name": "Select8"
+						},
+						{
+							"name": "selectedcolumns"
+						},
+						{
+							"name": "compsubtype"
+						}
+					],
+					"script": "source(output(\n\t\tpaabusncla as decimal(38,18),\n\t\tpaabusnsec as decimal(38,18),\n\t\tpaacaddrcountry as string,\n\t\tpaacaddress1 as string,\n\t\tpaacaddress2 as string,\n\t\tpaacaddress3 as string,\n\t\tpaacaddress4 as string,\n\t\tpaacaddress5 as string,\n\t\tpaacaddrpostal as string,\n\t\tpaaccmail as string,\n\t\tpaacfax as string,\n\t\tpaacname as string,\n\t\tpaacname2 as string,\n\t\tpaacontcname as string,\n\t\tpaacontcphone as string,\n\t\tpaacontemail as string,\n\t\tpaacontmobcphone as string,\n\t\tpaacontpeaid as decimal(38,18),\n\t\tpaacphone as string,\n\t\tpaactelex as string,\n\t\tpaafunct as decimal(38,18),\n\t\tpaaintnet as string,\n\t\tpaaintnote as string,\n\t\tpaalcname as string,\n\t\tpaalongname as string,\n\t\tpaamail as string,\n\t\tpaapeaid as decimal(38,18),\n\t\tpaarevcname as string,\n\t\tpaascname as string,\n\t\tpaaspbusndiv as decimal(38,18),\n\t\tpaawww as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> paa\nsource(output(\n\t\tpeaaaddbo as decimal(38,18),\n\t\tpeaaccaddynsw as string,\n\t\tpeaaclmadv as decimal(38,18),\n\t\tpeaaclmbo as decimal(38,18),\n\t\tpeaaclobo as decimal(38,18),\n\t\tpeaacorbo as decimal(38,18),\n\t\tpeaaddbor as decimal(38,18),\n\t\tpeaaddmailfreq as decimal(38,18),\n\t\tpeaalternatepayer as decimal(38,18),\n\t\tpeaaprobo as decimal(38,18),\n\t\tpeabirtno as string,\n\t\tpeabirtws as decimal(38,18),\n\t\tpeacalamt as decimal(38,18),\n\t\tpeacalcurr as string,\n\t\tpeaccint as string,\n\t\tpeaccintr as decimal(38,18),\n\t\tpeacclamt as decimal(38,18),\n\t\tpeacclcurr as string,\n\t\tpeaccode as decimal(38,18),\n\t\tpeaclamailfreq as decimal(38,18),\n\t\tpeaclmadv as decimal(38,18),\n\t\tpeaclmbor as decimal(38,18),\n\t\tpeaclmintynsw as string,\n\t\tpeaclmmailfreq as decimal(38,18),\n\t\tpeaclobor as decimal(38,18),\n\t\tpeaclomet as decimal(38,18),\n\t\tpeaclosmailfreq as decimal(38,18),\n\t\tpeacolid as string,\n\t\tpeacomp2 as decimal(38,18),\n\t\tpeacorbo as decimal(38,18),\n\t\tpeacorrmailfreq as decimal(38,18),\n\t\tpeacrdate as timestamp,\n\t\tpeacrmid as decimal(38,18),\n\t\tpeacrsign as string,\n\t\tpeacruser as decimal(38,18),\n\t\tpeacustomerid as string,\n\t\tpeadueday as decimal(38,18),\n\t\tpeaendate as timestamp,\n\t\tpeaextid as string,\n\t\tpeaextid2 as string,\n\t\tpeaexttransfer as string,\n\t\tpeaexttransfer2 as string,\n\t\tpeafromcomp as decimal(38,18),\n\t\tpeaie2busndiv as decimal(38,18),\n\t\tpeaie2busnse as decimal(38,18),\n\t\tpeaie3busndiv as decimal(38,18),\n\t\tpeaie3busnse as decimal(38,18),\n\t\tpeaiebusndiv as decimal(38,18),\n\t\tpeaiebusnse as decimal(38,18),\n\t\tpeaiecon1 as decimal(38,18),\n\t\tpeaiecon2 as decimal(38,18),\n\t\tpeaiecon3 as decimal(38,18),\n\t\tpeaiecon4 as decimal(38,18),\n\t\tpeaiecon5 as decimal(38,18),\n\t\tpeaiecond as string,\n\t\tpeaiediv as string,\n\t\tpeaieint as string,\n\t\tpeaieint1 as string,\n\t\tpeaieint2 as string,\n\t\tpeaieint3 as string,\n\t\tpeaieint4 as string,\n\t\tpeaieint5 as string,\n\t\tpeaiesect as string,\n\t\tpeaincreday as decimal(38,18),\n\t\tpeaingiro as decimal(38,18),\n\t\tpeaingiroludate as timestamp,\n\t\tpeaingirolusign as string,\n\t\tpeaingirono as string,\n\t\tpeainvisible as string,\n\t\tpeaiselectronic as string,\n\t\tpeaiyear as decimal(38,18),\n\t\tpeaknvmark as string,\n\t\tpealang2 as string,\n\t\tpealeicode as string,\n\t\tpealudate as timestamp,\n\t\tpealusign as string,\n\t\tpealuuser as decimal(38,18),\n\t\tpeamailcndnsplit as string,\n\t\tpeamailsizemb as decimal(38,18),\n\t\tpeamailuseservadress as string,\n\t\tpeamasked as string,\n\t\tpeamaxper as decimal(38,18),\n\t\tpeamdescr as string,\n\t\tpeamexamt as decimal(38,18),\n\t\tpeamexcdate as timestamp,\n\t\tpeamexcurr as string,\n\t\tpeamexpro as decimal(38,18),\n\t\tpeanopdue as decimal(38,18),\n\t\tpeanopurr as string,\n\t\tpeanotaco as decimal(38,18),\n\t\tpeanotdays as decimal(38,18),\n\t\tpeanotlay as decimal(38,18),\n\t\tpeanotsort as decimal(38,18),\n\t\tpeaorgno as string,\n\t\tpeaorigmemberfrom as decimal(38,18),\n\t\tpeaoutcreday as decimal(38,18),\n\t\tpeaoutgiro as decimal(38,18),\n\t\tpeaoutgiroludate as timestamp,\n\t\tpeaoutgirolusign as string,\n\t\tpeaoutgirono as string,\n\t\tpeapeaid as decimal(38,18),\n\t\tpeapersid as string,\n\t\tpeapersrfl as decimal(38,18),\n\t\tpeapibregsign as string,\n\t\tpeaprobor as decimal(38,18),\n\t\tpeaprovmailfreq as decimal(38,18),\n\t\tpeapurtyp as decimal(38,18),\n\t\tpearesdat as timestamp,\n\t\tpeasex as string,\n\t\tpeastaamt as decimal(38,18),\n\t\tpeastaniv as decimal(38,18),\n\t\tpeastatyp as decimal(38,18),\n\t\tpeastdate as timestamp,\n\t\tpeastensw as decimal(38,18),\n\t\tpeastopcod as decimal(38,18),\n\t\tpeastoppremnote as string,\n\t\tpeastopuse as string,\n\t\tpeasttniv as decimal(38,18),\n\t\tpeasttprmclm as decimal(38,18),\n\t\tpeasubtype as decimal(38,18),\n\t\tpeasw10 as string,\n\t\tpeaswink as decimal(38,18),\n\t\tpeaswrun as decimal(38,18),\n\t\tpeausecolfee as string,\n\t\tpeavatno as string,\n\t\tpeavendorid as string,\n\t\tpeaxlcurr as string,\n\t\tpeaxlpoin as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> pea\nsource(output(\n\t\tpebbrdate as timestamp,\n\t\tpebcivilstatus as decimal(38,18),\n\t\tpebconbusncla as decimal(38,18),\n\t\tpebconbusndiv as decimal(38,18),\n\t\tpebconbusnsec as decimal(38,18),\n\t\tpebconcomp2 as decimal(38,18),\n\t\tpebconoffice as decimal(38,18),\n\t\tpebdistrict as string,\n\t\tpebdunco as decimal(38,18),\n\t\tpebemlcurr as string,\n\t\tpebemlmdescr as string,\n\t\tpebetcbroker as string,\n\t\tpebfortsector as decimal(38,18),\n\t\tpebforttrade as string,\n\t\tpebgeneml as decimal(38,18),\n\t\tpebgroup as decimal(38,18),\n\t\tpebhourprice as decimal(38,18),\n\t\tpebinstadynz as string,\n\t\tpebisolan as string,\n\t\tpebkycapprdate as timestamp,\n\t\tpebkycapproved as string,\n\t\tpebkyccompany as decimal(38,18),\n\t\tpebkyccompdescr as string,\n\t\tpebkycid as string,\n\t\tpebludate as timestamp,\n\t\tpeblusign as string,\n\t\tpebmacheml as decimal(38,18),\n\t\tpebmansanctdescr as string,\n\t\tpebmansanction as string,\n\t\tpebmdescr as string,\n\t\tpebmvaynsw as string,\n\t\tpebnmisic as string,\n\t\tpebnmnyk as string,\n\t\tpeboffsanctdescr as string,\n\t\tpeboffsanction as string,\n\t\tpebonrisk as string,\n\t\tpebonriskdate as timestamp,\n\t\tpebpaylevel as decimal(38,18),\n\t\tpebpeaid as decimal(38,18),\n\t\tpebpebid as string,\n\t\tpebpeoid as string,\n\t\tpebpeoopeaid as decimal(38,18),\n\t\tpebpersacc as decimal(38,18),\n\t\tpebpever as decimal(38,18),\n\t\tpebpibregdate as timestamp,\n\t\tpebpibregsign as string,\n\t\tpebpidcname as string,\n\t\tpebpidid as decimal(38,18),\n\t\tpebpricecurr as string,\n\t\tpebqadate as timestamp,\n\t\tpebqasign as string,\n\t\tpebqastatus as string,\n\t\tpebratcod as string,\n\t\tpebratcomp as decimal(38,18),\n\t\tpebratedate as timestamp,\n\t\tpebratludate as timestamp,\n\t\tpebratsign as string,\n\t\tpebreason as string,\n\t\tpebressign as string,\n\t\tpebsitid as string,\n\t\tpebsupporter as string,\n\t\tpebtaxno as string,\n\t\tpebtypelevel as decimal(38,18),\n\t\tpebusstate as string,\n\t\tpebvaldate as timestamp,\n\t\tpebverstat as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> peb\nsource(output(\n\t\tpezdefaccrebynsw as string,\n\t\tpezdefagtnol as decimal(38,18),\n\t\tpezdefbusnbranch as decimal(38,18),\n\t\tpezdefbusncla as decimal(38,18),\n\t\tpezdefbusndiv as decimal(38,18),\n\t\tpezdefbusnsec as decimal(38,18),\n\t\tpezdefccpid as string,\n\t\tpezdefcomcod as string,\n\t\tpezdefcurr as string,\n\t\tpezdefinstcalctype as decimal(38,18),\n\t\tpezdefmortg as decimal(38,18),\n\t\tpezdefncomm as decimal(38,18),\n\t\tpezdefoffice as decimal(38,18),\n\t\tpezdeftarcodof as string,\n\t\tpezpezid as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> pez\nsource(output(\n\t\tqtbdispynsw as string,\n\t\tqtbfieldn as string,\n\t\tqtbmdescr as string,\n\t\tqtbsdescr as string,\n\t\tqtbvalue as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> qtbtable\nsource(output(\n\t\tcrcccode as decimal(38,18),\n\t\tcrccpers2 as decimal(38,18),\n\t\tcrccpers3 as decimal(38,18),\n\t\tcrccpers4 as decimal(38,18),\n\t\tcrclospro as decimal(38,18),\n\t\tcrcmdescr as string,\n\t\tcrcperinc as string,\n\t\tcrcratcod as string,\n\t\tcrcratcomp as decimal(38,18),\n\t\tcrcsdescr as string,\n\t\tcrcstopuse as string,\n\t\tcrcsw5 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> crctable\nsource(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> tcrossreference\nsource(output(\n\t\tpeccofobl as string,\n\t\tpeccofopt as decimal(38,18),\n\t\tpecconpeaid as decimal(38,18),\n\t\tpeccontyp as string,\n\t\tpecdepint as decimal(38,18),\n\t\tpecdepity as string,\n\t\tpecduedate as timestamp,\n\t\tpecextkey as string,\n\t\tpecibnrpr as decimal(38,18),\n\t\tpeciyear as decimal(38,18),\n\t\tpecmanfee as decimal(38,18),\n\t\tpecnoofyr as decimal(38,18),\n\t\tpecnoufyr as decimal(38,18),\n\t\tpecpcaid as string,\n\t\tpecpecid as decimal(38,18),\n\t\tpecprocom as decimal(38,18),\n\t\tpecprosw1 as string,\n\t\tpecprosw2 as string,\n\t\tpecsw5 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> pectable\nsource(output(\n\t\tcbsaddper as decimal(38,18),\n\t\tcbsagform as string,\n\t\tcbsaowreb as decimal(38,18),\n\t\tcbsautocl as decimal(38,18),\n\t\tcbsbusnbranch as decimal(38,18),\n\t\tcbsbusnsec as decimal(38,18),\n\t\tcbscnform as string,\n\t\tcbscrewform as string,\n\t\tcbsdefcondco as decimal(38,18),\n\t\tcbsdefpayer as string,\n\t\tcbsdnform as string,\n\t\tcbsetcpremium as string,\n\t\tcbslang2 as string,\n\t\tcbsmdescr as string,\n\t\tcbsmutual as string,\n\t\tcbspitype as string,\n\t\tcbsrefcod as string,\n\t\tcbsrenew as decimal(38,18),\n\t\tcbsrenewendrule as decimal(38,18),\n\t\tcbsrenewperiod as decimal(38,18),\n\t\tcbssdescr as string,\n\t\tcbssiidef as string,\n\t\tcbsstopuse as string,\n\t\tcbssw10 as string,\n\t\tcbstarynsw as string,\n\t\tcbstaxappl as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> cbsttable\nsource(output(\n\t\tcbsaddper as decimal(38,18),\n\t\tcbsagform as string,\n\t\tcbsaowreb as decimal(38,18),\n\t\tcbsautocl as decimal(38,18),\n\t\tcbsbusnbranch as decimal(38,18),\n\t\tcbsbusnsec as decimal(38,18),\n\t\tcbscnform as string,\n\t\tcbscrewform as string,\n\t\tcbsdefcondco as decimal(38,18),\n\t\tcbsdefpayer as string,\n\t\tcbsdnform as string,\n\t\tcbsetcpremium as string,\n\t\tcbslang2 as string,\n\t\tcbsmdescr as string,\n\t\tcbsmutual as string,\n\t\tcbspitype as string,\n\t\tcbsrefcod as string,\n\t\tcbsrenew as decimal(38,18),\n\t\tcbsrenewendrule as decimal(38,18),\n\t\tcbsrenewperiod as decimal(38,18),\n\t\tcbssdescr as string,\n\t\tcbssiidef as string,\n\t\tcbsstopuse as string,\n\t\tcbssw10 as string,\n\t\tcbstarynsw as string,\n\t\tcbstaxappl as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> cbstable2\nsource(output(\n\t\taccount_resp_me as string,\n\t\taccount_resp_pi as string,\n\t\taccount_status as string,\n\t\tclient_lost_reason as string,\n\t\tcompany_email as string,\n\t\tcompany_id as double,\n\t\tcompany_name as string,\n\t\tcompany_owner_full_name as string,\n\t\tcompany_owner_id as string,\n\t\tcountry as string,\n\t\tcuo_full_name as string,\n\t\tcuo_user_id as string,\n\t\tdate_inserted as timestamp,\n\t\tdate_updated as timestamp,\n\t\tgard_contact_id as string,\n\t\tmarket_area_code as string,\n\t\tmarket_area_description as string,\n\t\tmarket_area_id as string,\n\t\tparent_company_id as double,\n\t\tparent_company_name as string,\n\t\tparis_gic_id as double,\n\t\tprimary_contact_email as string,\n\t\tprimary_contact_name as string,\n\t\tsf_last_updated_date as timestamp,\n\t\tsource_system as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> SfCompany\npeb aggregate(groupBy(pebpeaid),\n\tMAXPEBPEVER = max(pebpever)) ~> maxpeb\npebtable, maxpeb join(pebtable@pebpeaid == maxpeb@pebpeaid\n\t&& pebpever == MAXPEBPEVER,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> pebmaxpeb\nqtbtable filter(qtbfieldn=='pebdunco') ~> pebdunco\npebmaxpeb, pebdunco join(pebdunco == toInteger(qtbvalue),\n\tjoinType:'left',\n\tbroadcast: 'auto')~> Prtstatusjoin\npea select(mapColumn(\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> peatable\nPrtstatusjoin select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid = pebtable@pebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever = pebpever,\n\t\tpebdunco,\n\t\tpebpeaid = maxpeb@pebpeaid,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN = qtbfieldn,\n\t\tQTBVALUE = qtbvalue,\n\t\tQTBMDESCR = qtbmdescr,\n\t\tQTBSDESCR = qtbsdescr,\n\t\tQTBDISPYNSW = qtbdispynsw\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Prtstatus\nPrtstatus, peatable join(pebpeaid == peapeaid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> prtpea\ncrctable select(mapColumn(\n\t\tcrcratcod,\n\t\tcrcmdescr\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> crcselected\nprtpea, crcselected join(pebratcod == crcratcod,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> peacrc\npaa select(mapColumn(\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> paatable\npaatable filter(iifNull(paafunct,0) ==0) ~> Paafiltered\npeacrc, Paafiltered join(peapeaid == paapeaid,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> crcpaa\npez select(mapColumn(\n\t\tpezpezid,\n\t\tpezdefbusnbranch\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> peztable\ncrcpaa, peztable join(peapeaid == pezpezid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> paapez\nExpression1, state lookup(pebtaxno == SOURCE_CODE_KEY,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lookupState\npeb select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tpebpever,\n\t\tpebdunco\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> pebtable\npaapez derive(Key = concat('P',toString(peapeaid)),\n\t\t{Partner Name} = iifNull(trim(paalongname),iifNull(trim(paacname, peamdescr))),\n\t\tAddress = concat(trim(paacaddress1),iif(isNull((concat(trim(paacaddress2),concat(trim(paacaddress3), trim(paacaddress4))))),' ',paacaddress2)),\n\t\t{Rating Code} = case(isNull(pebratcod),'N/A',pebratcod),\n\t\t{Rating Code desc} = case(isNull(crcmdescr),'N/A',crcmdescr),\n\t\t{Partner Short Name} = peamdescr,\n\t\tPezdefbusnbranch = toString(pezdefbusnbranch),\n\t\tpeasubtype = toString(peasubtype),\n\t\t{Source System} = 'PARIS',\n\t\t{Code Type State} = 368,\n\t\t{Code Type Capital} = 116,\n\t\t{Code Type Comp Sub} = 795,\n\t\t{Code Type Country} = 50) ~> Expression1\nlookupState select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever,\n\t\tpebdunco,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN,\n\t\tQTBVALUE,\n\t\tQTBMDESCR,\n\t\tQTBSDESCR,\n\t\tQTBDISPYNSW,\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2,\n\t\tcrcratcod,\n\t\tcrcmdescr,\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex,\n\t\tpezpezid,\n\t\tKey,\n\t\t{Partner Name},\n\t\tAddress,\n\t\t{Rating Code},\n\t\t{Rating Code desc},\n\t\t{Partner Short Name},\n\t\tPezdefbusnbranch = Expression1@Pezdefbusnbranch,\n\t\t{Source System},\n\t\t{Code Type State},\n\t\t{Code Type Capital},\n\t\t{Code Type Comp Sub},\n\t\t{Code Type Country},\n\t\tSOURCE_CODE_KEY,\n\t\tSOURCE_SYSTEM,\n\t\t{State Code} = TARGET_CODE,\n\t\t{State Description} = TARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1, capital lookup(Pezdefbusnbranch == tcrossreference@SOURCE_CODE_KEY,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lookupCapital\nlookupCapital select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever,\n\t\tpebdunco,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN,\n\t\tQTBVALUE,\n\t\tQTBMDESCR,\n\t\tQTBSDESCR,\n\t\tQTBDISPYNSW,\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2,\n\t\tcrcratcod,\n\t\tcrcmdescr,\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex,\n\t\tpezpezid,\n\t\tKey,\n\t\t{Partner Name},\n\t\tAddress,\n\t\t{Rating Code},\n\t\t{Rating Code desc},\n\t\t{Partner Short Name},\n\t\tPezdefbusnbranch,\n\t\t{Source System},\n\t\t{Code Type State},\n\t\t{Code Type Capital},\n\t\t{Code Type Comp Sub},\n\t\t{Code Type Country},\n\t\t{State Code},\n\t\t{State Description},\n\t\t{Capital Code} = TARGET_CODE,\n\t\t{Capital Description} = TARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSelect2, compsubtype lookup(peasubtype == SOURCE_CODE_KEY,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lookupCompSubtype\nlookupCompSubtype select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever,\n\t\tpebdunco,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN,\n\t\tQTBVALUE,\n\t\tQTBMDESCR,\n\t\tQTBSDESCR,\n\t\tQTBDISPYNSW,\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2,\n\t\tcrcratcod,\n\t\tcrcmdescr,\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex,\n\t\tpezpezid,\n\t\tKey,\n\t\t{Partner Name},\n\t\tAddress,\n\t\t{Rating Code},\n\t\t{Rating Code desc},\n\t\t{Partner Short Name},\n\t\tPezdefbusnbranch,\n\t\t{Source System},\n\t\t{Code Type State},\n\t\t{Code Type Capital},\n\t\t{Code Type Comp Sub},\n\t\t{Code Type Country},\n\t\t{State Code},\n\t\t{State Description},\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Company Sub Code} = TARGET_CODE,\n\t\t{Company Sub Description} = TARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nSelect3, country lookup(pebisolan == SOURCE_CODE_KEY,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lookupCountry\nlookupCountry select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever,\n\t\tpebdunco,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN,\n\t\tQTBVALUE,\n\t\tQTBMDESCR,\n\t\tQTBSDESCR,\n\t\tQTBDISPYNSW,\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2,\n\t\tcrcratcod,\n\t\tcrcmdescr,\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex,\n\t\tpezpezid,\n\t\tKey,\n\t\t{Partner Name},\n\t\tAddress,\n\t\t{Rating Code},\n\t\t{Rating Code desc},\n\t\t{Partner Short Name},\n\t\tPezdefbusnbranch,\n\t\t{Source System},\n\t\t{Code Type State},\n\t\t{Code Type Capital},\n\t\t{Code Type Comp Sub},\n\t\t{Code Type Country},\n\t\t{State Code},\n\t\t{State Description},\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Domicile Code} = TARGET_CODE,\n\t\t{Domicile Description} = TARGET_DESCRIPTION,\n\t\t{Company Sub Code},\n\t\t{Company Sub Description}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nSelect4, pectable lookup(peapeaid == pecpecid,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lookupContractType\nlookupContractType select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever,\n\t\tpebdunco,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN,\n\t\tQTBVALUE,\n\t\tQTBMDESCR,\n\t\tQTBSDESCR,\n\t\tQTBDISPYNSW,\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2,\n\t\tcrcratcod,\n\t\tcrcmdescr,\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex,\n\t\tpezpezid,\n\t\tKey,\n\t\t{Partner Name},\n\t\tAddress,\n\t\t{Rating Code},\n\t\t{Rating Code desc},\n\t\t{Partner Short Name},\n\t\tPezdefbusnbranch,\n\t\t{Source System},\n\t\t{Code Type State},\n\t\t{Code Type Capital},\n\t\t{Code Type Comp Sub},\n\t\t{Code Type Country},\n\t\t{State Code},\n\t\t{State Description},\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Domicile Code},\n\t\t{Domicile Description},\n\t\tpeccontype = peccontyp,\n\t\t{Company Sub Code},\n\t\t{Company Sub Description}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select5\nSelect5 derive({Contract Type} = case(peccontype == '0' , 'NORMAL',case(peccontype == '1','WAR',case(peccontype == '9','XL','OTHER')))) ~> DerivedColumn1\nDerivedColumn1, paa lookup(pebratcomp == paa@paapeaid,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> Lookup2\nLookup2 select(mapColumn(\n\t\tkey = Key,\n\t\t{Partner Name},\n\t\tAddress,\n\t\tpebdunco,\n\t\tQtbmdescr = QTBMDESCR,\n\t\tAddress1 = Select5@paacaddress1,\n\t\tAddress2 = Select5@paacaddress2,\n\t\tAddress3 = Select5@paacaddress3,\n\t\tAddress4 = Select5@paacaddress4,\n\t\tpaacaddress3 = Select5@paacaddress3,\n\t\t{Rating Company} = paa@paacname,\n\t\tPebratcod = pebratcod,\n\t\t{Rating Code desc},\n\t\tPebratedate = pebratedate,\n\t\t{Domicile Code},\n\t\t{Domicile Description},\n\t\tPeaccode = peaccode,\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Company Sub code} = {Company Sub Code},\n\t\t{Company Sub Description},\n\t\tState = {State Description},\n\t\t{Paacname RatingComp} = paa@paacname,\n\t\tPeaextid2 = peaextid2,\n\t\t{Contract Type}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> partner\ncbsttable derive(Key = 'PDIR99',\n\t\t{Partner Name} = 'Direct Placed',\n\t\tAddress = 'Not Applicable',\n\t\tpebdunco = toDecimal(null()),\n\t\tDuncodesc = 'Not Applicable',\n\t\tAddress1 = 'Not Applicable',\n\t\tAddress2 = 'Not Applicable',\n\t\tAddress3 = 'Not Applicable',\n\t\tAddress4 = 'Not Applicable',\n\t\t{Rating Company} = 'Not Applicable',\n\t\t{Rating Code} = 'N/A',\n\t\t{Rating Code Description} = 'Not Applicable',\n\t\t{Rating Date} = toTimestamp(case(1!=1,1)),\n\t\t{Domicile Code} = 'N/A',\n\t\t{Domicile Description} = 'Not Applicable',\n\t\tPeacode = toDecimal(null()),\n\t\t{Capital Code} = toString(null()),\n\t\t{Capital Description} = toString(null()),\n\t\t{Company Sub code} = toString(null()),\n\t\t{Company Sub Desc} = toString(null()),\n\t\tState = 'N/A',\n\t\tPeaextid2 = toString(null()),\n\t\t{Contract Type} = toString(null())) ~> DerivedColumn3\nDerivedColumn3 select(mapColumn(\n\t\tkey = Key,\n\t\t{Partner Name},\n\t\tAddress,\n\t\tpebdunco,\n\t\tQtbmdescr = Duncodesc,\n\t\tAddress1,\n\t\tAddress2,\n\t\tAddress3,\n\t\tAddress4,\n\t\t{Rating Company},\n\t\tPebratcod = {Rating Code},\n\t\t{Rating Code desc} = {Rating Code Description},\n\t\tPebratedate = {Rating Date},\n\t\t{Domicile Code},\n\t\t{Domicile Description},\n\t\tPeaccode = Peacode,\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Company Sub code},\n\t\t{Company Sub Description} = {Company Sub Desc},\n\t\tState,\n\t\tPeaextid2,\n\t\t{Contract Type}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> constantBroker\ncbstable2 derive({Partner Name} = 'Facultativ',\n\t\t{Pk Key} = 'PFACULTATIV',\n\t\tAddress = 'Not Applicable',\n\t\tAddress1 = 'Not Applicable',\n\t\tAddress2 = 'Not Applicable',\n\t\tAddress3 = 'Not Applicable',\n\t\tAddress4 = 'Not Applicable',\n\t\t{Rating Company} = 'Not Applicable',\n\t\t{Rating Code} = 'N/A',\n\t\t{Rating Code desc} = 'Not Applicable',\n\t\t{Domicile Description} = 'Not Applicable',\n\t\tPebratedate = toTimestamp(case(1!=1,1)),\n\t\tCity = 'N/A',\n\t\tState = 'N/A',\n\t\tPebdunco = toDecimal(null()),\n\t\tDuncodesc = 'Not Applicable',\n\t\t{Pea Lei Code} = toString(null()),\n\t\tPeaccode = toDecimal(null()),\n\t\t{Contract Type} = 'OTHER') ~> DerivedColumn4\nDerivedColumn4 select(mapColumn(\n\t\tkey = {Pk Key},\n\t\t{Partner Name},\n\t\tAddress,\n\t\tpebdunco = Pebdunco,\n\t\tQtbmdescr = Duncodesc,\n\t\tAddress1,\n\t\tAddress2,\n\t\tAddress3,\n\t\tAddress4,\n\t\t{Rating Company},\n\t\tPebratcod = {Rating Company},\n\t\t{Rating Code desc},\n\t\tPebratedate,\n\t\t{Domicile Code} = City,\n\t\t{Domicile Description},\n\t\tPeaccode,\n\t\t{Capital Code} = {Pea Lei Code},\n\t\t{Capital Description} = {Pea Lei Code},\n\t\t{Company Sub code} = {Pea Lei Code},\n\t\t{Company Sub Description} = {Pea Lei Code},\n\t\tState,\n\t\t{Contract Type},\n\t\tPeaextid2 = {Pea Lei Code}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> constantcontract\npartner, constantBroker, constantcontract union(byName: true)~> Union1\nUnion1 aggregate(groupBy(Key = key),\n\teach(match(name!='key'), $$ = first($$))) ~> deduplicate\ntcrossreference filter(CODE_TYPE_ID == 368 && SOURCE_SYSTEM == 'PARIS') ~> state\ntcrossreference filter(CODE_TYPE_ID == 116 && SOURCE_SYSTEM == 'PARIS') ~> capital\ntcrossreference filter(CODE_TYPE_ID == 50 && SOURCE_SYSTEM == 'PARIS') ~> country\nSfCompany select(mapColumn(\n\t\taccount_resp_me,\n\t\taccount_resp_pi,\n\t\taccount_status,\n\t\tclient_lost_reason,\n\t\tcompany_email,\n\t\tcompany_id,\n\t\tcompany_name,\n\t\tcompany_owner_full_name,\n\t\tcompany_owner_id,\n\t\tcountry,\n\t\tcuo_full_name,\n\t\tcuo_user_id,\n\t\tdate_inserted,\n\t\tdate_updated,\n\t\tgard_contact_id,\n\t\tmarket_area_code,\n\t\tmarket_area_description,\n\t\tmarket_area_id,\n\t\tparent_company_id,\n\t\tparent_company_name,\n\t\tparis_gic_id,\n\t\tprimary_contact_email,\n\t\tprimary_contact_name,\n\t\tsf_last_updated_date,\n\t\tsource_system\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select8\ndeduplicate select(mapColumn(\n\t\tKey,\n\t\tPartner_Name = {Partner Name},\n\t\tAddress,\n\t\tpebdunco,\n\t\tQtbmdescr,\n\t\tAddress1,\n\t\tAddress2,\n\t\tAddress3,\n\t\tAddress4,\n\t\tRating_Company = {Rating Company},\n\t\tPebratcod,\n\t\tRating_Code_desc = {Rating Code desc},\n\t\tPebratedate,\n\t\tDomicile_Code = {Domicile Code},\n\t\tDomicile_Description = {Domicile Description},\n\t\tPeaccode,\n\t\tCapital_Code = {Capital Code},\n\t\tCapital_Description = {Capital Description},\n\t\tCompany_Sub_code = {Company Sub code},\n\t\tCompany_Sub_Description = {Company Sub Description},\n\t\tState,\n\t\tPeaextid = Peaextid2,\n\t\tContract_Type = {Contract Type}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> selectedcolumns\ntcrossreference filter(CODE_TYPE_ID == 795 && SOURCE_SYSTEM == 'PARIS') ~> compsubtype\nselectedcolumns sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_premium_type')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "dwh_prepare/paris"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Other",
+								"type": "DatasetReference"
+							},
+							"name": "TCrossref"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "pre_dim_premium_type",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "CodeTypePremiumType"
+						},
+						{
+							"name": "Deduplicator"
+						},
+						{
+							"name": "DerivedColumn2"
+						},
+						{
+							"name": "Select1"
+						}
+					],
+					"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossref\nTCrossref filter(CODE_TYPE_ID == 802) ~> CodeTypePremiumType\nCodeTypePremiumType aggregate(groupBy(TARGET_CODE,\n\t\tTARGET_DESCRIPTION),\n\tCODE_TYPE = max(CODE_TYPE_ID)) ~> Deduplicator\nDeduplicator derive(Map_date = toDate(case(1!=1,1)),\n\t\tPk_key_pty = TARGET_CODE,\n\t\tPty_code = TARGET_CODE,\n\t\tPty_Description = TARGET_DESCRIPTION,\n\t\tInserted_By = 'M_PRE_DIM_PREMIUM_TYPE',\n\t\tDate_Inserted = currentDate(),\n\t\tLast_Updated_By = 'M_PRE_DIM_PREMIUM_TYPE',\n\t\tDate_Last_Updated = currentDate(),\n\t\tPty_Source_Column = 'TARGET_CODE',\n\t\tPty_Source_system = 'MAPPINGSYSTEM') ~> DerivedColumn2\nDerivedColumn2 select(mapColumn(\n\t\tMap_date,\n\t\tPk_key_pty,\n\t\tPty_code,\n\t\tPty_Description,\n\t\tInserted_By,\n\t\tDate_Inserted,\n\t\tLast_Updated_By,\n\t\tDate_Last_Updated,\n\t\tPty_Source_Column,\n\t\tPty_Source_system\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_premium_type_me')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "dwh_prepare/paris"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "ipa"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "dim_premium_type",
+								"type": "DatasetReference"
+							},
+							"name": "predimpremtype"
+						}
+					],
+					"transformations": [
+						{
+							"name": "ipatcode"
+						},
+						{
+							"name": "ipatable"
+						}
+					],
+					"script": "source(output(\n\t\tipaabatementpercentage as decimal(38,18),\n\t\tipaaccrebamtp as decimal(38,18),\n\t\tipaaccrebbase as decimal(38,18),\n\t\tipaaccrebp as decimal(38,18),\n\t\tipaaccrebsh as decimal(38,18),\n\t\tipaadarea as string,\n\t\tipaadcom as decimal(38,18),\n\t\tipaadcomc as decimal(38,18),\n\t\tipaaddst as decimal(38,18),\n\t\tipaadicomamtp as decimal(38,18),\n\t\tipaadicombase as decimal(38,18),\n\t\tipaadicomp as decimal(38,18),\n\t\tipaadmfee as decimal(38,18),\n\t\tipaadocomamtp as decimal(38,18),\n\t\tipaadocombase as decimal(38,18),\n\t\tipaadocomp as decimal(38,18),\n\t\tipaagaid as string,\n\t\tipaagbaseamtp as decimal(38,18),\n\t\tipaagtynsw as string,\n\t\tipaapprovestatus as string,\n\t\tipaassetsubno as decimal(38,18),\n\t\tipabonusamt as decimal(38,18),\n\t\tipabonusndisc as decimal(38,18),\n\t\tipaccqid as string,\n\t\tipaclodate as timestamp,\n\t\tipaclstat as decimal(38,18),\n\t\tipacosig1 as string,\n\t\tipacosig2 as string,\n\t\tipacrdate as timestamp,\n\t\tipacrsign as string,\n\t\tipacurr as string,\n\t\tipadwbsname as string,\n\t\tipaeingrpre as decimal(38,18),\n\t\tipaendate as timestamp,\n\t\tipaenhour as decimal(38,18),\n\t\tipaeoutpre as decimal(38,18),\n\t\tipagnsw as decimal(38,18),\n\t\tipagrossamtp as decimal(38,18),\n\t\tipagrossprem as decimal(38,18),\n\t\tipaicaid as string,\n\t\tipaienteredprem as decimal(38,18),\n\t\tipainaid as string,\n\t\tipaindate as timestamp,\n\t\tipainstad as decimal(38,18),\n\t\tipainstcalctype as decimal(38,18),\n\t\tipainstpertype as decimal(38,18),\n\t\tipaipaid as string,\n\t\tipairatecrew as decimal(38,18),\n\t\tipaiusdgt as decimal(38,18),\n\t\tipaknvmark as string,\n\t\tipalastinstamtp as decimal(38,18),\n\t\tipalastinstperc as decimal(38,18),\n\t\tipalisig1 as string,\n\t\tipalisig2 as string,\n\t\tipaludate as timestamp,\n\t\tipalusign as string,\n\t\tipamaninsynsw as string,\n\t\tipamarketripercentage as decimal(38,18),\n\t\tipaminprem as decimal(38,18),\n\t\tipaminrate as decimal(38,18),\n\t\tipanatpre as decimal(38,18),\n\t\tipanetamtp as decimal(38,18),\n\t\tipanetprem as decimal(38,18),\n\t\tipanote as string,\n\t\tipanoterm as decimal(38,18),\n\t\tipaobno as decimal(38,18),\n\t\tipaorate as decimal(38,18),\n\t\tipaotherexpences as decimal(38,18),\n\t\tipaousdgt as decimal(38,18),\n\t\tipapcdtxt as string,\n\t\tipapcod2 as string,\n\t\tipapcode as string,\n\t\tipapdays as decimal(38,18),\n\t\tipapocid as string,\n\t\tipapocprtln3 as decimal(38,18),\n\t\tipapolnn19 as string,\n\t\tipapoolpercentage as decimal(38,18),\n\t\tipapremn3 as decimal(38,18),\n\t\tipapremri as string,\n\t\tipaprfcomamtp as decimal(38,18),\n\t\tipaprfcombase as decimal(38,18),\n\t\tipaprfcomp as decimal(38,18),\n\t\tipaprocomamtp as decimal(38,18),\n\t\tipaprocombase as decimal(38,18),\n\t\tipaprocomp as decimal(38,18),\n\t\tiparate as decimal(38,18),\n\t\tiparatype as string,\n\t\tiparelcallamtp as decimal(38,18),\n\t\tiparelcallperc as decimal(38,18),\n\t\tipareopenipaid as string,\n\t\tiparesig1 as decimal(38,18),\n\t\tiparesig2 as decimal(38,18),\n\t\tiparetndisc as decimal(38,18),\n\t\tiparetynsw as string,\n\t\tiparicalcdate as timestamp,\n\t\tiparipercentage as decimal(38,18),\n\t\tiparistor as decimal(38,18),\n\t\tiparoundrule as string,\n\t\tipasecrebamtp as decimal(38,18),\n\t\tipasecrebbase as decimal(38,18),\n\t\tipasecrebp as decimal(38,18),\n\t\tipaslipsw as string,\n\t\tipastdate as timestamp,\n\t\tipasthour as decimal(38,18),\n\t\tipatarifamt as decimal(38,18),\n\t\tipatarifndisc as decimal(38,18),\n\t\tipataxamt as decimal(38,18),\n\t\tipataxgnsw as decimal(38,18),\n\t\tipatxcom as decimal(38,18),\n\t\tipatxcomc as decimal(38,18),\n\t\tipavalueicaid as string,\n\t\tipavalueipaid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> ipa\nipa select(mapColumn(\n\t\tipaipaid,\n\t\tipapcode,\n\t\tipapcod2\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> ipatcode\nipatcode derive(Pty_Code = iif( upper(trim(ipapcod2)) == 'XB','SMD',\r\n    iif(upper(trim(ipapcod2)) == 'XP','AJD',\r\n         iif(upper(trim(ipapcod2)) == 'XR','SRE',\r\n             iif(upper(trim(ipapcod2)) == 'XM','SMD',\r\n             iif(upper(trim(ipapcod2)) == 'XX','SMD',\r\n             iif(upper(trim(ipapcode)) == 'A','GAD',\r\n             iif(upper(trim(ipapcod2)) == 'C','CAN',\r\n             iif(upper(trim(ipapcod2)) == 'F','OTH',\r\n             iif(upper(trim(ipapcod2)) == 'G','GER',\r\n             iif(upper(trim(ipapcod2)) == 'L','LAY',\r\n             iif(upper(trim(ipapcod2)) == 'O','ORG',\r\n             iif(upper(trim(ipapcod2)) == 'P','PRO',\r\n             iif(upper(trim(ipapcod2)) == 'Q','OTH',\r\n             iif(upper(trim(ipapcod2)) == 'R','RVA',\r\n             iif(upper(trim(ipapcod2)) == 'S','SAL',\r\n             iif(upper(trim(ipapcod2)) == 'T','TRI',\r\n             iif(upper(trim(ipapcod2)) == 'X','OTH',\r\n                'N/A'\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                )\r\n            )\r\n        )\r\n     ),\n\t\tPty_Description = iif( upper(trim(ipapcod2)) == 'XB','Minimum & Deposit',\r\n    iif(upper(trim(ipapcod2)) == 'XP','Adjustment Premium',\r\n         iif(upper(trim(ipapcod2)) == 'XR','Reinstatement Premium',\r\n         iif(upper(trim(ipapcod2)) == 'XM','Minimum & Deposit',\r\n         iif(upper(trim(ipapcod2)) == 'XX','Minimum & Deposit',\r\n         iif(upper(trim(ipapcode)) == 'A','General Add',\r\n         iif(upper(trim(ipapcod2)) == 'C','Cancel',\r\n         iif(upper(trim(ipapcod2)) == 'F','Other',\r\n         iif(upper(trim(ipapcod2)) == 'G','General Return',\r\n         iif(upper(trim(ipapcod2)) == 'L','Layup',\r\n         iif(upper(trim(ipapcod2)) == 'O','Original',\r\n         iif(upper(trim(ipapcod2)) == 'P','Prolongation',\r\n         iif(upper(trim(ipapcod2)) == 'Q','Other',\r\n         iif(upper(trim(ipapcod2)) == 'R','Return Value',\r\n         iif(upper(trim(ipapcod2)) == 'S','Sale/Stop',\r\n         iif(upper(trim(ipapcod2)) == 'T','Trip',\r\n         iif(upper(trim(ipapcod2)) == 'X','Other',\r\n                'Not Applicable'\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                    )\r\n                )\r\n            )\r\n        )\r\n     ),\n\t\tPty_Source_code = case(in(['XB','XP','XR','XM','XX'],trim(upper(ipapcod2))),ipapcod2,ipapcode),\n\t\tSource_column = case(in(['XB','XP','XR','XM','XX'],trim(upper(ipapcod2))),'ipapcod2','ipapcode'),\n\t\tSource_System = 'PARIS',\n\t\tDate_inserted = currentDate(),\n\t\tDate_Last_Updated = currentDate(),\n\t\tInserted_By = 'M_PRE_DIM_PREMIUM_TYPE_ME',\n\t\tLast_Updated_by = 'M_PRE_DIM_PREMIUM_TYPE_ME',\n\t\tMap_date = toDate(case(1!=1,1))) ~> ipatable\nipatable sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_premium_type.parquet'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> predimpremtype"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_source_system')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Oltp05",
+								"type": "DatasetReference"
+							},
+							"name": "StaSourceSystem"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "pre_dim_source_system",
+								"type": "DatasetReference"
+							},
+							"name": "preDimSourceSystem"
+						}
+					],
+					"transformations": [
+						{
+							"name": "RemoveUnusedColumns"
+						},
+						{
+							"name": "NotApplicable"
+						},
+						{
+							"name": "NotApplicableRow"
+						},
+						{
+							"name": "UnionWithNotApplicable"
+						},
+						{
+							"name": "LastUpdatedBy"
+						},
+						{
+							"name": "AlterRow"
+						}
+					],
+					"script": "source(output(\n\t\tactive as string,\n\t\tdescription as string,\n\t\tinserted_by as string,\n\t\tinserted_date as timestamp,\n\t\tpk_source_system as string,\n\t\tupdated_by as string,\n\t\tupdated_date as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaSourceSystem\nStaSourceSystem select(mapColumn(\n\t\tactive,\n\t\tdescription,\n\t\tpk_source_system\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nRemoveUnusedColumns derive(pk_source_system = 'N/A',\n\t\tdescription = 'Not Applicable') ~> NotApplicable\nNotApplicable aggregate(groupBy(pk_source_system),\n\tdescription = first(description)) ~> NotApplicableRow\nRemoveUnusedColumns, NotApplicableRow union(byName: true)~> UnionWithNotApplicable\nUnionWithNotApplicable derive(last_updated_by = 'm_pre_dim_source_system') ~> LastUpdatedBy\nLastUpdatedBy alterRow(upsertIf(!isNull(pk_source_system))) ~> AlterRow\nAlterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_source_system.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimSourceSystem"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_vessel_type_group')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "dwh_prepare/paris"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Oltp05",
+								"type": "DatasetReference"
+							},
+							"name": "StaVesselTypeGroup"
+						},
+						{
+							"dataset": {
+								"referenceName": "Oltp05",
+								"type": "DatasetReference"
+							},
+							"name": "StaRiskDriverGroup"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "pre_dim_vessel_type_group",
+								"type": "DatasetReference"
+							},
+							"name": "PreDimVesselTypeGroup"
+						}
+					],
+					"transformations": [
+						{
+							"name": "RiskD1"
+						},
+						{
+							"name": "VesslTypeGroup"
+						},
+						{
+							"name": "RiskD6"
+						},
+						{
+							"name": "RiskGroup1"
+						},
+						{
+							"name": "RiskD2"
+						},
+						{
+							"name": "RiskD3"
+						},
+						{
+							"name": "RiskD4"
+						},
+						{
+							"name": "RiskD5"
+						},
+						{
+							"name": "RiskIV"
+						},
+						{
+							"name": "RiskLOH"
+						},
+						{
+							"name": "RiskSize"
+						},
+						{
+							"name": "RiskLvl4"
+						},
+						{
+							"name": "RiskLvl3"
+						},
+						{
+							"name": "RiskGrdGrp"
+						},
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "RiskGroup2"
+						},
+						{
+							"name": "Select2"
+						},
+						{
+							"name": "RiskGroup3"
+						},
+						{
+							"name": "Select3"
+						},
+						{
+							"name": "RiskGroup4"
+						},
+						{
+							"name": "Select4"
+						},
+						{
+							"name": "RiskGroup5"
+						},
+						{
+							"name": "Select5"
+						},
+						{
+							"name": "RiskGroupIV"
+						},
+						{
+							"name": "Select6"
+						},
+						{
+							"name": "RiskGroupLOH"
+						},
+						{
+							"name": "Select7"
+						},
+						{
+							"name": "RisGroupSize"
+						},
+						{
+							"name": "Select8"
+						},
+						{
+							"name": "RiskGroupLvl3"
+						},
+						{
+							"name": "Select9"
+						},
+						{
+							"name": "RiskGroupLvl4"
+						},
+						{
+							"name": "Select10"
+						},
+						{
+							"name": "RiskGardGp"
+						},
+						{
+							"name": "Select11"
+						},
+						{
+							"name": "RiskGroupD6"
+						},
+						{
+							"name": "RelevantColumns"
+						},
+						{
+							"name": "DerivedColumn1"
+						}
+					],
+					"script": "source(output(\n\t\tfk_gard_group as double,\n\t\tfk_rsk_driver_grp_1 as double,\n\t\tfk_rsk_driver_grp_2 as double,\n\t\tfk_rsk_driver_grp_3 as double,\n\t\tfk_rsk_driver_grp_4 as double,\n\t\tfk_rsk_driver_grp_5 as double,\n\t\tfk_rsk_driver_grp_6 as double,\n\t\tfk_rsk_driver_iv as double,\n\t\tfk_rsk_driver_loh as double,\n\t\tfk_rsk_driver_lvl3 as double,\n\t\tfk_rsk_driver_lvl4 as double,\n\t\tfk_rsk_driver_size as double,\n\t\tfk_rsk_grp_cargo as double,\n\t\tfk_rsk_grp_crew as double,\n\t\tfk_rsk_grp_hull as double,\n\t\tfk_rsk_grp_machinery as double,\n\t\tfk_rsk_grp_main as double,\n\t\tfk_rsk_grp_passenger as double,\n\t\tfk_rsk_grp_pollution as double,\n\t\tfk_rsk_grp_ri as double,\n\t\tfk_rsk_grp_size as double,\n\t\tfp_3_ltr_code as string,\n\t\tfp_level_5_code as string,\n\t\tfp_level_5_decode as string,\n\t\tfp_level_5_desc as string,\n\t\tfp_level_5_hull as double,\n\t\tfp_level_5_sub as string,\n\t\tinsert_date as timestamp,\n\t\tpk_vessel_type_group as double,\n\t\tupdate_date as timestamp,\n\t\tvsl_cefor_group as string,\n\t\tvsl_desc as string,\n\t\tvsl_gard_group as string,\n\t\tvsl_marine_group as string,\n\t\tvsl_risk_group as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaVesselTypeGroup\nsource(output(\n\t\tgroup_code as string,\n\t\tgroup_code_alternative as string,\n\t\tgroup_desc as string,\n\t\tgroup_desc_sort as string,\n\t\tgroup_name as string,\n\t\tpk_risk_driver_group as double,\n\t\ttable_name as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaRiskDriverGroup\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code1 = group_code,\n\t\tgroup_desc1 = group_desc,\n\t\tgroup_desc_sort1 = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskD1\nStaVesselTypeGroup select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> VesslTypeGroup\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code_D6 = group_code,\n\t\tgroup_code_alternative_D6 = group_code_alternative,\n\t\tgroup_desc_D6 = group_desc,\n\t\tgroup_desc_sort_D6 = group_desc_sort,\n\t\tgroup_name_D6 = group_name,\n\t\tpk_risk_driver_group_D6 = pk_risk_driver_group,\n\t\ttable_name_D6 = table_name\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskD6\nVesslTypeGroup, RiskD1 join(fk_rsk_driver_grp_1 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup1\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code2 = group_code,\n\t\tgroup_desc2 = group_desc,\n\t\tgroup_desc_sort2 = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskD2\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code3 = group_code,\n\t\tgroup_desc3 = group_desc,\n\t\tgroup_desc_sort3 = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskD3\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code4 = group_code,\n\t\tgroup_desc4 = group_desc,\n\t\tgroup_desc_sort4 = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskD4\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code5 = group_code,\n\t\tgroup_desc5 = group_desc,\n\t\tgroup_desc_sort5 = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskD5\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code_IV = group_code,\n\t\tgroup_desc_IV = group_desc,\n\t\tgroup_desc_sort_IV = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskIV\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code_LOH = group_code,\n\t\tgroup_desc_LOH = group_desc,\n\t\tgroup_desc_sort_LOH = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskLOH\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code_Size = group_code,\n\t\tgroup_desc_Size = group_desc,\n\t\tgroup_desc_sort_Size = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskSize\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code_Lvl4 = group_code,\n\t\tgroup_code_alternative_Lvl4 = group_code_alternative,\n\t\tgroup_desc_Lvl4 = group_desc,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskLvl4\nStaRiskDriverGroup select(mapColumn(\n\t\tfp_Lvl3_code = group_code,\n\t\tgroup_code_alternative_Lvl3 = group_code_alternative,\n\t\tfp_Lvl3_decode = group_desc,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskLvl3\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code_Ggp = group_code,\n\t\tgroup_code_alternative_Ggp = group_code_alternative,\n\t\tgroup_desc_Ggp = group_desc,\n\t\tgroup_desc_sort_Ggp = group_desc_sort,\n\t\tgroup_name_Ggp = group_name,\n\t\tpk_risk_driver_group,\n\t\ttable_name_Ggp = table_name\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskGrdGrp\nRiskGroup1 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1, RiskD2 join(fk_rsk_driver_grp_2 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup2\nRiskGroup2 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSelect2, RiskD3 join(fk_rsk_driver_grp_3 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup3\nRiskGroup3 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nSelect3, RiskD4 join(fk_rsk_driver_grp_4 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup4\nRiskGroup4 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nSelect4, RiskD5 join(fk_rsk_driver_grp_5 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup5\nRiskGroup5 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select5\nSelect5, RiskIV join(fk_rsk_driver_iv == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroupIV\nRiskGroupIV select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV,\n\t\tgroup_desc_IV,\n\t\tgroup_desc_sort_IV\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select6\nSelect6, RiskLOH join(fk_rsk_driver_loh == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroupLOH\nRiskGroupLOH select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV,\n\t\tgroup_desc_IV,\n\t\tgroup_desc_sort_IV,\n\t\tgroup_code_LOH,\n\t\tgroup_desc_LOH,\n\t\tgroup_desc_sort_LOH\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select7\nSelect7, RiskSize join(fk_rsk_driver_size == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RisGroupSize\nRisGroupSize select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV,\n\t\tgroup_desc_IV,\n\t\tgroup_desc_sort_IV,\n\t\tgroup_code_LOH,\n\t\tgroup_desc_LOH,\n\t\tgroup_desc_sort_LOH,\n\t\tgroup_code_Size,\n\t\tgroup_desc_Size\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select8\nSelect8, RiskLvl4 join(fk_rsk_driver_lvl4 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroupLvl3\nRiskGroupLvl3 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV,\n\t\tgroup_desc_IV,\n\t\tgroup_desc_sort_IV,\n\t\tgroup_code_LOH,\n\t\tgroup_desc_LOH,\n\t\tgroup_desc_sort_LOH,\n\t\tgroup_code_Size,\n\t\tgroup_desc_Size,\n\t\tgroup_Lvl4_code = group_code_Lvl4,\n\t\tFp_Lvl4_Group = group_code_alternative_Lvl4,\n\t\tgroup_Lvl4_decode = group_desc_Lvl4\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select9\nSelect9, RiskLvl3 join(fk_rsk_driver_lvl3 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroupLvl4\nRiskGroupLvl4 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV,\n\t\tgroup_desc_IV,\n\t\tgroup_desc_sort_IV,\n\t\tgroup_code_LOH,\n\t\tgroup_desc_LOH,\n\t\tgroup_desc_sort_LOH,\n\t\tgroup_code_Size,\n\t\tgroup_desc_Size,\n\t\tgroup_Lvl4_code,\n\t\tFp_Lvl4_Group,\n\t\tgroup_Lvl4_decode,\n\t\tgroup_Lvl3_decode = fp_Lvl3_code,\n\t\tFp_Lvl3_Group = group_code_alternative_Lvl3,\n\t\tgroup_desc_Lvl3 = fp_Lvl3_decode\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select10\nSelect10, RiskGrdGrp join(fk_gard_group == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGardGp\nRiskGardGp select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV,\n\t\tgroup_desc_IV,\n\t\tgroup_desc_sort_IV,\n\t\tgroup_code_LOH,\n\t\tgroup_desc_LOH,\n\t\tgroup_desc_sort_LOH,\n\t\tgroup_code_Size,\n\t\tgroup_desc_Size,\n\t\tgroup_Lvl4_code,\n\t\tFp_Lvl4_Group,\n\t\tgroup_Lvl4_decode,\n\t\tgroup_Lvl3_decode,\n\t\tFp_Lvl3_Group,\n\t\tgroup_desc_Lvl3,\n\t\tVessel_Gard_Group = group_desc_Ggp\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select11\nSelect11, RiskD6 join(fk_rsk_driver_grp_6 == pk_risk_driver_group_D6,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroupD6\nDerivedColumn1 select(mapColumn(\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tvsl_group1 = group_code1,\n\t\tvsl_group1_desc = group_desc1,\n\t\tvsl_group1_sort = group_desc_sort1,\n\t\tvsl_group2 = group_code2,\n\t\tvsl_group2_desc = group_desc2,\n\t\tvsl_group2_sort = group_desc_sort2,\n\t\tvsl_group3 = group_code3,\n\t\tvsl_group3_desc = group_desc3,\n\t\tvsl_group3_sort = group_desc_sort3,\n\t\tvsl_group4 = group_code4,\n\t\tvsl_group4_desc = group_desc4,\n\t\tvsl_group4_sort = group_desc_sort4,\n\t\tvsl_group5 = group_code5,\n\t\tvsl_group5_desc = group_desc5,\n\t\tvsl_group5_sort = group_desc_sort5,\n\t\tvsl_groupIV = group_code_IV,\n\t\tvsl_groupIV_desc = group_desc_IV,\n\t\tvsl_groupIV_sort = group_desc_sort_IV,\n\t\tvsl_groupLOH = group_code_LOH,\n\t\tvsl_groupLOH_desc = group_desc_LOH,\n\t\tvsl_groupLOH_sort = group_desc_sort_LOH,\n\t\tgroup_code_Size,\n\t\tgroup_desc_Size,\n\t\tfp_Lvl4_code = group_Lvl4_code,\n\t\tfp_Lvl4_Group = Fp_Lvl4_Group,\n\t\tgroup_Lvl4_decode,\n\t\tgroup_Lvl3_decode,\n\t\tFp_Lvl3_Group,\n\t\tgroup_desc_Lvl3,\n\t\tVessel_Gard_Group,\n\t\tVessel_Group_6 = group_code_D6,\n\t\tgroup_code_alternative_D6,\n\t\tVessel_Group_6_desc = group_code_D6\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> RelevantColumns\nRiskGroupD6 derive(group_code1 = toInteger(group_code1),\n\t\tgroup_code2 = toInteger(group_code2),\n\t\tgroup_code3 = toInteger(group_code3),\n\t\tgroup_code4 = toInteger(group_code4),\n\t\tgroup_code5 = toInteger(group_code5),\n\t\tgroup_code_D6 = toInteger(group_code_D6),\n\t\tgroup_code_IV = toInteger(group_code_IV),\n\t\tgroup_code_LOH = toInteger(group_code_LOH),\n\t\tFp_Lvl4_Group = toInteger(Fp_Lvl4_Group),\n\t\tFp_Lvl3_Group = toInteger(Fp_Lvl3_Group)) ~> DerivedColumn1\nRelevantColumns sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_vessel_type_group.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> PreDimVesselTypeGroup"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_sf_company')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Oltp05",
+								"type": "DatasetReference"
+							},
+							"name": "SfCompanyNew",
+							"description": "Sf Comapny new from Oltp05"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "sf_company",
+								"type": "DatasetReference"
+							},
+							"name": "SfCompany"
+						}
+					],
+					"transformations": [
+						{
+							"name": "NotNullCompany"
+						},
+						{
+							"name": "RelevantColumns"
+						},
+						{
+							"name": "Deduplicate"
+						},
+						{
+							"name": "Expression"
+						}
+					],
+					"script": "source(output(\n\t\taccount_resp_me as string,\n\t\taccount_resp_pi as string,\n\t\taccount_status as string,\n\t\tclient_lost_reason as string,\n\t\tcompany_email as string,\n\t\tcompany_id as double,\n\t\tcompany_name as string,\n\t\tcompany_owner_full_name as string,\n\t\tcompany_owner_id as string,\n\t\tcountry as string,\n\t\tcuo_full_name as string,\n\t\tcuo_user_id as string,\n\t\tdate_inserted as timestamp,\n\t\tdate_updated as timestamp,\n\t\tgard_contact_id as string,\n\t\tmarket_area_code as string,\n\t\tmarket_area_description as string,\n\t\tmarket_area_id as string,\n\t\tparent_company_id as double,\n\t\tparent_company_name as string,\n\t\tparis_gic_id as double,\n\t\tprimary_contact_email as string,\n\t\tprimary_contact_name as string,\n\t\tsf_last_updated_date as timestamp,\n\t\tsource_system as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> SfCompanyNew\nSfCompanyNew filter(iifNull(company_name,'NULL') != 'NULL' && iifNull(company_id,00) != 00) ~> NotNullCompany\nNotNullCompany select(mapColumn(\n\t\taccount_resp_me,\n\t\taccount_resp_pi,\n\t\taccount_status,\n\t\tclient_lost_reason,\n\t\tcompany_email,\n\t\tcompany_id,\n\t\tcompany_name,\n\t\tcompany_owner_full_name,\n\t\tgard_contact_id,\n\t\tgard_market_area_code = market_area_code,\n\t\tgard_market_area_desc = market_area_description,\n\t\tparent_company_id,\n\t\tparent_company_name,\n\t\tsource_system_id = paris_gic_id,\n\t\tprimary_contact_email,\n\t\tprimary_contact_name,\n\t\tsource_system\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RelevantColumns\nRelevantColumns aggregate(groupBy(company_id),\n\teach(match(name!='company_id'), $$ = first($$))) ~> Deduplicate\nDeduplicate derive(company_id = toInteger(company_id),\n\t\tsource_system_id = case(iifNull(source_system_id,0)==0, toInteger(company_id) , toInteger(source_system_id)),\n\t\tsource_system = case(iifNull(source_system,'NULL')=='NULL','SF', upper(source_system)),\n\t\tgard_market_area_code = substring(gard_market_area_code, 1, 10)) ~> Expression\nExpression sink(input(\n\t\tFROM_CURRENCY_ID as double,\n\t\tTO_CURRENCY_ID as double,\n\t\tEXCHANGE_FROM_DATE as timestamp,\n\t\tEXCHANGE_RATE as decimal(38,18),\n\t\tEXCHANGE_TO_DATE as timestamp,\n\t\tFROM_CURRENCY_CODE as string,\n\t\tTO_CURRENCY_CODE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['sf_company.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SfCompany"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyAzureToOraclePeatable')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_uhu",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "dwh_stage.p_peatable"
+							},
+							{
+								"name": "Destination",
+								"value": "AZURE_DWH.P_PEATABLE"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource"
+							},
+							"sink": {
+								"type": "OracleSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "peapeaid",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEAPEAID",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaccode",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACCODE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacomp2",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACOMP2",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastopuse",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEASTOPUSE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peainvisible",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAINVISIBLE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peapersid",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAPERSID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peacolid",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACOLID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peamdescr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAMDESCR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "pealang2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEALANG2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peabirtws",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEABIRTWS",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peasubtype",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEASUBTYPE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peabirtno",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEABIRTNO",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peasw10",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEASW10",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peapersrfl",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEAPERSRFL",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastopcod",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTOPCOD",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "pearesdat",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEARESDAT",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peanopurr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEANOPURR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaincreday",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAINCREDAY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaingiro",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAINGIRO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaingirono",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAINGIRONO",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peanotaco",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEANOTACO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peapurtyp",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPURTYP",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peanotlay",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEANOTLAY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peanotsort",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEANOTSORT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaswink",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASWINK",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaoutcreday",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAOUTCREDAY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaoutgiro",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAOUTGIRO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaoutgirono",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAOUTGIRONO",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaswrun",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASWRUN",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclomet",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLOMET",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peanopdue",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEANOPDUE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastatyp",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTATYP",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastaamt",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTAAMT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peasttniv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTTNIV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastaniv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTANIV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaprovad",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPROVAD",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaprotyp",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPROTYP",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacloclm",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLOCLM",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclmadv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLMADV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaprobo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAAPROBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaaddbo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAAADDBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaclobo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAACLOBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaclmbo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAACLMBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaacorbo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAACORBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peamexcdate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEAMEXCDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peamexcurr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAMEXCURR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peamexamt",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEAMEXAMT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peamexpro",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "PEAMEXPRO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacclcurr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACCLCURR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peacclamt",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEACCLAMT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaccint",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACCINT",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaccintr",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "PEACCINTR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacalcurr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACALCURR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peacalamt",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEACALAMT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaxlcurr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAXLCURR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaxlpoin",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEAXLPOIN",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiyear",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIYEAR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastensw",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTENSW",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastdate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEASTDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peaendate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEAENDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peamaxper",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "PEAMAXPER",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiediv",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEDIV",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiebusndiv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIEBUSNDIV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaie2busndiv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIE2BUSNDIV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaie3busndiv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIE3BUSNDIV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiesect",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIESECT",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiebusnse",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIEBUSNSE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaie2busnse",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIE2BUSNSE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaie3busnse",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIE3BUSNSE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT3",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint4",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT4",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint5",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT5",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecond",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIECOND",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecon1",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIECON1",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecon2",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIECON2",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecon3",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIECON3",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecon4",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIECON4",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecon5",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIECON5",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacrdate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEACRDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peacrsign",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACRSIGN",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "pealudate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEALUDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "pealusign",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEALUSIGN",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peasex",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEASEX",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "date_inserted",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "DATE_INSERTED",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "date_last_updated",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "DATE_LAST_UPDATED",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "inserted_by",
+											"type": "String"
+										},
+										"sink": {
+											"name": "INSERTED_BY",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "last_updated_by",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LAST_UPDATED_BY",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "map_date",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "MAP_DATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peaorgno",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAORGNO",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclosmailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLOSMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclmmailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLMMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastoppremnote",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEASTOPPREMNOTE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaingiroludate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEAINGIROLUDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peainvnotify",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAINVNOTIFY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacorrmailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACORRMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaingirolusign",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAINGIROLUSIGN",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaknvmark",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAKNVMARK",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaprenotify",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPRENOTIFY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclamailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLAMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaddbor",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAADDBOR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaprobor",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPROBOR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peapurnotify",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPURNOTIFY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclmbor",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLMBOR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaoutgiroludate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEAOUTGIROLUDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclmintynsw",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACLMINTYNSW",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peamailsizemb",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "PEAMAILSIZEMB",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclobor",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLOBOR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacorbo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACORBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaclmadv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAACLMADV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peausecolfee",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAUSECOLFEE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaoutgirolusign",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAOUTGIROLUSIGN",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaddmailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAADDMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peasttprmclm",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTTPRMCLM",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaprovmailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPROVMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peadueday",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEADUEDAY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peanotdays",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEANOTDAYS",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peafromcomp",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEAFROMCOMP",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacrmid",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEACRMID",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "pealeicode",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEALEICODE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaextid",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAEXTID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaextid2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAEXTID2",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Sourceazurepeatable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Oracle_destination_peatable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "copy job/marts_to_oracle"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyOltp05ConfigFile')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_Configfile",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "AZURE_READ.AZURE_CONFIG"
+							},
+							{
+								"name": "Destination",
+								"value": "raw/Static/config_file.parquet"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"oracleReaderQuery": "select table_name table_name from azure_config \nwhere oracle_schema_name not like 'AGRINT'",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "oracle_configfile_oltp05",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "lake_configfile_oltp05",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Copy_Agresso')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Temp copy job to get the Agresso data",
+				"activities": [
+					{
+						"name": "ForEach_Agresso",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@pipeline().parameters.cw_items",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Copy_Agresso",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [
+										{
+											"name": "Source",
+											"value": "STAGE_ITF.@{item().source.table}"
+										},
+										{
+											"name": "Destination",
+											"value": "dwh-stage/Agresso/@{item().destination.fileName}"
+										}
+									],
+									"typeProperties": {
+										"source": {
+											"type": "OracleSource",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "scr_oracle_agresso",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_table": "@item().source.table"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "Agresso",
+											"type": "DatasetReference",
+											"parameters": {
+												"fileName": {
+													"value": "@item().destination.fileName",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"parameters": {
+					"cw_items": {
+						"type": "Array",
+						"defaultValue": [
+							{
+								"source": {
+									"table": "S_UDV_EMPLOYEE"
+								},
+								"destination": {
+									"fileName": "udv_employee.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "S_UDV_OFFICE"
+								},
+								"destination": {
+									"fileName": "udv_office.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "S_UDV_ORGUNIT"
+								},
+								"destination": {
+									"fileName": "udv_orgunit.parquet"
+								}
+							}
+						]
+					}
+				},
+				"folder": {
+					"name": "copy job/dwh_stage/Agresso"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/P_Sf_Company')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_sf_company",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_sf_company",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"SfCompanyNew": {
+										"fileName": "\"sf_company_new\""
+									},
+									"SfCompany": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/m_sf_company')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/copy_exact_to_lake')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup_oltp05",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name = 'EXACT_SRC'\n",
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"dataset": {
+								"referenceName": "oracle_configfile_oltp05",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEachOltp05",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Lookup_oltp05",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup_oltp05').output.value",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Copy Oltp05",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "OracleSource",
+											"oracleReaderQuery": {
+												"value": "SELECT * FROM @{item().table_name} ",
+												"type": "Expression"
+											},
+											"partitionOption": "None",
+											"queryTimeout": "02:00:00"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "oracle_exact",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "Exact",
+											"type": "DatasetReference",
+											"parameters": {
+												"fileName": {
+													"value": "@{item().table_name}",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"folder": {
+					"name": "copy job/dwh_stage/oltp05"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/copy_exchange_rate_to_lake')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Until1",
+						"type": "Until",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('inside_lkp_exchange_rate_status').output.firstRow.load_completion_status,'Y')",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Wait1",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 60
+									}
+								},
+								{
+									"name": "inside_lkp_exchange_rate_status",
+									"type": "Lookup",
+									"dependsOn": [
+										{
+											"activity": "Wait1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.00:10:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "OracleSource",
+											"oracleReaderQuery": "select \"load_completion_status\" from \"hlp_exchange_rate_status\"",
+											"partitionOption": "None",
+											"queryTimeout": "02:00:00"
+										},
+										"dataset": {
+											"referenceName": "oracle_exchange_rate_status",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									}
+								},
+								{
+									"name": "Set variable1",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "inside_lkp_exchange_rate_status",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "vSourceLoadstatus",
+										"value": {
+											"value": "@activity('inside_lkp_exchange_rate_status').output.firstRow.load_completion_status",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"timeout": "0.01:00:00"
+						}
+					},
+					{
+						"name": "copy_hlp_exchange_rate",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Until1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "oracle_exchange_rate",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "stage_hlp_exchange_rate",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"variables": {
+					"vSourceLoadstatus": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "copy job/dwh_stage/oltp05"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		}
+	]
+}

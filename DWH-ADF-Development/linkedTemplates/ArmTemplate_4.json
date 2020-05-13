@@ -6,6 +6,42 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "DWH-ADF-Development"
+		},
+		"ARESRV476_Arendal_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ARESRV476_Arendal'"
+		},
+		"OLTP05_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OLTP05'"
+		},
+		"OracelStageITF_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OracelStageITF'"
+		},
+		"OracleAzureDwh_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OracleAzureDwh'"
+		},
+		"OracleCStage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OracleCStage'"
+		},
+		"OracleDbParisPoolScrAmster_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OracleDbParisPoolScrAmster'"
+		},
+		"OracleDbParisScrAmster_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OracleDbParisScrAmster'"
+		},
+		"ARESRV476_Arendal_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "\\\\ARESRV476\\Arendal\\"
+		},
+		"ARESRV476_Arendal_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "audun.taraldsen@gard.no"
 		}
 	},
 	"variables": {
@@ -13,14 +49,1175 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/CopyOltp05ConfigFile')]",
+			"name": "[concat(parameters('factoryName'), '/stage_hlp_exchange_rate')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Oltp05"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "\"hlp_exchange_rate\"",
+						"folderPath": "Exchange_rate",
+						"fileSystem": "dwh-stage"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/t_crossreference')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dwh-prepare/pre-dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "Mapping_System",
+						"fileSystem": "dwh-stage"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/tables_oltp05_lake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"fileName": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Test"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().fileName",
+							"type": "Expression"
+						},
+						"folderPath": "Static",
+						"fileSystem": "dwh-stage"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/test_agatable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "\"p_agatable\"",
+						"folderPath": "Paris",
+						"fileSystem": "dwh-stage"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "agaadjsign",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaadmcode",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaagaid",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaagname",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaagno",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaagnorf",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaagtype",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaalgid",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaareacd",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaassetno",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaassetsubno",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaausign",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaautoconpol",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaavttrkeep",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaavttrnote",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaavttrpeaid",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaavttrpros",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaavttrstatus",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaavttrynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agabusnbranch",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agabusncla",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agabusndiv",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agabusnregion",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agabusnsec",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agacantxt",
+						"type": "UTF8"
+					},
+					{
+						"name": "agacashbefcovdate",
+						"type": "INT96"
+					},
+					{
+						"name": "agacashbeforecover",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaccpid",
+						"type": "UTF8"
+					},
+					{
+						"name": "agachartradeteam",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaclasstype",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaclmsign",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaclmuat",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaclosedate",
+						"type": "INT96"
+					},
+					{
+						"name": "agaclosesign",
+						"type": "UTF8"
+					},
+					{
+						"name": "agacloseynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agacomfacnote",
+						"type": "UTF8"
+					},
+					{
+						"name": "agacomfacpeaid",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agacomfacynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agacomp2",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agacompdisckeep",
+						"type": "UTF8"
+					},
+					{
+						"name": "agacompdiscnote",
+						"type": "UTF8"
+					},
+					{
+						"name": "agacompdiscpeaid",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agacompdiscpros",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agacompdiscynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agacomtarnote",
+						"type": "UTF8"
+					},
+					{
+						"name": "agacomtarpeaid",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agacomtarstknote",
+						"type": "UTF8"
+					},
+					{
+						"name": "agacomtarstkpeaid",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agacomtarstkynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agacomtarynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaconcern",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaconnectsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaconsrnote",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaconsrynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agacontinsagaid",
+						"type": "UTF8"
+					},
+					{
+						"name": "agacontinsagno",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agacontinsynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agacrdate",
+						"type": "INT96"
+					},
+					{
+						"name": "agacrsign",
+						"type": "UTF8"
+					},
+					{
+						"name": "agacumul",
+						"type": "UTF8"
+					},
+					{
+						"name": "agadatcan",
+						"type": "INT96"
+					},
+					{
+						"name": "agadatest",
+						"type": "INT96"
+					},
+					{
+						"name": "agadatora",
+						"type": "INT96"
+					},
+					{
+						"name": "agadatore",
+						"type": "INT96"
+					},
+					{
+						"name": "agadatpca",
+						"type": "INT96"
+					},
+					{
+						"name": "agadecltyp",
+						"type": "UTF8"
+					},
+					{
+						"name": "agadwbs",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaeldocynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaelinvynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaendate",
+						"type": "INT96"
+					},
+					{
+						"name": "agaenhour",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaentrytype",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaeosign",
+						"type": "UTF8"
+					},
+					{
+						"name": "agafileref",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agafixprnote",
+						"type": "UTF8"
+					},
+					{
+						"name": "agafixprpeaid",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agafixprynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agafromcomp",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agagday",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agagen1keep",
+						"type": "UTF8"
+					},
+					{
+						"name": "agagen1note",
+						"type": "UTF8"
+					},
+					{
+						"name": "agagen1peaid",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agagen1prov",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agagen1ynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agagen2keep",
+						"type": "UTF8"
+					},
+					{
+						"name": "agagen2note",
+						"type": "UTF8"
+					},
+					{
+						"name": "agagen2peaid",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agagen2prov",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agagen2ynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agagen3keep",
+						"type": "UTF8"
+					},
+					{
+						"name": "agagen3note",
+						"type": "UTF8"
+					},
+					{
+						"name": "agagen3peaid",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agagen3prov",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agagen3ynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agagident",
+						"type": "UTF8"
+					},
+					{
+						"name": "agagmonth",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agagtype",
+						"type": "UTF8"
+					},
+					{
+						"name": "agahealthdate",
+						"type": "INT96"
+					},
+					{
+						"name": "agahealthynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "againcprovkeep",
+						"type": "UTF8"
+					},
+					{
+						"name": "againcprovnote",
+						"type": "UTF8"
+					},
+					{
+						"name": "againcprovpeaid",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "againcprovpros",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "againcprovynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "againcrebkeep",
+						"type": "UTF8"
+					},
+					{
+						"name": "againcrebnote",
+						"type": "UTF8"
+					},
+					{
+						"name": "againcrebpeaid",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "againcrebpros",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "againcrebynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "againdustrytxt",
+						"type": "UTF8"
+					},
+					{
+						"name": "againstti",
+						"type": "UTF8"
+					},
+					{
+						"name": "againtnote",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaisic",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaiyear",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaknvmark",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaktocred",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaktocust",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaktodeb",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaliabendate",
+						"type": "INT96"
+					},
+					{
+						"name": "agalocpolissued",
+						"type": "UTF8"
+					},
+					{
+						"name": "agalongname",
+						"type": "UTF8"
+					},
+					{
+						"name": "agalostcode",
+						"type": "UTF8"
+					},
+					{
+						"name": "agalosttxt35",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaludate",
+						"type": "INT96"
+					},
+					{
+						"name": "agalusign",
+						"type": "UTF8"
+					},
+					{
+						"name": "agamaiper",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agamgrpnote",
+						"type": "UTF8"
+					},
+					{
+						"name": "agamgrpynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agamincurr",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaminpre",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "aganoterm",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agansalecom",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "aganscomynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "aganumpers",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaoffice",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaoiltyp",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaopencover",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaordercode",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaordertxt35",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaorgcrdate",
+						"type": "INT96"
+					},
+					{
+						"name": "agaorgins",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaoxno",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaoxrefid",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaoyrno",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaoyrnote",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaoyrto",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agapeoid",
+						"type": "UTF8"
+					},
+					{
+						"name": "agapictype",
+						"type": "UTF8"
+					},
+					{
+						"name": "agapwcode",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agapwfrdate",
+						"type": "INT96"
+					},
+					{
+						"name": "agaratcod",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaratemodel",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agarefcod",
+						"type": "UTF8"
+					},
+					{
+						"name": "agareftxt",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaremove",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agarenbatchid",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agarencod",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agarentxt",
+						"type": "UTF8"
+					},
+					{
+						"name": "agasalesdiv",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agasetfreq",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agasettldetprt",
+						"type": "UTF8"
+					},
+					{
+						"name": "agashut",
+						"type": "UTF8"
+					},
+					{
+						"name": "agasitid",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaskipinstadynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agasource",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agastat1",
+						"type": "UTF8"
+					},
+					{
+						"name": "agastat2",
+						"type": "UTF8"
+					},
+					{
+						"name": "agastateareacd",
+						"type": "UTF8"
+					},
+					{
+						"name": "agastdate",
+						"type": "INT96"
+					},
+					{
+						"name": "agasthour",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaswo",
+						"type": "UTF8"
+					},
+					{
+						"name": "agatocomp",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agatrackit",
+						"type": "UTF8"
+					},
+					{
+						"name": "agatrackit1",
+						"type": "UTF8"
+					},
+					{
+						"name": "agatrackit2",
+						"type": "UTF8"
+					},
+					{
+						"name": "agatrackit3",
+						"type": "UTF8"
+					},
+					{
+						"name": "agatreatas",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaturnover",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agatzone",
+						"type": "UTF8"
+					},
+					{
+						"name": "agauat",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaufafpynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agausage",
+						"type": "UTF8"
+					},
+					{
+						"name": "agausecod",
+						"type": "UTF8"
+					},
+					{
+						"name": "agauwsign",
+						"type": "UTF8"
+					},
+					{
+						"name": "agawbs",
+						"type": "UTF8"
+					},
+					{
+						"name": "agawbscust",
+						"type": "UTF8"
+					},
+					{
+						"name": "agawntnocperiod",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agawnttext35",
+						"type": "UTF8"
+					},
+					{
+						"name": "agawntynsw",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaxmednote",
+						"type": "UTF8"
+					},
+					{
+						"name": "agaxmedpeaid",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "agaxmedynsw",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ARESRV476_Arendal')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "FileServer",
+				"typeProperties": {
+					"host": "[parameters('ARESRV476_Arendal_properties_typeProperties_host')]",
+					"userId": "[parameters('ARESRV476_Arendal_properties_typeProperties_userId')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ARESRV476_Arendal_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "AMSSRV049",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OLTP05')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('OLTP05_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AMSSRVRUN01",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OracelStageITF')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [
+					"IR AMSSRV049"
+				],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('OracelStageITF_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AMSSRV049",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OracleAzureDwh')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('OracleAzureDwh_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AMSSRV049",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OracleCStage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [
+					"IR AMSSRV049"
+				],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('OracleCStage_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AMSSRVRUN01",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OracleDbParisPoolScrAmster')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Paris Pool",
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('OracleDbParisPoolScrAmster_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AMSSRVRUN01",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OracleDbParisScrAmster')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Source to Paris data in amsterdam set up by Morten. This is only an copy of production. ",
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('OracleDbParisScrAmster_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AMSSRVRUN01",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Copy_oltp05_from_Lake_Sql')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"description": "temp copy job from lake to sql. This was used in the test when the db was not up running.",
 				"activities": [
 					{
-						"name": "Copy_Configfile",
-						"type": "Copy",
+						"name": "Lookup1",
+						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
@@ -29,73 +1226,44 @@
 							"secureOutput": false,
 							"secureInput": false
 						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "AZURE_READ.AZURE_CONFIG"
-							},
-							{
-								"name": "Destination",
-								"value": "raw/Static/config_file.parquet"
-							}
-						],
+						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "OracleSource",
-								"oracleReaderQuery": "select table_name table_name from azure_config \nwhere oracle_schema_name not like 'AGRINT'",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "ParquetSink",
+								"type": "ParquetSource",
 								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
+									"type": "AzureBlobFSReadSettings",
+									"recursive": false,
+									"enablePartitionDiscovery": false
 								}
 							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "oracle_configfile_oltp05",
+							"dataset": {
+								"referenceName": "lake_Oltp05_configfile",
 								"type": "DatasetReference",
 								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach_statictables",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
 							}
 						],
-						"outputs": [
-							{
-								"referenceName": "lake_configfile_oltp05",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"folder": {
-					"name": "Test"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Copy_Agresso')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Temp copy job to get the Agresso data",
-				"activities": [
-					{
-						"name": "ForEach_Agresso",
-						"type": "ForEach",
-						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@pipeline().parameters.cw_items",
+								"value": "@activity('Lookup1').output.value",
 								"type": "Expression"
 							},
 							"activities": [
 								{
-									"name": "Copy_Agresso",
+									"name": "Copy Static",
 									"type": "Copy",
 									"dependsOn": [],
 									"policy": {
@@ -108,42 +1276,46 @@
 									"userProperties": [
 										{
 											"name": "Source",
-											"value": "STAGE_ITF.@{item().source.table}"
+											"value": "dwh-stage/Static/@{item().TABLE_NAME}"
 										},
 										{
 											"name": "Destination",
-											"value": "dwh-stage/Agresso/@{item().destination.fileName}"
+											"value": "dwh_stage.@{trim(replace(item().TABLE_NAME,'\"',' ')) }"
 										}
 									],
 									"typeProperties": {
 										"source": {
-											"type": "OracleSource",
-											"partitionOption": "None"
+											"type": "ParquetSource",
+											"storeSettings": {
+												"type": "AzureBlobFSReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											}
 										},
 										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											}
+											"type": "AzureSqlSink"
 										},
 										"enableStaging": false
 									},
 									"inputs": [
 										{
-											"referenceName": "scr_oracle_agresso",
+											"referenceName": "tables_oltp05_lake",
 											"type": "DatasetReference",
 											"parameters": {
-												"cw_table": "@item().source.table"
+												"fileName": {
+													"value": "@item().table_name",
+													"type": "Expression"
+												}
 											}
 										}
 									],
 									"outputs": [
 										{
-											"referenceName": "Agresso",
+											"referenceName": "dwh_stage_oltp05_sql",
 											"type": "DatasetReference",
 											"parameters": {
-												"fileName": {
-													"value": "@item().destination.fileName",
+												"SinkDataset": {
+													"value": "@trim(replace(item().TABLE_NAME,'\"',' ')) ",
 													"type": "Expression"
 												}
 											}
@@ -155,1334 +1327,223 @@
 					}
 				],
 				"parameters": {
-					"cw_items": {
-						"type": "Array",
-						"defaultValue": [
-							{
-								"source": {
-									"table": "S_UDV_EMPLOYEE"
-								},
-								"destination": {
-									"fileName": "udv_employee.parquet"
-								}
-							},
-							{
-								"source": {
-									"table": "S_UDV_OFFICE"
-								},
-								"destination": {
-									"fileName": "udv_office.parquet"
-								}
-							},
-							{
-								"source": {
-									"table": "S_UDV_ORGUNIT"
-								},
-								"destination": {
-									"fileName": "udv_orgunit.parquet"
-								}
-							}
-						]
-					}
-				},
-				"folder": {
-					"name": "copy job/dwh_stage/Agresso"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/copy_exact_to_lake')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Lookup_oltp05",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name = 'EXACT_SRC'\n",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"dataset": {
-								"referenceName": "oracle_configfile_oltp05",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
+					"SourceContainer": {
+						"type": "string"
 					},
-					{
-						"name": "ForEachOltp05",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Lookup_oltp05",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup_oltp05').output.value",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Copy Oltp05",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "OracleSource",
-											"oracleReaderQuery": {
-												"value": "SELECT * FROM @{item().table_name} ",
-												"type": "Expression"
-											},
-											"partitionOption": "None",
-											"queryTimeout": "02:00:00"
-										},
-										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "oracle_exact",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "Exact",
-											"type": "DatasetReference",
-											"parameters": {
-												"fileName": {
-													"value": "@{item().table_name}",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"folder": {
-					"name": "copy job/dwh_stage/oltp05"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/copy_lloyds_to_lake')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Lookup_oltp05",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name = 'LLOYDS'\n",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"dataset": {
-								"referenceName": "oracle_configfile_oltp05",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
-					},
-					{
-						"name": "ForEachOltp05",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Lookup_oltp05",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup_oltp05').output.value",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Copy Oltp05",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "OracleSource",
-											"oracleReaderQuery": {
-												"value": "SELECT * FROM @{item().table_name} ",
-												"type": "Expression"
-											},
-											"partitionOption": "None",
-											"queryTimeout": "02:00:00"
-										},
-										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "Oracle_lloyds",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "Lloyds",
-											"type": "DatasetReference",
-											"parameters": {
-												"fileName": {
-													"value": "@{item().table_name}",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"folder": {
-					"name": "copy job/dwh_stage/oltp05"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/copy_mapsys_to_lake')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Lookup_oltp05",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name not like  'AGRINT'\n",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"dataset": {
-								"referenceName": "oracle_configfile_oltp05",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
-					},
-					{
-						"name": "ForEachOltp05",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Lookup_oltp05",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup_oltp05').output.value",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Copy Oltp05",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "OracleSource",
-											"partitionOption": "None",
-											"queryTimeout": "02:00:00"
-										},
-										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "Oracle_oltp05",
-											"type": "DatasetReference",
-											"parameters": {
-												"fileName": {
-													"value": "SELECT * FROM @{item().table_name} ",
-													"type": "Expression"
-												}
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "mapsys",
-											"type": "DatasetReference",
-											"parameters": {
-												"fileName": {
-													"value": "@{item().table_name}",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"folder": {
-					"name": "copy job/dwh_stage/oltp05"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/copy_oltp05_to_lake')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Lookup_oltp05",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name not like  'AGRINT'\n",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"dataset": {
-								"referenceName": "oracle_configfile_oltp05",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
-					},
-					{
-						"name": "ForEachOltp05",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Lookup_oltp05",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup_oltp05').output.value",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Copy Oltp05",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "OracleSource",
-											"oracleReaderQuery": {
-												"value": "SELECT * FROM @{item().table_name} ",
-												"type": "Expression"
-											},
-											"partitionOption": "None",
-											"queryTimeout": "02:00:00"
-										},
-										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "oracle_scr_oltp05",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "Oltp05",
-											"type": "DatasetReference",
-											"parameters": {
-												"fileName": {
-													"value": "@{item().table_name}",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"folder": {
-					"name": "copy job/dwh_stage/oltp05"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/copy_paris_fap_rsa_to_lake')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "This copy job is getting the views from config on paris c_stage. Testing the fap/rsa loading time. ",
-				"activities": [
-					{
-						"name": "Lookup_Paris",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where load_ind = 'N'\nand table_name not in ('\"p_filtable_cor\"','\"p_faptable\"')",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"dataset": {
-								"referenceName": "oracle_config_paris",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
-					},
-					{
-						"name": "ForEachParis",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Lookup_Paris",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup_Paris').output.value",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Copy Paris",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "OracleSource",
-											"oracleReaderQuery": {
-												"value": "SELECT * FROM @{item().table_name} ",
-												"type": "Expression"
-											},
-											"partitionOption": "None",
-											"queryTimeout": "02:00:00"
-										},
-										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "oracle_paris_fap_rsa",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "faptable_rsatable",
-											"type": "DatasetReference",
-											"parameters": {
-												"fileName": {
-													"value": "@{item().table_name}",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"folder": {
-					"name": "copy job/dwh_stage/paris"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/copy_paris_to_lake')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "This copy job is getting the views from config on paris c_stage. Temp, before we get SQL up running. ",
-				"activities": [
-					{
-						"name": "Lookup_Paris",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where load_ind = 'Y'\n",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"dataset": {
-								"referenceName": "oracle_config_paris",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
-					},
-					{
-						"name": "ForEachParis",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Lookup_Paris",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup_Paris').output.value",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Copy Paris",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "OracleSource",
-											"oracleReaderQuery": {
-												"value": "SELECT * FROM @{item().table_name} ",
-												"type": "Expression"
-											},
-											"partitionOption": "None",
-											"queryTimeout": "02:00:00"
-										},
-										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "scr_oracle_paris",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "Paris",
-											"type": "DatasetReference",
-											"parameters": {
-												"fileName": {
-													"value": "@{item().table_name}",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"folder": {
-					"name": "copy job/dwh_stage/paris"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/copy_saleforce_to_lake')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Lookup_oltp05",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name = 'SALEFORCE'",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"dataset": {
-								"referenceName": "oracle_configfile_oltp05",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
-					},
-					{
-						"name": "ForEachOltp05",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Lookup_oltp05",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup_oltp05').output.value",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Copy Oltp05",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "OracleSource",
-											"oracleReaderQuery": {
-												"value": "SELECT * FROM @{item().table_name} ",
-												"type": "Expression"
-											},
-											"partitionOption": "None",
-											"queryTimeout": "02:00:00"
-										},
-										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "oracle_scr_oltp05",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "Salesforce",
-											"type": "DatasetReference",
-											"parameters": {
-												"fileName": {
-													"value": "@{item().table_name}",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"folder": {
-					"name": "copy job/dwh_stage/oltp05"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/copy_static_to_lake')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Lookup_oltp05",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name = 'STATIC'\n",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"dataset": {
-								"referenceName": "oracle_configfile_oltp05",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
-					},
-					{
-						"name": "ForEachOltp05",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Lookup_oltp05",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup_oltp05').output.value",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Copy Oltp05",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "OracleSource",
-											"oracleReaderQuery": {
-												"value": "SELECT * FROM @{item().table_name} ",
-												"type": "Expression"
-											},
-											"partitionOption": "None",
-											"queryTimeout": "02:00:00"
-										},
-										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "oracle_scr_oltp05",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "Static",
-											"type": "DatasetReference",
-											"parameters": {
-												"fileName": {
-													"value": "@{item().table_name}",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"folder": {
-					"name": "copy job/dwh_stage/oltp05"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/load_stage_exact_table')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "LkpSrcLoadStatusExact",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.00:03:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"oracleReaderQuery": "select fn_check_exact_source_load LOAD_STATUS from dummy_table_dataset",
-								"partitionOption": "None",
-								"queryTimeout": "00:05:00"
-							},
-							"dataset": {
-								"referenceName": "Oracle_oltp05_dummy_table",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "If_table_is_loaded",
-						"type": "IfCondition",
-						"dependsOn": [
-							{
-								"activity": "LkpSrcLoadStatusExact",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(activity('LkpSrcLoadStatusExact').output.firstRow.LOAD_STATUS,'N')",
-								"type": "Expression"
-							},
-							"ifFalseActivities": [
-								{
-									"name": "copy_exact_to_lake",
-									"type": "ExecutePipeline",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"pipeline": {
-											"referenceName": "copy_exact_to_lake",
-											"type": "PipelineReference"
-										},
-										"waitOnCompletion": true,
-										"parameters": {}
-									}
-								}
-							],
-							"ifTrueActivities": [
-								{
-									"name": "Set variable1",
-									"type": "SetVariable",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "vTableLoaded",
-										"value": "'Empty Table'"
-									}
-								}
-							]
-						}
-					}
-				],
-				"variables": {
-					"vTableLoaded": {
-						"type": "String"
+					"SourceDirectory": {
+						"type": "string"
 					}
 				},
 				"folder": {
-					"name": "pipeline/dwh_stage"
+					"name": "Test"
 				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/copy_exact_to_lake')]"
+				"[concat(variables('factoryId'), '/datasets/tables_oltp05_lake')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/load_stage_lloyds_table')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/OracleParisScr')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "LkpSourceLoadStatusLloyds",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.00:03:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"oracleReaderQuery": "select fn_check_lloyds_source_load  LOAD_STATUS from dummy_table_dataset",
-								"partitionOption": "None",
-								"queryTimeout": "00:05:00"
-							},
-							"dataset": {
-								"referenceName": "Oracle_oltp05_dummy_table",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "If_table_is_loaded",
-						"type": "IfCondition",
-						"dependsOn": [
-							{
-								"activity": "LkpSourceLoadStatusLloyds",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(activity('LkpSourceLoadStatusLloyds').output.firstRow.LOAD_STATUS,'N')",
-								"type": "Expression"
-							},
-							"ifFalseActivities": [
-								{
-									"name": "copy_lloyds_to_lake",
-									"type": "ExecutePipeline",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"pipeline": {
-											"referenceName": "copy_lloyds_to_lake",
-											"type": "PipelineReference"
-										},
-										"waitOnCompletion": true,
-										"parameters": {}
-									}
-								}
-							],
-							"ifTrueActivities": [
-								{
-									"name": "Set variable1",
-									"type": "SetVariable",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "vTableLoaded",
-										"value": "'Empty Table'"
-									}
-								}
-							]
-						}
-					}
-				],
-				"variables": {
-					"vTableLoaded": {
-						"type": "String"
-					}
+				"description": "This is the scr dataset for Paris tables",
+				"linkedServiceName": {
+					"referenceName": "OracleCStage",
+					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "pipeline/dwh_stage"
+					"name": "Copy job/dwh-stage/Paris"
 				},
-				"annotations": []
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CSTAGE_PARIS",
+					"table": "p_pectable"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/copy_lloyds_to_lake')]"
+				"[concat(variables('factoryId'), '/linkedServices/OracleCStage')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/load_static_stage_dwh')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/OracleParisTablesScr')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "load_stage_lloyds_table",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "load_stage_lloyds_table",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "pl_copy_static_to_lake",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "copy_static_to_lake",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "error_in_pipeline_resolved",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "pl_copy_static_to_lake",
-								"dependencyConditions": [
-									"Failed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "error_in_pipeline_resolved",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"pErrorPipelineStatus": {
-									"value": "@activity('pl_copy_static_to_lake').error.message",
-									"type": "Expression"
-								}
-							}
-						}
-					}
-				],
-				"variables": {
-					"vInnerFailStatus": {
-						"type": "String"
-					}
+				"linkedServiceName": {
+					"referenceName": "OracleCStage",
+					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "pipeline/dwh_stage"
+					"name": "Copy job/dwh-stage/Paris"
 				},
-				"annotations": []
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CSTAGE_PARIS",
+					"table": "AZURE_CONFIG"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/load_stage_lloyds_table')]",
-				"[concat(variables('factoryId'), '/pipelines/copy_static_to_lake')]"
+				"[concat(variables('factoryId'), '/linkedServices/OracleCStage')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/load_master_pre')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/Oracle_destination_peatable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "load_static_stage_dwh",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "load_static_stage_dwh",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "copy_exact_to_lake",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "load_static_stage_dwh",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "copy_exact_to_lake",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "This should be email",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "load_static_stage_dwh",
-								"dependencyConditions": [
-									"Failed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "vFailStatus",
-							"value": "'Pipeline failed'"
-						}
-					}
-				],
-				"variables": {
-					"vFailStatus": {
-						"type": "String"
-					}
+				"linkedServiceName": {
+					"referenceName": "OracleAzureDwh",
+					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "pipeline/dwh_stage"
+					"name": "Copy job/marts_to_oracle"
 				},
-				"annotations": []
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "AZURE_DWH",
+					"table": "P_PEATABLE"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/load_static_stage_dwh')]",
-				"[concat(variables('factoryId'), '/pipelines/copy_exact_to_lake')]"
+				"[concat(variables('factoryId'), '/linkedServices/OracleAzureDwh')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/load_master_revit')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/Oracle_lloyds')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "load_master_pre",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "load_master_pre",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "load_pre_dim",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "load_master_pre",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "load_pre_dim",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
+				"linkedServiceName": {
+					"referenceName": "OLTP05",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Oltp05"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "AZURE_READ",
+					"table": "sta_exchange_rate"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OLTP05')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Oracle_oltp05')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP05",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"fileName": {
+						"type": "string"
 					}
-				],
-				"variables": {
-					"vMasterRevitErrorStatus": {
-						"type": "String"
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Oltp05"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "AZURE_READ",
+					"table": {
+						"value": "@dataset().fileName",
+						"type": "Expression"
 					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OLTP05')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Oracle_oltp05_dummy_table')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This is used to check if there is any data in the Oracle source table.",
+				"linkedServiceName": {
+					"referenceName": "OLTP05",
+					"type": "LinkedServiceReference"
 				},
 				"folder": {
 					"name": "pipeline/dwh_stage"
 				},
-				"annotations": []
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "AZURE_READ",
+					"table": "DUMMY_TABLE_DATASET"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/load_master_pre')]"
+				"[concat(variables('factoryId'), '/linkedServices/OLTP05')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/oracle_config_paris')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This dataset is pointing to the cinfig file in stage_itf. Temp solution",
+				"linkedServiceName": {
+					"referenceName": "OracleCStage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Paris"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CSTAGE_PARIS",
+					"table": "AZURE_CONFIG"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OracleCStage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/oracle_configfile_oltp05')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP05",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Oltp05"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "AZURE_READ",
+					"table": "AZURE_CONFIG"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OLTP05')]"
 			]
 		}
 	]
