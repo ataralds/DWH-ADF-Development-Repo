@@ -14,7 +14,7 @@
 			],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(output(\n\t\tagt_description as string,\n\t\tagt_key as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_expense.parquet']) ~> PreDImExpense"
+			"script": "source(output(\n\t\texp_key as string,\n\t\texp_code as string,\n\t\texp_description as string,\n\t\texp_cost_compensation as string,\n\t\texg_code as string,\n\t\texg_description as string,\n\t\text_code as string,\n\t\text_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_expense.parquet']) ~> PreDImExpense"
 		}
 	}
 }
