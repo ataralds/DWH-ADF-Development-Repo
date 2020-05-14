@@ -25,9 +25,15 @@
 				},
 				{
 					"name": "Select1"
+				},
+				{
+					"name": "ExpenseGroup827"
+				},
+				{
+					"name": "Select2"
 				}
 			],
-			"script": "source(output(\n\t\tsource_code_key as string,\n\t\tsource_system as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tcode_type_id as double,\n\t\tcode2 as string,\n\t\tom_x_ref as string,\n\t\tcode_type as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nTCrossReference filter(source_system == 'PARIS' && code_type_id == 198) ~> FInancialType198\nFInancialType198 select(mapColumn(\n\t\texp_key = source_code_key,\n\t\texp_code = target_code,\n\t\texp_description = target_description,\n\t\texp_cost_compensation = code2\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FinancialType\nTCrossReference filter(source_system == 'PARIS' && code_type_id == 828) ~> ExpenseCostGroup828\nExpenseCostGroup828 select(mapColumn(\n\t\tsource_code_key,\n\t\text_code = target_code,\n\t\text_description = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1"
+			"script": "source(output(\n\t\tsource_code_key as string,\n\t\tsource_system as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tcode_type_id as double,\n\t\tcode2 as string,\n\t\tom_x_ref as string,\n\t\tcode_type as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCrossReference\nTCrossReference filter(source_system == 'PARIS' && code_type_id == 198) ~> FInancialType198\nFInancialType198 select(mapColumn(\n\t\texp_key = source_code_key,\n\t\texp_code = target_code,\n\t\texp_description = target_description,\n\t\texp_cost_compensation = code2\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FinancialType\nTCrossReference filter(source_system == 'PARIS' && code_type_id == 828) ~> ExpenseCostGroup828\nExpenseCostGroup828 select(mapColumn(\n\t\tsource_code_key,\n\t\text_code = target_code,\n\t\text_description = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nTCrossReference filter(source_system == 'PARIS' && code_type_id == 827) ~> ExpenseGroup827\nExpenseGroup827 select(mapColumn(\n\t\tsource_code_key,\n\t\texg_code = target_code,\n\t\texg_description = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2"
 		}
 	}
 }
