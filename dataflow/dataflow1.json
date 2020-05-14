@@ -1,0 +1,20 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "mapsys",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(output(\n\t\tsource_code_key as string,\n\t\tsource_system as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tcode_type_id as double,\n\t\tcode2 as string,\n\t\tom_x_ref as string,\n\t\tcode_type as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source1"
+		}
+	}
+}
