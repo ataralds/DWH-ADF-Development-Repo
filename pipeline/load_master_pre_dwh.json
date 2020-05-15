@@ -49,7 +49,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "error_handling",
+						"referenceName": "pipeline_error_handling",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
@@ -76,7 +76,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "error_handling",
+						"referenceName": "pipeline_error_handling",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
