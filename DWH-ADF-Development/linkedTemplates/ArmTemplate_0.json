@@ -37,7 +37,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/error_handling')]",
+			"name": "[concat(parameters('factoryName'), '/pipeline_error_handling')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -83,7 +83,7 @@
 				"variables": {
 					"vEmailTo": {
 						"type": "String",
-						"defaultValue": "sudipta.dutta@gard.no"
+						"defaultValue": "sudipta.dutta@gard.no;siv.borve@gard.no;liv.rasmussen@gard.no"
 					},
 					"vSubject": {
 						"type": "String",
@@ -91,7 +91,7 @@
 					}
 				},
 				"folder": {
-					"name": "pipeline/dwh_stage"
+					"name": "pipeline/dwh_master"
 				},
 				"annotations": []
 			},
@@ -150,7 +150,7 @@
 					}
 				},
 				"folder": {
-					"name": "pipeline/dwh_stage"
+					"name": "pipeline/dwh_master"
 				},
 				"annotations": []
 			},

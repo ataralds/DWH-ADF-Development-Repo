@@ -2796,7 +2796,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Until1",
+						"name": "UntilExRateOraSrcecmplte",
 						"type": "Until",
 						"dependsOn": [],
 						"userProperties": [],
@@ -2812,7 +2812,7 @@
 									"dependsOn": [],
 									"userProperties": [],
 									"typeProperties": {
-										"waitTimeInSeconds": 60
+										"waitTimeInSeconds": 180
 									}
 								},
 								{
@@ -2877,7 +2877,7 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Until1",
+								"activity": "UntilExRateOraSrcecmplte",
 								"dependencyConditions": [
 									"Succeeded"
 								]
