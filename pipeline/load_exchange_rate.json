@@ -81,6 +81,30 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "error_handling",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "If Condition1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "load_exchange_rate",
+						"pPipelineErrorMsg": "Pipeline failed. Please check"
+					}
+				}
 			}
 		],
 		"folder": {
