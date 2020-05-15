@@ -43,7 +43,7 @@
 		"variables": {
 			"vEmailTo": {
 				"type": "String",
-				"defaultValue": "sudipta.dutta@gard.no"
+				"defaultValue": "sudipta.dutta@gard.no;siv.borve@gard.no;liv.rasmussen@gard.no"
 			},
 			"vSubject": {
 				"type": "String",
