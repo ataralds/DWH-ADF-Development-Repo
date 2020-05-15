@@ -58,7 +58,7 @@
 								"waitOnCompletion": true,
 								"parameters": {
 									"pPipelineName": "Pipeline Name",
-									"pEmailSubject": "Azure DWH Alert ! Exchange rate file not arrived to load and copy into Azure.",
+									"pEmailSubject": "ADF DWH Alert ! Exchange rate file not arrived to load and copy into Azure.",
 									"pEmailBody": "Exchange rate file not available",
 									"pEmailTo": "sudipta.dutta@gard.no;siv.borve@gard.no"
 								}
@@ -80,6 +80,56 @@
 							}
 						}
 					]
+				}
+			},
+			{
+				"name": "error_handling",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "If Condition1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "load_exchange_rate",
+						"pPipelineErrorMsg": "Pipeline failed. Please check"
+					}
+				}
+			},
+			{
+				"name": "pipeline_send_email_1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "If Condition1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_send_email",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "load_exchange_rate",
+						"pEmailSubject": "ADF DWH Alert ! Exchange rate copy job completed successfully",
+						"pEmailBody": "HLP_EXCHNAGE_RATE data copied into Azure SQL server successfully",
+						"pEmailTo": "sudipta.dutta@gard.no;siv.borve@gard.no"
+					}
 				}
 			}
 		],

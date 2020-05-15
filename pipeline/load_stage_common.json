@@ -4,25 +4,15 @@
 		"activities": [
 			{
 				"name": "m_hlp_exchange_rate_usd",
-				"type": "ExecuteDataFlow",
+				"type": "ExecutePipeline",
 				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
+					"pipeline": {
 						"referenceName": "m_hlp_exchange_rate_usd",
-						"type": "DataFlowReference"
+						"type": "PipelineReference"
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					}
+					"waitOnCompletion": true
 				}
 			}
 		],

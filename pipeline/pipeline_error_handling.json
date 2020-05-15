@@ -1,5 +1,5 @@
 {
-	"name": "error_handling",
+	"name": "pipeline_error_handling",
 	"properties": {
 		"activities": [
 			{
@@ -43,7 +43,7 @@
 		"variables": {
 			"vEmailTo": {
 				"type": "String",
-				"defaultValue": "sudipta.dutta@gard.no"
+				"defaultValue": "sudipta.dutta@gard.no;siv.borve@gard.no;liv.rasmussen@gard.no"
 			},
 			"vSubject": {
 				"type": "String",
@@ -51,7 +51,7 @@
 			}
 		},
 		"folder": {
-			"name": "pipeline/dwh_stage"
+			"name": "pipeline/dwh_master"
 		},
 		"annotations": []
 	}

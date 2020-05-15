@@ -49,7 +49,7 @@
 			}
 		},
 		"folder": {
-			"name": "pipeline/dwh_stage"
+			"name": "pipeline/dwh_master"
 		},
 		"annotations": []
 	}
