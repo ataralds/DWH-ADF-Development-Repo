@@ -26,8 +26,7 @@
 						"referenceName": "Other",
 						"type": "DatasetReference"
 					},
-					"name": "TCross",
-					"description": "Code_type_id=819"
+					"name": "TCross"
 				}
 			],
 			"sinks": [],
@@ -45,7 +44,8 @@
 					"name": "Expressions"
 				},
 				{
-					"name": "AllegedCause"
+					"name": "AllegedCause",
+					"description": "code_type_id = 819"
 				},
 				{
 					"name": "XrefAllegedCause"
@@ -59,11 +59,11 @@
 				},
 				{
 					"name": "CauseOfInjury",
-					"description": "327"
+					"description": "code_type_id = 327"
 				},
 				{
 					"name": "ClaimTypeSpec",
-					"description": "821"
+					"description": "code_type_id = 821"
 				},
 				{
 					"name": "XrefClaimTypeSpec"
@@ -73,34 +73,35 @@
 				},
 				{
 					"name": "RuleOfCover",
-					"description": "167"
+					"description": "code_type_id = 167"
 				},
 				{
 					"name": "XrefRuleOfCover"
 				},
 				{
 					"name": "ClaimDetail",
-					"description": "775"
+					"description": "code_type_id = 775"
 				},
 				{
 					"name": "XrefClaimDetail"
 				},
 				{
 					"name": "Status",
-					"description": "822"
+					"description": "code_type_id = 822"
 				},
 				{
 					"name": "XrefStatus"
 				},
 				{
 					"name": "HumanClaimLocation",
-					"description": "824"
+					"description": "code_type_id = 824"
 				},
 				{
 					"name": "Select8"
 				},
 				{
-					"name": "TitleRank"
+					"name": "TitleRank",
+					"description": "code_type_id = 311"
 				},
 				{
 					"name": "Select9"
