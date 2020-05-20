@@ -51,7 +51,7 @@
 			}
 		},
 		"folder": {
-			"name": "pipeline/dwh_master"
+			"name": "pipelines/dwh_master"
 		},
 		"annotations": []
 	}
