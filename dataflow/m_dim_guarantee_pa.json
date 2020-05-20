@@ -2,7 +2,7 @@
 	"name": "m_dim_guarantee_pa",
 	"properties": {
 		"folder": {
-			"name": "dwh_prepare/paris"
+			"name": "dwh_prepare/pre_dim"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
