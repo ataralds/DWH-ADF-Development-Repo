@@ -15,10 +15,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "dwh_stage",
-			"table": {
-				"value": "@dataset().fileName",
-				"type": "Expression"
-			}
+			"table": "p_peatable"
 		}
 	}
 }
