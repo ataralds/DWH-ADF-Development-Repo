@@ -1,0 +1,35 @@
+{
+	"name": "m_dim_sub_claim_pa",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_sub_claim_pa",
+						"type": "DatasetReference"
+					},
+					"name": "PreDimSubClaim"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dim_sub_claim",
+						"type": "DatasetReference"
+					},
+					"name": "DimSubClaim"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DerivedColumn1"
+				},
+				{
+					"name": "AlterRow1"
+				}
+			],
+			"script": "source(output(\n\t\tagt_description as string,\n\t\tagt_key as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_sub_claim_pa.parquet']) ~> PreDimSubClaim\nPreDimSubClaim derive() ~> DerivedColumn1\nDerivedColumn1 alterRow() ~> AlterRow1\nAlterRow1 sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimSubClaim"
+		}
+	}
+}
