@@ -1,0 +1,12 @@
+{
+	"name": "m_fact_exch_rate",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
