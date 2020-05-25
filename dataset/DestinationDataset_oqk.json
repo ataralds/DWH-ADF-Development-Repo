@@ -1,0 +1,21 @@
+{
+	"name": "DestinationDataset_oqk",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "sf_company_top_group.parquet",
+				"folderPath": "Salesforce",
+				"fileSystem": "dwh-stage"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
