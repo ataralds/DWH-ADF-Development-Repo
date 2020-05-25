@@ -13,6 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "dim_currency.parquet",
 				"folderPath": "dim",
 				"fileSystem": "marts"
 			},
