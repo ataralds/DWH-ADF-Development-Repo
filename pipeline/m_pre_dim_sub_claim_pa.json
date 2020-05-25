@@ -1,0 +1,42 @@
+{
+	"name": "m_pre_dim_sub_claim_pa",
+	"properties": {
+		"activities": [
+			{
+				"name": "m_pre_dim_sub_claim_pa",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "m_pre_dim_sub_claim_pa",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"Lcc": {
+								"fileName": "\"p_lcctable\""
+							},
+							"Lca": {
+								"fileName": "\"p_lcatable\""
+							},
+							"TCross": {
+								"fileName": "tcrossreference.parquet"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}

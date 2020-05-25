@@ -1,0 +1,198 @@
+{
+	"name": "m_pre_dim_sub_claim_pa",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Paris",
+						"type": "DatasetReference"
+					},
+					"name": "Lcc"
+				},
+				{
+					"dataset": {
+						"referenceName": "Paris",
+						"type": "DatasetReference"
+					},
+					"name": "Lca"
+				},
+				{
+					"dataset": {
+						"referenceName": "Other",
+						"type": "DatasetReference"
+					},
+					"name": "TCross"
+				},
+				{
+					"dataset": {
+						"referenceName": "pre_dim_claim_type_pa",
+						"type": "DatasetReference"
+					},
+					"name": "ClmType"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_sub_claim_pa",
+						"type": "DatasetReference"
+					},
+					"name": "PreDimSubClaimPa"
+				}
+			],
+			"transformations": [
+				{
+					"name": "LccTable"
+				},
+				{
+					"name": "LcaTable"
+				},
+				{
+					"name": "LccLca"
+				},
+				{
+					"name": "Expressions"
+				},
+				{
+					"name": "AllegedCause",
+					"description": "code_type_id = 819"
+				},
+				{
+					"name": "XrefAllegedCause",
+					"description": "code_type_id = 819"
+				},
+				{
+					"name": "CarriageMethod",
+					"description": "820"
+				},
+				{
+					"name": "XrefCarriageMethod",
+					"description": "code_type_id = 820"
+				},
+				{
+					"name": "CauseOfInjury",
+					"description": "code_type_id = 327"
+				},
+				{
+					"name": "ClaimTypeSpec",
+					"description": "code_type_id = 821"
+				},
+				{
+					"name": "XrefClaimTypeSpec",
+					"description": "code_type_id = 821"
+				},
+				{
+					"name": "XrefCauseOfInjury",
+					"description": "code_type_id = 327"
+				},
+				{
+					"name": "RuleOfCover",
+					"description": "code_type_id = 167"
+				},
+				{
+					"name": "XrefRuleOfCover",
+					"description": "code_type_id = 167"
+				},
+				{
+					"name": "ClaimDetail",
+					"description": "code_type_id = 775"
+				},
+				{
+					"name": "XrefClaimDetail",
+					"description": "code_type_id = 775"
+				},
+				{
+					"name": "Status",
+					"description": "code_type_id = 822"
+				},
+				{
+					"name": "XrefStatus",
+					"description": "code_type_id = 822"
+				},
+				{
+					"name": "HumanClaimLocation",
+					"description": "code_type_id = 824"
+				},
+				{
+					"name": "XrefHumanClmLoc",
+					"description": "code_type_id = 824"
+				},
+				{
+					"name": "TitleRank",
+					"description": "code_type_id = 311"
+				},
+				{
+					"name": "XrefTitleRank",
+					"description": "code_type_id = 311"
+				},
+				{
+					"name": "SelectedColums"
+				},
+				{
+					"name": "LccClmType"
+				},
+				{
+					"name": "PreDimClmType"
+				},
+				{
+					"name": "LccAllegedCause"
+				},
+				{
+					"name": "AllegeCauseTop"
+				},
+				{
+					"name": "AllegedCauseTop",
+					"description": "code_type_id = 819"
+				},
+				{
+					"name": "XrefAllCausedTop",
+					"description": "code_type_id = 819"
+				},
+				{
+					"name": "AllCauTopCarriageMthod"
+				},
+				{
+					"name": "CarriageCauseInjury"
+				},
+				{
+					"name": "CauseRuleOfCover"
+				},
+				{
+					"name": "RuleCoverClmDetail"
+				},
+				{
+					"name": "ClmDetEmployee"
+				},
+				{
+					"name": "Employee",
+					"description": "code_type_id = 329"
+				},
+				{
+					"name": "XrefEmployee",
+					"description": "code_type_id = 329"
+				},
+				{
+					"name": "EmployeeStatus"
+				},
+				{
+					"name": "EmployeeHuman"
+				},
+				{
+					"name": "HumanTitleRank"
+				},
+				{
+					"name": "HandlingNull"
+				},
+				{
+					"name": "HumanClmType"
+				},
+				{
+					"name": "RequiredColumns"
+				}
+			],
+			"script": "source(output(\n\t\tlccadddescrlev1 as string,\n\t\tlccadddescrlev2 as string,\n\t\tlccadddescrlev3 as string,\n\t\tlccadddescrlev4 as string,\n\t\tlccadditionaltxt as string,\n\t\tlccadjuster as string,\n\t\tlccalleged1 as string,\n\t\tlccalleged2 as string,\n\t\tlccallegedtxt as string,\n\t\tlccamount as decimal(38,18),\n\t\tlccamtdispunknown as string,\n\t\tlcccargotype as string,\n\t\tlcccarriagemethod as string,\n\t\tlcccause as string,\n\t\tlcccausetxt as string,\n\t\tlccclmamtynsw as string,\n\t\tlccclmdet as string,\n\t\tlccclmtype as string,\n\t\tlccclupcommenced as decimal(38,18),\n\t\tlccclupcompleted as decimal(38,18),\n\t\tlccconseq as string,\n\t\tlccconseqos as string,\n\t\tlcccurr as string,\n\t\tlccdecision as decimal(38,18),\n\t\tlccdisembarkedat as string,\n\t\tlccdisembarkeddate as timestamp,\n\t\tlccdisembarkiso as string,\n\t\tlccembarkedat as string,\n\t\tlccembarkeddate as timestamp,\n\t\tlccembarkiso as string,\n\t\tlccemergevac as string,\n\t\tlccfduty as decimal(38,18),\n\t\tlccgrossamount as decimal(38,18),\n\t\tlccgrosssettle as decimal(38,18),\n\t\tlcchandlebyclms as string,\n\t\tlccinitcontpoint as string,\n\t\tlccinlitigation as string,\n\t\tlccjurisdiction as string,\n\t\tlccladid as decimal(38,18),\n\t\tlcclcaid as string,\n\t\tlcclccid as string,\n\t\tlcclightcccid as string,\n\t\tlccln6 as decimal(38,18),\n\t\tlccloconvess as string,\n\t\tlccloconvesstxt as string,\n\t\tlccmafareatxt as string,\n\t\tlccmaffectarea as string,\n\t\tlccmanos as string,\n\t\tlccmanouver as string,\n\t\tlccmfkey as string,\n\t\tlccnpersons as decimal(38,18),\n\t\tlccothshipname as string,\n\t\tlccpeaid as decimal(38,18),\n\t\tlccpilotname as string,\n\t\tlccpilotonboard as string,\n\t\tlccpollutant as string,\n\t\tlccradnavynsw as string,\n\t\tlccrecovccvid as decimal(38,18),\n\t\tlccrecovcom as string,\n\t\tlccrecovcurr as string,\n\t\tlccrecovery as decimal(38,18),\n\t\tlccrecovyn as string,\n\t\tlccremarks as string,\n\t\tlccrolecat as string,\n\t\tlccrule as string,\n\t\tlccruleofcov as string,\n\t\tlccsettlement as decimal(38,18),\n\t\tlcctext as string,\n\t\tlcctrtmco as decimal(38,18),\n\t\tlccuwsign as string,\n\t\tlccvessdevi as string,\n\t\tlccvisiblcccid as string,\n\t\tlccvoyagefr as string,\n\t\tlccvoyageto as string,\n\t\tlccvoyfriso as string,\n\t\tlccvoytoiso as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> Lcc\nsource(output(\n\t\tlcaacstat as string,\n\t\tlcaadjsign as string,\n\t\tlcaagaid as string,\n\t\tlcaareacd as string,\n\t\tlcaareadescr as string,\n\t\tlcaautosetleyn as string,\n\t\tlcabigevent as string,\n\t\tlcabirtno as string,\n\t\tlcabonynsw as string,\n\t\tlcacagtyp as string,\n\t\tlcacalclamtfrinjured as string,\n\t\tlcacategorytype as string,\n\t\tlcacattype as string,\n\t\tlcaccod2 as string,\n\t\tlcaccod2date as timestamp,\n\t\tlcaccod2trmtdate as timestamp,\n\t\tlcaccod2txt35 as string,\n\t\tlcacefocc as string,\n\t\tlcacefocm as string,\n\t\tlcacefouc as string,\n\t\tlcaclintc as decimal(38,18),\n\t\tlcaclmcac as string,\n\t\tlcaclmdate as timestamp,\n\t\tlcaclmdatechd as string,\n\t\tlcaclmid as decimal(38,18),\n\t\tlcaclmintynsw as string,\n\t\tlcaclmn3 as decimal(38,18),\n\t\tlcaclmpeaid as decimal(38,18),\n\t\tlcaclmtype as string,\n\t\tlcaclodate as timestamp,\n\t\tlcacndid as string,\n\t\tlcacommonynsw as string,\n\t\tlcacompllevel as string,\n\t\tlcaconflictclm as string,\n\t\tlcacrdate as timestamp,\n\t\tlcacrobbid as string,\n\t\tlcacrsign as string,\n\t\tlcacyear as decimal(38,18),\n\t\tlcaecauseco as string,\n\t\tlcaecfid as string,\n\t\tlcaeclid as string,\n\t\tlcaecoid as string,\n\t\tlcaenassshr as decimal(38,18),\n\t\tlcaenintrst as string,\n\t\tlcaeuoffpros as decimal(38,18),\n\t\tlcaeuownpros as decimal(38,18),\n\t\tlcaexppdate as timestamp,\n\t\tlcaextadjynsw as string,\n\t\tlcaextclmid as string,\n\t\tlcafileref as decimal(38,18),\n\t\tlcafinalstatmdate as timestamp,\n\t\tlcafoadate as timestamp,\n\t\tlcafpareacd as string,\n\t\tlcafromareacd as string,\n\t\tlcageodescr as string,\n\t\tlcahour as decimal(38,18),\n\t\tlcaicaid as string,\n\t\tlcaimpexp as decimal(38,18),\n\t\tlcainsamt as decimal(38,18),\n\t\tlcainscurr as string,\n\t\tlcainsured as decimal(38,18),\n\t\tlcainsuredmno as string,\n\t\tlcainsuredmof as string,\n\t\tlcaintnote as string,\n\t\tlcaisrndcontrssigned as string,\n\t\tlcajurisdiction as string,\n\t\tlcaknvmark as string,\n\t\tlcalabid as string,\n\t\tlcalcaid as string,\n\t\tlcaldescr as string,\n\t\tlcaliabcode as decimal(38,18),\n\t\tlcaliabtxt as string,\n\t\tlcalimamt as decimal(38,18),\n\t\tlcalimcurr as string,\n\t\tlcalimdays as decimal(38,18),\n\t\tlcalimdedamt as decimal(38,18),\n\t\tlcalimrenewed as decimal(38,18),\n\t\tlcaloadate as timestamp,\n\t\tlcalodescr as string,\n\t\tlcalossco as string,\n\t\tlcalrgclmynsw as string,\n\t\tlcaltdate as timestamp,\n\t\tlcaludate as timestamp,\n\t\tlcalusign as string,\n\t\tlcamanhavsalaer as string,\n\t\tlcamfkey as string,\n\t\tlcamoveddate as timestamp,\n\t\tlcamovedsign as string,\n\t\tlcamovedto as string,\n\t\tlcamplamt as decimal(38,18),\n\t\tlcamplcurr as string,\n\t\tlcamuoffgrp as decimal(38,18),\n\t\tlcamuoffpros as decimal(38,18),\n\t\tlcamuownpros as decimal(38,18),\n\t\tlcan1nooftreatm as decimal(38,18),\n\t\tlcan2nooftreatm as decimal(38,18),\n\t\tlcan3nooftreatm as decimal(38,18),\n\t\tlcan4nooftreatm as decimal(38,18),\n\t\tlcan5nooftreatm as decimal(38,18),\n\t\tlcan6nooftreatm as decimal(38,18),\n\t\tlcan7nooftreatm as decimal(38,18),\n\t\tlcan8nooftreatm as decimal(38,18),\n\t\tlcancauseco as string,\n\t\tlcanextdate as timestamp,\n\t\tlcanextsign as string,\n\t\tlcanmclef as string,\n\t\tlcanoofpers as decimal(38,18),\n\t\tlcaobno as decimal(38,18),\n\t\tlcaoccoffdate as timestamp,\n\t\tlcaoccoffynsw as string,\n\t\tlcaoccownynsw as string,\n\t\tlcaoffice as decimal(38,18),\n\t\tlcaonoffs as decimal(38,18),\n\t\tlcaoutstm as string,\n\t\tlcapilotonboard as string,\n\t\tlcaportcccid as string,\n\t\tlcaportunlid as string,\n\t\tlcaprepayamtp as decimal(38,18),\n\t\tlcaprepaycurr as string,\n\t\tlcaprocess as string,\n\t\tlcarecovachamt as decimal(38,18),\n\t\tlcarecovachcurr as string,\n\t\tlcarecovachdate as timestamp,\n\t\tlcarecovachintnote as string,\n\t\tlcarecovachsign as string,\n\t\tlcarecovachynsw as string,\n\t\tlcarecovccvid as decimal(38,18),\n\t\tlcarecovpotamt as decimal(38,18),\n\t\tlcarecovpotcurr as string,\n\t\tlcarecovpotintnote as string,\n\t\tlcarecovpotynsw as string,\n\t\tlcarecovremdate as timestamp,\n\t\tlcareduceprem as string,\n\t\tlcaregamt as decimal(38,18),\n\t\tlcaregcurr as string,\n\t\tlcaregndate as timestamp,\n\t\tlcaregnsign as string,\n\t\tlcaregress as decimal(38,18),\n\t\tlcaregtext70 as string,\n\t\tlcarepdate as timestamp,\n\t\tlcaresumtionfrom as string,\n\t\tlcataucode as decimal(38,18),\n\t\tlcatautxt as string,\n\t\tlcataxno as string,\n\t\tlcatcauseco as string,\n\t\tlcatimnote as string,\n\t\tlcatlotype as decimal(38,18),\n\t\tlcatmcloludate as timestamp,\n\t\tlcatmclolusign as string,\n\t\tlcatmduedate as timestamp,\n\t\tlcatmextdocid as decimal(38,18),\n\t\tlcatmextduedate as timestamp,\n\t\tlcatmextludate as timestamp,\n\t\tlcatmextlusign as string,\n\t\tlcatmludate as timestamp,\n\t\tlcatmlusign as string,\n\t\tlcatmstatus as string,\n\t\tlcatoareacd as string,\n\t\tlcatranme as string,\n\t\tlcatranty as decimal(38,18),\n\t\tlcatrtmco as decimal(38,18),\n\t\tlcatzone as string,\n\t\tlcauwsign as string,\n\t\tlcawocdate as timestamp,\n\t\tlcawocstat as string,\n\t\tlcaworkplace as decimal(38,18),\n\t\tlcawrkclaim as decimal(38,18),\n\t\tlcawrkplccod as decimal(38,18),\n\t\tlcaxlmref as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> Lca\nsource(output(\n\t\tsource_code_key as string,\n\t\tsource_system as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tcode_type_id as double,\n\t\tcode2 as string,\n\t\tom_x_ref as string,\n\t\tcode_type as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCross\nsource(output(\n\t\tclm_source_system as string,\n\t\tclm_code as string,\n\t\tclm_source_key as string,\n\t\tinserted_by as string,\n\t\tlast_updated_by as string,\n\t\tdate_inserted as timestamp,\n\t\tdate_last_updated as timestamp,\n\t\tpk_key_clm as string,\n\t\tclm_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_claim_type.parquet']) ~> ClmType\nLcc select(mapColumn(\n\t\tlcclcaid,\n\t\tlccclmtype,\n\t\tlcclccid,\n\t\tlccmfkey,\n\t\tlccalleged1,\n\t\tlccalleged2,\n\t\tlcccarriagemethod,\n\t\tlcccause,\n\t\tlccloconvess,\n\t\tlccruleofcov,\n\t\tlcctext,\n\t\tlccclmdet,\n\t\tlccuwsign,\n\t\tlccln6,\n\t\tlccremarks,\n\t\tlcctrtmco,\n\t\tlccrolecat,\n\t\teach(match(left(name,7)=='lccaddd'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> LccTable\nLca select(mapColumn(\n\t\tlcalcaid,\n\t\tlcaclmdate\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> LcaTable\nLccTable, LcaTable join(lcclcaid == lcalcaid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> LccLca\nLccLca derive(scl_sub_claim_key = concat('P',lcclccid),\n\t\tscl_clm_key = concat('PARIS',lccclmtype),\n\t\tscl_inc_key = concat('P',lcalcaid),\n\t\tscl_alleged_cause_key = case(iifNull(lccalleged2,'Null') =='Null', lccalleged1, lccalleged2),\n\t\tscl_alleged_caused_top_key = lccalleged1,\n\t\tscl_carriage_method_key = trim(lcccarriagemethod),\n\t\tscl_cause_of_injury_key = lcccause,\n\t\tscl_claim_type_spec_key = iifNull(lccadddescrlev4, iifNull(lccadddescrlev3,iifNull(lccadddescrlev2,lccadddescrlev1))),\n\t\tscl_rule_of_cover_key = lccruleofcov,\n\t\tscl_claim_detail_key = trim(lccclmdet),\n\t\tscl_employee_key = lccuwsign,\n\t\tscl_clm_status_key = toString(lcctrtmco),\n\t\tscl_human_clm_loc_key = lccloconvess,\n\t\tscl_title_rank_key = lccrolecat,\n\t\tscl_sub_claim_desc = lcctext,\n\t\tscl_sub_claim_number = lccln6,\n\t\tscl_member_sub_claim_reference = lccmfkey,\n\t\tscl_sub_claim_remarks = lccremarks,\n\t\tscl_gard_sub_claim_id = lccmfkey) ~> Expressions\nTCross filter(code_type_id == 819 && source_system == 'PARIS') ~> AllegedCause\nAllegedCause select(mapColumn(\n\t\tsource_code_key_all_cau = source_code_key,\n\t\ttarget_code_all_cau = target_code,\n\t\ttarget_description_all_cau = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefAllegedCause\nTCross filter(code_type_id == 820 && source_system == 'PARIS') ~> CarriageMethod\nCarriageMethod select(mapColumn(\n\t\tsource_code_key_CarriageMethod = source_code_key,\n\t\ttarget_code_CarriageMethod = target_code,\n\t\ttarget_description_CarriageMethod = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefCarriageMethod\nTCross filter(code_type_id == 327 && source_system == 'PARIS') ~> CauseOfInjury\nTCross filter(code_type_id == 821 && source_system == 'PARIS') ~> ClaimTypeSpec\nClaimTypeSpec select(mapColumn(\n\t\tsource_code_key_clm_type_spec = source_code_key,\n\t\ttarget_code_clm_type_spec = target_code,\n\t\ttarget_description_clm_type_spec = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefClaimTypeSpec\nCauseOfInjury select(mapColumn(\n\t\tsource_code_key_cause_injury = source_code_key,\n\t\ttarget_code_cause_injury = target_code,\n\t\ttarget_description_cause_injury = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefCauseOfInjury\nTCross filter(code_type_id == 167 && source_system == 'PARIS') ~> RuleOfCover\nRuleOfCover select(mapColumn(\n\t\tsource_code_key_roc = source_code_key,\n\t\ttarget_code_roc = target_code,\n\t\ttarget_description_roc = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefRuleOfCover\nTCross filter(code_type_id == 775 && source_system == 'PARIS') ~> ClaimDetail\nClaimDetail select(mapColumn(\n\t\tsource_code_key_claim_detail = source_code_key,\n\t\ttarget_code_claim_detail = target_code,\n\t\ttarget_description_claim_detail = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefClaimDetail\nTCross filter(code_type_id == 822 && source_system == 'PARIS') ~> Status\nStatus select(mapColumn(\n\t\tsource_code_key_status = source_code_key,\n\t\ttarget_code_status = target_code,\n\t\ttarget_description_status = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefStatus\nTCross filter(code_type_id == 824 && source_system == 'PARIS') ~> HumanClaimLocation\nHumanClaimLocation select(mapColumn(\n\t\tsource_code_key_hcl = source_code_key,\n\t\ttarget_code_hcl = target_code,\n\t\ttarget_description_hcl = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefHumanClmLoc\nTCross filter(code_type_id == 311 && source_system == 'PARIS') ~> TitleRank\nTitleRank select(mapColumn(\n\t\tsource_code_key_TitleRank = source_code_key,\n\t\ttarget_code_TitleRank = target_code,\n\t\ttarget_description_TitleRank = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefTitleRank\nExpressions select(mapColumn(\n\t\teach(match(left(name,3)=='scl'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectedColums\nSelectedColums, PreDimClmType join(scl_clm_key == pk_key_clm,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> LccClmType\nClmType select(mapColumn(\n\t\tclm_code,\n\t\tpk_key_clm,\n\t\tclm_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> PreDimClmType\nLccClmType, XrefAllegedCause join(scl_alleged_cause_key == source_code_key_all_cau,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> LccAllegedCause\nLccAllegedCause, XrefAllCausedTop join(scl_alleged_caused_top_key == source_code_key_allcautop,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> AllegeCauseTop\nTCross filter(code_type_id == 819 && source_system == 'PARIS') ~> AllegedCauseTop\nAllegedCauseTop select(mapColumn(\n\t\tsource_code_key_allcautop = source_code_key,\n\t\ttarget_description_allcautop = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefAllCausedTop\nAllegeCauseTop, XrefCarriageMethod join(scl_carriage_method_key == source_code_key_CarriageMethod,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> AllCauTopCarriageMthod\nAllCauTopCarriageMthod, XrefCauseOfInjury join(scl_cause_of_injury_key == source_code_key_cause_injury,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> CarriageCauseInjury\nCarriageCauseInjury, XrefRuleOfCover join(scl_rule_of_cover_key == source_code_key_roc,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> CauseRuleOfCover\nCauseRuleOfCover, XrefClaimDetail join(scl_claim_detail_key == source_code_key_claim_detail,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RuleCoverClmDetail\nRuleCoverClmDetail, XrefEmployee join(scl_employee_key == source_code_key_employee,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> ClmDetEmployee\nTCross filter(code_type_id == 329 && source_system == 'PARIS') ~> Employee\nEmployee select(mapColumn(\n\t\tsource_code_key_employee = source_code_key,\n\t\ttarget_code_employee = target_code,\n\t\ttarget_description_employee = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefEmployee\nClmDetEmployee, XrefStatus join(scl_clm_status_key == source_code_key_status,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> EmployeeStatus\nEmployeeStatus, XrefHumanClmLoc join(scl_human_clm_loc_key == source_code_key_hcl,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> EmployeeHuman\nEmployeeHuman, XrefTitleRank join(scl_title_rank_key == source_code_key_TitleRank,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> HumanTitleRank\nHumanClmType derive(scl_sub_claim_type_code = clm_code,\n\t\tscl_sub_claim_type_description = clm_description,\n\t\tscl_sub_claim_detail_code = iifNull(target_code_claim_detail,'N/A'),\n\t\tscl_sub_claim_detail_desc = iifNull(target_description_claim_detail,'Not Applicable'),\n\t\tscl_sub_claim_status = iifNull(target_description_status,'Not Applicable'),\n\t\tscl_rule_of_cover_code = iifNull(target_code_roc, 'N/A'),\n\t\tscl_rule_of_cover_description = iifNull(target_description_roc, 'Not Applicable'),\n\t\tscl_sub_claim_handler_code = iifNull(target_code_hcl, 'N/A'),\n\t\tscl_sub_claim_handler_description = iifNull(target_description_hcl, 'Not Applicable'),\n\t\tscl_human_location = iifNull(target_description_hcl,'Not Applicable'),\n\t\tscl_cause_of_injury = iifNull(target_description_cause_injury,'Not Applicable'),\n\t\tscl_title_rank_top = iifNull(target_description_TitleRank, 'Not Applicable'),\n\t\tscl_alleged_cause = iifNull(target_description_all_cau, 'Not Applicable'),\n\t\tscl_alleged_cause_top = iifNull(target_description_allcautop, 'Not Applicable'),\n\t\tscl_carriage_method = iifNull(target_description_CarriageMethod, 'Not Applicable'),\n\t\tscl_claim_type_specification = iifNull(target_description_clm_type_spec, 'Not Applicable')) ~> HandlingNull\nHumanTitleRank, XrefClaimTypeSpec join(scl_claim_type_spec_key == source_code_key_clm_type_spec,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> HumanClmType\nHandlingNull select(mapColumn(\n\t\tscl_inc_key,\n\t\tpk_key = scl_sub_claim_key,\n\t\teach(match(right(name,3)!='key'&&left(name,3)=='scl'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RequiredColumns\nRequiredColumns sink(input(\n\t\tagt_description as string,\n\t\tagt_key as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_sub_claim_pa.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> PreDimSubClaimPa"
+		}
+	}
+}
