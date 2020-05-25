@@ -26,6 +26,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "mappings/dwh_stage"
+		},
 		"annotations": []
 	}
 }

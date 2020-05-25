@@ -1,6 +1,9 @@
 {
 	"name": "m_hlp_exchange_rate_usd",
 	"properties": {
+		"folder": {
+			"name": "dwh_stage"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

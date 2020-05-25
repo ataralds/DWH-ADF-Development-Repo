@@ -46,6 +46,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "mappings/dwh_prepare"
+		},
 		"annotations": []
 	}
 }

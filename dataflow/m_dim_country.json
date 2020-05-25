@@ -1,6 +1,9 @@
 {
 	"name": "m_dim_country",
 	"properties": {
+		"folder": {
+			"name": "marts/dim"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
