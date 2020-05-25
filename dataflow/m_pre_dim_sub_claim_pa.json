@@ -1,6 +1,9 @@
 {
 	"name": "m_pre_dim_sub_claim_pa",
 	"properties": {
+		"folder": {
+			"name": "dwh_prepare/pre_dim"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
