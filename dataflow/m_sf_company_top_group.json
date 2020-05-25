@@ -1,0 +1,20 @@
+{
+	"name": "m_sf_company_top_group",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "sf_company_b_tree",
+						"type": "DatasetReference"
+					},
+					"name": "CompanyBtree"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(output(\n\t\tCOMPANY_NAME as string,\n\t\tCOMPANY_ID as double,\n\t\tPARENT_COMPANY_ID as double,\n\t\tLEFT_NODE as double,\n\t\tRIGHT_NODE as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> CompanyBtree"
+		}
+	}
+}
