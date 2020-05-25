@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "sf_company_top_group.parquet",
+				"fileName": "sf_company_b_tree.parquet",
 				"folderPath": "Salesforce",
 				"fileSystem": "dwh-stage"
 			},
