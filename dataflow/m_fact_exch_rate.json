@@ -22,10 +22,19 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "Lookup1"
+					"name": "LkpCurFrom"
+				},
+				{
+					"name": "SelectColumns"
+				},
+				{
+					"name": "LkpCurTo"
+				},
+				{
+					"name": "Select1"
 				}
 			],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> hlpExchRate\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> dimCurrency\nhlpExchRate, dimCurrency lookup(ERROR_FUNCTION('') == ERROR_FUNCTION(''),\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> Lookup1"
+			"script": "source(output(\n\t\tcurrency_code_from as string,\n\t\tcurrency_code_to as string,\n\t\tcurrency_id_from as decimal(38,18),\n\t\tcurrency_id_to as decimal(38,18),\n\t\tday as timestamp,\n\t\trate as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> hlpExchRate\nsource(output(\n\t\tdim_key as long,\n\t\ttop_code as string,\n\t\ttop_description as string,\n\t\tcur_code as string,\n\t\tcur_description as string,\n\t\tcurr_last_exchange_rate_to_usd as decimal(12,2)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> dimCurrency\nhlpExchRate, dimCurrency lookup(currency_code_from == cur_code,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LkpCurFrom\nLkpCurFrom select(mapColumn(\n\t\tday,\n\t\trate,\n\t\tcur_dim_key_from = dim_key,\n\t\teach(match(startsWith(name,'currency_')),\n\t\t\t'source_'+$$ = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectColumns\nSelectColumns, dimCurrency lookup(source_currency_code_to == cur_code,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LkpCurTo\nLkpCurTo select(mapColumn(\n\t\tday,\n\t\trate,\n\t\tcur_dim_key_from,\n\t\tsource_currency_code_from,\n\t\tsource_currency_code_to,\n\t\tsource_currency_id_from,\n\t\tsource_currency_id_to,\n\t\tcur_dim_key_to = dim_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1"
 		}
 	}
 }
