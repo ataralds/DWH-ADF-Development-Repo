@@ -10,7 +10,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "STAGE_ITF",
-			"table": "SF_COMPANY_TOP_GROUP"
+			"table": "SF_COMPANY_B_TREE"
 		}
 	}
 }
