@@ -1,6 +1,9 @@
 {
 	"name": "m_dim_sub_claim_pa",
 	"properties": {
+		"folder": {
+			"name": "marts/dim"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
