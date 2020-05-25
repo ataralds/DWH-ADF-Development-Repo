@@ -23,8 +23,15 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
-			"script": "source(output(\n\t\tCOMPANY_NAME as string,\n\t\tCOMPANY_ID as double,\n\t\tPARENT_COMPANY_ID as double,\n\t\tLEFT_NODE as double,\n\t\tRIGHT_NODE as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> CompanyBtree\nsource(output(\n\t\tCOMPANY_NAME as string,\n\t\tCOMPANY_ID as double,\n\t\tPARENT_COMPANY_ID as double,\n\t\tLEFT_NODE as double,\n\t\tRIGHT_NODE as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> ComapnyBtreeRight"
+			"transformations": [
+				{
+					"name": "leftRightCompany"
+				},
+				{
+					"name": "selectedValues"
+				}
+			],
+			"script": "source(output(\n\t\tCOMPANY_NAME as string,\n\t\tCOMPANY_ID as double,\n\t\tPARENT_COMPANY_ID as double,\n\t\tLEFT_NODE as double,\n\t\tRIGHT_NODE as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> CompanyBtree\nsource(output(\n\t\tCOMPANY_NAME as string,\n\t\tCOMPANY_ID as double,\n\t\tPARENT_COMPANY_ID as double,\n\t\tLEFT_NODE as double,\n\t\tRIGHT_NODE as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> ComapnyBtreeRight\nCompanyBtree, ComapnyBtreeRight join(CompanyBtree@LEFT_NODE >= ComapnyBtreeRight@LEFT_NODE\n\t&& CompanyBtree@LEFT_NODE <= ComapnyBtreeRight@RIGHT_NODE,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> leftRightCompany\nleftRightCompany filter(ComapnyBtreeRight@PARENT_COMPANY_ID == -1) ~> selectedValues"
 		}
 	}
 }
