@@ -1,0 +1,44 @@
+{
+	"name": "sf_company_b_tree",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dwh-stage"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Salesforce",
+				"fileSystem": "dwh-stage"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "COMPANY_NAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "COMPANY_ID",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "PARENT_COMPANY_ID",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "LEFT_NODE",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "RIGHT_NODE",
+				"type": "DOUBLE"
+			}
+		]
+	}
+}
