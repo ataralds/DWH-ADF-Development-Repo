@@ -5,6 +5,9 @@
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "marts/fact"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
