@@ -23,6 +23,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "pipelines/dwh_master"
+		},
 		"annotations": []
 	}
 }
