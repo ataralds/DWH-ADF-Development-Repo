@@ -42,19 +42,6 @@
 				}
 			},
 			{
-				"name": "m_pre_dim_employee",
-				"type": "ExecutePipeline",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "m_pre_dim_employee",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
 				"name": "m_pre_dim_source_system",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
@@ -62,19 +49,6 @@
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "m_pre_dim_source_system",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "m_pre_dim_sub_claim_pa",
-				"type": "ExecutePipeline",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "m_pre_dim_sub_claim_pa",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
@@ -150,29 +124,6 @@
 				}
 			},
 			{
-				"name": "pipeline_error_handling3",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "m_pre_dim_employee",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "pipeline_error_handling",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"pPipelineName": "m_pre_employee"
-					}
-				}
-			},
-			{
 				"name": "pipeline_error_handling4",
 				"type": "ExecutePipeline",
 				"dependsOn": [
@@ -192,29 +143,6 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"pPipelineName": "m_pre_dim_source_system"
-					}
-				}
-			},
-			{
-				"name": "pipeline_error_handling5",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "m_pre_dim_sub_claim_pa",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "pipeline_error_handling",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"pPipelineName": "m_pre_dim_sub_claim_pa"
 					}
 				}
 			}
