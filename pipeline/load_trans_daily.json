@@ -1,0 +1,24 @@
+{
+	"name": "load_trans_daily",
+	"properties": {
+		"activities": [
+			{
+				"name": "m_fact_exch_rate",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "m_fact_exch_rate",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "pipelines/dwh_marts"
+		},
+		"annotations": []
+	}
+}
