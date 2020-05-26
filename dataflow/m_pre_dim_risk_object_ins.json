@@ -4,10 +4,53 @@
 		"description": "Insurance mapping from pre dim risk object",
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Paris",
+						"type": "DatasetReference"
+					},
+					"name": "Ica"
+				},
+				{
+					"dataset": {
+						"referenceName": "Paris",
+						"type": "DatasetReference"
+					},
+					"name": "ina"
+				},
+				{
+					"dataset": {
+						"referenceName": "Paris",
+						"type": "DatasetReference"
+					},
+					"name": "paa"
+				},
+				{
+					"dataset": {
+						"referenceName": "Paris",
+						"type": "DatasetReference"
+					},
+					"name": "peb"
+				},
+				{
+					"dataset": {
+						"referenceName": "t_crossreference",
+						"type": "DatasetReference"
+					},
+					"name": "tcross"
+				}
+			],
 			"sinks": [],
-			"transformations": [],
-			"script": ""
+			"transformations": [
+				{
+					"name": "pebtable"
+				},
+				{
+					"name": "pebtable1"
+				}
+			],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> Ica\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> ina\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> paa\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> peb\nsource(output(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> tcross\npeb select(skipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> pebtable\npeb select(skipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> pebtable1"
 		}
 	}
 }
