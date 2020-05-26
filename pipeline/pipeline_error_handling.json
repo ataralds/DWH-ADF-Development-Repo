@@ -51,13 +51,6 @@
 				"typeProperties": {
 					"storedProcedureName": "[adf_audit].[prc_audit_pipeline_error_status]",
 					"storedProcedureParameters": {
-						"pInCreateDateTime": {
-							"value": {
-								"value": "@pipeline().TriggerTime",
-								"type": "Expression"
-							},
-							"type": "String"
-						},
 						"pInPipelineName": {
 							"value": {
 								"value": "@pipeline().parameters.pPipelineName",
@@ -76,7 +69,7 @@
 		"parameters": {
 			"pPipelineName": {
 				"type": "string",
-				"defaultValue": "m_pre_dim_country"
+				"defaultValue": "pipeline_name"
 			},
 			"pPipelineErrorMsg": {
 				"type": "string",
