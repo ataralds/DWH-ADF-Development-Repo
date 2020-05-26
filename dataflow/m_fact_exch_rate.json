@@ -1,6 +1,9 @@
 {
 	"name": "m_fact_exch_rate",
 	"properties": {
+		"folder": {
+			"name": "marts"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
