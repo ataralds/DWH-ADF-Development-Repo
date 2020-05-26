@@ -1,20 +1,19 @@
 {
-	"name": "dim_currency",
+	"name": "fact_exchange_rate",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "marts/dim"
+			"name": "marts/fact"
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "dim_currency.parquet",
-				"folderPath": "dim",
+				"folderPath": "fact",
 				"fileSystem": "marts"
 			},
 			"compressionCodec": "snappy"

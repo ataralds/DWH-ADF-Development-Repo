@@ -39,7 +39,7 @@
 			}
 		},
 		"folder": {
-			"name": "pipeline/dwh_prepare"
+			"name": "pipelines/dwh_prepare"
 		},
 		"annotations": []
 	}

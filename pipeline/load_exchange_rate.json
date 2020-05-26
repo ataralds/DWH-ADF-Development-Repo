@@ -134,7 +134,7 @@
 			}
 		],
 		"folder": {
-			"name": "pipeline/dwh_stage"
+			"name": "pipelines/dwh_stage"
 		},
 		"annotations": []
 	}
