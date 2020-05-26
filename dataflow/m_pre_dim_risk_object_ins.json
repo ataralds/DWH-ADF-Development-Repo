@@ -1,0 +1,13 @@
+{
+	"name": "m_pre_dim_risk_object_ins",
+	"properties": {
+		"description": "Insurance mapping from pre dim risk object",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
