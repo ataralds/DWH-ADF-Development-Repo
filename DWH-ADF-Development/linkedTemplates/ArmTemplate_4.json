@@ -49,6 +49,307 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/pre_dim_vessel_type_group')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dwh-prepare/pre-dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "Pre_Dim",
+						"fileSystem": "dwh-prepare"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pre_fact_claim_trans_pa')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dwh-prepare/pre-fact"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "Pre_Fact",
+						"fileSystem": "dwh-prepare"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pre_fact_prem_trans')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dwh-prepare/pre-fact"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "Pre_Fact",
+						"fileSystem": "dwh-prepare"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sf_company')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dwh-stage"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "Other",
+						"fileSystem": "dwh-stage"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "FROM_CURRENCY_ID",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "TO_CURRENCY_ID",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "EXCHANGE_FROM_DATE",
+						"type": "INT96"
+					},
+					{
+						"name": "EXCHANGE_RATE",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 18
+					},
+					{
+						"name": "EXCHANGE_TO_DATE",
+						"type": "INT96"
+					},
+					{
+						"name": "FROM_CURRENCY_CODE",
+						"type": "UTF8"
+					},
+					{
+						"name": "TO_CURRENCY_CODE",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sf_company_b_tree')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"fileName": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "dwh-stage"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().fileName",
+							"type": "Expression"
+						},
+						"folderPath": "Salesforce",
+						"fileSystem": "dwh-stage"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "COMPANY_NAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "COMPANY_ID",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "PARENT_COMPANY_ID",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "LEFT_NODE",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "RIGHT_NODE",
+						"type": "DOUBLE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sf_company_top_group')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dwh-stage"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "Salesforce",
+						"fileSystem": "dwh-stage"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "COMPANY_NAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "COMPANY_ID",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "PARENT_COMPANY_ID",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "LEFT_NODE",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "RIGHT_NODE",
+						"type": "DOUBLE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/stage_hlp_exchange_rate')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -85,7 +386,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "dwh-prepare/pre-dim"
+					"name": "dwh-stage"
 				},
 				"annotations": [],
 				"type": "Parquet",
@@ -1390,160 +1691,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/OracleCStage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Oracle_destination_peatable')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OracleAzureDwh",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Copy job/marts_to_oracle"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "AZURE_DWH",
-					"table": "P_PEATABLE"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracleAzureDwh')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Oracle_lloyds')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OLTP05",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Copy job/dwh-stage/Oltp05"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "AZURE_READ",
-					"table": "sta_exchange_rate"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OLTP05')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Oracle_oltp05')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OLTP05",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"fileName": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Copy job/dwh-stage/Oltp05"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "AZURE_READ",
-					"table": {
-						"value": "@dataset().fileName",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OLTP05')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Oracle_oltp05_dummy_table')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "This is used to check if there is any data in the Oracle source table.",
-				"linkedServiceName": {
-					"referenceName": "OLTP05",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "pipeline/dwh_stage"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "AZURE_READ",
-					"table": "DUMMY_TABLE_DATASET"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OLTP05')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/oracle_config_paris')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "This dataset is pointing to the cinfig file in stage_itf. Temp solution",
-				"linkedServiceName": {
-					"referenceName": "OracleCStage",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Copy job/dwh-stage/Paris"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "CSTAGE_PARIS",
-					"table": "AZURE_CONFIG"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OracleCStage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/oracle_configfile_oltp05')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OLTP05",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Copy job/dwh-stage/Oltp05"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "AZURE_READ",
-					"table": "AZURE_CONFIG"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OLTP05')]"
 			]
 		}
 	]

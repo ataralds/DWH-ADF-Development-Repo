@@ -1,0 +1,1309 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "DWH-ADF-Development"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/m_dim_currency')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_dim_currency",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_dim_currency",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"preDimCurrency": {},
+									"dimCurrency": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_dim_employee')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_dim_employee",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_dim_employee",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"preDimEmployee": {},
+									"dimEmployee": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_dim_source_system')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_dim_source_system",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_dim_source_system",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"PreDimSourceSystem": {},
+									"DimSourceSystem": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_dim_sub_claim_pa')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_dim_sub_claim_pa",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_dim_sub_claim_pa",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"PreDimSubClaim": {},
+									"DimSubClaim": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_fact_exch_rate')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_fact_exch_rate",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_fact_exch_rate",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"hlpExchRate": {},
+									"dimCurrency": {},
+									"dimTime": {
+										"fileName": "\"sta_dim_time\""
+									},
+									"factExchangeRate": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_hlp_exchange_rate_usd')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_hlp_exchange_rate_usd",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_hlp_exchange_rate_usd",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"hlpExhangeRate": {},
+									"hlpExchangeRateUSD": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"folder": {
+					"name": "mappings/dwh_stage"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_agreement_pa')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_pre_dim_agreement_pa",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_pre_dim_agreement_pa",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Pagatable": {
+										"fileName": "\"p_agatable\""
+									},
+									"Pagztable": {
+										"fileName": "\"p_agztable\""
+									},
+									"Ppebtable": {
+										"fileName": "\"p_pebtable\""
+									},
+									"tcrossreference": {
+										"fileName": "tcrossreference.parquet"
+									},
+									"SrcSfCompany": {
+										"fileName": "\"sf_company_new\""
+									},
+									"DimTime": {
+										"fileName": "\"sta_dim_time\""
+									},
+									"PreDimAgreement": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"folder": {
+					"name": "mappings/dwh_prepare"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_country')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_pre_dim_country",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_pre_dim_country",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"vcrossreference": {
+										"fileName": "v_crossreference.parquet"
+									},
+									"preDimCountry": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_coverage')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_pre_dim_coverage",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_pre_dim_coverage",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"TCrossReference": {
+										"fileName": "t_crossreference.parquet"
+									},
+									"CoverageGroup": {
+										"fileName": "\"sta_coverage_group\""
+									},
+									"preDimCoverageInsert": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_currency')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_pre_dim_currency",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_pre_dim_currency",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"HlpExchangeRateToUsd": {
+										"fileName": "hlp_exchange_rate_to_usd.parquet"
+									},
+									"tCrossReference": {
+										"fileName": "t_crossreference.parquet"
+									},
+									"preDimCurrency": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_employee')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_pre_dim_employee",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_pre_dim_employee",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"tcrossreference": {
+										"fileName": "t_crossreference.parquet"
+									},
+									"udvAgressoEmployee": {
+										"fileName": "s_udv_ags_employee.parquet"
+									},
+									"preDimEmployee": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_source_system')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_pre_dim_source_system",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_pre_dim_source_system",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StaSourceSystem": {
+										"fileName": "\"sta_source_system\""
+									},
+									"preDimSourceSystem": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_sub_claim_pa')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_pre_dim_sub_claim_pa",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_pre_dim_sub_claim_pa",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Lcc": {
+										"fileName": "\"p_lcctable\""
+									},
+									"Lca": {
+										"fileName": "\"p_lcatable\""
+									},
+									"TCross": {
+										"fileName": "tcrossreference.parquet"
+									},
+									"ClmType": {},
+									"PreDimSubClaimPa": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_sf_company_top_group')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_sf_company_top_group",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_sf_company_top_group",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"CompanyBtree": {
+										"fileName": "sf_company_b_tree.parquet"
+									},
+									"ComapnyBtreeRight": {
+										"fileName": "sf_company_b_tree.parquet"
+									},
+									"SfCompanyTopGroup": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pre_dim_vessel_type_group')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_pre_dim_vessel_type_group",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_pre_dim_vessel_type_group",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StaVesselTypeGroup": {
+										"fileName": "\"sta_vessl_type_group\""
+									},
+									"StaRiskDriverGroup": {
+										"fileName": "\"sta_risk_driver_group\""
+									},
+									"PreDimVesselTypeGroup": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"folder": {
+					"name": "mappings/dwh_prepare"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/load_dim')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_dim_country",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "m_dim_country",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "m_dim_coverage",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "m_dim_coverage",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "pipeline_error_handling",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "m_dim_country",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline_error_handling",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"pPipelineName": "m_dim_country"
+							}
+						}
+					},
+					{
+						"name": "pipeline_error_handling1",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "m_dim_coverage",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline_error_handling",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"pPipelineName": "m_dim_coverage"
+							}
+						}
+					}
+				],
+				"folder": {
+					"name": "pipelines/dwh_marts"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/load_exchange_rate')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "lookup_exchange_file_status",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.00:10:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"oracleReaderQuery": "select \"file_arrival_status\" from \"hlp_exchange_rate_status\"",
+								"partitionOption": "None",
+								"queryTimeout": "00:10:00"
+							},
+							"dataset": {
+								"referenceName": "oracle_exchange_rate_status",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "If Condition1",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "lookup_exchange_file_status",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('lookup_exchange_file_status').output.firstRow.file_arrival_status,'Y')",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "pipeline_send_email",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "pipeline_send_email",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"pPipelineName": "Pipeline Name",
+											"pEmailSubject": "ADF DWH Alert ! Exchange rate file not arrived to load and copy into Azure.",
+											"pEmailBody": "Exchange rate file not available",
+											"pEmailTo": "sudipta.dutta@gard.no;siv.borve@gard.no"
+										}
+									}
+								}
+							],
+							"ifTrueActivities": [
+								{
+									"name": "copy_exchange_rate_to_lake",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "copy_exchange_rate_to_lake",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {}
+									}
+								},
+								{
+									"name": "pipeline_send_email_1",
+									"type": "ExecutePipeline",
+									"dependsOn": [
+										{
+											"activity": "copy_exchange_rate_to_lake",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "pipeline_send_email",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"pPipelineName": "load_exchange_rate",
+											"pEmailSubject": "ADF DWH Alert ! Exchange rate copy job completed successfully",
+											"pEmailBody": "HLP_EXCHNAGE_RATE data copied into Azure SQL server successfully",
+											"pEmailTo": "sudipta.dutta@gard.no;siv.borve@gard.no"
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "error_handling",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "If Condition1",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline_error_handling",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"pPipelineName": "load_exchange_rate",
+								"pPipelineErrorMsg": "Pipeline failed. Please check"
+							}
+						}
+					}
+				],
+				"folder": {
+					"name": "pipelines/dwh_stage"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/load_pre_dim')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_pre_dim_agreement_pa",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "m_pre_dim_agreement_pa",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "m_pre_dim_country",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "m_pre_dim_country",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "m_pre_dim_coverage",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "m_pre_dim_coverage",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "m_pre_dim_source_system",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "m_pre_dim_source_system",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "pipeline_error_handling",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "m_pre_dim_agreement_pa",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline_error_handling",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"pPipelineName": "m_pre_dim_agreement_pa"
+							}
+						}
+					},
+					{
+						"name": "pipeline_error_handling1",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "m_pre_dim_country",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline_error_handling",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"pPipelineName": "m_pre_dim_country"
+							}
+						}
+					},
+					{
+						"name": "pipeline_error_handling2",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "m_pre_dim_coverage",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline_error_handling",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"pPipelineName": "m_pre_dim_coverage"
+							}
+						}
+					},
+					{
+						"name": "pipeline_error_handling4",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "m_pre_dim_source_system",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline_error_handling",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"pPipelineName": "m_pre_dim_source_system"
+							}
+						}
+					},
+					{
+						"name": "m_pre_dim_employee",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "m_pre_dim_employee",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "m_pre_dim_sub_claim_pa",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "m_pre_dim_sub_claim_pa",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "pipeline_error_handling5",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "m_pre_dim_employee",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline_error_handling",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"pPipelineName": "m_pre_dim_employee"
+							}
+						}
+					},
+					{
+						"name": "pipeline_error_handling6",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "m_pre_dim_sub_claim_pa",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline_error_handling",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"variables": {
+					"vPreDim": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "pipelines/dwh_prepare"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/m_pre_dim_agreement_pa')]",
+				"[concat(variables('factoryId'), '/pipelines/m_pre_dim_country')]",
+				"[concat(variables('factoryId'), '/pipelines/m_pre_dim_coverage')]",
+				"[concat(variables('factoryId'), '/pipelines/m_pre_dim_source_system')]",
+				"[concat(variables('factoryId'), '/pipelines/m_pre_dim_employee')]",
+				"[concat(variables('factoryId'), '/pipelines/m_pre_dim_sub_claim_pa')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/load_stage_common')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_hlp_exchange_rate_usd",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "m_hlp_exchange_rate_usd",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "pipeline_error_handling1",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "m_hlp_exchange_rate_usd",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline_error_handling",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"pPipelineName": "m_hlp_exchange_rate_usd"
+							}
+						}
+					}
+				],
+				"folder": {
+					"name": "pipelines/dwh_stage"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/m_hlp_exchange_rate_usd')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/load_stage_exact_table')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "LkpSrcLoadStatusExact",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.00:03:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"oracleReaderQuery": "select fn_check_exact_source_load LOAD_STATUS from dummy_table_dataset",
+								"partitionOption": "None",
+								"queryTimeout": "00:05:00"
+							},
+							"dataset": {
+								"referenceName": "Oracle_oltp05_dummy_table",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "If_table_is_loaded",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "LkpSrcLoadStatusExact",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('LkpSrcLoadStatusExact').output.firstRow.LOAD_STATUS,'N')",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "copy_exact_to_lake",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "copy_exact_to_lake",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {}
+									}
+								}
+							],
+							"ifTrueActivities": [
+								{
+									"name": "Set variable1",
+									"type": "SetVariable",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "vTableLoaded",
+										"value": "'Empty Table'"
+									}
+								}
+							]
+						}
+					}
+				],
+				"variables": {
+					"vTableLoaded": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "pipelines/dwh_stage"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		}
+	]
+}

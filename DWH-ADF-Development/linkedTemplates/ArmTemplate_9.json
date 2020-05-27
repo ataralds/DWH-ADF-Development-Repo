@@ -1,0 +1,606 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "DWH-ADF-Development"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/load_stage_lloyds_table')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "LkpSourceLoadStatusLloyds",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.00:03:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"oracleReaderQuery": "select fn_check_lloyds_source_load  LOAD_STATUS from dummy_table_dataset",
+								"partitionOption": "None",
+								"queryTimeout": "00:05:00"
+							},
+							"dataset": {
+								"referenceName": "Oracle_oltp05_dummy_table",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "If_table_is_loaded",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "LkpSourceLoadStatusLloyds",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('LkpSourceLoadStatusLloyds').output.firstRow.LOAD_STATUS,'N')",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "copy_lloyds_to_lake",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "copy_lloyds_to_lake",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {}
+									}
+								}
+							],
+							"ifTrueActivities": [
+								{
+									"name": "Set variable1",
+									"type": "SetVariable",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "vTableLoaded",
+										"value": "'Empty Table'"
+									}
+								}
+							]
+						}
+					}
+				],
+				"variables": {
+					"vTableLoaded": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "pipelines/dwh_stage"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/load_trans_daily')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_fact_exch_rate",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "m_fact_exch_rate",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"folder": {
+					"name": "pipelines/dwh_marts"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/load_master_dwh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "load_pre_dim",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "load_stage_common",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "load_pre_dim",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "load_stage_common",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Initialize_pipeline",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "load_stage_common",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "load_dim",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "load_pre_dim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "load_dim",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "load_trans_daily",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "load_dim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "load_trans_daily",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Initialize_pipeline",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Initialize_pipeline",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "pipeline_send_email",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "load_trans_daily",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline_send_email",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"pPipelineName": "load_master_dwh",
+								"pEmailSubject": "Azure DWH Alert ! load_master_dwh completed successfully",
+								"pEmailBody": " load_master_dwh completed successfully"
+							}
+						}
+					}
+				],
+				"variables": {
+					"vMasterRevitErrorStatus": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "pipelines/dwh_master"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/load_trans_daily')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/load_static_stage_dwh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "load_stage_lloyds_table",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "load_stage_lloyds_table",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "pl_copy_static_to_lake",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "copy_static_to_lake",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "error_handling",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "pl_copy_static_to_lake",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline_error_handling",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"pPipelineName": {
+									"value": "copy_static_to_lake",
+									"type": "Expression"
+								},
+								"pPipelineErrorMsg": {
+									"value": "@activity('pl_copy_static_to_lake').error.message",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "error_handling_copy1",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "load_stage_lloyds_table",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline_error_handling",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"pPipelineName": {
+									"value": "load_stage_lloyds_table",
+									"type": "Expression"
+								},
+								"pPipelineErrorMsg": {
+									"value": "@activity('load_stage_lloyds_table').error.message",
+									"type": "Expression"
+								}
+							}
+						}
+					}
+				],
+				"variables": {
+					"vInnerFailStatus": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "pipelines/dwh_stage"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/load_stage_lloyds_table')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trgr_load_exchange_rate')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This is to execute exchange rate copy job",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "load_exchange_rate",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2020-05-12T10:32:00.000Z",
+						"endTime": "2020-07-01T10:32:00.000Z",
+						"timeZone": "UTC",
+						"schedule": {
+							"minutes": [
+								15
+							],
+							"hours": [
+								22
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/load_all_master')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "load_master_dwh",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "load_master_dwh",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"folder": {
+					"name": "pipelines/dwh_master"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/load_master_dwh')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/load_master_pre_dwh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "load_static_stage_dwh",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "load_static_stage_dwh",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "copy_exact_to_lake",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "load_static_stage_dwh",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "copy_exact_to_lake",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "error_handling",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "copy_exact_to_lake",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline_error_handling",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"pPipelineName": "copy_exact_to_lake",
+								"pPipelineErrorMsg": {
+									"value": "@activity('copy_exact_to_lake').error.message",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "error_handling_copy1",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "load_static_stage_dwh",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline_error_handling",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"pPipelineName": "load_static_stage_dwh",
+								"pPipelineErrorMsg": {
+									"value": "@activity('load_static_stage_dwh').error.message",
+									"type": "Expression"
+								}
+							}
+						}
+					}
+				],
+				"variables": {
+					"vFailStatus": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "pipelines/dwh_stage"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/load_static_stage_dwh')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trgr_load_all_master')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "load_all_master",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2020-05-27T10:06:00.000Z",
+						"endTime": "2020-07-01T10:06:00.000Z",
+						"timeZone": "UTC",
+						"schedule": {
+							"minutes": [
+								25
+							],
+							"hours": [
+								22
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/load_all_master')]"
+			]
+		}
+	]
+}

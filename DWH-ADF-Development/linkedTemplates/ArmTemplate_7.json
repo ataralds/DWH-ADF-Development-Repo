@@ -13,6 +13,2247 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_sub_claim_pa')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "dwh_prepare/pre_dim"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "Lcc"
+						},
+						{
+							"dataset": {
+								"referenceName": "Paris",
+								"type": "DatasetReference"
+							},
+							"name": "Lca"
+						},
+						{
+							"dataset": {
+								"referenceName": "Other",
+								"type": "DatasetReference"
+							},
+							"name": "TCross"
+						},
+						{
+							"dataset": {
+								"referenceName": "pre_dim_claim_type_pa",
+								"type": "DatasetReference"
+							},
+							"name": "ClmType"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "pre_dim_sub_claim_pa",
+								"type": "DatasetReference"
+							},
+							"name": "PreDimSubClaimPa"
+						}
+					],
+					"transformations": [
+						{
+							"name": "LccTable"
+						},
+						{
+							"name": "LcaTable"
+						},
+						{
+							"name": "LccLca"
+						},
+						{
+							"name": "Expressions"
+						},
+						{
+							"name": "AllegedCause",
+							"description": "code_type_id = 819"
+						},
+						{
+							"name": "XrefAllegedCause",
+							"description": "code_type_id = 819"
+						},
+						{
+							"name": "CarriageMethod",
+							"description": "820"
+						},
+						{
+							"name": "XrefCarriageMethod",
+							"description": "code_type_id = 820"
+						},
+						{
+							"name": "CauseOfInjury",
+							"description": "code_type_id = 327"
+						},
+						{
+							"name": "ClaimTypeSpec",
+							"description": "code_type_id = 821"
+						},
+						{
+							"name": "XrefClaimTypeSpec",
+							"description": "code_type_id = 821"
+						},
+						{
+							"name": "XrefCauseOfInjury",
+							"description": "code_type_id = 327"
+						},
+						{
+							"name": "RuleOfCover",
+							"description": "code_type_id = 167"
+						},
+						{
+							"name": "XrefRuleOfCover",
+							"description": "code_type_id = 167"
+						},
+						{
+							"name": "ClaimDetail",
+							"description": "code_type_id = 775"
+						},
+						{
+							"name": "XrefClaimDetail",
+							"description": "code_type_id = 775"
+						},
+						{
+							"name": "Status",
+							"description": "code_type_id = 822"
+						},
+						{
+							"name": "XrefStatus",
+							"description": "code_type_id = 822"
+						},
+						{
+							"name": "HumanClaimLocation",
+							"description": "code_type_id = 824"
+						},
+						{
+							"name": "XrefHumanClmLoc",
+							"description": "code_type_id = 824"
+						},
+						{
+							"name": "TitleRank",
+							"description": "code_type_id = 311"
+						},
+						{
+							"name": "XrefTitleRank",
+							"description": "code_type_id = 311"
+						},
+						{
+							"name": "SelectedColums"
+						},
+						{
+							"name": "LccClmType"
+						},
+						{
+							"name": "PreDimClmType"
+						},
+						{
+							"name": "LccAllegedCause"
+						},
+						{
+							"name": "AllegeCauseTop"
+						},
+						{
+							"name": "AllegedCauseTop",
+							"description": "code_type_id = 819"
+						},
+						{
+							"name": "XrefAllCausedTop",
+							"description": "code_type_id = 819"
+						},
+						{
+							"name": "AllCauTopCarriageMthod"
+						},
+						{
+							"name": "CarriageCauseInjury"
+						},
+						{
+							"name": "CauseRuleOfCover"
+						},
+						{
+							"name": "RuleCoverClmDetail"
+						},
+						{
+							"name": "ClmDetEmployee"
+						},
+						{
+							"name": "Employee",
+							"description": "code_type_id = 329"
+						},
+						{
+							"name": "XrefEmployee",
+							"description": "code_type_id = 329"
+						},
+						{
+							"name": "EmployeeStatus"
+						},
+						{
+							"name": "EmployeeHuman"
+						},
+						{
+							"name": "HumanTitleRank"
+						},
+						{
+							"name": "HandlingNull"
+						},
+						{
+							"name": "HumanClmType"
+						},
+						{
+							"name": "RequiredColumns"
+						}
+					],
+					"script": "source(output(\n\t\tlccadddescrlev1 as string,\n\t\tlccadddescrlev2 as string,\n\t\tlccadddescrlev3 as string,\n\t\tlccadddescrlev4 as string,\n\t\tlccadditionaltxt as string,\n\t\tlccadjuster as string,\n\t\tlccalleged1 as string,\n\t\tlccalleged2 as string,\n\t\tlccallegedtxt as string,\n\t\tlccamount as decimal(38,18),\n\t\tlccamtdispunknown as string,\n\t\tlcccargotype as string,\n\t\tlcccarriagemethod as string,\n\t\tlcccause as string,\n\t\tlcccausetxt as string,\n\t\tlccclmamtynsw as string,\n\t\tlccclmdet as string,\n\t\tlccclmtype as string,\n\t\tlccclupcommenced as decimal(38,18),\n\t\tlccclupcompleted as decimal(38,18),\n\t\tlccconseq as string,\n\t\tlccconseqos as string,\n\t\tlcccurr as string,\n\t\tlccdecision as decimal(38,18),\n\t\tlccdisembarkedat as string,\n\t\tlccdisembarkeddate as timestamp,\n\t\tlccdisembarkiso as string,\n\t\tlccembarkedat as string,\n\t\tlccembarkeddate as timestamp,\n\t\tlccembarkiso as string,\n\t\tlccemergevac as string,\n\t\tlccfduty as decimal(38,18),\n\t\tlccgrossamount as decimal(38,18),\n\t\tlccgrosssettle as decimal(38,18),\n\t\tlcchandlebyclms as string,\n\t\tlccinitcontpoint as string,\n\t\tlccinlitigation as string,\n\t\tlccjurisdiction as string,\n\t\tlccladid as decimal(38,18),\n\t\tlcclcaid as string,\n\t\tlcclccid as string,\n\t\tlcclightcccid as string,\n\t\tlccln6 as decimal(38,18),\n\t\tlccloconvess as string,\n\t\tlccloconvesstxt as string,\n\t\tlccmafareatxt as string,\n\t\tlccmaffectarea as string,\n\t\tlccmanos as string,\n\t\tlccmanouver as string,\n\t\tlccmfkey as string,\n\t\tlccnpersons as decimal(38,18),\n\t\tlccothshipname as string,\n\t\tlccpeaid as decimal(38,18),\n\t\tlccpilotname as string,\n\t\tlccpilotonboard as string,\n\t\tlccpollutant as string,\n\t\tlccradnavynsw as string,\n\t\tlccrecovccvid as decimal(38,18),\n\t\tlccrecovcom as string,\n\t\tlccrecovcurr as string,\n\t\tlccrecovery as decimal(38,18),\n\t\tlccrecovyn as string,\n\t\tlccremarks as string,\n\t\tlccrolecat as string,\n\t\tlccrule as string,\n\t\tlccruleofcov as string,\n\t\tlccsettlement as decimal(38,18),\n\t\tlcctext as string,\n\t\tlcctrtmco as decimal(38,18),\n\t\tlccuwsign as string,\n\t\tlccvessdevi as string,\n\t\tlccvisiblcccid as string,\n\t\tlccvoyagefr as string,\n\t\tlccvoyageto as string,\n\t\tlccvoyfriso as string,\n\t\tlccvoytoiso as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> Lcc\nsource(output(\n\t\tlcaacstat as string,\n\t\tlcaadjsign as string,\n\t\tlcaagaid as string,\n\t\tlcaareacd as string,\n\t\tlcaareadescr as string,\n\t\tlcaautosetleyn as string,\n\t\tlcabigevent as string,\n\t\tlcabirtno as string,\n\t\tlcabonynsw as string,\n\t\tlcacagtyp as string,\n\t\tlcacalclamtfrinjured as string,\n\t\tlcacategorytype as string,\n\t\tlcacattype as string,\n\t\tlcaccod2 as string,\n\t\tlcaccod2date as timestamp,\n\t\tlcaccod2trmtdate as timestamp,\n\t\tlcaccod2txt35 as string,\n\t\tlcacefocc as string,\n\t\tlcacefocm as string,\n\t\tlcacefouc as string,\n\t\tlcaclintc as decimal(38,18),\n\t\tlcaclmcac as string,\n\t\tlcaclmdate as timestamp,\n\t\tlcaclmdatechd as string,\n\t\tlcaclmid as decimal(38,18),\n\t\tlcaclmintynsw as string,\n\t\tlcaclmn3 as decimal(38,18),\n\t\tlcaclmpeaid as decimal(38,18),\n\t\tlcaclmtype as string,\n\t\tlcaclodate as timestamp,\n\t\tlcacndid as string,\n\t\tlcacommonynsw as string,\n\t\tlcacompllevel as string,\n\t\tlcaconflictclm as string,\n\t\tlcacrdate as timestamp,\n\t\tlcacrobbid as string,\n\t\tlcacrsign as string,\n\t\tlcacyear as decimal(38,18),\n\t\tlcaecauseco as string,\n\t\tlcaecfid as string,\n\t\tlcaeclid as string,\n\t\tlcaecoid as string,\n\t\tlcaenassshr as decimal(38,18),\n\t\tlcaenintrst as string,\n\t\tlcaeuoffpros as decimal(38,18),\n\t\tlcaeuownpros as decimal(38,18),\n\t\tlcaexppdate as timestamp,\n\t\tlcaextadjynsw as string,\n\t\tlcaextclmid as string,\n\t\tlcafileref as decimal(38,18),\n\t\tlcafinalstatmdate as timestamp,\n\t\tlcafoadate as timestamp,\n\t\tlcafpareacd as string,\n\t\tlcafromareacd as string,\n\t\tlcageodescr as string,\n\t\tlcahour as decimal(38,18),\n\t\tlcaicaid as string,\n\t\tlcaimpexp as decimal(38,18),\n\t\tlcainsamt as decimal(38,18),\n\t\tlcainscurr as string,\n\t\tlcainsured as decimal(38,18),\n\t\tlcainsuredmno as string,\n\t\tlcainsuredmof as string,\n\t\tlcaintnote as string,\n\t\tlcaisrndcontrssigned as string,\n\t\tlcajurisdiction as string,\n\t\tlcaknvmark as string,\n\t\tlcalabid as string,\n\t\tlcalcaid as string,\n\t\tlcaldescr as string,\n\t\tlcaliabcode as decimal(38,18),\n\t\tlcaliabtxt as string,\n\t\tlcalimamt as decimal(38,18),\n\t\tlcalimcurr as string,\n\t\tlcalimdays as decimal(38,18),\n\t\tlcalimdedamt as decimal(38,18),\n\t\tlcalimrenewed as decimal(38,18),\n\t\tlcaloadate as timestamp,\n\t\tlcalodescr as string,\n\t\tlcalossco as string,\n\t\tlcalrgclmynsw as string,\n\t\tlcaltdate as timestamp,\n\t\tlcaludate as timestamp,\n\t\tlcalusign as string,\n\t\tlcamanhavsalaer as string,\n\t\tlcamfkey as string,\n\t\tlcamoveddate as timestamp,\n\t\tlcamovedsign as string,\n\t\tlcamovedto as string,\n\t\tlcamplamt as decimal(38,18),\n\t\tlcamplcurr as string,\n\t\tlcamuoffgrp as decimal(38,18),\n\t\tlcamuoffpros as decimal(38,18),\n\t\tlcamuownpros as decimal(38,18),\n\t\tlcan1nooftreatm as decimal(38,18),\n\t\tlcan2nooftreatm as decimal(38,18),\n\t\tlcan3nooftreatm as decimal(38,18),\n\t\tlcan4nooftreatm as decimal(38,18),\n\t\tlcan5nooftreatm as decimal(38,18),\n\t\tlcan6nooftreatm as decimal(38,18),\n\t\tlcan7nooftreatm as decimal(38,18),\n\t\tlcan8nooftreatm as decimal(38,18),\n\t\tlcancauseco as string,\n\t\tlcanextdate as timestamp,\n\t\tlcanextsign as string,\n\t\tlcanmclef as string,\n\t\tlcanoofpers as decimal(38,18),\n\t\tlcaobno as decimal(38,18),\n\t\tlcaoccoffdate as timestamp,\n\t\tlcaoccoffynsw as string,\n\t\tlcaoccownynsw as string,\n\t\tlcaoffice as decimal(38,18),\n\t\tlcaonoffs as decimal(38,18),\n\t\tlcaoutstm as string,\n\t\tlcapilotonboard as string,\n\t\tlcaportcccid as string,\n\t\tlcaportunlid as string,\n\t\tlcaprepayamtp as decimal(38,18),\n\t\tlcaprepaycurr as string,\n\t\tlcaprocess as string,\n\t\tlcarecovachamt as decimal(38,18),\n\t\tlcarecovachcurr as string,\n\t\tlcarecovachdate as timestamp,\n\t\tlcarecovachintnote as string,\n\t\tlcarecovachsign as string,\n\t\tlcarecovachynsw as string,\n\t\tlcarecovccvid as decimal(38,18),\n\t\tlcarecovpotamt as decimal(38,18),\n\t\tlcarecovpotcurr as string,\n\t\tlcarecovpotintnote as string,\n\t\tlcarecovpotynsw as string,\n\t\tlcarecovremdate as timestamp,\n\t\tlcareduceprem as string,\n\t\tlcaregamt as decimal(38,18),\n\t\tlcaregcurr as string,\n\t\tlcaregndate as timestamp,\n\t\tlcaregnsign as string,\n\t\tlcaregress as decimal(38,18),\n\t\tlcaregtext70 as string,\n\t\tlcarepdate as timestamp,\n\t\tlcaresumtionfrom as string,\n\t\tlcataucode as decimal(38,18),\n\t\tlcatautxt as string,\n\t\tlcataxno as string,\n\t\tlcatcauseco as string,\n\t\tlcatimnote as string,\n\t\tlcatlotype as decimal(38,18),\n\t\tlcatmcloludate as timestamp,\n\t\tlcatmclolusign as string,\n\t\tlcatmduedate as timestamp,\n\t\tlcatmextdocid as decimal(38,18),\n\t\tlcatmextduedate as timestamp,\n\t\tlcatmextludate as timestamp,\n\t\tlcatmextlusign as string,\n\t\tlcatmludate as timestamp,\n\t\tlcatmlusign as string,\n\t\tlcatmstatus as string,\n\t\tlcatoareacd as string,\n\t\tlcatranme as string,\n\t\tlcatranty as decimal(38,18),\n\t\tlcatrtmco as decimal(38,18),\n\t\tlcatzone as string,\n\t\tlcauwsign as string,\n\t\tlcawocdate as timestamp,\n\t\tlcawocstat as string,\n\t\tlcaworkplace as decimal(38,18),\n\t\tlcawrkclaim as decimal(38,18),\n\t\tlcawrkplccod as decimal(38,18),\n\t\tlcaxlmref as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> Lca\nsource(output(\n\t\tsource_code_key as string,\n\t\tsource_system as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tcode_type_id as double,\n\t\tcode2 as string,\n\t\tom_x_ref as string,\n\t\tcode_type as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> TCross\nsource(output(\n\t\tclm_source_system as string,\n\t\tclm_code as string,\n\t\tclm_source_key as string,\n\t\tinserted_by as string,\n\t\tlast_updated_by as string,\n\t\tdate_inserted as timestamp,\n\t\tdate_last_updated as timestamp,\n\t\tpk_key_clm as string,\n\t\tclm_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_claim_type.parquet']) ~> ClmType\nLcc select(mapColumn(\n\t\tlcclcaid,\n\t\tlccclmtype,\n\t\tlcclccid,\n\t\tlccmfkey,\n\t\tlccalleged1,\n\t\tlccalleged2,\n\t\tlcccarriagemethod,\n\t\tlcccause,\n\t\tlccloconvess,\n\t\tlccruleofcov,\n\t\tlcctext,\n\t\tlccclmdet,\n\t\tlccuwsign,\n\t\tlccln6,\n\t\tlccremarks,\n\t\tlcctrtmco,\n\t\tlccrolecat,\n\t\teach(match(left(name,7)=='lccaddd'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> LccTable\nLca select(mapColumn(\n\t\tlcalcaid,\n\t\tlcaclmdate\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> LcaTable\nLccTable, LcaTable join(lcclcaid == lcalcaid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> LccLca\nLccLca derive(scl_sub_claim_key = concat('P',lcclccid),\n\t\tscl_clm_key = concat('PARIS',lccclmtype),\n\t\tscl_inc_key = concat('P',lcalcaid),\n\t\tscl_alleged_cause_key = case(iifNull(lccalleged2,'Null') =='Null', lccalleged1, lccalleged2),\n\t\tscl_alleged_caused_top_key = lccalleged1,\n\t\tscl_carriage_method_key = trim(lcccarriagemethod),\n\t\tscl_cause_of_injury_key = lcccause,\n\t\tscl_claim_type_spec_key = iifNull(lccadddescrlev4, iifNull(lccadddescrlev3,iifNull(lccadddescrlev2,lccadddescrlev1))),\n\t\tscl_rule_of_cover_key = lccruleofcov,\n\t\tscl_claim_detail_key = trim(lccclmdet),\n\t\tscl_employee_key = lccuwsign,\n\t\tscl_clm_status_key = toString(lcctrtmco),\n\t\tscl_human_clm_loc_key = lccloconvess,\n\t\tscl_title_rank_key = lccrolecat,\n\t\tscl_sub_claim_desc = lcctext,\n\t\tscl_sub_claim_number = lccln6,\n\t\tscl_member_sub_claim_reference = lccmfkey,\n\t\tscl_sub_claim_remarks = lccremarks,\n\t\tscl_gard_sub_claim_id = lccmfkey) ~> Expressions\nTCross filter(code_type_id == 819 && source_system == 'PARIS') ~> AllegedCause\nAllegedCause select(mapColumn(\n\t\tsource_code_key_all_cau = source_code_key,\n\t\ttarget_code_all_cau = target_code,\n\t\ttarget_description_all_cau = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefAllegedCause\nTCross filter(code_type_id == 820 && source_system == 'PARIS') ~> CarriageMethod\nCarriageMethod select(mapColumn(\n\t\tsource_code_key_CarriageMethod = source_code_key,\n\t\ttarget_code_CarriageMethod = target_code,\n\t\ttarget_description_CarriageMethod = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefCarriageMethod\nTCross filter(code_type_id == 327 && source_system == 'PARIS') ~> CauseOfInjury\nTCross filter(code_type_id == 821 && source_system == 'PARIS') ~> ClaimTypeSpec\nClaimTypeSpec select(mapColumn(\n\t\tsource_code_key_clm_type_spec = source_code_key,\n\t\ttarget_code_clm_type_spec = target_code,\n\t\ttarget_description_clm_type_spec = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefClaimTypeSpec\nCauseOfInjury select(mapColumn(\n\t\tsource_code_key_cause_injury = source_code_key,\n\t\ttarget_code_cause_injury = target_code,\n\t\ttarget_description_cause_injury = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefCauseOfInjury\nTCross filter(code_type_id == 167 && source_system == 'PARIS') ~> RuleOfCover\nRuleOfCover select(mapColumn(\n\t\tsource_code_key_roc = source_code_key,\n\t\ttarget_code_roc = target_code,\n\t\ttarget_description_roc = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefRuleOfCover\nTCross filter(code_type_id == 775 && source_system == 'PARIS') ~> ClaimDetail\nClaimDetail select(mapColumn(\n\t\tsource_code_key_claim_detail = source_code_key,\n\t\ttarget_code_claim_detail = target_code,\n\t\ttarget_description_claim_detail = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefClaimDetail\nTCross filter(code_type_id == 822 && source_system == 'PARIS') ~> Status\nStatus select(mapColumn(\n\t\tsource_code_key_status = source_code_key,\n\t\ttarget_code_status = target_code,\n\t\ttarget_description_status = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefStatus\nTCross filter(code_type_id == 824 && source_system == 'PARIS') ~> HumanClaimLocation\nHumanClaimLocation select(mapColumn(\n\t\tsource_code_key_hcl = source_code_key,\n\t\ttarget_code_hcl = target_code,\n\t\ttarget_description_hcl = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefHumanClmLoc\nTCross filter(code_type_id == 311 && source_system == 'PARIS') ~> TitleRank\nTitleRank select(mapColumn(\n\t\tsource_code_key_TitleRank = source_code_key,\n\t\ttarget_code_TitleRank = target_code,\n\t\ttarget_description_TitleRank = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefTitleRank\nExpressions select(mapColumn(\n\t\teach(match(left(name,3)=='scl'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectedColums\nSelectedColums, PreDimClmType join(scl_clm_key == pk_key_clm,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> LccClmType\nClmType select(mapColumn(\n\t\tclm_code,\n\t\tpk_key_clm,\n\t\tclm_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> PreDimClmType\nLccClmType, XrefAllegedCause join(scl_alleged_cause_key == source_code_key_all_cau,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> LccAllegedCause\nLccAllegedCause, XrefAllCausedTop join(scl_alleged_caused_top_key == source_code_key_allcautop,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> AllegeCauseTop\nTCross filter(code_type_id == 819 && source_system == 'PARIS') ~> AllegedCauseTop\nAllegedCauseTop select(mapColumn(\n\t\tsource_code_key_allcautop = source_code_key,\n\t\ttarget_description_allcautop = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefAllCausedTop\nAllegeCauseTop, XrefCarriageMethod join(scl_carriage_method_key == source_code_key_CarriageMethod,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> AllCauTopCarriageMthod\nAllCauTopCarriageMthod, XrefCauseOfInjury join(scl_cause_of_injury_key == source_code_key_cause_injury,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> CarriageCauseInjury\nCarriageCauseInjury, XrefRuleOfCover join(scl_rule_of_cover_key == source_code_key_roc,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> CauseRuleOfCover\nCauseRuleOfCover, XrefClaimDetail join(scl_claim_detail_key == source_code_key_claim_detail,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RuleCoverClmDetail\nRuleCoverClmDetail, XrefEmployee join(scl_employee_key == source_code_key_employee,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> ClmDetEmployee\nTCross filter(code_type_id == 329 && source_system == 'PARIS') ~> Employee\nEmployee select(mapColumn(\n\t\tsource_code_key_employee = source_code_key,\n\t\ttarget_code_employee = target_code,\n\t\ttarget_description_employee = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefEmployee\nClmDetEmployee, XrefStatus join(scl_clm_status_key == source_code_key_status,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> EmployeeStatus\nEmployeeStatus, XrefHumanClmLoc join(scl_human_clm_loc_key == source_code_key_hcl,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> EmployeeHuman\nEmployeeHuman, XrefTitleRank join(scl_title_rank_key == source_code_key_TitleRank,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> HumanTitleRank\nHumanClmType derive(scl_sub_claim_type_code = clm_code,\n\t\tscl_sub_claim_type_description = clm_description,\n\t\tscl_sub_claim_detail_code = iifNull(target_code_claim_detail,'N/A'),\n\t\tscl_sub_claim_detail_desc = iifNull(target_description_claim_detail,'Not Applicable'),\n\t\tscl_sub_claim_status = iifNull(target_description_status,'Not Applicable'),\n\t\tscl_rule_of_cover_code = iifNull(target_code_roc, 'N/A'),\n\t\tscl_rule_of_cover_description = iifNull(target_description_roc, 'Not Applicable'),\n\t\tscl_sub_claim_handler_code = iifNull(target_code_hcl, 'N/A'),\n\t\tscl_sub_claim_handler_description = iifNull(target_description_hcl, 'Not Applicable'),\n\t\tscl_human_location = iifNull(target_description_hcl,'Not Applicable'),\n\t\tscl_cause_of_injury = iifNull(target_description_cause_injury,'Not Applicable'),\n\t\tscl_title_rank_top = iifNull(target_description_TitleRank, 'Not Applicable'),\n\t\tscl_alleged_cause = iifNull(target_description_all_cau, 'Not Applicable'),\n\t\tscl_alleged_cause_top = iifNull(target_description_allcautop, 'Not Applicable'),\n\t\tscl_carriage_method = iifNull(target_description_CarriageMethod, 'Not Applicable'),\n\t\tscl_claim_type_specification = iifNull(target_description_clm_type_spec, 'Not Applicable')) ~> HandlingNull\nHumanTitleRank, XrefClaimTypeSpec join(scl_claim_type_spec_key == source_code_key_clm_type_spec,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> HumanClmType\nHandlingNull select(mapColumn(\n\t\tscl_inc_key,\n\t\tpk_key = scl_sub_claim_key,\n\t\teach(match(right(name,3)!='key'&&left(name,3)=='scl'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RequiredColumns\nRequiredColumns sink(input(\n\t\tagt_description as string,\n\t\tagt_key as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_sub_claim_pa.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> PreDimSubClaimPa"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_pre_dim_vessel_type_group')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "dwh_prepare/pre_dim"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Oltp05",
+								"type": "DatasetReference"
+							},
+							"name": "StaVesselTypeGroup"
+						},
+						{
+							"dataset": {
+								"referenceName": "Oltp05",
+								"type": "DatasetReference"
+							},
+							"name": "StaRiskDriverGroup"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "pre_dim_vessel_type_group",
+								"type": "DatasetReference"
+							},
+							"name": "PreDimVesselTypeGroup"
+						}
+					],
+					"transformations": [
+						{
+							"name": "RiskD1"
+						},
+						{
+							"name": "VesslTypeGroup"
+						},
+						{
+							"name": "RiskD6"
+						},
+						{
+							"name": "RiskGroup1"
+						},
+						{
+							"name": "RiskD2"
+						},
+						{
+							"name": "RiskD3"
+						},
+						{
+							"name": "RiskD4"
+						},
+						{
+							"name": "RiskD5"
+						},
+						{
+							"name": "RiskIV"
+						},
+						{
+							"name": "RiskLOH"
+						},
+						{
+							"name": "RiskSize"
+						},
+						{
+							"name": "RiskLvl4"
+						},
+						{
+							"name": "RiskLvl3"
+						},
+						{
+							"name": "RiskGrdGrp"
+						},
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "RiskGroup2"
+						},
+						{
+							"name": "Select2"
+						},
+						{
+							"name": "RiskGroup3"
+						},
+						{
+							"name": "Select3"
+						},
+						{
+							"name": "RiskGroup4"
+						},
+						{
+							"name": "Select4"
+						},
+						{
+							"name": "RiskGroup5"
+						},
+						{
+							"name": "Select5"
+						},
+						{
+							"name": "RiskGroupIV"
+						},
+						{
+							"name": "Select6"
+						},
+						{
+							"name": "RiskGroupLOH"
+						},
+						{
+							"name": "Select7"
+						},
+						{
+							"name": "RisGroupSize"
+						},
+						{
+							"name": "Select8"
+						},
+						{
+							"name": "RiskGroupLvl3"
+						},
+						{
+							"name": "Select9"
+						},
+						{
+							"name": "RiskGroupLvl4"
+						},
+						{
+							"name": "Select10"
+						},
+						{
+							"name": "RiskGardGp"
+						},
+						{
+							"name": "Select11"
+						},
+						{
+							"name": "RiskGroupD6"
+						},
+						{
+							"name": "RelevantColumns"
+						},
+						{
+							"name": "DerivedColumn1"
+						}
+					],
+					"script": "source(output(\n\t\tfk_gard_group as double,\n\t\tfk_rsk_driver_grp_1 as double,\n\t\tfk_rsk_driver_grp_2 as double,\n\t\tfk_rsk_driver_grp_3 as double,\n\t\tfk_rsk_driver_grp_4 as double,\n\t\tfk_rsk_driver_grp_5 as double,\n\t\tfk_rsk_driver_grp_6 as double,\n\t\tfk_rsk_driver_iv as double,\n\t\tfk_rsk_driver_loh as double,\n\t\tfk_rsk_driver_lvl3 as double,\n\t\tfk_rsk_driver_lvl4 as double,\n\t\tfk_rsk_driver_size as double,\n\t\tfk_rsk_grp_cargo as double,\n\t\tfk_rsk_grp_crew as double,\n\t\tfk_rsk_grp_hull as double,\n\t\tfk_rsk_grp_machinery as double,\n\t\tfk_rsk_grp_main as double,\n\t\tfk_rsk_grp_passenger as double,\n\t\tfk_rsk_grp_pollution as double,\n\t\tfk_rsk_grp_ri as double,\n\t\tfk_rsk_grp_size as double,\n\t\tfp_3_ltr_code as string,\n\t\tfp_level_5_code as string,\n\t\tfp_level_5_decode as string,\n\t\tfp_level_5_desc as string,\n\t\tfp_level_5_hull as double,\n\t\tfp_level_5_sub as string,\n\t\tinsert_date as timestamp,\n\t\tpk_vessel_type_group as double,\n\t\tupdate_date as timestamp,\n\t\tvsl_cefor_group as string,\n\t\tvsl_desc as string,\n\t\tvsl_gard_group as string,\n\t\tvsl_marine_group as string,\n\t\tvsl_risk_group as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaVesselTypeGroup\nsource(output(\n\t\tgroup_code as string,\n\t\tgroup_code_alternative as string,\n\t\tgroup_desc as string,\n\t\tgroup_desc_sort as string,\n\t\tgroup_name as string,\n\t\tpk_risk_driver_group as double,\n\t\ttable_name as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaRiskDriverGroup\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code1 = group_code,\n\t\tgroup_desc1 = group_desc,\n\t\tgroup_desc_sort1 = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskD1\nStaVesselTypeGroup select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> VesslTypeGroup\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code_D6 = group_code,\n\t\tgroup_code_alternative_D6 = group_code_alternative,\n\t\tgroup_desc_D6 = group_desc,\n\t\tgroup_desc_sort_D6 = group_desc_sort,\n\t\tgroup_name_D6 = group_name,\n\t\tpk_risk_driver_group_D6 = pk_risk_driver_group,\n\t\ttable_name_D6 = table_name\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskD6\nVesslTypeGroup, RiskD1 join(fk_rsk_driver_grp_1 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup1\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code2 = group_code,\n\t\tgroup_desc2 = group_desc,\n\t\tgroup_desc_sort2 = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskD2\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code3 = group_code,\n\t\tgroup_desc3 = group_desc,\n\t\tgroup_desc_sort3 = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskD3\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code4 = group_code,\n\t\tgroup_desc4 = group_desc,\n\t\tgroup_desc_sort4 = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskD4\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code5 = group_code,\n\t\tgroup_desc5 = group_desc,\n\t\tgroup_desc_sort5 = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskD5\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code_IV = group_code,\n\t\tgroup_desc_IV = group_desc,\n\t\tgroup_desc_sort_IV = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskIV\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code_LOH = group_code,\n\t\tgroup_desc_LOH = group_desc,\n\t\tgroup_desc_sort_LOH = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskLOH\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code_Size = group_code,\n\t\tgroup_desc_Size = group_desc,\n\t\tgroup_desc_sort_Size = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskSize\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code_Lvl4 = group_code,\n\t\tgroup_code_alternative_Lvl4 = group_code_alternative,\n\t\tgroup_desc_Lvl4 = group_desc,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskLvl4\nStaRiskDriverGroup select(mapColumn(\n\t\tfp_Lvl3_code = group_code,\n\t\tgroup_code_alternative_Lvl3 = group_code_alternative,\n\t\tfp_Lvl3_decode = group_desc,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskLvl3\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code_Ggp = group_code,\n\t\tgroup_code_alternative_Ggp = group_code_alternative,\n\t\tgroup_desc_Ggp = group_desc,\n\t\tgroup_desc_sort_Ggp = group_desc_sort,\n\t\tgroup_name_Ggp = group_name,\n\t\tpk_risk_driver_group,\n\t\ttable_name_Ggp = table_name\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskGrdGrp\nRiskGroup1 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1, RiskD2 join(fk_rsk_driver_grp_2 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup2\nRiskGroup2 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSelect2, RiskD3 join(fk_rsk_driver_grp_3 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup3\nRiskGroup3 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nSelect3, RiskD4 join(fk_rsk_driver_grp_4 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup4\nRiskGroup4 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nSelect4, RiskD5 join(fk_rsk_driver_grp_5 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup5\nRiskGroup5 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select5\nSelect5, RiskIV join(fk_rsk_driver_iv == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroupIV\nRiskGroupIV select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV,\n\t\tgroup_desc_IV,\n\t\tgroup_desc_sort_IV\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select6\nSelect6, RiskLOH join(fk_rsk_driver_loh == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroupLOH\nRiskGroupLOH select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV,\n\t\tgroup_desc_IV,\n\t\tgroup_desc_sort_IV,\n\t\tgroup_code_LOH,\n\t\tgroup_desc_LOH,\n\t\tgroup_desc_sort_LOH\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select7\nSelect7, RiskSize join(fk_rsk_driver_size == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RisGroupSize\nRisGroupSize select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV,\n\t\tgroup_desc_IV,\n\t\tgroup_desc_sort_IV,\n\t\tgroup_code_LOH,\n\t\tgroup_desc_LOH,\n\t\tgroup_desc_sort_LOH,\n\t\tgroup_code_Size,\n\t\tgroup_desc_Size\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select8\nSelect8, RiskLvl4 join(fk_rsk_driver_lvl4 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroupLvl3\nRiskGroupLvl3 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV,\n\t\tgroup_desc_IV,\n\t\tgroup_desc_sort_IV,\n\t\tgroup_code_LOH,\n\t\tgroup_desc_LOH,\n\t\tgroup_desc_sort_LOH,\n\t\tgroup_code_Size,\n\t\tgroup_desc_Size,\n\t\tgroup_Lvl4_code = group_code_Lvl4,\n\t\tFp_Lvl4_Group = group_code_alternative_Lvl4,\n\t\tgroup_Lvl4_decode = group_desc_Lvl4\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select9\nSelect9, RiskLvl3 join(fk_rsk_driver_lvl3 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroupLvl4\nRiskGroupLvl4 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV,\n\t\tgroup_desc_IV,\n\t\tgroup_desc_sort_IV,\n\t\tgroup_code_LOH,\n\t\tgroup_desc_LOH,\n\t\tgroup_desc_sort_LOH,\n\t\tgroup_code_Size,\n\t\tgroup_desc_Size,\n\t\tgroup_Lvl4_code,\n\t\tFp_Lvl4_Group,\n\t\tgroup_Lvl4_decode,\n\t\tgroup_Lvl3_decode = fp_Lvl3_code,\n\t\tFp_Lvl3_Group = group_code_alternative_Lvl3,\n\t\tgroup_desc_Lvl3 = fp_Lvl3_decode\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select10\nSelect10, RiskGrdGrp join(fk_gard_group == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGardGp\nRiskGardGp select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV,\n\t\tgroup_desc_IV,\n\t\tgroup_desc_sort_IV,\n\t\tgroup_code_LOH,\n\t\tgroup_desc_LOH,\n\t\tgroup_desc_sort_LOH,\n\t\tgroup_code_Size,\n\t\tgroup_desc_Size,\n\t\tgroup_Lvl4_code,\n\t\tFp_Lvl4_Group,\n\t\tgroup_Lvl4_decode,\n\t\tgroup_Lvl3_decode,\n\t\tFp_Lvl3_Group,\n\t\tgroup_desc_Lvl3,\n\t\tVessel_Gard_Group = group_desc_Ggp\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select11\nSelect11, RiskD6 join(fk_rsk_driver_grp_6 == pk_risk_driver_group_D6,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroupD6\nDerivedColumn1 select(mapColumn(\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tvsl_group1 = group_code1,\n\t\tvsl_group1_desc = group_desc1,\n\t\tvsl_group1_sort = group_desc_sort1,\n\t\tvsl_group2 = group_code2,\n\t\tvsl_group2_desc = group_desc2,\n\t\tvsl_group2_sort = group_desc_sort2,\n\t\tvsl_group3 = group_code3,\n\t\tvsl_group3_desc = group_desc3,\n\t\tvsl_group3_sort = group_desc_sort3,\n\t\tvsl_group4 = group_code4,\n\t\tvsl_group4_desc = group_desc4,\n\t\tvsl_group4_sort = group_desc_sort4,\n\t\tvsl_group5 = group_code5,\n\t\tvsl_group5_desc = group_desc5,\n\t\tvsl_group5_sort = group_desc_sort5,\n\t\tvsl_groupIV = group_code_IV,\n\t\tvsl_groupIV_desc = group_desc_IV,\n\t\tvsl_groupIV_sort = group_desc_sort_IV,\n\t\tvsl_groupLOH = group_code_LOH,\n\t\tvsl_groupLOH_desc = group_desc_LOH,\n\t\tvsl_groupLOH_sort = group_desc_sort_LOH,\n\t\tgroup_code_Size,\n\t\tgroup_desc_Size,\n\t\tfp_Lvl4_code = group_Lvl4_code,\n\t\tfp_Lvl4_Group = Fp_Lvl4_Group,\n\t\tgroup_Lvl4_decode,\n\t\tgroup_Lvl3_decode,\n\t\tFp_Lvl3_Group,\n\t\tgroup_desc_Lvl3,\n\t\tVessel_Gard_Group,\n\t\tVessel_Group_6 = group_code_D6,\n\t\tgroup_code_alternative_D6,\n\t\tVessel_Group_6_desc = group_code_D6\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> RelevantColumns\nRiskGroupD6 derive(group_code1 = toInteger(group_code1),\n\t\tgroup_code2 = toInteger(group_code2),\n\t\tgroup_code3 = toInteger(group_code3),\n\t\tgroup_code4 = toInteger(group_code4),\n\t\tgroup_code5 = toInteger(group_code5),\n\t\tgroup_code_D6 = toInteger(group_code_D6),\n\t\tgroup_code_IV = toInteger(group_code_IV),\n\t\tgroup_code_LOH = toInteger(group_code_LOH),\n\t\tFp_Lvl4_Group = toInteger(Fp_Lvl4_Group),\n\t\tFp_Lvl3_Group = toInteger(Fp_Lvl3_Group)) ~> DerivedColumn1\nRelevantColumns sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_vessel_type_group.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> PreDimVesselTypeGroup"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_sf_company')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Oltp05",
+								"type": "DatasetReference"
+							},
+							"name": "SfCompanyNew",
+							"description": "Sf Comapny new from Oltp05"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "sf_company",
+								"type": "DatasetReference"
+							},
+							"name": "SfCompany"
+						}
+					],
+					"transformations": [
+						{
+							"name": "NotNullCompany"
+						},
+						{
+							"name": "RelevantColumns"
+						},
+						{
+							"name": "Deduplicate"
+						},
+						{
+							"name": "Expression"
+						}
+					],
+					"script": "source(output(\n\t\taccount_resp_me as string,\n\t\taccount_resp_pi as string,\n\t\taccount_status as string,\n\t\tclient_lost_reason as string,\n\t\tcompany_email as string,\n\t\tcompany_id as double,\n\t\tcompany_name as string,\n\t\tcompany_owner_full_name as string,\n\t\tcompany_owner_id as string,\n\t\tcountry as string,\n\t\tcuo_full_name as string,\n\t\tcuo_user_id as string,\n\t\tdate_inserted as timestamp,\n\t\tdate_updated as timestamp,\n\t\tgard_contact_id as string,\n\t\tmarket_area_code as string,\n\t\tmarket_area_description as string,\n\t\tmarket_area_id as string,\n\t\tparent_company_id as double,\n\t\tparent_company_name as string,\n\t\tparis_gic_id as double,\n\t\tprimary_contact_email as string,\n\t\tprimary_contact_name as string,\n\t\tsf_last_updated_date as timestamp,\n\t\tsource_system as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> SfCompanyNew\nSfCompanyNew filter(iifNull(company_name,'NULL') != 'NULL' && iifNull(company_id,00) != 00) ~> NotNullCompany\nNotNullCompany select(mapColumn(\n\t\taccount_resp_me,\n\t\taccount_resp_pi,\n\t\taccount_status,\n\t\tclient_lost_reason,\n\t\tcompany_email,\n\t\tcompany_id,\n\t\tcompany_name,\n\t\tcompany_owner_full_name,\n\t\tgard_contact_id,\n\t\tgard_market_area_code = market_area_code,\n\t\tgard_market_area_desc = market_area_description,\n\t\tparent_company_id,\n\t\tparent_company_name,\n\t\tsource_system_id = paris_gic_id,\n\t\tprimary_contact_email,\n\t\tprimary_contact_name,\n\t\tsource_system\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RelevantColumns\nRelevantColumns aggregate(groupBy(company_id),\n\teach(match(name!='company_id'), $$ = first($$))) ~> Deduplicate\nDeduplicate derive(company_id = toInteger(company_id),\n\t\tsource_system_id = case(iifNull(source_system_id,0)==0, toInteger(company_id) , toInteger(source_system_id)),\n\t\tsource_system = case(iifNull(source_system,'NULL')=='NULL','SF', upper(source_system)),\n\t\tgard_market_area_code = substring(gard_market_area_code, 1, 10)) ~> Expression\nExpression sink(input(\n\t\tFROM_CURRENCY_ID as double,\n\t\tTO_CURRENCY_ID as double,\n\t\tEXCHANGE_FROM_DATE as timestamp,\n\t\tEXCHANGE_RATE as decimal(38,18),\n\t\tEXCHANGE_TO_DATE as timestamp,\n\t\tFROM_CURRENCY_CODE as string,\n\t\tTO_CURRENCY_CODE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['sf_company.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SfCompany"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/m_sf_company_top_group')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "dwh_stage"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "sf_company_b_tree",
+								"type": "DatasetReference"
+							},
+							"name": "CompanyBtree"
+						},
+						{
+							"dataset": {
+								"referenceName": "sf_company_b_tree",
+								"type": "DatasetReference"
+							},
+							"name": "ComapnyBtreeRight"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "sf_company_top_group",
+								"type": "DatasetReference"
+							},
+							"name": "SfCompanyTopGroup"
+						}
+					],
+					"transformations": [
+						{
+							"name": "leftRightCompany"
+						},
+						{
+							"name": "FilteredValues"
+						},
+						{
+							"name": "SelectedColumns"
+						}
+					],
+					"script": "source(output(\n\t\tCOMPANY_NAME as string,\n\t\tCOMPANY_ID as double,\n\t\tPARENT_COMPANY_ID as double,\n\t\tLEFT_NODE as double,\n\t\tRIGHT_NODE as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> CompanyBtree\nsource(output(\n\t\tCOMPANY_NAME as string,\n\t\tCOMPANY_ID as double,\n\t\tPARENT_COMPANY_ID as double,\n\t\tLEFT_NODE as double,\n\t\tRIGHT_NODE as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> ComapnyBtreeRight\nCompanyBtree, ComapnyBtreeRight join(CompanyBtree@LEFT_NODE >= ComapnyBtreeRight@LEFT_NODE\n\t&& CompanyBtree@LEFT_NODE <= ComapnyBtreeRight@RIGHT_NODE,\n\tjoinType:'inner',\n\tbroadcast: 'left')~> leftRightCompany\nleftRightCompany filter(ComapnyBtreeRight@PARENT_COMPANY_ID == -1) ~> FilteredValues\nFilteredValues select(mapColumn(\n\t\tcompany_name = CompanyBtree@COMPANY_NAME,\n\t\tcompany_id = CompanyBtree@COMPANY_ID,\n\t\tcompany_name_top_group = ComapnyBtreeRight@COMPANY_NAME,\n\t\tcompany_id_top_group = ComapnyBtreeRight@COMPANY_ID\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectedColumns\nSelectedColumns sink(input(\n\t\tCOMPANY_NAME as string,\n\t\tCOMPANY_ID as double,\n\t\tPARENT_COMPANY_ID as double,\n\t\tLEFT_NODE as double,\n\t\tRIGHT_NODE as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['sf_company_top_group.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SfCompanyTopGroup"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyAzureToOraclePeatable')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_uhu",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "dwh_stage.p_peatable"
+							},
+							{
+								"name": "Destination",
+								"value": "AZURE_DWH.P_PEATABLE"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource"
+							},
+							"sink": {
+								"type": "OracleSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "peapeaid",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEAPEAID",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaccode",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACCODE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacomp2",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACOMP2",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastopuse",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEASTOPUSE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peainvisible",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAINVISIBLE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peapersid",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAPERSID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peacolid",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACOLID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peamdescr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAMDESCR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "pealang2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEALANG2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peabirtws",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEABIRTWS",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peasubtype",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEASUBTYPE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peabirtno",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEABIRTNO",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peasw10",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEASW10",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peapersrfl",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEAPERSRFL",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastopcod",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTOPCOD",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "pearesdat",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEARESDAT",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peanopurr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEANOPURR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaincreday",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAINCREDAY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaingiro",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAINGIRO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaingirono",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAINGIRONO",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peanotaco",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEANOTACO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peapurtyp",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPURTYP",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peanotlay",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEANOTLAY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peanotsort",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEANOTSORT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaswink",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASWINK",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaoutcreday",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAOUTCREDAY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaoutgiro",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAOUTGIRO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaoutgirono",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAOUTGIRONO",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaswrun",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASWRUN",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclomet",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLOMET",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peanopdue",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEANOPDUE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastatyp",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTATYP",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastaamt",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTAAMT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peasttniv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTTNIV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastaniv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTANIV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaprovad",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPROVAD",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaprotyp",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPROTYP",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacloclm",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLOCLM",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclmadv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLMADV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaprobo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAAPROBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaaddbo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAAADDBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaclobo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAACLOBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaclmbo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAACLMBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaacorbo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAACORBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peamexcdate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEAMEXCDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peamexcurr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAMEXCURR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peamexamt",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEAMEXAMT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peamexpro",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "PEAMEXPRO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacclcurr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACCLCURR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peacclamt",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEACCLAMT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaccint",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACCINT",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaccintr",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "PEACCINTR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacalcurr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACALCURR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peacalamt",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEACALAMT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaxlcurr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAXLCURR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaxlpoin",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEAXLPOIN",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiyear",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIYEAR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastensw",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTENSW",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastdate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEASTDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peaendate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEAENDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peamaxper",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "PEAMAXPER",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiediv",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEDIV",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiebusndiv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIEBUSNDIV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaie2busndiv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIE2BUSNDIV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaie3busndiv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIE3BUSNDIV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiesect",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIESECT",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiebusnse",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIEBUSNSE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaie2busnse",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIE2BUSNSE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaie3busnse",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAIE3BUSNSE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT3",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint4",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT4",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaieint5",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIEINT5",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecond",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAIECOND",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecon1",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIECON1",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecon2",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIECON2",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecon3",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIECON3",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecon4",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIECON4",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaiecon5",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEAIECON5",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacrdate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEACRDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peacrsign",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACRSIGN",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "pealudate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEALUDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "pealusign",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEALUSIGN",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peasex",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEASEX",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "date_inserted",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "DATE_INSERTED",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "date_last_updated",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "DATE_LAST_UPDATED",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "inserted_by",
+											"type": "String"
+										},
+										"sink": {
+											"name": "INSERTED_BY",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "last_updated_by",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LAST_UPDATED_BY",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "map_date",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "MAP_DATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peaorgno",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAORGNO",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclosmailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLOSMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclmmailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLMMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peastoppremnote",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEASTOPPREMNOTE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaingiroludate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEAINGIROLUDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peainvnotify",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAINVNOTIFY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacorrmailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACORRMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaingirolusign",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAINGIROLUSIGN",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaknvmark",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAKNVMARK",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaprenotify",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPRENOTIFY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclamailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLAMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaddbor",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAADDBOR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaprobor",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPROBOR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peapurnotify",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPURNOTIFY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclmbor",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLMBOR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaoutgiroludate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PEAOUTGIROLUDATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclmintynsw",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEACLMINTYNSW",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peamailsizemb",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "PEAMAILSIZEMB",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaclobor",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACLOBOR",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacorbo",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEACORBO",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaclmadv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAACLMADV",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peausecolfee",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAUSECOLFEE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaoutgirolusign",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAOUTGIROLUSIGN",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaaddmailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAADDMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peasttprmclm",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEASTTPRMCLM",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peaprovmailfreq",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEAPROVMAILFREQ",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peadueday",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PEADUEDAY",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peanotdays",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "PEANOTDAYS",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peafromcomp",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEAFROMCOMP",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "peacrmid",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "PEACRMID",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "pealeicode",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEALEICODE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaextid",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAEXTID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "peaextid2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PEAEXTID2",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Sourceazurepeatable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Oracle_destination_peatable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "copy job/marts_to_oracle"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyOltp05ConfigFile')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_Configfile",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "AZURE_READ.AZURE_CONFIG"
+							},
+							{
+								"name": "Destination",
+								"value": "raw/Static/config_file.parquet"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"oracleReaderQuery": "select table_name table_name from azure_config \nwhere oracle_schema_name not like 'AGRINT'",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "oracle_configfile_oltp05",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "lake_configfile_oltp05",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Copy_Agresso')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Temp copy job to get the Agresso data",
+				"activities": [
+					{
+						"name": "ForEach_Agresso",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@pipeline().parameters.cw_items",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Copy_Agresso",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [
+										{
+											"name": "Source",
+											"value": "STAGE_ITF.@{item().source.table}"
+										},
+										{
+											"name": "Destination",
+											"value": "dwh-stage/Agresso/@{item().destination.fileName}"
+										}
+									],
+									"typeProperties": {
+										"source": {
+											"type": "OracleSource",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "scr_oracle_agresso",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_table": "@item().source.table"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "Agresso",
+											"type": "DatasetReference",
+											"parameters": {
+												"fileName": {
+													"value": "@item().destination.fileName",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"parameters": {
+					"cw_items": {
+						"type": "Array",
+						"defaultValue": [
+							{
+								"source": {
+									"table": "S_UDV_EMPLOYEE"
+								},
+								"destination": {
+									"fileName": "udv_employee.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "S_UDV_OFFICE"
+								},
+								"destination": {
+									"fileName": "udv_office.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "S_UDV_ORGUNIT"
+								},
+								"destination": {
+									"fileName": "udv_orgunit.parquet"
+								}
+							}
+						]
+					}
+				},
+				"folder": {
+					"name": "copy job/dwh_stage/Agresso"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/P_Sf_Company')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "m_sf_company",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "m_sf_company",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"SfCompanyNew": {
+										"fileName": "\"sf_company_new\""
+									},
+									"SfCompany": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/m_sf_company')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/copy_exact_to_lake')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup_oltp05",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name = 'EXACT_SRC'\n",
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"dataset": {
+								"referenceName": "oracle_configfile_oltp05",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEachOltp05",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Lookup_oltp05",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup_oltp05').output.value",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Copy Oltp05",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "OracleSource",
+											"oracleReaderQuery": {
+												"value": "SELECT * FROM @{item().table_name} ",
+												"type": "Expression"
+											},
+											"partitionOption": "None",
+											"queryTimeout": "02:00:00"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "oracle_exact",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "Exact",
+											"type": "DatasetReference",
+											"parameters": {
+												"fileName": {
+													"value": "@{item().table_name}",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"folder": {
+					"name": "copy job/dwh_stage/oltp05"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/copy_exchange_rate_to_lake')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "UntilExRateOraSrcecmplte",
+						"type": "Until",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('inside_lkp_exchange_rate_status').output.firstRow.load_completion_status,'Y')",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Wait1",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 180
+									}
+								},
+								{
+									"name": "inside_lkp_exchange_rate_status",
+									"type": "Lookup",
+									"dependsOn": [
+										{
+											"activity": "Wait1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.00:10:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "OracleSource",
+											"oracleReaderQuery": "select \"load_completion_status\" from \"hlp_exchange_rate_status\"",
+											"partitionOption": "None",
+											"queryTimeout": "02:00:00"
+										},
+										"dataset": {
+											"referenceName": "oracle_exchange_rate_status",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									}
+								},
+								{
+									"name": "Set variable1",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "inside_lkp_exchange_rate_status",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "vSourceLoadstatus",
+										"value": {
+											"value": "@activity('inside_lkp_exchange_rate_status').output.firstRow.load_completion_status",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"timeout": "0.01:00:00"
+						}
+					},
+					{
+						"name": "copy_hlp_exchange_rate",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "UntilExRateOraSrcecmplte",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "oracle_exchange_rate",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "stage_hlp_exchange_rate",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"variables": {
+					"vSourceLoadstatus": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "copy job/dwh_stage/oltp05"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/copy_lloyds_to_lake')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -840,18 +3081,21 @@
 						}
 					}
 				],
+				"folder": {
+					"name": "mappings/dwh_stage"
+				},
 				"annotations": []
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/m_hlp_exchange_rate_usd')]",
+			"name": "[concat(parameters('factoryName'), '/m_dim_country')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "m_hlp_exchange_rate_usd",
+						"name": "m_dim_country",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
@@ -864,12 +3108,12 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "m_hlp_exchange_rate_usd",
+								"referenceName": "m_dim_country",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"hlpExhangeRate": {},
-									"hlpExchangeRateUSD": {}
+									"preDimCountry": {},
+									"DimCountry": {}
 								}
 							},
 							"staging": {},
@@ -885,13 +3129,13 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/m_pre_dim_agreement_pa')]",
+			"name": "[concat(parameters('factoryName'), '/m_dim_coverage')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "m_pre_dim_agreement_pa",
+						"name": "m_dim_coverage",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
@@ -904,29 +3148,12 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "m_pre_dim_agreement_pa",
+								"referenceName": "m_dim_coverage",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"Pagatable": {
-										"fileName": "\"p_agatable\""
-									},
-									"Pagztable": {
-										"fileName": "\"p_agztable\""
-									},
-									"Ppebtable": {
-										"fileName": "\"p_pebtable\""
-									},
-									"tcrossreference": {
-										"fileName": "tcrossreference.parquet"
-									},
-									"SrcSfCompany": {
-										"fileName": "\"sf_company_new\""
-									},
-									"DimTime": {
-										"fileName": "\"sta_dim_time\""
-									},
-									"PreDimAgreement": {}
+									"preDimCoverage": {},
+									"dimCoverage": {}
 								}
 							},
 							"staging": {},
@@ -940,782 +3167,6 @@
 				"annotations": []
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pre_dim_vessel_type_group')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "m_pre_dim_vessel_type_group",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "m_pre_dim_vessel_type_group",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"StaVesselTypeGroup": {
-										"fileName": "\"sta_vessl_type_group\""
-									},
-									"StaRiskDriverGroup": {
-										"fileName": "\"sta_risk_driver_group\""
-									},
-									"PreDimVesselTypeGroup": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/load_exchange_rate')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "lookup_exchange_file_status",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.00:10:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"oracleReaderQuery": "select \"file_arrival_status\" from \"hlp_exchange_rate_status\"",
-								"partitionOption": "None",
-								"queryTimeout": "00:10:00"
-							},
-							"dataset": {
-								"referenceName": "oracle_exchange_rate_status",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "If Condition1",
-						"type": "IfCondition",
-						"dependsOn": [
-							{
-								"activity": "lookup_exchange_file_status",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(activity('lookup_exchange_file_status').output.firstRow.file_arrival_status,'Y')",
-								"type": "Expression"
-							},
-							"ifFalseActivities": [
-								{
-									"name": "pipeline_send_email",
-									"type": "ExecutePipeline",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"pipeline": {
-											"referenceName": "pipeline_send_email",
-											"type": "PipelineReference"
-										},
-										"waitOnCompletion": true,
-										"parameters": {
-											"pPipelineName": "Pipeline Name",
-											"pEmailSubject": "ADF DWH Alert ! Exchange rate file not arrived to load and copy into Azure.",
-											"pEmailBody": "Exchange rate file not available",
-											"pEmailTo": "sudipta.dutta@gard.no;siv.borve@gard.no"
-										}
-									}
-								}
-							],
-							"ifTrueActivities": [
-								{
-									"name": "copy_exchange_rate_to_lake",
-									"type": "ExecutePipeline",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"pipeline": {
-											"referenceName": "copy_exchange_rate_to_lake",
-											"type": "PipelineReference"
-										},
-										"waitOnCompletion": true,
-										"parameters": {}
-									}
-								}
-							]
-						}
-					},
-					{
-						"name": "error_handling",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "If Condition1",
-								"dependencyConditions": [
-									"Failed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "pipeline_error_handling",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"pPipelineName": "load_exchange_rate",
-								"pPipelineErrorMsg": "Pipeline failed. Please check"
-							}
-						}
-					},
-					{
-						"name": "pipeline_send_email_1",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "If Condition1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "pipeline_send_email",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"pPipelineName": "load_exchange_rate",
-								"pEmailSubject": "ADF DWH Alert ! Exchange rate copy job completed successfully",
-								"pEmailBody": "HLP_EXCHNAGE_RATE data copied into Azure SQL server successfully",
-								"pEmailTo": "sudipta.dutta@gard.no;siv.borve@gard.no"
-							}
-						}
-					}
-				],
-				"folder": {
-					"name": "pipeline/dwh_stage"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/load_pre_dim')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Set variable1",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "vPreDim",
-							"value": "'This is inside load_pre_dim'"
-						}
-					},
-					{
-						"name": "m_pre_dim_agreement_pa",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "Set variable1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "m_pre_dim_agreement_pa",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"variables": {
-					"vPreDim": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "pipeline/dwh_prepare"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/m_pre_dim_agreement_pa')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/load_stage_common')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "m_hlp_exchange_rate_usd",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "m_hlp_exchange_rate_usd",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"folder": {
-					"name": "pipeline/dwh_stage"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/m_hlp_exchange_rate_usd')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/load_stage_exact_table')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "LkpSrcLoadStatusExact",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.00:03:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"oracleReaderQuery": "select fn_check_exact_source_load LOAD_STATUS from dummy_table_dataset",
-								"partitionOption": "None",
-								"queryTimeout": "00:05:00"
-							},
-							"dataset": {
-								"referenceName": "Oracle_oltp05_dummy_table",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "If_table_is_loaded",
-						"type": "IfCondition",
-						"dependsOn": [
-							{
-								"activity": "LkpSrcLoadStatusExact",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(activity('LkpSrcLoadStatusExact').output.firstRow.LOAD_STATUS,'N')",
-								"type": "Expression"
-							},
-							"ifFalseActivities": [
-								{
-									"name": "copy_exact_to_lake",
-									"type": "ExecutePipeline",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"pipeline": {
-											"referenceName": "copy_exact_to_lake",
-											"type": "PipelineReference"
-										},
-										"waitOnCompletion": true,
-										"parameters": {}
-									}
-								}
-							],
-							"ifTrueActivities": [
-								{
-									"name": "Set variable1",
-									"type": "SetVariable",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "vTableLoaded",
-										"value": "'Empty Table'"
-									}
-								}
-							]
-						}
-					}
-				],
-				"variables": {
-					"vTableLoaded": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "pipeline/dwh_stage"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/load_stage_lloyds_table')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "LkpSourceLoadStatusLloyds",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.00:03:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"oracleReaderQuery": "select fn_check_lloyds_source_load  LOAD_STATUS from dummy_table_dataset",
-								"partitionOption": "None",
-								"queryTimeout": "00:05:00"
-							},
-							"dataset": {
-								"referenceName": "Oracle_oltp05_dummy_table",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "If_table_is_loaded",
-						"type": "IfCondition",
-						"dependsOn": [
-							{
-								"activity": "LkpSourceLoadStatusLloyds",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(activity('LkpSourceLoadStatusLloyds').output.firstRow.LOAD_STATUS,'N')",
-								"type": "Expression"
-							},
-							"ifFalseActivities": [
-								{
-									"name": "copy_lloyds_to_lake",
-									"type": "ExecutePipeline",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"pipeline": {
-											"referenceName": "copy_lloyds_to_lake",
-											"type": "PipelineReference"
-										},
-										"waitOnCompletion": true,
-										"parameters": {}
-									}
-								}
-							],
-							"ifTrueActivities": [
-								{
-									"name": "Set variable1",
-									"type": "SetVariable",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "vTableLoaded",
-										"value": "'Empty Table'"
-									}
-								}
-							]
-						}
-					}
-				],
-				"variables": {
-					"vTableLoaded": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "pipeline/dwh_stage"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/copy_lloyds_to_lake')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/load_master_dwh')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "load_pre_dim",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "load_stage_common",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "load_pre_dim",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "load_stage_common",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "load_stage_common",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"variables": {
-					"vMasterRevitErrorStatus": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "pipeline/dwh_master"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/load_pre_dim')]",
-				"[concat(variables('factoryId'), '/pipelines/load_stage_common')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/load_static_stage_dwh')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "load_stage_lloyds_table",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "load_stage_lloyds_table",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "pl_copy_static_to_lake",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "copy_static_to_lake",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "error_handling",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "pl_copy_static_to_lake",
-								"dependencyConditions": [
-									"Failed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "pipeline_error_handling",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"pPipelineName": {
-									"value": "copy_static_to_lake",
-									"type": "Expression"
-								},
-								"pPipelineErrorMsg": {
-									"value": "@activity('pl_copy_static_to_lake').error.message",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "error_handling_copy1",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "load_stage_lloyds_table",
-								"dependencyConditions": [
-									"Failed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "pipeline_error_handling",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"pPipelineName": {
-									"value": "load_stage_lloyds_table",
-									"type": "Expression"
-								},
-								"pPipelineErrorMsg": {
-									"value": "@activity('load_stage_lloyds_table').error.message",
-									"type": "Expression"
-								}
-							}
-						}
-					}
-				],
-				"variables": {
-					"vInnerFailStatus": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "pipeline/dwh_stage"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/load_stage_lloyds_table')]",
-				"[concat(variables('factoryId'), '/pipelines/copy_static_to_lake')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trgr_load_exchange_rate')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "This is to execute exchange rate copy job",
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "load_exchange_rate",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2020-05-12T10:32:00.000Z",
-						"endTime": "2020-07-01T10:32:00.000Z",
-						"timeZone": "UTC",
-						"schedule": {
-							"minutes": [
-								15
-							],
-							"hours": [
-								22
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/load_exchange_rate')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/load_master_pre_dwh')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "load_static_stage_dwh",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "load_static_stage_dwh",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "copy_exact_to_lake",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "load_static_stage_dwh",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "copy_exact_to_lake",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "error_handling",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "copy_exact_to_lake",
-								"dependencyConditions": [
-									"Failed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "pipeline_error_handling",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"pPipelineName": "copy_exact_to_lake",
-								"pPipelineErrorMsg": {
-									"value": "@activity('copy_exact_to_lake').error.message",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "error_handling_copy1",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "load_static_stage_dwh",
-								"dependencyConditions": [
-									"Failed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "pipeline_error_handling",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"pPipelineName": "load_static_stage_dwh",
-								"pPipelineErrorMsg": {
-									"value": "@activity('load_static_stage_dwh').error.message",
-									"type": "Expression"
-								}
-							}
-						}
-					}
-				],
-				"variables": {
-					"vFailStatus": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "pipeline/dwh_stage"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/load_static_stage_dwh')]"
-			]
 		}
 	]
 }

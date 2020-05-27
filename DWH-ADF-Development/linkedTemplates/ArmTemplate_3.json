@@ -13,6 +13,171 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/pre_dim_capital')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dwh-prepare/pre-dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "Pre_Dim",
+						"fileSystem": "dwh-prepare"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "PK_KEY",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_DESCRIPTION",
+						"type": "UTF8"
+					},
+					{
+						"name": "CPT_NUMBER",
+						"type": "INT32"
+					},
+					{
+						"name": "INSERTED_BY",
+						"type": "UTF8"
+					},
+					{
+						"name": "DATE_INSERTED",
+						"type": "DATE"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pre_dim_category_pa')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dwh-prepare/pre-dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "Pre_Dim",
+						"fileSystem": "dwh-prepare"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "agt_description",
+						"type": "UTF8"
+					},
+					{
+						"name": "agt_key",
+						"type": "UTF8"
+					},
+					{
+						"name": "last_updated_by",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pre_dim_claim_detail_pa')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dwh-prepare/pre-dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "Pre_Dim",
+						"fileSystem": "dwh-prepare"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "agt_description",
+						"type": "UTF8"
+					},
+					{
+						"name": "agt_key",
+						"type": "UTF8"
+					},
+					{
+						"name": "last_updated_by",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pre_dim_claim_rule_pa')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "unsure if we need this? ",
+				"linkedServiceName": {
+					"referenceName": "dwhdatalakedevelopment",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dwh-prepare/pre-dim"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "Pre_Dim",
+						"fileSystem": "dwh-prepare"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "agt_description",
+						"type": "UTF8"
+					},
+					{
+						"name": "agt_key",
+						"type": "UTF8"
+					},
+					{
+						"name": "last_updated_by",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pre_dim_claim_type_pa')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -652,204 +817,6 @@
 					},
 					{
 						"name": "last_updated_by",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pre_dim_vessel_type_group')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "dwh-prepare/pre-dim"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "Pre_Dim",
-						"fileSystem": "dwh-prepare"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "PK_KEY",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_DESCRIPTION",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_NUMBER",
-						"type": "INT32"
-					},
-					{
-						"name": "INSERTED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "DATE_INSERTED",
-						"type": "DATE"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pre_fact_claim_trans_pa')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "dwh-prepare/pre-fact"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "Pre_Fact",
-						"fileSystem": "dwh-prepare"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "PK_KEY",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_DESCRIPTION",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_NUMBER",
-						"type": "INT32"
-					},
-					{
-						"name": "INSERTED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "DATE_INSERTED",
-						"type": "DATE"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pre_fact_prem_trans')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "dwh-prepare/pre-fact"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "Pre_Fact",
-						"fileSystem": "dwh-prepare"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "PK_KEY",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_DESCRIPTION",
-						"type": "UTF8"
-					},
-					{
-						"name": "CPT_NUMBER",
-						"type": "INT32"
-					},
-					{
-						"name": "INSERTED_BY",
-						"type": "UTF8"
-					},
-					{
-						"name": "DATE_INSERTED",
-						"type": "DATE"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/sf_company')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dwhdatalakedevelopment",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "dwh-stage"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "Other",
-						"fileSystem": "dwh-stage"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "FROM_CURRENCY_ID",
-						"type": "DOUBLE"
-					},
-					{
-						"name": "TO_CURRENCY_ID",
-						"type": "DOUBLE"
-					},
-					{
-						"name": "EXCHANGE_FROM_DATE",
-						"type": "INT96"
-					},
-					{
-						"name": "EXCHANGE_RATE",
-						"type": "DECIMAL",
-						"precision": 38,
-						"scale": 18
-					},
-					{
-						"name": "EXCHANGE_TO_DATE",
-						"type": "INT96"
-					},
-					{
-						"name": "FROM_CURRENCY_CODE",
-						"type": "UTF8"
-					},
-					{
-						"name": "TO_CURRENCY_CODE",
 						"type": "UTF8"
 					}
 				]
