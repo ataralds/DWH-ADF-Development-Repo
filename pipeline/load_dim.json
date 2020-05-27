@@ -27,6 +27,52 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "pipeline_error_handling",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "m_dim_country",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "m_dim_country"
+					}
+				}
+			},
+			{
+				"name": "pipeline_error_handling1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "m_dim_coverage",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "m_dim_coverage"
+					}
+				}
 			}
 		],
 		"folder": {
