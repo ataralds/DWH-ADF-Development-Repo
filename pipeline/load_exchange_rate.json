@@ -78,6 +78,32 @@
 								},
 								"waitOnCompletion": true
 							}
+						},
+						{
+							"name": "pipeline_send_email_1",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "copy_exchange_rate_to_lake",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "pipeline_send_email",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"pPipelineName": "load_exchange_rate",
+									"pEmailSubject": "ADF DWH Alert ! Exchange rate copy job completed successfully",
+									"pEmailBody": "HLP_EXCHNAGE_RATE data copied into Azure SQL server successfully",
+									"pEmailTo": "sudipta.dutta@gard.no;siv.borve@gard.no"
+								}
+							}
 						}
 					]
 				}
@@ -103,32 +129,6 @@
 					"parameters": {
 						"pPipelineName": "load_exchange_rate",
 						"pPipelineErrorMsg": "Pipeline failed. Please check"
-					}
-				}
-			},
-			{
-				"name": "pipeline_send_email_1",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "If Condition1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "pipeline_send_email",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"pPipelineName": "load_exchange_rate",
-						"pEmailSubject": "ADF DWH Alert ! Exchange rate copy job completed successfully",
-						"pEmailBody": "HLP_EXCHNAGE_RATE data copied into Azure SQL server successfully",
-						"pEmailTo": "sudipta.dutta@gard.no;siv.borve@gard.no"
 					}
 				}
 			}
