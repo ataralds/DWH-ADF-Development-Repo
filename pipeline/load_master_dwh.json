@@ -94,6 +94,31 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "pipeline_send_email",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_trans_daily",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_send_email",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "load_master_dwh",
+						"pEmailSubject": "Azure DWH Alert ! load_master_dwh completed successfully",
+						"pEmailBody": " load_master_dwh completed successfully"
+					}
+				}
 			}
 		],
 		"variables": {
