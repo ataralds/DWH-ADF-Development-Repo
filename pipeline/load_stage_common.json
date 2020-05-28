@@ -1,0 +1,47 @@
+{
+	"name": "load_stage_common",
+	"properties": {
+		"activities": [
+			{
+				"name": "m_hlp_exchange_rate_usd",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "m_hlp_exchange_rate_usd",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pipeline_error_handling1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "m_hlp_exchange_rate_usd",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "m_hlp_exchange_rate_usd"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "pipelines/dwh_stage"
+		},
+		"annotations": []
+	}
+}

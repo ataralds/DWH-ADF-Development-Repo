@@ -1,0 +1,23 @@
+{
+	"name": "fact_exchange_rate",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "marts/fact"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "fact",
+				"fileSystem": "marts"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

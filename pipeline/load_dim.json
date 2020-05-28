@@ -1,46 +1,39 @@
 {
-	"name": "load_master_pre",
+	"name": "load_dim",
 	"properties": {
 		"activities": [
 			{
-				"name": "load_static_stage_dwh",
+				"name": "m_dim_country",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "load_static_stage_dwh",
+						"referenceName": "m_dim_country",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
 				}
 			},
 			{
-				"name": "copy_exact_to_lake",
+				"name": "m_dim_coverage",
 				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "load_static_stage_dwh",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "copy_exact_to_lake",
+						"referenceName": "m_dim_coverage",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
 				}
 			},
 			{
-				"name": "error_handling",
+				"name": "pipeline_error_handling",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "copy_exact_to_lake",
+						"activity": "m_dim_country",
 						"dependencyConditions": [
 							"Failed"
 						]
@@ -49,25 +42,21 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "error_handling",
+						"referenceName": "pipeline_error_handling",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
 					"parameters": {
-						"pPipelineName": "copy_exact_to_lake",
-						"pPipelineErrorMsg": {
-							"value": "@activity('copy_exact_to_lake').error.message",
-							"type": "Expression"
-						}
+						"pPipelineName": "m_dim_country"
 					}
 				}
 			},
 			{
-				"name": "error_handling_copy1",
+				"name": "pipeline_error_handling1",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "load_static_stage_dwh",
+						"activity": "m_dim_coverage",
 						"dependencyConditions": [
 							"Failed"
 						]
@@ -76,27 +65,18 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "error_handling",
+						"referenceName": "pipeline_error_handling",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
 					"parameters": {
-						"pPipelineName": "load_static_stage_dwh",
-						"pPipelineErrorMsg": {
-							"value": "@activity('load_static_stage_dwh').error.message",
-							"type": "Expression"
-						}
+						"pPipelineName": "m_dim_coverage"
 					}
 				}
 			}
 		],
-		"variables": {
-			"vFailStatus": {
-				"type": "String"
-			}
-		},
 		"folder": {
-			"name": "pipeline/dwh_stage"
+			"name": "pipelines/dwh_marts"
 		},
 		"annotations": []
 	}

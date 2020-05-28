@@ -1,0 +1,138 @@
+{
+	"name": "copy_exchange_rate_to_lake",
+	"properties": {
+		"activities": [
+			{
+				"name": "UntilExRateOraSrcecmplte",
+				"type": "Until",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('inside_lkp_exchange_rate_status').output.firstRow.load_completion_status,'Y')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Wait1",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 180
+							}
+						},
+						{
+							"name": "inside_lkp_exchange_rate_status",
+							"type": "Lookup",
+							"dependsOn": [
+								{
+									"activity": "Wait1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.00:10:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"oracleReaderQuery": "select \"load_completion_status\" from \"hlp_exchange_rate_status\"",
+									"partitionOption": "None",
+									"queryTimeout": "02:00:00"
+								},
+								"dataset": {
+									"referenceName": "oracle_exchange_rate_status",
+									"type": "DatasetReference"
+								}
+							}
+						},
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "inside_lkp_exchange_rate_status",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "vSourceLoadstatus",
+								"value": {
+									"value": "@activity('inside_lkp_exchange_rate_status').output.firstRow.load_completion_status",
+									"type": "Expression"
+								}
+							}
+						}
+					],
+					"timeout": "0.01:00:00"
+				}
+			},
+			{
+				"name": "copy_hlp_exchange_rate",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "UntilExRateOraSrcecmplte",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "oracle_exchange_rate",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "stage_hlp_exchange_rate",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"variables": {
+			"vSourceLoadstatus": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "copy job/dwh_stage/oltp05"
+		},
+		"annotations": []
+	}
+}

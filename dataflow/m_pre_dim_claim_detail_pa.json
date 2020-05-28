@@ -1,0 +1,48 @@
+{
+	"name": "m_pre_dim_claim_detail_pa",
+	"properties": {
+		"description": "Pre DIM claim detail from Paris ",
+		"folder": {
+			"name": "dwh_prepare/pre_dim"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Other",
+						"type": "DatasetReference"
+					},
+					"name": "tcrossreference"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_claim_detail_pa",
+						"type": "DatasetReference"
+					},
+					"name": "preDimClaimPA"
+				}
+			],
+			"transformations": [
+				{
+					"name": "parisClaimDetail"
+				},
+				{
+					"name": "deduplicator"
+				},
+				{
+					"name": "xrefcld"
+				},
+				{
+					"name": "alterRow"
+				},
+				{
+					"name": "lastupdatedby"
+				}
+			],
+			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> tcrossreference\ntcrossreference filter(SOURCE_SYSTEM=='PARIS' && CODE_TYPE_ID==775) ~> parisClaimDetail\nxrefcld aggregate(groupBy(cld_description),\n\tcld_key = first(cld_key)) ~> deduplicator\nparisClaimDetail select(mapColumn(\n\t\tcld_key = TARGET_CODE,\n\t\tcld_description = TARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefcld\nlastupdatedby alterRow(upsertIf(!isNull(cld_key))) ~> alterRow\ndeduplicator derive(last_updated_by = 'pre_dim_claim_detail') ~> lastupdatedby\nalterRow sink(input(\n\t\tagt_description as string,\n\t\tagt_key as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_claim_detail_pa.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimClaimPA"
+		}
+	}
+}
