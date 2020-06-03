@@ -2,6 +2,84 @@
 	"name": "m_pre_dim_risk_object_main",
 	"properties": {
 		"description": "test run",
+		"activities": [
+			{
+				"name": "m_pre_dim_risk_object_pa",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "m_pre_dim_risk_object_pa",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"tcross": {
+								"fileName": "tcrossreference"
+							},
+							"pea": {
+								"fileName": "\"p_peatable\""
+							},
+							"ica": {
+								"fileName": "\"p_icatable\""
+							},
+							"iuv": {
+								"fileName": "\"p_iuvtable\""
+							},
+							"iuw": {
+								"fileName": "\"p_iuwtable\""
+							},
+							"ipa": {
+								"fileName": "\"p_ipatable\""
+							},
+							"aga": {
+								"fileName": "\"p_agatable\""
+							},
+							"ina": {
+								"fileName": "\"p_inatable\""
+							},
+							"obb": {
+								"fileName": "\"p_obbtable\""
+							},
+							"ing": {
+								"fileName": "\"p_ingtable\""
+							},
+							"oba": {
+								"fileName": "\"p_obatable\""
+							},
+							"hlpexhangerateusd": {
+								"fileName": "hlp_exchange_rate_to_usd.parquet"
+							},
+							"staparisclaimlead": {
+								"fileName": "\"sta_risk_claim_lead\""
+							},
+							"cco": {
+								"fileName": "\"p_ccotable\""
+							},
+							"paa": {
+								"fileName": "\"p_paatable\""
+							},
+							"stariskgroup": {
+								"fileName": "\"sta_risk_group\""
+							},
+							"isa": {
+								"fileName": "\"p_isatable\""
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
+			}
+		],
 		"annotations": []
 	}
 }
