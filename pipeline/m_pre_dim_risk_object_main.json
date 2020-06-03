@@ -21,7 +21,7 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"tcross": {
-								"fileName": "tcrossreference"
+								"fileName": "tcrossreference.parquet"
 							},
 							"pea": {
 								"fileName": "\"p_peatable\""
@@ -57,7 +57,7 @@
 								"fileName": "hlp_exchange_rate_to_usd.parquet"
 							},
 							"staparisclaimlead": {
-								"fileName": "\"sta_risk_claim_lead\""
+								"fileName": "\"sta_paris_claim_lead\""
 							},
 							"cco": {
 								"fileName": "\"p_ccotable\""
