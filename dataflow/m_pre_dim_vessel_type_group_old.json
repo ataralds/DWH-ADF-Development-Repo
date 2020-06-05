@@ -1,5 +1,5 @@
 {
-	"name": "m_pre_dim_vessel_type_group",
+	"name": "m_pre_dim_vessel_type_group_old",
 	"properties": {
 		"folder": {
 			"name": "dwh_prepare/pre_dim"
