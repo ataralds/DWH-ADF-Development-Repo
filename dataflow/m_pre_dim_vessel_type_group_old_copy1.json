@@ -1,0 +1,100 @@
+{
+	"name": "m_pre_dim_vessel_type_group_old_copy1",
+	"properties": {
+		"folder": {
+			"name": "dwh_prepare/pre_dim"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Oltp05",
+						"type": "DatasetReference"
+					},
+					"name": "StaVesselTypeGroup"
+				},
+				{
+					"dataset": {
+						"referenceName": "Oltp05",
+						"type": "DatasetReference"
+					},
+					"name": "StaRiskDriverGroup"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "RiskD1"
+				},
+				{
+					"name": "VesslTypeGroup"
+				},
+				{
+					"name": "RiskGroup1"
+				},
+				{
+					"name": "RiskD2"
+				},
+				{
+					"name": "Select1"
+				},
+				{
+					"name": "RiskGroup2"
+				},
+				{
+					"name": "Select2"
+				},
+				{
+					"name": "RiskGroup3"
+				},
+				{
+					"name": "Select3"
+				},
+				{
+					"name": "RiskGroup4"
+				},
+				{
+					"name": "Select4"
+				},
+				{
+					"name": "RiskGroup5"
+				},
+				{
+					"name": "Select5"
+				},
+				{
+					"name": "RiskGroupIV"
+				},
+				{
+					"name": "Select6"
+				},
+				{
+					"name": "RiskGroupLOH"
+				},
+				{
+					"name": "Select7"
+				},
+				{
+					"name": "RisGroupSize"
+				},
+				{
+					"name": "Select8"
+				},
+				{
+					"name": "RiskGroupLvl3"
+				},
+				{
+					"name": "Select9"
+				},
+				{
+					"name": "RiskGroupLvl4"
+				},
+				{
+					"name": "Select10"
+				}
+			],
+			"script": "source(output(\n\t\tfk_gard_group as double,\n\t\tfk_rsk_driver_grp_1 as double,\n\t\tfk_rsk_driver_grp_2 as double,\n\t\tfk_rsk_driver_grp_3 as double,\n\t\tfk_rsk_driver_grp_4 as double,\n\t\tfk_rsk_driver_grp_5 as double,\n\t\tfk_rsk_driver_grp_6 as double,\n\t\tfk_rsk_driver_iv as double,\n\t\tfk_rsk_driver_loh as double,\n\t\tfk_rsk_driver_lvl3 as double,\n\t\tfk_rsk_driver_lvl4 as double,\n\t\tfk_rsk_driver_size as double,\n\t\tfk_rsk_grp_cargo as double,\n\t\tfk_rsk_grp_crew as double,\n\t\tfk_rsk_grp_hull as double,\n\t\tfk_rsk_grp_machinery as double,\n\t\tfk_rsk_grp_main as double,\n\t\tfk_rsk_grp_passenger as double,\n\t\tfk_rsk_grp_pollution as double,\n\t\tfk_rsk_grp_ri as double,\n\t\tfk_rsk_grp_size as double,\n\t\tfp_3_ltr_code as string,\n\t\tfp_level_5_code as string,\n\t\tfp_level_5_decode as string,\n\t\tfp_level_5_desc as string,\n\t\tfp_level_5_hull as double,\n\t\tfp_level_5_sub as string,\n\t\tinsert_date as timestamp,\n\t\tpk_vessel_type_group as double,\n\t\tupdate_date as timestamp,\n\t\tvsl_cefor_group as string,\n\t\tvsl_desc as string,\n\t\tvsl_gard_group as string,\n\t\tvsl_marine_group as string,\n\t\tvsl_risk_group as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaVesselTypeGroup\nsource(output(\n\t\tgroup_code as string,\n\t\tgroup_code_alternative as string,\n\t\tgroup_desc as string,\n\t\tgroup_desc_sort as string,\n\t\tgroup_name as string,\n\t\tpk_risk_driver_group as double,\n\t\ttable_name as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaRiskDriverGroup\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code1 = group_code,\n\t\tgroup_desc1 = group_desc,\n\t\tgroup_desc_sort1 = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskD1\nStaVesselTypeGroup select(mapColumn(\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_grp_main,\n\t\tfp_3_ltr_code,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tvsl_desc\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> VesslTypeGroup\nVesslTypeGroup, RiskD1 join(fk_rsk_driver_grp_1 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup1\nStaRiskDriverGroup select(mapColumn(\n\t\tgroup_code2 = group_code,\n\t\tgroup_desc2 = group_desc,\n\t\tgroup_desc_sort2 = group_desc_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskD2\nRiskGroup1 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1, RiskD2 join(fk_rsk_driver_grp_2 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup2\nRiskGroup2 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSelect2, StaRiskDriverGroup join(fk_rsk_driver_grp_3 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup3\nRiskGroup3 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3 = group_code,\n\t\tgroup_desc3 = group_desc,\n\t\tgroup_desc_sort3 = group_desc_sort\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nSelect3, StaRiskDriverGroup join(fk_rsk_driver_grp_4 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup4\nRiskGroup4 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4 = group_code,\n\t\tgroup_desc4 = group_desc,\n\t\tgroup_desc_sort4 = group_desc_sort\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nSelect4, StaRiskDriverGroup join(fk_rsk_driver_grp_5 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup5\nRiskGroup5 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5 = group_code,\n\t\tgroup_desc5 = group_desc,\n\t\tgroup_desc_sort5 = group_desc_sort\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select5\nSelect5, StaRiskDriverGroup join(fk_rsk_driver_iv == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroupIV\nRiskGroupIV select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV = group_code,\n\t\tgroup_desc_IV = group_desc,\n\t\tgroup_desc_sort_IV = group_desc_sort\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select6\nSelect6, StaRiskDriverGroup join(fk_rsk_driver_loh == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroupLOH\nRiskGroupLOH select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV,\n\t\tgroup_desc_IV,\n\t\tgroup_desc_sort_IV,\n\t\tgroup_code_LOH = group_code,\n\t\tgroup_desc_LOH = group_desc,\n\t\tgroup_desc_sort_LOH = group_desc_sort\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select7\nSelect7, StaRiskDriverGroup join(fk_rsk_driver_size == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RisGroupSize\nRisGroupSize select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV,\n\t\tgroup_desc_IV,\n\t\tgroup_desc_sort_IV,\n\t\tgroup_code_LOH,\n\t\tgroup_desc_LOH,\n\t\tgroup_desc_sort_LOH,\n\t\tgroup_code_Size = group_code,\n\t\tgroup_desc_Size = group_desc\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select8\nSelect8, StaRiskDriverGroup join(fk_rsk_driver_lvl4 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroupLvl3\nRiskGroupLvl3 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV,\n\t\tgroup_desc_IV,\n\t\tgroup_desc_sort_IV,\n\t\tgroup_code_LOH,\n\t\tgroup_desc_LOH,\n\t\tgroup_desc_sort_LOH,\n\t\tgroup_code_Size,\n\t\tgroup_desc_Size,\n\t\tgroup_Lvl4_code = group_code,\n\t\tFp_Lvl4_Group = group_code_alternative,\n\t\tgroup_Lvl4_decode = group_desc\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select9\nSelect9, StaRiskDriverGroup join(fk_rsk_driver_lvl3 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroupLvl4\nRiskGroupLvl4 select(mapColumn(\n\t\tfk_gard_group,\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_2,\n\t\tfk_rsk_driver_grp_3,\n\t\tfk_rsk_driver_grp_4,\n\t\tfk_rsk_driver_grp_5,\n\t\tfk_rsk_driver_grp_6,\n\t\tfk_rsk_driver_iv,\n\t\tfk_rsk_driver_loh,\n\t\tfk_rsk_driver_lvl3,\n\t\tfk_rsk_driver_lvl4,\n\t\tfk_rsk_driver_size,\n\t\tfk_rsk_grp_cargo,\n\t\tfk_rsk_grp_crew,\n\t\tfk_rsk_grp_hull,\n\t\tfk_rsk_grp_machinery,\n\t\tfk_rsk_grp_main,\n\t\tfk_rsk_grp_passenger,\n\t\tfk_rsk_grp_pollution,\n\t\tfk_rsk_grp_ri,\n\t\tfk_rsk_grp_size,\n\t\tfp_3_ltr_code,\n\t\tfp_level_5_code,\n\t\tfp_level_5_decode,\n\t\tfp_level_5_desc,\n\t\tfp_level_5_hull,\n\t\tfp_level_5_sub,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tupdate_date,\n\t\tvsl_cefor_group,\n\t\tvsl_desc,\n\t\tvsl_gard_group,\n\t\tvsl_marine_group,\n\t\tvsl_risk_group,\n\t\tgroup_code1,\n\t\tgroup_desc1,\n\t\tgroup_desc_sort1,\n\t\tgroup_code2,\n\t\tgroup_desc2,\n\t\tgroup_desc_sort2,\n\t\tgroup_code3,\n\t\tgroup_desc3,\n\t\tgroup_desc_sort3,\n\t\tgroup_code4,\n\t\tgroup_desc4,\n\t\tgroup_desc_sort4,\n\t\tgroup_code5,\n\t\tgroup_desc5,\n\t\tgroup_desc_sort5,\n\t\tgroup_code_IV,\n\t\tgroup_desc_IV,\n\t\tgroup_desc_sort_IV,\n\t\tgroup_code_LOH,\n\t\tgroup_desc_LOH,\n\t\tgroup_desc_sort_LOH,\n\t\tgroup_code_Size,\n\t\tgroup_desc_Size,\n\t\tgroup_Lvl4_code,\n\t\tFp_Lvl4_Group,\n\t\tgroup_Lvl4_decode,\n\t\tgroup_Lvl3_decode = group_code,\n\t\tFp_Lvl3_Group = group_code_alternative,\n\t\tgroup_desc_Lvl3 = group_desc\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select10"
+		}
+	}
+}
