@@ -15,6 +15,18 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "m_pre_dim_vessel_type_group",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"StaVesselTypeGroup": {
+								"fileName": "\"sta_vessl_type_group\""
+							},
+							"StaRiskDriverGroup": {
+								"fileName": "\"sta_risk_driver_group\""
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
