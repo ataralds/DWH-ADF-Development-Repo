@@ -13,6 +13,28 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/OracleParisTablesScr')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OracleCStage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Copy job/dwh-stage/Paris"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CSTAGE_PARIS",
+					"table": "AZURE_CONFIG"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Oracle_destination_peatable')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -594,48 +616,6 @@
 						}
 					],
 					"script": "source(output(\n\t\tpk_key as string,\n\t\tcov_description as string,\n\t\tcov_exposure_group_code as string,\n\t\tcov_exposure_group_desc as string,\n\t\tgrp_key as string,\n\t\tgrp_description as string,\n\t\tcov_energy_exp_group_code as string,\n\t\tcov_energy_exp_group_desc as string,\n\t\tcov_layer_group_code as string,\n\t\tcov_layer_group_descr as string,\n\t\tcov_gic_group_code as string,\n\t\tcov_gic_group_desc as string,\n\t\tcov_3ltr_code as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_coverage.parquet']) ~> preDimCoverage\npreDimCoverage derive(tot_key = 'ALL',\n\t\ttot_description = 'All Coverages') ~> derivedTopColumns\nderivedTopColumns alterRow(upsertIf(!isNull(pk_key))) ~> alterRow\nalterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_coverage.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimCoverage"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/m_dim_currency')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "marts/dim"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "pre_dim_currency",
-								"type": "DatasetReference"
-							},
-							"name": "preDimCurrency"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "dim_currency",
-								"type": "DatasetReference"
-							},
-							"name": "dimCurrency"
-						}
-					],
-					"transformations": [
-						{
-							"name": "DeriveTopLevel"
-						},
-						{
-							"name": "AlterRow",
-							"description": "Upsert if pk key is not null"
-						}
-					],
-					"script": "source(output(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_currency.parquet']) ~> preDimCurrency\npreDimCurrency derive(top_key = 'ALL',\n\t\ttop_description = 'All Currencies') ~> DeriveTopLevel\nDeriveTopLevel alterRow(upsertIf(!isNull(PK_KEY))) ~> AlterRow\nAlterRow sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_currency.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimCurrency"
 				}
 			},
 			"dependsOn": []
