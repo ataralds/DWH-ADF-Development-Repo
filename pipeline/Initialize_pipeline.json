@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "prc_del_audit_pipeline_error_status",
+				"name": "prc_initialize_pipeline",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [],
 				"policy": {
@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[adf_audit].[prc_del_audit_pipeline_err_stat]"
+					"storedProcedureName": "[adf_audit].[prc_initialize_pipeline]"
 				},
 				"linkedServiceName": {
 					"referenceName": "sql_server_development_connection",

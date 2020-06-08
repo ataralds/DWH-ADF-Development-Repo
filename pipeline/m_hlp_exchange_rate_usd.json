@@ -19,9 +19,9 @@
 						"referenceName": "m_hlp_exchange_rate_usd",
 						"type": "DataFlowReference"
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
+					"integrationRuntime": {
+						"referenceName": "IrExecutePipeline",
+						"type": "IntegrationRuntimeReference"
 					}
 				}
 			}
