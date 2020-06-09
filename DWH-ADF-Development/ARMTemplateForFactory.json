@@ -1883,6 +1883,56 @@
 											}
 										}
 									]
+								},
+								{
+									"name": "prc_audit_dwh_table_row_count",
+									"type": "SqlServerStoredProcedure",
+									"dependsOn": [
+										{
+											"activity": "Copy Oltp05",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"storedProcedureName": "[[adf_audit].[prc_audit_dwh_table_row_count]",
+										"storedProcedureParameters": {
+											"pInCopyJobName": {
+												"value": {
+													"value": "@item().table_name",
+													"type": "Expression"
+												},
+												"type": "String"
+											},
+											"pInSourceCount": {
+												"value": {
+													"value": "@activity('Copy Oltp05').output.rowsRead",
+													"type": "Expression"
+												},
+												"type": "Int32"
+											},
+											"pInTargetCount": {
+												"value": {
+													"value": "@activity('Copy Oltp05').output.rowsCopied",
+													"type": "Expression"
+												},
+												"type": "Int32"
+											}
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "sql_server_development_connection",
+										"type": "LinkedServiceReference"
+									}
 								}
 							]
 						}
@@ -1896,7 +1946,8 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/oracle_configfile_oltp05')]",
 				"[concat(variables('factoryId'), '/datasets/oracle_exact')]",
-				"[concat(variables('factoryId'), '/datasets/Exact')]"
+				"[concat(variables('factoryId'), '/datasets/Exact')]",
+				"[concat(variables('factoryId'), '/linkedServices/sql_server_development_connection')]"
 			]
 		},
 		{
@@ -2029,6 +2080,56 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "prc_audit_dwh_table_row_count",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "copy_hlp_exchange_rate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[adf_audit].[prc_audit_dwh_table_row_count]",
+							"storedProcedureParameters": {
+								"pInCopyJobName": {
+									"value": {
+										"value": "@pipeline().Pipeline",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"pInSourceCount": {
+									"value": {
+										"value": "@activity('copy_hlp_exchange_rate').output.rowsRead",
+										"type": "Expression"
+									},
+									"type": "Int32"
+								},
+								"pInTargetCount": {
+									"value": {
+										"value": "@activity('copy_hlp_exchange_rate').output.rowsCopied",
+										"type": "Expression"
+									},
+									"type": "Int32"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "sql_server_development_connection",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"variables": {
@@ -2044,6 +2145,7 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/oracle_exchange_rate')]",
 				"[concat(variables('factoryId'), '/datasets/stage_hlp_exchange_rate')]",
+				"[concat(variables('factoryId'), '/linkedServices/sql_server_development_connection')]",
 				"[concat(variables('factoryId'), '/datasets/oracle_exchange_rate_status')]"
 			]
 		},
