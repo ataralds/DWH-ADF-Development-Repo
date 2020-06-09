@@ -1,0 +1,16 @@
+{
+	"name": "SourceDataset_rf3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracelStageITF",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "MARTS",
+			"table": "AS_DIM_PARTNER"
+		}
+	}
+}
