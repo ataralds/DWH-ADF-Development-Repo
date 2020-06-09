@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_rf3",
+				"name": "Copy_as_dim_partner",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
