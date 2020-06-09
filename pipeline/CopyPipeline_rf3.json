@@ -1,0 +1,727 @@
+{
+	"name": "CopyPipeline_rf3",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_rf3",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "MARTS.AS_DIM_PARTNER"
+					},
+					{
+						"name": "Destination",
+						"value": "marts.as_dim_partner"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DIMENSION_KEY",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dimension_key",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_ADDRESS_3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_address_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_PRIMARY_CONTACT_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_primary_contact_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_RATING_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_rating_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_COMPANY_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_company_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_PARTNER_SHORT_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_partner_short_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_ACCOUNT_RESP_PI_INIT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_account_resp_pi_init",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_ACCOUNT_RESP_ME_INIT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_account_resp_me_init",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_CURRENCY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_currency_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_COMPANY_SUB_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_company_sub_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_RATING_CODE_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_rating_code_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_ACCOUNT_RESP_PI_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_account_resp_pi_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_PARTNER_GROUP",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_partner_group",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_TOP_COMPANY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_top_company",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_RATING_COMPANY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_rating_company",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_LEGAL_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_legal_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_ACCOUNT_RESPONSIBLE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_account_responsible",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_RATING_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "prt_rating_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_PARTNER_NUMBER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "prt_partner_number",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_ADDRESS_4",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_address_4",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_STATUS_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_status_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "prt_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_PARTNER_ROLE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_partner_role_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_COMPANY_OWNER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_company_owner",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_BROKER_CODE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "prt_broker_code",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "TOP_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "top_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_OFFICE_KEY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_office_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_STATUS_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_status_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TOP_DESCRIPTION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "top_description",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_COMPANY_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "prt_sf_company_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_GARD_CONTACT_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_gard_contact_id",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_COMM_ON_ETC_BASIS_YEAR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "prt_comm_on_etc_basis_year",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_REPORTING_AREA_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_reporting_area_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_LEI_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_lei_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_DEFAULT_ETC_BROKER_IND",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_default_etc_broker_ind",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_COMPANY_EMAIL",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_company_email",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_STATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_state",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_CLIENT_LOST_REASON",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_client_lost_reason",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_PARTNER_ROLE_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_partner_role_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_ACCOUNT_STATUS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_account_status",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_INTERCOMPANY_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_intercompany_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_MARKET_AREA_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_market_area_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_CONTRACT_TYPE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_contract_type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_ACCOUNT_RESP_ME_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_account_resp_me_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_PRIMARY_UNDERWRITER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_primary_underwriter",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_KEY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_MARKET_AREA_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_market_area_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_REPORTING_AREA_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_reporting_area_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_ADDRESS_2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_address_2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_ADDRESS_1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_address_1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_HEDGE_PCT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "prt_hedge_pct",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_TOP_COMPANY_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "prt_sf_top_company_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_COMPANY_SUB_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_company_sub_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_MEMBER_SINCE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "prt_member_since",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_GARD_CONTACT_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_gard_contact_id",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_DOMICILE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_domicile_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_DOMICILE_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_domicile_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_COMM_ON_ETC_BASIS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_comm_on_etc_basis",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_PRIMARY_CONTACT_EMAIL",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_primary_contact_email",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_INTERCOMPANY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_intercompany_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TOP_KEY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "top_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_PARTNER_GROUP_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_partner_group_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_KEY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_DEFAULT_ETC_BROKER_STRDATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "prt_default_etc_broker_strdate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_CURRENCY_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_currency_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRT_SF_LEI_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "prt_sf_lei_code",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_rf3",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_rf3",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
