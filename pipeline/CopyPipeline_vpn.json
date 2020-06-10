@@ -1,0 +1,127 @@
+{
+	"name": "CopyPipeline_vpn",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_vpn",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "MARTS.AS_DIM_AGREEMENT_TYPE"
+					},
+					{
+						"name": "Destination",
+						"value": "marts.as_dim_agreement_type"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DIMENSION_KEY",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dimension_key",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "TOP_DESCRIPTION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "top_description",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TOP_KEY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "top_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TOP_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "top_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "AGT_KEY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agt_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGT_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "agt_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "AGT_DESCRIPTION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agt_description",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_vpn",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_vpn",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
