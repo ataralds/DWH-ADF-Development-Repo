@@ -1,8 +1,16 @@
 {
 	"name": "as_dim_agreement",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracelStageITF",
+			"type": "LinkedServiceReference"
+		},
 		"annotations": [],
 		"type": "OracleTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "MARTS",
+			"table": "AS_DIM_AGREEMENT"
+		}
 	}
 }
