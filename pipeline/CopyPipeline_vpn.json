@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_vpn",
+				"name": "Copy_as_dim_agreement_type",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
