@@ -1,0 +1,8 @@
+{
+	"name": "as_dim_agreement",
+	"properties": {
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
