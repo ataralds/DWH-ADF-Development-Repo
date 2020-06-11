@@ -23,7 +23,582 @@
 					"sink": {
 						"type": "AzureSqlSink"
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DIM_SOURCE_SYSTEM",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_source_system",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_CLAIM_TRANS_DATE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_claim_trans_date",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_CLAIM_CATEGORY",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_claim_category",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_RISK_OBJECT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_risk_object",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_TRANSACTION_TYPE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_transaction_type",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_SUB_CLAIM",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_sub_claim",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_GUARANTEE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_guarantee",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_CLAIM_DETAIL",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_claim_detail",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_CLAIM_RULE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_claim_rule",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_BROKER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_broker",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_CLIENT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_client",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_INCIDENT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_incident",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_CLAIM_COST_GROUP",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_claim_cost_group",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_EXPENSE_CODE_GROUP",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_expense_code_group",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_EXPENSE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_expense",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_CLAIMS_HANDLER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_claims_handler",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_UNDERWRITER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_underwriter",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_CURRENCY",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_currency",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_COVERAGE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_coverage",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_COUNTRY",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_country",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_CLAIM_TYPE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_claim_type",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_CLAIM_TEAM",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_claim_team",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_BUSINESS_AREA",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_business_area",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_AGREEMENT_TYPE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_agreement_type",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_AGREEMENT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_agreement",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_VESSEL_TYPE_GROUP",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_vessel_type_group",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_VESSEL_MAIN_DETAIL",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_vessel_main_detail",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_TIME_AGREEMENT_START_DATE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_time_agreement_start_date",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "TRANSACTION_KEY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "transaction_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_ADV_PAYMENT_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_adv_payment_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_ADV_PAYMENT_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_adv_payment_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_BALANCE_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_balance_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "DELETED_IND",
+									"type": "String"
+								},
+								"sink": {
+									"name": "deleted_ind",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_GIVENCO_RESERVE_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_givenco_reserve_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "GUARANTEE_AMOUNT_STAT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "guarantee_amount_stat",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_GIVENCO_PAYMENT_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_givenco_payment_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_IG_CLAIM_TYPE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_ig_claim_type",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_GL_PAYMENT_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_gl_payment_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_INCURRED_GROSS_STAT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_incurred_gross_stat",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "GUARANTEE_AMOUNT_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "guarantee_amount_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_RESERVE_GROSS_USD_ORIG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_reserve_gross_usd_orig",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_PAYMENT_GROSS_STAT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_payment_gross_stat",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CREATED_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "created_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "INC_STATUS_AT_TRANS_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "inc_status_at_trans_date",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_RESERVE_GROSS_STAT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_reserve_gross_stat",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_RESERVE_GROSS_USD",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "claim_reserve_gross_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_PAYMENT_GROSS_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_payment_gross_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_PAYMENT_GROSS_USD",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "claim_payment_gross_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CREATED_BY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "created_by",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_GL_PAYMENT_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_gl_payment_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_BALANCE_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_balance_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_GIVENCO_RESERVE_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_givenco_reserve_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_INCURRED_GROSS_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_incurred_gross_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_RESERVE_GROSS_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_reserve_gross_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_GIVENCO_PAYMENT_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_givenco_payment_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "GUARANTEE_AMOUNT_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "guarantee_amount_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CLAIM_PAYMENT_GROSS_USD_ORIG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "claim_payment_gross_usd_orig",
+									"type": "Decimal"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
