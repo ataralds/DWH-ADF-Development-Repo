@@ -23,7 +23,612 @@
 					"sink": {
 						"type": "AzureSqlSink"
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DIM_VESSEL_MAIN_DETAIL",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_vessel_main_detail",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_VESSEL_TYPE_GROUP",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_vessel_type_group",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_PREMIUM_TRANS_DATE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_premium_trans_date",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_SOURCE_SYSTEM",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_source_system",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_RISK_OBJECT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_risk_object",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_PREMIUM_TYPE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_premium_type",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_PREMIUM_LINE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_premium_line",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_CLIENT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_client",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_BROKER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_broker",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_AGREEMENT_START_DATE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_agreement_start_date",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_UNDERWRITER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_underwriter",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_CURRENCY",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_currency",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_COVERAGE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_coverage",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_COUNTRY",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_country",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_BUSINESS_AREA",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_business_area",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_AGREEMENT_TYPE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_agreement_type",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DIM_AGREEMENT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dim_agreement",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "TRANSACTION_KEY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "transaction_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PREMIUM_ESTIMATED_GROSS_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "premium_estimated_gross_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMISSION_LAST_EST_GROSS_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "commission_last_est_gross_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "PREMIUM_CLOSED_GIVENCO_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "premium_closed_givenco_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMISSION_RR_GROSS_STAT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "commission_rr_gross_stat",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "PREMIUM_LAST_EST_GROSS_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "premium_last_est_gross_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "INVALIDATED_IND",
+									"type": "String"
+								},
+								"sink": {
+									"name": "invalidated_ind",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CREATED_BY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "created_by",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMISSION_RR_GROSS_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "commission_rr_gross_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMISSION_ESTIMAT_GIVENCO_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "commission_estimat_givenco_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "TRANSFER_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "transfer_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "PREMIUM_CLOSED_GROSS_STAT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "premium_closed_gross_stat",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMISION_CLOSED_GROSS_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "commision_closed_gross_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "DELETED_IND",
+									"type": "String"
+								},
+								"sink": {
+									"name": "deleted_ind",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMISSION_LAST_EST_GROSS_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "commission_last_est_gross_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "PREMIUM_ESTIMATED_GROSS_STAT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "premium_estimated_gross_stat",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "PREMIUM_LAST_EST_GROSS_STAT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "premium_last_est_gross_stat",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "PREMIUM_RR_GROSS_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "premium_rr_gross_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMISION_ESTIMATED_GROSS_STAT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "commision_estimated_gross_stat",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMISSION_ESTIMAT_GIVENCO_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "commission_estimat_givenco_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMISSION_LAST_EST_GROSS_STAT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "commission_last_est_gross_stat",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "PREMIUM_CLOSED_GROSS_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "premium_closed_gross_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMISSION_CLOSED_GIVENCO_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "commission_closed_givenco_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMISSION_RR_GROSS_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "commission_rr_gross_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "PREMIUM_RR_GROSS_STAT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "premium_rr_gross_stat",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "PREMIUM_LAST_EST_GROSS_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "premium_last_est_gross_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "PREMIUM_ESTIMATED_GIVENCO_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "premium_estimated_givenco_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "VOUCHER_NO",
+									"type": "String"
+								},
+								"sink": {
+									"name": "voucher_no",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMISION_ESTIMATED_GROSS_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "commision_estimated_gross_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "PREMIUM_CLOSED_GIVENCO_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "premium_closed_givenco_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "PREMIUM_CLOSED_GROSS_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "premium_closed_gross_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "DEFERRED_ACTUAL_CALL_IND",
+									"type": "String"
+								},
+								"sink": {
+									"name": "deferred_actual_call_ind",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CREATED_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "created_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMISSION_CLOSED_GIVENCO_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "commission_closed_givenco_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "VOUCHER_NO_COMMISSION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "voucher_no_commission",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_VAL_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "accounting_val_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "PREMIUM_ESTIMATED_GROSS_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "premium_estimated_gross_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "NOTE_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "note_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMISION_ESTIMATED_GROSS_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "commision_estimated_gross_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_VAL_DATE_COMM",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "accounting_val_date_comm",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "PREMIUM_ESTIMATED_GIVENCO_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "premium_estimated_givenco_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMISION_CLOSED_GROSS_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "commision_closed_gross_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "PREMIUM_RR_GROSS_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "premium_rr_gross_org",
+									"type": "Decimal"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
