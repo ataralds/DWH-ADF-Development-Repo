@@ -1,8 +1,16 @@
 {
 	"name": "OracleTable_as_dim_business_area",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracelStageITF",
+			"type": "LinkedServiceReference"
+		},
 		"annotations": [],
 		"type": "OracleTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "MARTS",
+			"table": "AS_DIM_BUSINESS_AREA"
+		}
 	}
 }
