@@ -1,5 +1,5 @@
 {
-	"name": "sf_opportunity_product",
+	"name": "sf_opportunity",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_server_development_connection",
@@ -27,7 +27,7 @@
 		],
 		"typeProperties": {
 			"schema": "dwh_stage",
-			"table": "sf_opportunity_product"
+			"table": "sf_opportunity"
 		}
 	}
 }
