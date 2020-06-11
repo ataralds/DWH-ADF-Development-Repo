@@ -1,0 +1,72 @@
+{
+	"name": "pre_dim_reskontro_details",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "dwh-prepare"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "pk_key",
+				"type": "UTF8"
+			},
+			{
+				"name": "reg_code",
+				"type": "UTF8"
+			},
+			{
+				"name": "reg_description",
+				"type": "UTF8"
+			},
+			{
+				"name": "ar1_code",
+				"type": "UTF8"
+			},
+			{
+				"name": "ar1_description",
+				"type": "UTF8"
+			},
+			{
+				"name": "ar2_code",
+				"type": "UTF8"
+			},
+			{
+				"name": "ar2_description",
+				"type": "UTF8"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "UTF8"
+			},
+			{
+				"name": "con_2ltr_code",
+				"type": "UTF8"
+			},
+			{
+				"name": "con_country_name",
+				"type": "UTF8"
+			},
+			{
+				"name": "con_oecd",
+				"type": "UTF8"
+			},
+			{
+				"name": "con_currency_code",
+				"type": "UTF8"
+			},
+			{
+				"name": "con_eu",
+				"type": "UTF8"
+			}
+		]
+	}
+}
