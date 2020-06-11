@@ -604,7 +604,10 @@
 		],
 		"typeProperties": {
 			"schema": "dwh_stage",
-			"table": ""
+			"table": {
+				"value": "@dataset().SinkDataset",
+				"type": "Expression"
+			}
 		}
 	}
 }
