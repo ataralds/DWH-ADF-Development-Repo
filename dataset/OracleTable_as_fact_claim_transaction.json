@@ -1,8 +1,16 @@
 {
 	"name": "OracleTable_as_fact_claim_transaction",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracelStageITF",
+			"type": "LinkedServiceReference"
+		},
 		"annotations": [],
 		"type": "OracleTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "MARTS",
+			"table": "AS_FACT_CLAIM_TRANSACTION"
+		}
 	}
 }
