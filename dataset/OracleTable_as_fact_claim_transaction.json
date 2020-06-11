@@ -1,0 +1,8 @@
+{
+	"name": "OracleTable_as_fact_claim_transaction",
+	"properties": {
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
