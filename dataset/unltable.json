@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "dwh_stage_sql"
+			"name": "dwh_stage_sql/Paris"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
