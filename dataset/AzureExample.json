@@ -68,7 +68,7 @@
 		],
 		"typeProperties": {
 			"schema": "dwh_stage",
-			"table": "p_paatable"
+			"table": "p_ccotable"
 		}
 	}
 }
