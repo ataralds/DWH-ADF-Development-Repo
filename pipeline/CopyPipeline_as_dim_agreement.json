@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Copy as Dim agreement",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -23,7 +23,842 @@
 					"sink": {
 						"type": "AzureSqlSink"
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DIMENSION_KEY",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dimension_key",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_REFERENCE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_reference",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_UW_YEAR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "agr_uw_year",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_RESP_UW_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_resp_uw_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_CLM_HDL_CASUALTY_AND_PROP",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_clm_hdl_casualty_and_prop",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_DATE_ESTABLISHED",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agr_date_established",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_TEAM_RESP_UW_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_team_resp_uw_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_SF_COMPANY_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "agr_sf_company_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_EST_NUMBER_OF_OBJECTS",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "agr_est_number_of_objects",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_MARKET_SEGM_COUNTRY_GROUP",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_market_segm_country_group",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_MARKET_SEGMENT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_market_segment",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_CLUB_RETENTION",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "agr_club_retention",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_MAIN_VESSEL_TYPE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_main_vessel_type_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_INTERNAL_NOTE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_internal_note",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_EST_TOTAL_GROSS_TON",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "agr_est_total_gross_ton",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_SF_MARKET_AREA_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_sf_market_area_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_TEAM_ACCOUNT_MANAGER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_team_account_manager_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_UW_ASSIST_DESCRIPTION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_uw_assist_description",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_TEAM_ACCOUNT_MANAGER_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_team_account_manager_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_SF_COMPANY_NAME_BROKER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_sf_company_name_broker",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_UW_DESCRIPTION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_uw_description",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_SF_CLIENT_LOST_REASON",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_sf_client_lost_reason",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_BUSINESS_AREA",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_business_area",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_CLM_HDL_CARGO_LIQUID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_clm_hdl_cargo_liquid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_SF_TOP_GROUP_BROKER_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "agr_sf_top_group_broker_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_UW_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_uw_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_KEY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "agr_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_SF_MARKET_AREA_SHORT_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_sf_market_area_short_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_UW_ASSIST_TEAM_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_uw_assist_team_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CHARTERERS_TRAD_CLM_TEAM_IND",
+									"type": "String"
+								},
+								"sink": {
+									"name": "charterers_trad_clm_team_ind",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_MARKET_SEGMENT_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_market_segment_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TOP_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "top_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_UW_ASSIST_TEAM_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_uw_assist_team_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_DATE_START",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agr_date_start",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_ABATEMENT_STAT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "agr_abatement_stat",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_ABATEMENT_USD",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "agr_abatement_usd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_SF_COMPANY_OWNER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_sf_company_owner",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_SF_COMPANY_BROKER_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "agr_sf_company_broker_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_PARTNER_TEAM_GRP_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_partner_team_grp_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_SF_TOP_GROUP_BROKER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_sf_top_group_broker",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_ORDER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_order_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_EXT_ADJUSTER_IND",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_ext_adjuster_ind",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_CLM_HDL_PERS_INJ_AND_CREW",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_clm_hdl_pers_inj_and_crew",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_MARKET_AREA_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_market_area_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_UW_YEAR_DAYS",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "agr_uw_year_days",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_DUMMY_IND",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_dummy_ind",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_MAIN_VESSEL_TYPE_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_main_vessel_type_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_CLM_HDL_CARGO_DRY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_clm_hdl_cargo_dry",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_SF_COMPANY_NAME_CLIENT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_sf_company_name_client",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_MARKET_SEGM_CNT_GRP_SORT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_market_segm_cnt_grp_sort",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_PARTNER_OFFICE_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_partner_office_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TOP_KEY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "top_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_MARKET_SEGM_CNT_GRP_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_market_segm_cnt_grp_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_CLM_ADJUSTER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_clm_adjuster",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_MEMBER_NUMBER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "agr_member_number",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_DATE_END",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agr_date_end",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_SF_MARKET_AREA_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_sf_market_area_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_UW_ASSIST_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_uw_assist_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_EST_PREMIUM_ORG",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "agr_est_premium_org",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_PARTNER_MAIN_GRP_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_partner_main_grp_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_MARKET_AREA_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_market_area_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_CLUB_RETENTION_STAT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "agr_club_retention_stat",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_MARKET_SEGMENT_SPLIT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_market_segment_split",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_TEAM_RESP_UW_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_team_resp_uw_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_SF_TOP_GROUP_CLIENT_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "agr_sf_top_group_client_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_SF_KEY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_sf_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TOP_DESCRIPTION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "top_description",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_MARKET_SEGMENT_SPLIT_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_market_segment_split_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_OFFICE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_office",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_MARKET_AREA_SORT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_market_area_sort",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_SF_TOP_GROUP_CLIENT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_sf_top_group_client",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_AGREEMENT_TYPE_DETAIL_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_agreement_type_detail_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_CLM_HDL_ENVIRONMENTAL",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_clm_hdl_environmental",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_AGREEMENT_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_agreement_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_RESP_UW_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_resp_uw_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_EST_PREMIUM_CURRENCY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_est_premium_currency_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_MAIN_OFFICE_IND",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_main_office_ind",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_AGREEMENT_TYPE_DETAIL_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_agreement_type_detail_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_AGREEMENT_TYPE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_agreement_type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_MARKET_AREA_SHORT_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_market_area_short_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_CLM_HDL_MANDE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_clm_hdl_mande",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AGR_CLM_HDL_DEFENCE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agr_clm_hdl_defence",
+									"type": "String"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
