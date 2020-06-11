@@ -27,7 +27,7 @@
 		],
 		"typeProperties": {
 			"schema": "dwh_stage",
-			"table": "sf_opportunity"
+			"table": "sf_opportunity_product"
 		}
 	}
 }
