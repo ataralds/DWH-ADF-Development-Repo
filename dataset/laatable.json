@@ -602,7 +602,7 @@
 		],
 		"typeProperties": {
 			"schema": "dwh_stage",
-			"table": "p_iuwtable"
+			"table": "p_laatable"
 		}
 	}
 }
