@@ -2,15 +2,15 @@
 	"name": "OracleEksempel",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "OLTP05",
+			"referenceName": "OracleCStage",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "AZURE_READ",
-			"table": "sta_claim_process"
+			"schema": "CSTAGE_PARIS",
+			"table": "p_paatable"
 		}
 	}
 }
