@@ -23,7 +23,142 @@
 					"sink": {
 						"type": "AzureSqlSink"
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DIMENSION_KEY",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dimension_key",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "TOP_DESCRIPTION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "top_description",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "GRP_KEY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "grp_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "GRP_DESCRIPTION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "grp_description",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TOP_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "top_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "BUA_DESCRIPTION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "bua_description",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BUS_KEY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "bus_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BUA_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "bua_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "BUA_KEY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "bua_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TOP_KEY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "top_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "GRP_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "grp_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "BUS_DESCRIPTION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "bus_description",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BUS_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "bus_id",
+									"type": "Int64"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
