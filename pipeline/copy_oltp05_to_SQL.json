@@ -1,0 +1,104 @@
+{
+	"name": "copy_oltp05_to_SQL",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lookup_oltp05",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name not like  'AGRINT'\n",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "oracle_configfile_oltp05",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEachOltp05",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup_oltp05",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup_oltp05').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy Oltp05",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"oracleReaderQuery": {
+										"value": "SELECT * FROM @{item().table_name} ",
+										"type": "Expression"
+									},
+									"partitionOption": "None",
+									"queryTimeout": "02:00:00"
+								},
+								"sink": {
+									"type": "AzureSqlSink"
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "oracle_scr_oltp05",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "dwh_stage_oltp05_sql",
+									"type": "DatasetReference",
+									"parameters": {
+										"SinkDataset": {
+											"value": "@{item().table_name}",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "copy job/dwh_stage/oltp05"
+		},
+		"annotations": []
+	}
+}
