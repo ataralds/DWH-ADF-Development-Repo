@@ -68,7 +68,7 @@
 		],
 		"typeProperties": {
 			"schema": "dwh_stage",
-			"table": "sta_claim_process"
+			"table": "p_paatable"
 		}
 	}
 }
