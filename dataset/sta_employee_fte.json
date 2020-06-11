@@ -1,5 +1,5 @@
 {
-	"name": "sta_dummy_source",
+	"name": "sta_employee_fte",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_server_development_connection",
