@@ -1,0 +1,393 @@
+{
+	"name": "AzureSql_as_dim_time",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "dimension_key",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "policy_month_start_date",
+				"type": "date"
+			},
+			{
+				"name": "policy_qtr_start_date",
+				"type": "date"
+			},
+			{
+				"name": "policy_quarter_key",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "underwriting_quarter_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "accounting_month_start_date",
+				"type": "date"
+			},
+			{
+				"name": "underwriting_quarter_key",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "accounting_month_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "policy_year_key",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "top_key",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "accounting_qtr_start_date",
+				"type": "date"
+			},
+			{
+				"name": "underwriting_year_number",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "policy_quarter_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "calendar_date_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "day_of_policy_quarter",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "accounting_month_of_quarter",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "policy_year_number",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "policy_month_of_year",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "underwriting_month_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "day_of_accounting_year",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "day_of_accounting_month",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "day_of_underwriting_year",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "policy_year_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "underwriting_year_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "policy_qtr_of_year",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "underwriting_year_time_span",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "accounting_year_key",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "accounting_year_start_date",
+				"type": "date"
+			},
+			{
+				"name": "accounting_qtr_of_year",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "accounting_year_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "accounting_quarter_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "day",
+				"type": "date"
+			},
+			{
+				"name": "calendar_date_key",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "underwriting_year_end_date",
+				"type": "date"
+			},
+			{
+				"name": "accounting_month_key",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "policy_month_time_span",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "underwriting_qtr_of_year",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "underwriting_month_end_date",
+				"type": "date"
+			},
+			{
+				"name": "day_of_underwriting_quarter",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "policy_month_name",
+				"type": "varchar"
+			},
+			{
+				"name": "underwriting_month_of_year",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "underwriting_year_key",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "accounting_qtr_time_span",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "day_of_accounting_quarter",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "accounting_month_time_span",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "policy_qtr_time_span",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "underwriting_year_start_date",
+				"type": "date"
+			},
+			{
+				"name": "policy_month_key",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "accounting_quarter_key",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "day_of_underwriting_month",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "underwriting_month_time_span",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "accounting_qtr_end_date",
+				"type": "date"
+			},
+			{
+				"name": "underwriting_month_start_date",
+				"type": "date"
+			},
+			{
+				"name": "underwriting_month_of_quarter",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "accounting_year_end_date",
+				"type": "date"
+			},
+			{
+				"name": "all_years",
+				"type": "varchar"
+			},
+			{
+				"name": "accounting_month_of_year",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "policy_month_end_date",
+				"type": "date"
+			},
+			{
+				"name": "policy_month_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "day_name",
+				"type": "varchar"
+			},
+			{
+				"name": "accounting_month_end_date",
+				"type": "date"
+			},
+			{
+				"name": "policy_month_of_quarter",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "underwriting_qtr_time_span",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "underwriting_month_key",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "underwriting_qtr_end_date",
+				"type": "date"
+			},
+			{
+				"name": "policy_year_start_date",
+				"type": "date"
+			},
+			{
+				"name": "underwriting_qtr_start_date",
+				"type": "date"
+			},
+			{
+				"name": "day_of_policy_year",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "accounting_year_number",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "policy_year_time_span",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "policy_year_end_date",
+				"type": "date"
+			},
+			{
+				"name": "accounting_year_time_span",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "day_of_policy_month",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "top_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "policy_qtr_end_date",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "marts",
+			"table": "as_dim_time"
+		}
+	}
+}

@@ -1,6 +1,799 @@
 {
 	"name": "CopyPipeline_as_dim_time",
 	"properties": {
+		"activities": [
+			{
+				"name": "Copy as_dim_time",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DIMENSION_KEY",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "dimension_key",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_MONTH_START_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "policy_month_start_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_QTR_START_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "policy_qtr_start_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_QUARTER_KEY",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "policy_quarter_key",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_QUARTER_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "underwriting_quarter_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_MONTH_START_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "accounting_month_start_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_QUARTER_KEY",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "underwriting_quarter_key",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_MONTH_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "accounting_month_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_YEAR_KEY",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "policy_year_key",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "TOP_KEY",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "top_key",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_QTR_START_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "accounting_qtr_start_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_YEAR_NUMBER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "underwriting_year_number",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_QUARTER_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "policy_quarter_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "CALENDAR_DATE_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "calendar_date_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DAY_OF_POLICY_QUARTER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "day_of_policy_quarter",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_MONTH_OF_QUARTER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "accounting_month_of_quarter",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_YEAR_NUMBER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "policy_year_number",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_MONTH_OF_YEAR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "policy_month_of_year",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_MONTH_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "underwriting_month_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DAY_OF_ACCOUNTING_YEAR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "day_of_accounting_year",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "DAY_OF_ACCOUNTING_MONTH",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "day_of_accounting_month",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "DAY_OF_UNDERWRITING_YEAR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "day_of_underwriting_year",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_YEAR_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "policy_year_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_YEAR_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "underwriting_year_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_QTR_OF_YEAR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "policy_qtr_of_year",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_YEAR_TIME_SPAN",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "underwriting_year_time_span",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_YEAR_KEY",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "accounting_year_key",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_YEAR_START_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "accounting_year_start_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_QTR_OF_YEAR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "accounting_qtr_of_year",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_YEAR_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "accounting_year_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_QUARTER_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "accounting_quarter_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DAY",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "day",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "CALENDAR_DATE_KEY",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "calendar_date_key",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_YEAR_END_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "underwriting_year_end_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_MONTH_KEY",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "accounting_month_key",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_MONTH_TIME_SPAN",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "policy_month_time_span",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_QTR_OF_YEAR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "underwriting_qtr_of_year",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_MONTH_END_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "underwriting_month_end_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "DAY_OF_UNDERWRITING_QUARTER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "day_of_underwriting_quarter",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_MONTH_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "policy_month_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_MONTH_OF_YEAR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "underwriting_month_of_year",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_YEAR_KEY",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "underwriting_year_key",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_QTR_TIME_SPAN",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "accounting_qtr_time_span",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "DAY_OF_ACCOUNTING_QUARTER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "day_of_accounting_quarter",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_MONTH_TIME_SPAN",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "accounting_month_time_span",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_QTR_TIME_SPAN",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "policy_qtr_time_span",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_YEAR_START_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "underwriting_year_start_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_MONTH_KEY",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "policy_month_key",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_QUARTER_KEY",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "accounting_quarter_key",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "DAY_OF_UNDERWRITING_MONTH",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "day_of_underwriting_month",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_MONTH_TIME_SPAN",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "underwriting_month_time_span",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_QTR_END_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "accounting_qtr_end_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_MONTH_START_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "underwriting_month_start_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_MONTH_OF_QUARTER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "underwriting_month_of_quarter",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_YEAR_END_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "accounting_year_end_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ALL_YEARS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "all_years",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_MONTH_OF_YEAR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "accounting_month_of_year",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_MONTH_END_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "policy_month_end_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_MONTH_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "policy_month_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "DAY_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "day_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_MONTH_END_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "accounting_month_end_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_MONTH_OF_QUARTER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "policy_month_of_quarter",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_QTR_TIME_SPAN",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "underwriting_qtr_time_span",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_MONTH_KEY",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "underwriting_month_key",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_QTR_END_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "underwriting_qtr_end_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_YEAR_START_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "policy_year_start_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "UNDERWRITING_QTR_START_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "underwriting_qtr_start_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "DAY_OF_POLICY_YEAR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "day_of_policy_year",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_YEAR_NUMBER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "accounting_year_number",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_YEAR_TIME_SPAN",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "policy_year_time_span",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_YEAR_END_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "policy_year_end_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCOUNTING_YEAR_TIME_SPAN",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "accounting_year_time_span",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "DAY_OF_POLICY_MONTH",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "day_of_policy_month",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "TOP_ID",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "top_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "POLICY_QTR_END_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "policy_qtr_end_date",
+									"type": "DateTime"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "OracleTable_as_dim_time",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzureSql_as_dim_time",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
 		"annotations": []
 	}
 }
