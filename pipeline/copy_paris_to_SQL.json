@@ -63,7 +63,7 @@
 								"source": {
 									"type": "OracleSource",
 									"oracleReaderQuery": {
-										"value": "SELECT * FROM  @trim(replace(item().TABLE_NAME,'\"',' '))",
+										"value": "SELECT * FROM  [@{item().TABLE_NAME}]",
 										"type": "Expression"
 									},
 									"partitionOption": "None",
