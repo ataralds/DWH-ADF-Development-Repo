@@ -1,0 +1,336 @@
+{
+	"name": "AzureSql_as_fact_premium_transaction",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "dim_vessel_main_detail",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_vessel_type_group",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_premium_trans_date",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_source_system",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_risk_object",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_premium_type",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_premium_line",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_client",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_broker",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_agreement_start_date",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_underwriter",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_currency",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_coverage",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_country",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_business_area",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_agreement_type",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_agreement",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "transaction_key",
+				"type": "varchar"
+			},
+			{
+				"name": "premium_estimated_gross_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "commission_last_est_gross_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "premium_closed_givenco_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "commission_rr_gross_stat",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "premium_last_est_gross_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "invalidated_ind",
+				"type": "char"
+			},
+			{
+				"name": "created_by",
+				"type": "varchar"
+			},
+			{
+				"name": "commission_rr_gross_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "commission_estimat_givenco_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "transfer_date",
+				"type": "date"
+			},
+			{
+				"name": "premium_closed_gross_stat",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "commision_closed_gross_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "deleted_ind",
+				"type": "char"
+			},
+			{
+				"name": "commission_last_est_gross_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "premium_estimated_gross_stat",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "premium_last_est_gross_stat",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "premium_rr_gross_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "commision_estimated_gross_stat",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "commission_estimat_givenco_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "commission_last_est_gross_stat",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "premium_closed_gross_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "commission_closed_givenco_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "commission_rr_gross_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "premium_rr_gross_stat",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "premium_last_est_gross_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "premium_estimated_givenco_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "voucher_no",
+				"type": "varchar"
+			},
+			{
+				"name": "commision_estimated_gross_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "premium_closed_givenco_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "premium_closed_gross_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "deferred_actual_call_ind",
+				"type": "char"
+			},
+			{
+				"name": "created_date",
+				"type": "date"
+			},
+			{
+				"name": "commission_closed_givenco_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "voucher_no_commission",
+				"type": "varchar"
+			},
+			{
+				"name": "accounting_val_date",
+				"type": "date"
+			},
+			{
+				"name": "premium_estimated_gross_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "note_date",
+				"type": "date"
+			},
+			{
+				"name": "commision_estimated_gross_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "accounting_val_date_comm",
+				"type": "date"
+			},
+			{
+				"name": "premium_estimated_givenco_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "commision_closed_gross_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "premium_rr_gross_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "marts",
+			"table": "as_fact_premium_transaction"
+		}
+	}
+}
