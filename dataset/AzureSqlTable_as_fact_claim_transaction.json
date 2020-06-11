@@ -7,6 +7,10 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "marts",
+			"table": "as_fact_claim_transaction"
+		}
 	}
 }
