@@ -1,0 +1,8 @@
+{
+	"name": "OracleTable_as_dim_business_area",
+	"properties": {
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
