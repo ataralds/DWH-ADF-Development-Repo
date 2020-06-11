@@ -2,7 +2,7 @@
 	"name": "OracleEksempel",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "OracelStageITF",
+			"referenceName": "OracleCStage",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
