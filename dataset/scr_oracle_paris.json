@@ -3,7 +3,7 @@
 	"properties": {
 		"description": "All the views in paris",
 		"linkedServiceName": {
-			"referenceName": "OracleCStage",
+			"referenceName": "OracelStageITF",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
@@ -14,7 +14,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "CSTAGE_PARIS",
-			"table": "ACOTABLE"
+			"table": "p_peatable"
 		}
 	}
 }
