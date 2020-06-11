@@ -63,7 +63,7 @@
 								"source": {
 									"type": "OracleSource",
 									"oracleReaderQuery": {
-										"value": "SELECT * FROM  [@{item().TABLE_NAME}]",
+										"value": "SELECT * FROM  @trim(replace(item().TABLE_NAME,'\"',' '))",
 										"type": "Expression"
 									},
 									"partitionOption": "None",
@@ -86,7 +86,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"SinkDataset": {
-											"value": "[@{item().TABLE_NAME}]",
+											"value": "@trim(replace(item().TABLE_NAME,'\"',' '))",
 											"type": "Expression"
 										}
 									}

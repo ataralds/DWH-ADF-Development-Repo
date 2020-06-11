@@ -3,7 +3,7 @@
 	"properties": {
 		"description": "All the views in paris",
 		"linkedServiceName": {
-			"referenceName": "OracelStageITF",
+			"referenceName": "OracleCStage",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
