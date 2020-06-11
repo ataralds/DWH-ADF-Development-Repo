@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "dwh_stage_sql/Agresso"
+			"name": "dwh_stage_sql/mapsys"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
