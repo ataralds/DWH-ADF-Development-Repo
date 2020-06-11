@@ -1,0 +1,16 @@
+{
+	"name": "OracleTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracelStageITF",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "MARTS",
+			"table": "AS_FACT_PREMIUM_TRANSACTION"
+		}
+	}
+}
