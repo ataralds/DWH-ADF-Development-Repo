@@ -1,5 +1,5 @@
 {
-	"name": "OracleTable1",
+	"name": "OracleTable_as_fact_premium_transaction",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OracelStageITF",
