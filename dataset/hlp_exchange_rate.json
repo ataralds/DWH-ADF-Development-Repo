@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "dwh_stage_sql/Oltp05/Static"
+			"name": "dwh_stage_sql/exchange_rate"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
@@ -27,7 +27,7 @@
 		],
 		"typeProperties": {
 			"schema": "dwh_stage",
-			"table": "hlp_exchange_rate_to_usd"
+			"table": "hlp_exchange_rate"
 		}
 	}
 }
