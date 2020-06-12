@@ -17,15 +17,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_crossreference",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"OmMapCodeValues": {
-								"fileName": "\"map_code_values\""
-							},
-							"OmMapCodeType": {
-								"fileName": "\"map_code_type\""
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
 						"referenceName": "IrExecutePipeline",
