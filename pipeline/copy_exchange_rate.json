@@ -1,0 +1,54 @@
+{
+	"name": "copy_exchange_rate",
+	"properties": {
+		"activities": [
+			{
+				"name": "copy_hlp_exchange_rate",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE  dwh_stage.hlp_exchange_rate;",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "oracle_exchange_rate",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "hlp_exchange_rate",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"variables": {
+			"vSourceLoadstatus": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "copy job/dwh_stage/oltp05"
+		},
+		"annotations": []
+	}
+}
