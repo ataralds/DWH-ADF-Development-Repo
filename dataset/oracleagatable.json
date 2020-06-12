@@ -10,7 +10,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "CSTAGE_PARIS",
-			"table": "p_icatable"
+			"table": "p_peatable"
 		}
 	}
 }
