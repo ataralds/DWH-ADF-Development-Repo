@@ -857,7 +857,7 @@
 		],
 		"typeProperties": {
 			"schema": "dwh_stage",
-			"table": "p_icatable"
+			"table": "p_peatable"
 		}
 	}
 }
