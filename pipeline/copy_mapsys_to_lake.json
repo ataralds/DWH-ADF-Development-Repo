@@ -102,7 +102,7 @@
 			}
 		],
 		"folder": {
-			"name": "copy job/dwh_stage/oltp05"
+			"name": "Test"
 		},
 		"annotations": []
 	}
