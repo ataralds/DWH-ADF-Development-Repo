@@ -105,6 +105,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE  dwh_stage.hlp_exchange_rate;",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false
