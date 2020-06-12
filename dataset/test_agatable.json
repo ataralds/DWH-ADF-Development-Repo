@@ -1,0 +1,918 @@
+{
+	"name": "test_agatable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "\"p_agatable\"",
+				"folderPath": "Paris",
+				"fileSystem": "dwh-stage"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "agaadjsign",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaadmcode",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaagaid",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaagname",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaagno",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaagnorf",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaagtype",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaalgid",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaareacd",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaassetno",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaassetsubno",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaausign",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaautoconpol",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaavttrkeep",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaavttrnote",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaavttrpeaid",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaavttrpros",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaavttrstatus",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaavttrynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agabusnbranch",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agabusncla",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agabusndiv",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agabusnregion",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agabusnsec",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agacantxt",
+				"type": "UTF8"
+			},
+			{
+				"name": "agacashbefcovdate",
+				"type": "INT96"
+			},
+			{
+				"name": "agacashbeforecover",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaccpid",
+				"type": "UTF8"
+			},
+			{
+				"name": "agachartradeteam",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaclasstype",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaclmsign",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaclmuat",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaclosedate",
+				"type": "INT96"
+			},
+			{
+				"name": "agaclosesign",
+				"type": "UTF8"
+			},
+			{
+				"name": "agacloseynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agacomfacnote",
+				"type": "UTF8"
+			},
+			{
+				"name": "agacomfacpeaid",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agacomfacynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agacomp2",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agacompdisckeep",
+				"type": "UTF8"
+			},
+			{
+				"name": "agacompdiscnote",
+				"type": "UTF8"
+			},
+			{
+				"name": "agacompdiscpeaid",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agacompdiscpros",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agacompdiscynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agacomtarnote",
+				"type": "UTF8"
+			},
+			{
+				"name": "agacomtarpeaid",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agacomtarstknote",
+				"type": "UTF8"
+			},
+			{
+				"name": "agacomtarstkpeaid",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agacomtarstkynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agacomtarynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaconcern",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaconnectsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaconsrnote",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaconsrynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agacontinsagaid",
+				"type": "UTF8"
+			},
+			{
+				"name": "agacontinsagno",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agacontinsynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agacrdate",
+				"type": "INT96"
+			},
+			{
+				"name": "agacrsign",
+				"type": "UTF8"
+			},
+			{
+				"name": "agacumul",
+				"type": "UTF8"
+			},
+			{
+				"name": "agadatcan",
+				"type": "INT96"
+			},
+			{
+				"name": "agadatest",
+				"type": "INT96"
+			},
+			{
+				"name": "agadatora",
+				"type": "INT96"
+			},
+			{
+				"name": "agadatore",
+				"type": "INT96"
+			},
+			{
+				"name": "agadatpca",
+				"type": "INT96"
+			},
+			{
+				"name": "agadecltyp",
+				"type": "UTF8"
+			},
+			{
+				"name": "agadwbs",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaeldocynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaelinvynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaendate",
+				"type": "INT96"
+			},
+			{
+				"name": "agaenhour",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaentrytype",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaeosign",
+				"type": "UTF8"
+			},
+			{
+				"name": "agafileref",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agafixprnote",
+				"type": "UTF8"
+			},
+			{
+				"name": "agafixprpeaid",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agafixprynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agafromcomp",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agagday",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agagen1keep",
+				"type": "UTF8"
+			},
+			{
+				"name": "agagen1note",
+				"type": "UTF8"
+			},
+			{
+				"name": "agagen1peaid",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agagen1prov",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agagen1ynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agagen2keep",
+				"type": "UTF8"
+			},
+			{
+				"name": "agagen2note",
+				"type": "UTF8"
+			},
+			{
+				"name": "agagen2peaid",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agagen2prov",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agagen2ynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agagen3keep",
+				"type": "UTF8"
+			},
+			{
+				"name": "agagen3note",
+				"type": "UTF8"
+			},
+			{
+				"name": "agagen3peaid",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agagen3prov",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agagen3ynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agagident",
+				"type": "UTF8"
+			},
+			{
+				"name": "agagmonth",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agagtype",
+				"type": "UTF8"
+			},
+			{
+				"name": "agahealthdate",
+				"type": "INT96"
+			},
+			{
+				"name": "agahealthynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "againcprovkeep",
+				"type": "UTF8"
+			},
+			{
+				"name": "againcprovnote",
+				"type": "UTF8"
+			},
+			{
+				"name": "againcprovpeaid",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "againcprovpros",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "againcprovynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "againcrebkeep",
+				"type": "UTF8"
+			},
+			{
+				"name": "againcrebnote",
+				"type": "UTF8"
+			},
+			{
+				"name": "againcrebpeaid",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "againcrebpros",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "againcrebynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "againdustrytxt",
+				"type": "UTF8"
+			},
+			{
+				"name": "againstti",
+				"type": "UTF8"
+			},
+			{
+				"name": "againtnote",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaisic",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaiyear",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaknvmark",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaktocred",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaktocust",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaktodeb",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaliabendate",
+				"type": "INT96"
+			},
+			{
+				"name": "agalocpolissued",
+				"type": "UTF8"
+			},
+			{
+				"name": "agalongname",
+				"type": "UTF8"
+			},
+			{
+				"name": "agalostcode",
+				"type": "UTF8"
+			},
+			{
+				"name": "agalosttxt35",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaludate",
+				"type": "INT96"
+			},
+			{
+				"name": "agalusign",
+				"type": "UTF8"
+			},
+			{
+				"name": "agamaiper",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agamgrpnote",
+				"type": "UTF8"
+			},
+			{
+				"name": "agamgrpynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agamincurr",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaminpre",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "aganoterm",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agansalecom",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "aganscomynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "aganumpers",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaoffice",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaoiltyp",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaopencover",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaordercode",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaordertxt35",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaorgcrdate",
+				"type": "INT96"
+			},
+			{
+				"name": "agaorgins",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaoxno",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaoxrefid",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaoyrno",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaoyrnote",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaoyrto",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agapeoid",
+				"type": "UTF8"
+			},
+			{
+				"name": "agapictype",
+				"type": "UTF8"
+			},
+			{
+				"name": "agapwcode",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agapwfrdate",
+				"type": "INT96"
+			},
+			{
+				"name": "agaratcod",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaratemodel",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agarefcod",
+				"type": "UTF8"
+			},
+			{
+				"name": "agareftxt",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaremove",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agarenbatchid",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agarencod",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agarentxt",
+				"type": "UTF8"
+			},
+			{
+				"name": "agasalesdiv",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agasetfreq",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agasettldetprt",
+				"type": "UTF8"
+			},
+			{
+				"name": "agashut",
+				"type": "UTF8"
+			},
+			{
+				"name": "agasitid",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaskipinstadynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agasource",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agastat1",
+				"type": "UTF8"
+			},
+			{
+				"name": "agastat2",
+				"type": "UTF8"
+			},
+			{
+				"name": "agastateareacd",
+				"type": "UTF8"
+			},
+			{
+				"name": "agastdate",
+				"type": "INT96"
+			},
+			{
+				"name": "agasthour",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaswo",
+				"type": "UTF8"
+			},
+			{
+				"name": "agatocomp",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agatrackit",
+				"type": "UTF8"
+			},
+			{
+				"name": "agatrackit1",
+				"type": "UTF8"
+			},
+			{
+				"name": "agatrackit2",
+				"type": "UTF8"
+			},
+			{
+				"name": "agatrackit3",
+				"type": "UTF8"
+			},
+			{
+				"name": "agatreatas",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaturnover",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agatzone",
+				"type": "UTF8"
+			},
+			{
+				"name": "agauat",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaufafpynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agausage",
+				"type": "UTF8"
+			},
+			{
+				"name": "agausecod",
+				"type": "UTF8"
+			},
+			{
+				"name": "agauwsign",
+				"type": "UTF8"
+			},
+			{
+				"name": "agawbs",
+				"type": "UTF8"
+			},
+			{
+				"name": "agawbscust",
+				"type": "UTF8"
+			},
+			{
+				"name": "agawntnocperiod",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agawnttext35",
+				"type": "UTF8"
+			},
+			{
+				"name": "agawntynsw",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaxmednote",
+				"type": "UTF8"
+			},
+			{
+				"name": "agaxmedpeaid",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "agaxmedynsw",
+				"type": "UTF8"
+			}
+		]
+	}
+}

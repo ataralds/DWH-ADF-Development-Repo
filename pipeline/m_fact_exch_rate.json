@@ -1,0 +1,36 @@
+{
+	"name": "m_fact_exch_rate",
+	"properties": {
+		"activities": [
+			{
+				"name": "m_fact_exch_rate",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "m_fact_exch_rate",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"dimTime": {
+								"fileName": "\"sta_dim_time\""
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IrExecutePipeline",
+						"type": "IntegrationRuntimeReference"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}

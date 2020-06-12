@@ -1,11 +1,18 @@
 {
-	"name": "load_master_pre",
+	"name": "load_master_pre_dwh",
 	"properties": {
 		"activities": [
 			{
 				"name": "load_static_stage_dwh",
 				"type": "ExecutePipeline",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Initialize_pipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
@@ -49,7 +56,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "error_handling",
+						"referenceName": "pipeline_error_handling",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
@@ -76,7 +83,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "error_handling",
+						"referenceName": "pipeline_error_handling",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
@@ -88,6 +95,19 @@
 						}
 					}
 				}
+			},
+			{
+				"name": "Initialize_pipeline",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Initialize_pipeline",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"variables": {
@@ -96,7 +116,7 @@
 			}
 		},
 		"folder": {
-			"name": "pipeline/dwh_stage"
+			"name": "pipelines/dwh_stage"
 		},
 		"annotations": []
 	}

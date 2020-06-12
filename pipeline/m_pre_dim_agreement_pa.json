@@ -1,0 +1,54 @@
+{
+	"name": "m_pre_dim_agreement_pa",
+	"properties": {
+		"activities": [
+			{
+				"name": "m_pre_dim_agreement_pa",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "m_pre_dim_agreement_pa",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"Pagatable": {
+								"fileName": "\"p_agatable\""
+							},
+							"Pagztable": {
+								"fileName": "\"p_agztable\""
+							},
+							"Ppebtable": {
+								"fileName": "\"p_pebtable\""
+							},
+							"tcrossreference": {
+								"fileName": "tcrossreference.parquet"
+							},
+							"SrcSfCompany": {
+								"fileName": "\"sf_company_new\""
+							},
+							"DimTime": {
+								"fileName": "\"sta_dim_time\""
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IrExecutePipeline",
+						"type": "IntegrationRuntimeReference"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "mappings/dwh_prepare"
+		},
+		"annotations": []
+	}
+}
