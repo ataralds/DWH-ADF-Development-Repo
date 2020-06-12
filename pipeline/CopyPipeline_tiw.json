@@ -1,0 +1,1977 @@
+{
+	"name": "CopyPipeline_tiw",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_tiw",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "CSTAGE_PARIS.p_agatable"
+					},
+					{
+						"name": "Destination",
+						"value": "dwh_stage.p_agatable"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "agadatcan",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agadatcan",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "againcprovpros",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "againcprovpros",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "agaalgid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaalgid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaausign",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaausign",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agagen2peaid",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agagen2peaid",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agacontinsagno",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agacontinsagno",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "agacantxt",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agacantxt",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agagen2ynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agagen2ynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaswo",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaswo",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agareftxt",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agareftxt",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaremove",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaremove",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agalusign",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agalusign",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agawnttext35",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agawnttext35",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaclosesign",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaclosesign",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaareacd",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaareacd",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agacomfacnote",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agacomfacnote",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaconsrnote",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaconsrnote",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agachartradeteam",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agachartradeteam",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agabusnregion",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agabusnregion",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agaagtype",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaagtype",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agaiyear",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaiyear",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "agagen3ynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agagen3ynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaassetsubno",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaassetsubno",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agagmonth",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agagmonth",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agadatcan",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agadatcan",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "agaavttrkeep",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaavttrkeep",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agawbscust",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agawbscust",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agapeoid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agapeoid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agasalesdiv",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agasalesdiv",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agafixprynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agafixprynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agacompdiscnote",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agacompdiscnote",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agacomfacynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agacomfacynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agarencod",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agarencod",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agausecod",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agausecod",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaminpre",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaminpre",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "agaxmedynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaxmedynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "againcrebkeep",
+									"type": "String"
+								},
+								"sink": {
+									"name": "againcrebkeep",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaavttrstatus",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaavttrstatus",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agahealthdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agahealthdate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "agatrackit3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agatrackit3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agawbs",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agawbs",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaenhour",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaenhour",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "agahealthynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agahealthynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agagen3note",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agagen3note",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaufafpynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaufafpynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agadatpca",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agadatpca",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "agagen1note",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agagen1note",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agabusndiv",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agabusndiv",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agacomp2",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agacomp2",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agastat2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agastat2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agauwsign",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agauwsign",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agacomtarpeaid",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agacomtarpeaid",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agacloseynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agacloseynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "aganumpers",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "aganumpers",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "agaknvmark",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaknvmark",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agalostcode",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agalostcode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaorgcrdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agaorgcrdate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "agaagno",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaagno",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "agalosttxt35",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agalosttxt35",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agagen1ynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agagen1ynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agagen3peaid",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agagen3peaid",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agatrackit1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agatrackit1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaktocred",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaktocred",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agamgrpnote",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agamgrpnote",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agacompdisckeep",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agacompdisckeep",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agagen1peaid",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agagen1peaid",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agagen2keep",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agagen2keep",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agabusnsec",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agabusnsec",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agacomtarynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agacomtarynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaoxrefid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaoxrefid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agacomfacpeaid",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agacomfacpeaid",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agaskipinstadynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaskipinstadynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agatrackit2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agatrackit2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agapictype",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agapictype",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agafixprpeaid",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agafixprpeaid",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agadwbs",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agadwbs",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agauat",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agauat",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "againcprovynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "againcprovynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agansalecom",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agansalecom",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "agawntynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agawntynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaclosedate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agaclosedate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "againcprovpeaid",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "againcprovpeaid",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agashut",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agashut",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaadmcode",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaadmcode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agafixprnote",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agafixprnote",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaconsrynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaconsrynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaliabendate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agaliabendate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "agaeldocynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaeldocynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaoyrno",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaoyrno",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agacrdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agacrdate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "agaeosign",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaeosign",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaadjsign",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaadjsign",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaratemodel",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaratemodel",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agagen2note",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agagen2note",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaavttrpros",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaavttrpros",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "agasettldetprt",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agasettldetprt",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaordercode",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaordercode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agabusncla",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agabusncla",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agacompdiscynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agacompdiscynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaoyrnote",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaoyrnote",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaktocust",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaktocust",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "againcrebpros",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "againcrebpros",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "agacashbefcovdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agacashbefcovdate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "agatrackit",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agatrackit",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaclasstype",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaclasstype",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agacompdiscpeaid",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agacompdiscpeaid",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agaoiltyp",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaoiltyp",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agaconcern",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaconcern",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "againdustrytxt",
+									"type": "String"
+								},
+								"sink": {
+									"name": "againdustrytxt",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaludate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agaludate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "agaorgins",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaorgins",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "aganoterm",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "aganoterm",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "againstti",
+									"type": "String"
+								},
+								"sink": {
+									"name": "againstti",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agafromcomp",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agafromcomp",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agarentxt",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agarentxt",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agagen2prov",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agagen2prov",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "agaktodeb",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaktodeb",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agalongname",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agalongname",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agamgrpynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agamgrpynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agacompdiscpros",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agacompdiscpros",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "agalocpolissued",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agalocpolissued",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "againtnote",
+									"type": "String"
+								},
+								"sink": {
+									"name": "againtnote",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agarefcod",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agarefcod",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agastdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agastdate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "agacomtarstkynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agacomtarstkynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaautoconpol",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaautoconpol",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaxmednote",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaxmednote",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agastat1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agastat1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaratcod",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaratcod",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agarenbatchid",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agarenbatchid",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "agadatora",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agadatora",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "agacomtarnote",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agacomtarnote",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaxmedpeaid",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaxmedpeaid",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agawntnocperiod",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agawntnocperiod",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "agaclmuat",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaclmuat",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agasthour",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agasthour",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "agagtype",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agagtype",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agacontinsynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agacontinsynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agacumul",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agacumul",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "againcrebynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "againcrebynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaagname",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaagname",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agamaiper",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agamaiper",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agagen1prov",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agagen1prov",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "agagen1keep",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agagen1keep",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agastateareacd",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agastateareacd",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaconnectsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaconnectsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agasource",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agasource",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agatreatas",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agatreatas",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaendate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agaendate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "agadatore",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agadatore",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "agatzone",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agatzone",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaoyrto",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaoyrto",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agacontinsagaid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agacontinsagaid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agapwfrdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agapwfrdate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "agasitid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agasitid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agasetfreq",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agasetfreq",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agabusnbranch",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agabusnbranch",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "aganscomynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "aganscomynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agafileref",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agafileref",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "agagen3keep",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agagen3keep",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaisic",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaisic",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agamincurr",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agamincurr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaavttrpeaid",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaavttrpeaid",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agapwcode",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agapwcode",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agaagnorf",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaagnorf",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "agaavttrnote",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaavttrnote",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agatocomp",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agatocomp",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agaclmsign",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaclmsign",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaavttrynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaavttrynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaoxno",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaoxno",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "agagen3prov",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agagen3prov",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "agaoffice",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaoffice",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "againcrebpeaid",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "againcrebpeaid",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "againcrebnote",
+									"type": "String"
+								},
+								"sink": {
+									"name": "againcrebnote",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaopencover",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaopencover",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agagident",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agagident",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agausage",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agausage",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaentrytype",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaentrytype",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaturnover",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaturnover",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agacrsign",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agacrsign",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agacomtarstknote",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agacomtarstknote",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agadatest",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "agadatest",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "againcprovnote",
+									"type": "String"
+								},
+								"sink": {
+									"name": "againcprovnote",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agagday",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agagday",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "agadecltyp",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agadecltyp",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agacashbeforecover",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agacashbeforecover",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaccpid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaccpid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaassetno",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agaassetno",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "agaordertxt35",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaordertxt35",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "againcprovkeep",
+									"type": "String"
+								},
+								"sink": {
+									"name": "againcprovkeep",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agaelinvynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "agaelinvynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "agacomtarstkpeaid",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "agacomtarstkpeaid",
+									"type": "Int64"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_tiw",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_tiw",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
