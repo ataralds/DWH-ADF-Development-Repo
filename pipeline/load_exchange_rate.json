@@ -73,7 +73,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"pipeline": {
-									"referenceName": "copy_exchange_rate_to_lake",
+									"referenceName": "copy_exchange_rate",
 									"type": "PipelineReference"
 								},
 								"waitOnCompletion": true
