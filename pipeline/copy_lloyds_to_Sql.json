@@ -69,10 +69,7 @@
 									"queryTimeout": "02:00:00"
 								},
 								"sink": {
-									"type": "ParquetSink",
-									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings"
-									}
+									"type": "AzureSqlSink"
 								},
 								"enableStaging": false
 							},
@@ -84,14 +81,8 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "Lloyds",
-									"type": "DatasetReference",
-									"parameters": {
-										"fileName": {
-											"value": "@{item().table_name}",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "sqlLloyds",
+									"type": "DatasetReference"
 								}
 							]
 						}
