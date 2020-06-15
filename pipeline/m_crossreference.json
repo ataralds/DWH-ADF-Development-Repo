@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_crossreference",
+						"referenceName": "m_t_crossreference",
 						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
