@@ -47,7 +47,7 @@
 					},
 					"activities": [
 						{
-							"name": "Copy Oltp05",
+							"name": "Copy Lloyds",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
