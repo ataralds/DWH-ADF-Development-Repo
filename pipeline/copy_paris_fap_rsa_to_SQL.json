@@ -1,7 +1,7 @@
 {
-	"name": "copy_paris_to_SQL",
+	"name": "copy_paris_fap_rsa_to_SQL",
 	"properties": {
-		"description": "This copy job is getting the views from config on paris c_stage. Temp, before we get SQL up running. ",
+		"description": "This copy job is getting the views from config on paris c_stage. Testing the fap/rsa loading time. ",
 		"activities": [
 			{
 				"name": "Lookup_Paris",
@@ -18,7 +18,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where load_ind = 'Y'\n",
+						"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where load_ind = 'N'\nand table_name not in ('\"p_filtable_cor\"','\"p_faptable\"')",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
@@ -63,30 +63,29 @@
 								"source": {
 									"type": "OracleSource",
 									"oracleReaderQuery": {
-										"value": "SELECT * FROM  @{item().TABLE_NAME}",
+										"value": "SELECT * FROM @{item().table_name} ",
 										"type": "Expression"
 									},
 									"partitionOption": "None",
 									"queryTimeout": "02:00:00"
 								},
 								"sink": {
-									"type": "AzureSqlSink",
-									"disableMetricsCollection": false
+									"type": "AzureSqlSink"
 								},
 								"enableStaging": false
 							},
 							"inputs": [
 								{
-									"referenceName": "scr_oracle_paris",
+									"referenceName": "oracle_paris_fap_rsa",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "ParisTables",
+									"referenceName": "sqlfaprsacopy",
 									"type": "DatasetReference",
 									"parameters": {
-										"SinkDataset": {
+										"sinkDataset": {
 											"value": "@trim(replace(item().TABLE_NAME,'\"',' '))",
 											"type": "Expression"
 										}

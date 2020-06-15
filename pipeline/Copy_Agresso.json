@@ -41,10 +41,7 @@
 									"partitionOption": "None"
 								},
 								"sink": {
-									"type": "ParquetSink",
-									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings"
-									}
+									"type": "AzureSqlSink"
 								},
 								"enableStaging": false
 							},
@@ -59,7 +56,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "Agresso",
+									"referenceName": "AgressoSql",
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
