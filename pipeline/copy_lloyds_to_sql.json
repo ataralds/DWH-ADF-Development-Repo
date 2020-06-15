@@ -1,5 +1,5 @@
 {
-	"name": "copy_lloyds_to_Sql",
+	"name": "copy_lloyds_to_sql",
 	"properties": {
 		"activities": [
 			{
@@ -97,7 +97,7 @@
 			}
 		],
 		"folder": {
-			"name": "Test"
+			"name": "copy job/dwh_stage/oltp05"
 		},
 		"annotations": []
 	}
