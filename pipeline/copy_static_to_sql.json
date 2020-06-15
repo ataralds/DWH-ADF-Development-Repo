@@ -1,9 +1,9 @@
 {
-	"name": "copy_saleforce_to_sql",
+	"name": "copy_static_to_sql",
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup_saleforce",
+				"name": "Lookup_static",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name = 'SALEFORCE'",
+						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name = 'STATIC'\n",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
@@ -29,11 +29,11 @@
 				}
 			},
 			{
-				"name": "ForEachSaleforce",
+				"name": "ForEachsStatic",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup_saleforce",
+						"activity": "Lookup_static",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -42,12 +42,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup_saleforce').output.value",
+						"value": "@activity('Lookup_static').output.value",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "Copy Saleforce",
+							"name": "Copy Static",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -69,7 +69,10 @@
 									"queryTimeout": "02:00:00"
 								},
 								"sink": {
-									"type": "AzureSqlSink"
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									}
 								},
 								"enableStaging": false
 							},
@@ -81,11 +84,11 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "SqlSaleforce",
+									"referenceName": "Static",
 									"type": "DatasetReference",
 									"parameters": {
-										"sinkDataset": {
-											"value": "@trim(replace(item().TABLE_NAME,'\"',' '))",
+										"fileName": {
+											"value": "@{item().table_name}",
 											"type": "Expression"
 										}
 									}
@@ -97,7 +100,7 @@
 			}
 		],
 		"folder": {
-			"name": "copy job/dwh_stage/oltp05"
+			"name": "Test"
 		},
 		"annotations": []
 	}
