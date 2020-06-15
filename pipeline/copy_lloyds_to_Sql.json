@@ -82,7 +82,13 @@
 							"outputs": [
 								{
 									"referenceName": "sqlLloyds",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"sinkDataset": {
+											"value": "@trim(replace(item().TABLE_NAME,'\"',' '))",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
