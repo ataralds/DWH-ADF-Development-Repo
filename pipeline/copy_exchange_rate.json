@@ -1,5 +1,5 @@
 {
-	"name": "copy_exchange_rate_to_lake",
+	"name": "copy_exchange_rate",
 	"properties": {
 		"activities": [
 			{
