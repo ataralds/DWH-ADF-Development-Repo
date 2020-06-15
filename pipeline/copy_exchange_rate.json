@@ -1,5 +1,5 @@
 {
-	"name": "copy_exchange_rate_to_lake",
+	"name": "copy_exchange_rate",
 	"properties": {
 		"activities": [
 			{
@@ -34,7 +34,7 @@
 								}
 							],
 							"policy": {
-								"timeout": "0.00:10:00",
+								"timeout": "0.02:00:00",
 								"retry": 0,
 								"retryIntervalInSeconds": 30,
 								"secureOutput": false,
@@ -104,10 +104,9 @@
 						"queryTimeout": "02:00:00"
 					},
 					"sink": {
-						"type": "ParquetSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						}
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE  dwh_stage.hlp_exchange_rate;",
+						"disableMetricsCollection": false
 					},
 					"enableStaging": false
 				},
@@ -119,7 +118,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "stage_hlp_exchange_rate",
+						"referenceName": "hlp_exchange_rate",
 						"type": "DatasetReference"
 					}
 				]
