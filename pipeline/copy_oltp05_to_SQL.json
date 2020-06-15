@@ -69,7 +69,12 @@
 									"queryTimeout": "02:00:00"
 								},
 								"sink": {
-									"type": "AzureSqlSink"
+									"type": "AzureSqlSink",
+									"preCopyScript": {
+										"value": "@{concat('TRUNCATE TABLE dwh_stage.',trim(replace(item().table_name,'\"',' ')),';')}",
+										"type": "Expression"
+									},
+									"disableMetricsCollection": false
 								},
 								"enableStaging": false
 							},
@@ -91,11 +96,33 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Copy Oltp05",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "v_delete",
+								"value": "@{concat('TRUNCATE TABLE dwh_stage.',trim(replace(item().table_name,'\"',' ')),';')}"
+							}
 						}
 					]
 				}
 			}
 		],
+		"variables": {
+			"v_delete": {
+				"type": "String"
+			}
+		},
 		"folder": {
 			"name": "copy job/dwh_stage/oltp05"
 		},
