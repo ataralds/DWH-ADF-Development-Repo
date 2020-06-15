@@ -1,5 +1,5 @@
 {
-	"name": "sqlfaprsacopy",
+	"name": "SQLMapsys",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_server_development_connection",
