@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name = 'STATIC'\n",
+						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name = 'STATIC' and oracle_schema_name = 'RSKDRV' \n",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
