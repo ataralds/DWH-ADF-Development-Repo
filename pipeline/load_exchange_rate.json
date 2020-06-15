@@ -19,7 +19,7 @@
 						"type": "OracleSource",
 						"oracleReaderQuery": "select \"file_arrival_status\" from \"hlp_exchange_rate_status\"",
 						"partitionOption": "None",
-						"queryTimeout": "00:10:00"
+						"queryTimeout": "00:30:00"
 					},
 					"dataset": {
 						"referenceName": "oracle_exchange_rate_status",
@@ -67,7 +67,7 @@
 					],
 					"ifTrueActivities": [
 						{
-							"name": "copy_exchange_rate_to_lake",
+							"name": "copy_exchange_rate",
 							"type": "ExecutePipeline",
 							"dependsOn": [],
 							"userProperties": [],
@@ -84,7 +84,7 @@
 							"type": "ExecutePipeline",
 							"dependsOn": [
 								{
-									"activity": "copy_exchange_rate_to_lake",
+									"activity": "copy_exchange_rate",
 									"dependencyConditions": [
 										"Succeeded"
 									]
