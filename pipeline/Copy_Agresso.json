@@ -73,7 +73,7 @@
 		],
 		"parameters": {
 			"cw_items": {
-				"type": "Array",
+				"type": "array",
 				"defaultValue": "[{\"source\":{\"table\":\"S_UDV_EMPLOYEE\"},\"destination\":{\"fileName\":\"udv_employee\"}},{\"source\":{\"table\":\"S_UDV_OFFICE\"},\"destination\":{\"fileName\":\"udv_office}},{\"source\":{\"table\":\"S_UDV_ORGUNIT\"},\"destination\":{\"fileName\":\"udv_orgunit\"}}]"
 			}
 		},
