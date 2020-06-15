@@ -96,23 +96,6 @@
 									}
 								}
 							]
-						},
-						{
-							"name": "Set variable1",
-							"type": "SetVariable",
-							"dependsOn": [
-								{
-									"activity": "Copy Oltp05",
-									"dependencyConditions": [
-										"Completed"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "v_delete",
-								"value": "@{concat('TRUNCATE TABLE dwh_stage.',trim(replace(item().table_name,'\"',' ')),';')}"
-							}
 						}
 					]
 				}
