@@ -126,14 +126,14 @@
 									},
 									"pInSourceCount": {
 										"value": {
-											"value": "@activity('Copy Oltp05').output.rowsRead",
+											"value": "@activity('Copy Exact').output.rowsRead",
 											"type": "Expression"
 										},
 										"type": "Int32"
 									},
 									"pInTargetCount": {
 										"value": {
-											"value": "@activity('Copy Oltp05').output.rowsCopied",
+											"value": "@activity('Copy Exact').output.rowsCopied",
 											"type": "Expression"
 										},
 										"type": "Int32"
