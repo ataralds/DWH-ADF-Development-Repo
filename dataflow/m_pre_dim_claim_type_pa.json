@@ -45,7 +45,14 @@
 						"referenceName": "lcatable",
 						"type": "DatasetReference"
 					},
-					"name": "lcatable"
+					"name": "Lcatable"
+				},
+				{
+					"dataset": {
+						"referenceName": "faltable",
+						"type": "DatasetReference"
+					},
+					"name": "faltable"
 				}
 			],
 			"sinks": [],
@@ -58,9 +65,15 @@
 				},
 				{
 					"name": "IcaLca"
+				},
+				{
+					"name": "LcaLab"
+				},
+				{
+					"name": "LcaFal"
 				}
 			],
-			"script": "source(output(\n\t\tagaagaid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select agaagaid from dwh_stage.p_agatable where agabusndiv =1',\n\tformat: 'query') ~> agatable\nsource(output(\n\t\tsource_code_key as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tcode_type as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select source_code_key,target_code,target_description,code_type from dwh_stage.t_crossreference where source_system = \\'PARIS\\' and code_type_id = 167',\n\tformat: 'query') ~> Tcross\nsource(output(\n\t\tlablabid as string,\n\t\tlabmainev as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select lablabid,labmainev from dwh_stage.p_labtable',\n\tformat: 'query') ~> Labtable\nsource(output(\n\t\tinainaid as string,\n\t\tinaagaid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select inainaid,inaagaid from dwh_stage.p_inatable',\n\tformat: 'query') ~> Inatable\nsource(output(\n\t\ticaicaid as string,\n\t\ticainaid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select icaicaid,icainaid from dwh_stage.p_icatable',\n\tformat: 'query') ~> Icatable\nsource(output(\n\t\tlcalcaid as string,\n\t\tlcaicaid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select lcalcaid,lcaicaid from dwh_stage.p_lcatable',\n\tformat: 'query') ~> lcatable\nagatable, Inatable join(agaagaid == inaagaid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> AgaIna\nAgaIna, Icatable join(inainaid == icainaid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> InaIca\nInaIca, lcatable join(icaicaid == lcaicaid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> IcaLca"
+			"script": "source(output(\n\t\tagaagaid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select agaagaid from dwh_stage.p_agatable where agabusndiv =1',\n\tformat: 'query') ~> agatable\nsource(output(\n\t\tsource_code_key as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tcode_type as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select source_code_key,target_code,target_description,code_type from dwh_stage.t_crossreference where source_system = \\'PARIS\\' and code_type_id = 167',\n\tformat: 'query') ~> Tcross\nsource(output(\n\t\tlablabid as string,\n\t\tlabmainev as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select lablabid,labmainev from dwh_stage.p_labtable',\n\tformat: 'query') ~> Labtable\nsource(output(\n\t\tinainaid as string,\n\t\tinaagaid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select inainaid,inaagaid from dwh_stage.p_inatable',\n\tformat: 'query') ~> Inatable\nsource(output(\n\t\ticaicaid as string,\n\t\ticainaid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select icaicaid,icainaid from dwh_stage.p_icatable',\n\tformat: 'query') ~> Icatable\nsource(output(\n\t\tlcalcaid as string,\n\t\tlcaicaid as string,\n\t\tlcalabid as string,\n\t\tlcaagaid as string,\n\t\tlcalossco as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select lcalcaid,lcaicaid,lcalabid,lcaagaid,lcalossco from dwh_stage.p_lcatable',\n\tformat: 'query') ~> Lcatable\nsource(output(\n\t\tfalfalid as string,\n\t\tfalclmcat as string,\n\t\tfallcaid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select falfalid,falclmcat,fallcaid from dwh_stage.p_faltable where falinout= \\'I\\'',\n\tformat: 'query') ~> faltable\nagatable, Inatable join(agaagaid == inaagaid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> AgaIna\nAgaIna, Icatable join(inainaid == icainaid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> InaIca\nInaIca, Lcatable join(icaicaid == lcaicaid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> IcaLca\nIcaLca, Labtable join(lcalabid == lablabid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> LcaLab\nLcaLab, faltable join(lcaicaid == fallcaid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> LcaFal"
 		}
 	}
 }
