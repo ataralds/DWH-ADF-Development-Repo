@@ -16,7 +16,7 @@
 		"typeProperties": {
 			"schema": "dwh_stage",
 			"table": {
-				"value": "@dataset().fileName",
+				"value": "dummy",
 				"type": "Expression"
 			}
 		}
