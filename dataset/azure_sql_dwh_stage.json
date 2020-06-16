@@ -5,11 +5,6 @@
 			"referenceName": "sql_server_development_connection",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"fileName": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
