@@ -1,0 +1,7 @@
+{
+	"name": "load_master_pre_paris",
+	"properties": {
+		"description": "this is to use paris copy job",
+		"annotations": []
+	}
+}
