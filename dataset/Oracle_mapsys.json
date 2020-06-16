@@ -5,6 +5,9 @@
 			"referenceName": "OLTP05",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Copy job/dwh-stage/Oltp05"
+		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
