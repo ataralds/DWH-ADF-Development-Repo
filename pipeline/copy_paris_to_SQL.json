@@ -70,7 +70,8 @@
 									"queryTimeout": "02:00:00"
 								},
 								"sink": {
-									"type": "AzureSqlSink"
+									"type": "AzureSqlSink",
+									"disableMetricsCollection": false
 								},
 								"enableStaging": false
 							},
