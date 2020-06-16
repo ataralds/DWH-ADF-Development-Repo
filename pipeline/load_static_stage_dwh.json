@@ -21,10 +21,6 @@
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
-					"pipeline": {
-						"referenceName": "copy_static_to_lake",
-						"type": "PipelineReference"
-					},
 					"waitOnCompletion": true
 				}
 			},

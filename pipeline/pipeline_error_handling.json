@@ -74,12 +74,16 @@
 			"pPipelineErrorMsg": {
 				"type": "string",
 				"defaultValue": "Pipeline failed. Please check"
+			},
+			"pEmailTo": {
+				"type": "string",
+				"defaultValue": "sudipta.dutta@gard.no"
 			}
 		},
 		"variables": {
 			"vEmailTo": {
 				"type": "String",
-				"defaultValue": "sudipta.dutta@gard.no"
+				"defaultValue": "pEmailTo"
 			},
 			"vSubject": {
 				"type": "String",

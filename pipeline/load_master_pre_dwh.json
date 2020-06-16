@@ -7,7 +7,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "Initialize_pipeline",
+						"activity": "load_master_pre_paris",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -35,10 +35,6 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"pipeline": {
-						"referenceName": "copy_exact_to_lake",
-						"type": "PipelineReference"
-					},
 					"waitOnCompletion": true
 				}
 			},
@@ -104,6 +100,26 @@
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "Initialize_pipeline",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "load_master_pre_paris",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Initialize_pipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "load_master_pre_paris",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
