@@ -79,7 +79,7 @@
 				},
 				{
 					"name": "AlterRow",
-					"description": "Upsert if not null"
+					"description": "Upsert "
 				},
 				{
 					"name": "currency124"
