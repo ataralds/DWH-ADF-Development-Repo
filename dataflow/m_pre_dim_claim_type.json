@@ -1,0 +1,25 @@
+{
+	"name": "m_pre_dim_claim_type",
+	"properties": {
+		"description": "Code_Type_id = 774 Claim Type",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "tcrossreference",
+						"type": "DatasetReference"
+					},
+					"name": "tcross"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "DerivedColumn1"
+				}
+			],
+			"script": "source(output(\n\t\tcode_type_id as long,\n\t\tcode2 as string,\n\t\ttarget_description as string,\n\t\tsource_system as string,\n\t\tom_x_ref as string,\n\t\ttarget_code as string,\n\t\tcode_type as string,\n\t\tsource_code_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.t_crossreference\\nwhere code_type_id = 774',\n\tformat: 'query') ~> tcross\ntcross derive(pk_key_claim = concat(source_system,source_code_key),\n\t\t{} = ERROR_FUNCTION('')) ~> DerivedColumn1"
+		}
+	}
+}
