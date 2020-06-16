@@ -35,10 +35,6 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"pipeline": {
-						"referenceName": "copy_exact_to_lake",
-						"type": "PipelineReference"
-					},
 					"waitOnCompletion": true
 				}
 			},
