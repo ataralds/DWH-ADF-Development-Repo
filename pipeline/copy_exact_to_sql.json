@@ -42,7 +42,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup_exact').output",
+						"value": "@activity('Lookup_exact').output.value",
 						"type": "Expression"
 					},
 					"activities": [
@@ -87,13 +87,7 @@
 							"outputs": [
 								{
 									"referenceName": "SqlExact",
-									"type": "DatasetReference",
-									"parameters": {
-										"sinkDataset": {
-											"value": "@trim(replace(item().TABLE_NAME,'\"',' '))",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							]
 						},
