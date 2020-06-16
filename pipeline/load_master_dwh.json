@@ -34,6 +34,71 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "load_dim",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_pre_dim",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "load_dim",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "load_trans_daily",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_dim",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "load_trans_daily",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pipeline_send_email",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_trans_daily",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_send_email",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "load_master_dwh",
+						"pEmailSubject": "Azure DWH Alert ! load_master_dwh completed successfully",
+						"pEmailBody": " load_master_dwh completed successfully"
+					}
+				}
 			}
 		],
 		"variables": {

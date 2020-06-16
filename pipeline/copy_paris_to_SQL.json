@@ -1,0 +1,106 @@
+{
+	"name": "copy_paris_to_SQL",
+	"properties": {
+		"description": "This copy job is getting the views from config on paris c_stage. Temp, before we get SQL up running. ",
+		"activities": [
+			{
+				"name": "Lookup_Paris",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where load_ind = 'Y'\n",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "oracle_config_paris",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEachParis",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup_Paris",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup_Paris').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy Paris",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"oracleReaderQuery": {
+										"value": "SELECT * FROM  @{item().TABLE_NAME}",
+										"type": "Expression"
+									},
+									"partitionOption": "None",
+									"queryTimeout": "02:00:00"
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "scr_oracle_paris",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ParisTables",
+									"type": "DatasetReference",
+									"parameters": {
+										"SinkDataset": {
+											"value": "@trim(replace(item().TABLE_NAME,'\"',' '))",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "copy job/dwh_stage/paris"
+		},
+		"annotations": []
+	}
+}

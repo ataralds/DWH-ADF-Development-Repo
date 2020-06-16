@@ -1,0 +1,32 @@
+{
+	"name": "audit_pipeline_error_status",
+	"properties": {
+		"description": "This is used for pipeline execution error logging. ",
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pipeline_name",
+				"type": "varchar"
+			},
+			{
+				"name": "error_status",
+				"type": "varchar"
+			},
+			{
+				"name": "pipeline_date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "adf_audit",
+			"table": "audit_pipeline_error_status"
+		}
+	}
+}

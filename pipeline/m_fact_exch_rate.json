@@ -24,13 +24,16 @@
 							}
 						}
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
+					"integrationRuntime": {
+						"referenceName": "IrExecutePipeline",
+						"type": "IntegrationRuntimeReference"
 					}
 				}
 			}
 		],
+		"folder": {
+			"name": "mappings/marts/dim/fact"
+		},
 		"annotations": []
 	}
 }
