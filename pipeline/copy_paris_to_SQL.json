@@ -97,6 +97,56 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "Stored procedure1",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Copy Paris",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[adf_audit].[prc_audit_dwh_table_row_count]",
+								"storedProcedureParameters": {
+									"pInCopyJobName": {
+										"value": {
+											"value": "@item().table_name",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"pInSourceCount": {
+										"value": {
+											"value": "@activity('Copy Paris').output.rowsRead",
+											"type": "Expression"
+										},
+										"type": "Int32"
+									},
+									"pInTargetCount": {
+										"value": {
+											"value": "@activity('Copy Paris').output.rowsCopied",
+											"type": "Expression"
+										},
+										"type": "Int32"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "sql_server_development_connection",
+								"type": "LinkedServiceReference"
+							}
 						}
 					]
 				}
