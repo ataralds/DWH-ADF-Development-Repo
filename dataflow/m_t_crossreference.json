@@ -28,7 +28,8 @@
 						"referenceName": "tcrossreference",
 						"type": "DatasetReference"
 					},
-					"name": "tCrossReference"
+					"name": "tCrossReference",
+					"description": "Truncate/Insert"
 				}
 			],
 			"transformations": [
@@ -45,7 +46,7 @@
 				},
 				{
 					"name": "Deduplicate",
-					"description": "Getting only distinct rows"
+					"description": "Getting distinct rows only "
 				},
 				{
 					"name": "FilterSourceCodeFields",
