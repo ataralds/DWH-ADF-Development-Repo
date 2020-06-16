@@ -9,14 +9,14 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "azure_sql_dwh_stage",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "agatable"
 				},
 				{
 					"dataset": {
-						"referenceName": "azure_sql_dwh_stage",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "agztable"
@@ -30,21 +30,21 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "azure_sql_dwh_stage",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "tcrossreference"
 				},
 				{
 					"dataset": {
-						"referenceName": "azure_sql_dwh_stage",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "SrcSfCompany"
 				},
 				{
 					"dataset": {
-						"referenceName": "azure_sql_dwh_stage",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "DimTime"
