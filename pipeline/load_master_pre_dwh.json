@@ -7,7 +7,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "load_master_pre_paris",
+						"activity": "copy_mapsys_to_sql",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -123,6 +123,53 @@
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "copy_mapsys_to_sql",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_master_pre_paris",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "copy_mapsys_to_sql",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pipeline_error_handling",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "copy_mapsys_to_sql",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "copy_mapsys_to_sql",
+						"pPipelineErrorMsg": {
+							"value": "@activity('copy_mapsys_to_sql').error.message",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
