@@ -1,0 +1,34 @@
+{
+	"name": "m_pre_dim_claim_type_pa",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "agatable",
+						"type": "DatasetReference"
+					},
+					"name": "agatable"
+				},
+				{
+					"dataset": {
+						"referenceName": "labtable",
+						"type": "DatasetReference"
+					},
+					"name": "labtable"
+				},
+				{
+					"dataset": {
+						"referenceName": "t_cross",
+						"type": "DatasetReference"
+					},
+					"name": "Tcross"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(output(\n\t\tagaagaid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select agaagaid from dwh_stage.p_agatable where agabusndiv =1',\n\tformat: 'query') ~> agatable\nsource(output(\n\t\tlablabid as string,\n\t\tlabmainev as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select lablabid,labmainev from dwh_stage.p_labtable ',\n\tformat: 'query') ~> labtable\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select ',\n\tformat: 'query') ~> Tcross"
+		}
+	}
+}
