@@ -99,7 +99,7 @@
 							]
 						},
 						{
-							"name": "Stored procedure1",
+							"name": "prc_audit_dwh_table_row_count",
 							"type": "SqlServerStoredProcedure",
 							"dependsOn": [
 								{
