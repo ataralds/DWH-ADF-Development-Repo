@@ -14,11 +14,7 @@
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "dwh_stage",
-			"table": {
-				"value": "dummy",
-				"type": "Expression"
-			}
+			"schema": "dwh_stage"
 		}
 	}
 }
