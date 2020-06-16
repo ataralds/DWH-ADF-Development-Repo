@@ -1,6 +1,7 @@
 {
 	"name": "m_pre_dim_claim_type_pa",
 	"properties": {
+		"description": "code_type_id = 167",
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -13,22 +14,22 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "labtable",
-						"type": "DatasetReference"
-					},
-					"name": "labtable"
-				},
-				{
-					"dataset": {
 						"referenceName": "t_cross",
 						"type": "DatasetReference"
 					},
 					"name": "Tcross"
+				},
+				{
+					"dataset": {
+						"referenceName": "labtable",
+						"type": "DatasetReference"
+					},
+					"name": "Labtable"
 				}
 			],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(output(\n\t\tagaagaid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select agaagaid from dwh_stage.p_agatable where agabusndiv =1',\n\tformat: 'query') ~> agatable\nsource(output(\n\t\tlablabid as string,\n\t\tlabmainev as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select lablabid,labmainev from dwh_stage.p_labtable ',\n\tformat: 'query') ~> labtable\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select ',\n\tformat: 'query') ~> Tcross"
+			"script": "source(output(\n\t\tagaagaid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select agaagaid from dwh_stage.p_agatable where agabusndiv =1',\n\tformat: 'query') ~> agatable\nsource(output(\n\t\tsource_code_key as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tcode_type as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select source_code_key,target_code,target_description,code_type from dwh_stage.t_crossreference where source_system = \\'PARIS\\' and code_type_id = 167',\n\tformat: 'query') ~> Tcross\nsource(output(\n\t\tlablabid as string,\n\t\tlabmainev as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select lablabid,labmainev from dwh_stage.p_labtable',\n\tformat: 'query') ~> Labtable"
 		}
 	}
 }
