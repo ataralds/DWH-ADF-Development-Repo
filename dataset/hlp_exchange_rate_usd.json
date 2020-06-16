@@ -1,5 +1,5 @@
 {
-	"name": "hlp_exchange_rate",
+	"name": "hlp_exchange_rate_usd",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_server_development_connection",
@@ -27,7 +27,7 @@
 		],
 		"typeProperties": {
 			"schema": "dwh_stage",
-			"table": "hlp_exchange_rate"
+			"table": "hlp_exchange_rate_to_usd"
 		}
 	}
 }
