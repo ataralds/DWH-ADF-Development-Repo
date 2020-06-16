@@ -2,6 +2,9 @@
 	"name": "m_pre_dim_claim_type",
 	"properties": {
 		"description": "Code_Type_id = 774 Claim Type",
+		"folder": {
+			"name": "dwh_prepare/pre_dim"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
