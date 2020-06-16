@@ -87,7 +87,13 @@
 							"outputs": [
 								{
 									"referenceName": "SqlExact",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"sinkDataset": {
+											"value": "@trim(replace(item().TABLE_NAME,'\"',' '))",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						},
