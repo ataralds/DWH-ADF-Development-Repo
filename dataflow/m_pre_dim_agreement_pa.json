@@ -16,7 +16,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "azure_sql_dwh_stage",
+						"referenceName": "agztable",
 						"type": "DatasetReference"
 					},
 					"name": "Pagztable"
