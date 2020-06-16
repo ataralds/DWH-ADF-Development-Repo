@@ -1,24 +1,15 @@
 {
-	"name": "azure_sql_dwh_stage",
+	"name": "azure_sql_server",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_server_development_connection",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"fileName": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "dwh_stage",
-			"table": {
-				"value": "@dataset().fileName",
-				"type": "Expression"
-			}
+			"schema": "dwh_stage"
 		}
 	}
 }
