@@ -7,7 +7,7 @@
 		},
 		"parameters": {
 			"sinkDataset": {
-				"type": "object"
+				"type": "string"
 			}
 		},
 		"folder": {
