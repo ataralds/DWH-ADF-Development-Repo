@@ -1,0 +1,16 @@
+{
+	"name": "Oracle_mapsys",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLTP05",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "AZURE_READ",
+			"table": "sf_meeting"
+		}
+	}
+}
