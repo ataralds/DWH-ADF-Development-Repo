@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name = 'STATIC' and oracle_schema_name = 'RSKDRV' \n",
+						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name in ('STATIC','RSKDRV') and oracle_table_name not in ('HLP_EXCHANGE_RATE','HLP_EXCHANGE_RATE_STATUS')\n",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
@@ -69,7 +69,12 @@
 									"queryTimeout": "02:00:00"
 								},
 								"sink": {
-									"type": "AzureSqlSink"
+									"type": "AzureSqlSink",
+									"preCopyScript": {
+										"value": "@{concat('TRUNCATE TABLE dwh_stage.',trim(replace(item().TABLE_NAME,'\"',' ')),';')}",
+										"type": "Expression"
+									},
+									"disableMetricsCollection": false
 								},
 								"enableStaging": false
 							},
