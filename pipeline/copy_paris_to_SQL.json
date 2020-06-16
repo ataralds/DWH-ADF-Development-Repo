@@ -71,6 +71,10 @@
 								},
 								"sink": {
 									"type": "AzureSqlSink",
+									"preCopyScript": {
+										"value": "@{concat('TRUNCATE TABLE dwh_stage.',trim(replace(item().TABLE_NAME,'\"',' ')),';')}",
+										"type": "Expression"
+									},
 									"disableMetricsCollection": false
 								},
 								"enableStaging": false
