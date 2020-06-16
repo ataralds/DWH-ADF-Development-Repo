@@ -1,9 +1,9 @@
 {
-	"name": "copy_static_to_lake",
+	"name": "copy_lloyds_to_sql",
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup_oltp05",
+				"name": "Lookup_lloyds",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name = 'STATIC'\n",
+						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name = 'LLOYDS'\n",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
@@ -29,11 +29,11 @@
 				}
 			},
 			{
-				"name": "ForEachOltp05",
+				"name": "ForEachLloyds",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup_oltp05",
+						"activity": "Lookup_lloyds",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -42,12 +42,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup_oltp05').output.value",
+						"value": "@activity('Lookup_lloyds').output.value",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "Copy Oltp05",
+							"name": "Copy Lloyds",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -69,26 +69,23 @@
 									"queryTimeout": "02:00:00"
 								},
 								"sink": {
-									"type": "ParquetSink",
-									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings"
-									}
+									"type": "AzureSqlSink"
 								},
 								"enableStaging": false
 							},
 							"inputs": [
 								{
-									"referenceName": "oracle_scr_oltp05",
+									"referenceName": "Oracle_lloyds",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "Static",
+									"referenceName": "sqlLloyds",
 									"type": "DatasetReference",
 									"parameters": {
-										"fileName": {
-											"value": "@{item().table_name}",
+										"sinkDataset": {
+											"value": "@trim(replace(item().TABLE_NAME,'\"',' '))",
 											"type": "Expression"
 										}
 									}
@@ -100,7 +97,7 @@
 			}
 		],
 		"folder": {
-			"name": "Test"
+			"name": "copy job/dwh_stage/oltp05"
 		},
 		"annotations": []
 	}

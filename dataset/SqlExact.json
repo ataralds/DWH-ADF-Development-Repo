@@ -1,5 +1,5 @@
 {
-	"name": "sqlfaprsacopy",
+	"name": "SqlExact",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_server_development_connection",
@@ -11,17 +11,10 @@
 			}
 		},
 		"folder": {
-			"name": "Copy job/dwh-stage/Oltp05"
+			"name": "dwh_stage_sql/Oltp05/Exact"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [],
-		"typeProperties": {
-			"schema": "dwh_stage",
-			"table": {
-				"value": "@dataset().sinkDataset",
-				"type": "Expression"
-			}
-		}
+		"schema": []
 	}
 }
