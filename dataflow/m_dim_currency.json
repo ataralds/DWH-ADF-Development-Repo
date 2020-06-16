@@ -9,14 +9,14 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "azure_sql_dwh_stage",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "preDimCurrency"
 				},
 				{
 					"dataset": {
-						"referenceName": "azure_sql_dwh_stage",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "dimCurrencyMaxDimKey"
