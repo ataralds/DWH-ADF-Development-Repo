@@ -39,15 +39,15 @@
 							}
 						}
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
+					"integrationRuntime": {
+						"referenceName": "IrExecutePipeline",
+						"type": "IntegrationRuntimeReference"
 					}
 				}
 			}
 		],
 		"folder": {
-			"name": "mappings/dwh_prepare"
+			"name": "mappings/dwh_prepare/pre dim"
 		},
 		"annotations": []
 	}
