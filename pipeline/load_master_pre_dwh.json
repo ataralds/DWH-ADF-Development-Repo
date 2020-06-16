@@ -23,7 +23,7 @@
 				}
 			},
 			{
-				"name": "copy_exact_to_lake",
+				"name": "copy_exact_to_sql",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
@@ -35,6 +35,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"pipeline": {
+						"referenceName": "copy_exact_to_sql",
+						"type": "PipelineReference"
+					},
 					"waitOnCompletion": true
 				}
 			},
@@ -43,7 +47,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "copy_exact_to_lake",
+						"activity": "copy_exact_to_sql",
 						"dependencyConditions": [
 							"Failed"
 						]
@@ -57,9 +61,9 @@
 					},
 					"waitOnCompletion": true,
 					"parameters": {
-						"pPipelineName": "copy_exact_to_lake",
+						"pPipelineName": "copy_exact_to_sql",
 						"pPipelineErrorMsg": {
-							"value": "@activity('copy_exact_to_lake').error.message",
+							"value": "@activity('copy_exact_to_sql').error.message",
 							"type": "Expression"
 						}
 					}
