@@ -1,0 +1,42 @@
+{
+	"name": "m_pre_dim_coverage",
+	"properties": {
+		"activities": [
+			{
+				"name": "m_pre_dim_coverage",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "m_pre_dim_coverage",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"TCrossReference": {
+								"fileName": "t_crossreference.parquet"
+							},
+							"CoverageGroup": {
+								"fileName": "\"sta_coverage_group\""
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IrExecutePipeline",
+						"type": "IntegrationRuntimeReference"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "mappings/dwh_prepare/pre dim"
+		},
+		"annotations": []
+	}
+}

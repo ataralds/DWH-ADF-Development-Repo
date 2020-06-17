@@ -1,0 +1,139 @@
+{
+	"name": "load_master_pre_dwh",
+	"properties": {
+		"activities": [
+			{
+				"name": "load_static_stage_dwh",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_master_pre_paris",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "load_static_stage_dwh",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "copy_exact_to_lake",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_static_stage_dwh",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "error_handling",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "copy_exact_to_lake",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "copy_exact_to_lake",
+						"pPipelineErrorMsg": {
+							"value": "@activity('copy_exact_to_lake').error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "error_handling_copy1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_static_stage_dwh",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "load_static_stage_dwh",
+						"pPipelineErrorMsg": {
+							"value": "@activity('load_static_stage_dwh').error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Initialize_pipeline",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Initialize_pipeline",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "load_master_pre_paris",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Initialize_pipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "load_master_pre_paris",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"variables": {
+			"vFailStatus": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "pipelines/dwh_stage"
+		},
+		"annotations": []
+	}
+}

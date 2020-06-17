@@ -1,6 +1,9 @@
 {
 	"name": "m_dim_currency",
 	"properties": {
+		"folder": {
+			"name": "marts/dim"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -30,7 +33,7 @@
 					"description": "Upsert if pk key is not null"
 				}
 			],
-			"script": "source(output(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> preDimCurrency\npreDimCurrency derive(top_key = 'All',\n\t\ttop_description = 'All Currencies') ~> DeriveTopLevel\nDeriveTopLevel alterRow(upsertIf(!isNull(PK_KEY))) ~> AlterRow\nAlterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_currency.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimCurrency"
+			"script": "source(output(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_currency.parquet']) ~> preDimCurrency\npreDimCurrency derive(top_key = 'ALL',\n\t\ttop_description = 'All Currencies') ~> DeriveTopLevel\nDeriveTopLevel alterRow(upsertIf(!isNull(PK_KEY))) ~> AlterRow\nAlterRow sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_currency.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimCurrency"
 		}
 	}
 }

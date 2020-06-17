@@ -1,0 +1,17 @@
+{
+	"name": "IrExecutePipeline",
+	"properties": {
+		"type": "Managed",
+		"description": "This integration runtime is created to execute the pipelines with better performance.",
+		"typeProperties": {
+			"computeProperties": {
+				"location": "AutoResolve",
+				"dataFlowProperties": {
+					"computeType": "MemoryOptimized",
+					"coreCount": 32,
+					"timeToLive": 30
+				}
+			}
+		}
+	}
+}
