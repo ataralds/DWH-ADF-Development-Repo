@@ -1,0 +1,367 @@
+{
+	"name": "CopyPipeline_goi",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_goi",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "CSTAGE_PARIS.p_obatable"
+					},
+					{
+						"name": "Destination",
+						"value": "dwh_stage.p_obatable"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "obaobno",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "obaobno",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "obalongtermrate",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "obalongtermrate",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "obaassetno",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "obaassetno",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "obatrackit2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "obatrackit2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "obaimoynsw",
+									"type": "String"
+								},
+								"sink": {
+									"name": "obaimoynsw",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "obapeaid",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "obapeaid",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "obaorgbui",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "obaorgbui",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"name": "obaobrt",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "obaobrt",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "obammsino",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "obammsino",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "obaoxno",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "obaoxno",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "obatrackit3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "obatrackit3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "obacallno",
+									"type": "String"
+								},
+								"sink": {
+									"name": "obacallno",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "obachassis",
+									"type": "String"
+								},
+								"sink": {
+									"name": "obachassis",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "obalusign",
+									"type": "String"
+								},
+								"sink": {
+									"name": "obalusign",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "obacomp2",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "obacomp2",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "obancsid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "obancsid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "obaassetsubno",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "obaassetsubno",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "obaorgbuiltmonth",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "obaorgbuiltmonth",
+									"type": "Byte"
+								}
+							},
+							{
+								"source": {
+									"name": "obatrackit",
+									"type": "String"
+								},
+								"sink": {
+									"name": "obatrackit",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "obanjcid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "obanjcid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "obaintnote",
+									"type": "String"
+								},
+								"sink": {
+									"name": "obaintnote",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "obanpcid",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "obanpcid",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "obacrsign",
+									"type": "String"
+								},
+								"sink": {
+									"name": "obacrsign",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "obancnid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "obancnid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "obancmid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "obancmid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "obaknvmark",
+									"type": "String"
+								},
+								"sink": {
+									"name": "obaknvmark",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "obaludate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "obaludate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "obaextnote",
+									"type": "String"
+								},
+								"sink": {
+									"name": "obaextnote",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "obatrackit1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "obatrackit1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "obacrdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "obacrdate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "obaimono",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "obaimono",
+									"type": "Int32"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_goi",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_goi",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
