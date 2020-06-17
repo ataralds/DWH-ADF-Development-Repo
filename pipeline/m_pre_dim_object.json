@@ -19,9 +19,6 @@
 						"referenceName": "m_pre_dim_object",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"lloydsvesselhistory": {
-								"fileName": "lloyds_vessel_history.parquet"
-							},
 							"lloydscompany": {
 								"fileName": "lloyds_company.parquet"
 							},
