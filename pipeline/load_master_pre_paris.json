@@ -1,0 +1,48 @@
+{
+	"name": "load_master_pre_paris",
+	"properties": {
+		"description": "this is to use paris copy job",
+		"activities": [
+			{
+				"name": "copy_paris_to_SQL",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "copy_paris_to_SQL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pipeline_error_handling",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "copy_paris_to_SQL",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "copy_paris_to_sql"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "pipelines/dwh_stage"
+		},
+		"annotations": []
+	}
+}

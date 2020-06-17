@@ -1,9 +1,10 @@
 {
-	"name": "copy_oltp05_to_SQL",
+	"name": "copy_paris_fap_rsa_to_SQL",
 	"properties": {
+		"description": "This copy job is getting the views from config on paris c_stage. Testing the fap/rsa loading time. ",
 		"activities": [
 			{
-				"name": "Lookup_oltp05",
+				"name": "Lookup_Paris",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -17,23 +18,23 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name not like  'AGRINT'\n",
+						"oracleReaderQuery": "select TABLE_NAME table_name from azure_config where load_ind = 'N'\nand table_name not in ('\"p_filtable_cor\"','\"p_faptable\"')",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "oracle_configfile_oltp05",
+						"referenceName": "oracle_config_paris",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
 			},
 			{
-				"name": "ForEachOltp05",
+				"name": "ForEachParis",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup_oltp05",
+						"activity": "Lookup_Paris",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -42,12 +43,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup_oltp05').output.value",
+						"value": "@activity('Lookup_Paris').output.value",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "Copy Oltp05",
+							"name": "Copy Paris",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -69,28 +70,23 @@
 									"queryTimeout": "02:00:00"
 								},
 								"sink": {
-									"type": "AzureSqlSink",
-									"preCopyScript": {
-										"value": "@{concat('TRUNCATE TABLE dwh_stage.',trim(replace(item().table_name,'\"',' ')),';')}",
-										"type": "Expression"
-									},
-									"disableMetricsCollection": false
+									"type": "AzureSqlSink"
 								},
 								"enableStaging": false
 							},
 							"inputs": [
 								{
-									"referenceName": "oracle_scr_oltp05",
+									"referenceName": "oracle_paris_fap_rsa",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "dwh_stage_oltp05_sql",
+									"referenceName": "sqlfaprsacopy",
 									"type": "DatasetReference",
 									"parameters": {
-										"SinkDataset": {
-											"value": "@trim(replace(item().table_name,'\"',' '))",
+										"sinkDataset": {
+											"value": "@trim(replace(item().TABLE_NAME,'\"',' '))",
 											"type": "Expression"
 										}
 									}
@@ -101,13 +97,8 @@
 				}
 			}
 		],
-		"variables": {
-			"v_delete": {
-				"type": "String"
-			}
-		},
 		"folder": {
-			"name": "Test"
+			"name": "copy job/dwh_stage/paris"
 		},
 		"annotations": []
 	}

@@ -1,9 +1,9 @@
 {
-	"name": "copy_oltp05_to_SQL",
+	"name": "copy_lloyds_to_sql",
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup_oltp05",
+				"name": "Lookup_lloyds",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name not like  'AGRINT'\n",
+						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name = 'LLOYDS'\nand azure_table_name not like 'lloyds_vessel_history'\n",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
@@ -29,11 +29,11 @@
 				}
 			},
 			{
-				"name": "ForEachOltp05",
+				"name": "ForEachLloyds",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup_oltp05",
+						"activity": "Lookup_lloyds",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -42,12 +42,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup_oltp05').output.value",
+						"value": "@activity('Lookup_lloyds').output.value",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "Copy Oltp05",
+							"name": "Copy Lloyds",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -71,7 +71,7 @@
 								"sink": {
 									"type": "AzureSqlSink",
 									"preCopyScript": {
-										"value": "@{concat('TRUNCATE TABLE dwh_stage.',trim(replace(item().table_name,'\"',' ')),';')}",
+										"value": "@{concat('TRUNCATE TABLE dwh_stage.',trim(replace(item().TABLE_NAME,'\"',' ')),';')}",
 										"type": "Expression"
 									},
 									"disableMetricsCollection": false
@@ -80,17 +80,17 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "oracle_scr_oltp05",
+									"referenceName": "Oracle_lloyds",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "dwh_stage_oltp05_sql",
+									"referenceName": "sqlLloyds",
 									"type": "DatasetReference",
 									"parameters": {
-										"SinkDataset": {
-											"value": "@trim(replace(item().table_name,'\"',' '))",
+										"sinkDataset": {
+											"value": "@trim(replace(item().TABLE_NAME,'\"',' '))",
 											"type": "Expression"
 										}
 									}
@@ -101,13 +101,8 @@
 				}
 			}
 		],
-		"variables": {
-			"v_delete": {
-				"type": "String"
-			}
-		},
 		"folder": {
-			"name": "Test"
+			"name": "copy job/dwh_stage/oltp05"
 		},
 		"annotations": []
 	}
