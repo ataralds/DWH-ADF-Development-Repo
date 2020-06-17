@@ -1,0 +1,569 @@
+{
+	"name": "DestinationDataset_ed4",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "icaicaid",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icac1000prem",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icauwaid",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icadayamt",
+				"type": "bigint",
+				"precision": 19,
+				"scale": 0
+			},
+			{
+				"name": "icaagaid",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icacadate",
+				"type": "date",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "icafixownrnote",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icamincurr",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icariobjecttype",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icachdate",
+				"type": "date",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "icasondisc",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icaintgrlag",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icaobno",
+				"type": "int",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "icaeoamt",
+				"type": "bigint",
+				"precision": 19,
+				"scale": 0
+			},
+			{
+				"name": "icagt",
+				"type": "int",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "icastat3",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icaperspre",
+				"type": "int",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "icasthour",
+				"type": "smallint",
+				"precision": 5,
+				"scale": 0
+			},
+			{
+				"name": "icaexpendate",
+				"type": "date",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "icapaymperc",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icaenhour",
+				"type": "smallint",
+				"precision": 5,
+				"scale": 0
+			},
+			{
+				"name": "icaadmfeerate",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icaprevyrate",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icaexhausted",
+				"type": "bigint",
+				"precision": 19,
+				"scale": 0
+			},
+			{
+				"name": "icaourshare",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icaunitamt",
+				"type": "bigint",
+				"precision": 19,
+				"scale": 0
+			},
+			{
+				"name": "icalaunchdate",
+				"type": "date",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "icapmlamt",
+				"type": "bigint",
+				"precision": 19,
+				"scale": 0
+			},
+			{
+				"name": "icaoforder",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icanoofpersons",
+				"type": "int",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "icatotamt",
+				"type": "bigint",
+				"precision": 19,
+				"scale": 0
+			},
+			{
+				"name": "icaoyrno",
+				"type": "tinyint",
+				"precision": 3,
+				"scale": 0
+			},
+			{
+				"name": "icaprevyinstad",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icasufix2",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icafixownrynsw",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icaunitprem",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icaaggregate",
+				"type": "bigint",
+				"precision": 19,
+				"scale": 0
+			},
+			{
+				"name": "icacrsign",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icastdate",
+				"type": "date",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "icaexpenhour",
+				"type": "smallint",
+				"precision": 5,
+				"scale": 0
+			},
+			{
+				"name": "icadeclaredamt",
+				"type": "bigint",
+				"precision": 19,
+				"scale": 0
+			},
+			{
+				"name": "icaamtcod",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icacrdate",
+				"type": "date",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "icawrshare",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icapmlcurr",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icaintosprem",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icaunits",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icaeoamtcod",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icadeliverydate",
+				"type": "date",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "icaludate",
+				"type": "date",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "icadeclaredamtlocal",
+				"type": "bigint",
+				"precision": 19,
+				"scale": 0
+			},
+			{
+				"name": "icaminpre",
+				"type": "int",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "icainaid",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icatlorat",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icarinote",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icaprevynatpre",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icaextndisc",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icaextshare",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icaint100prem",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icaprovst",
+				"type": "tinyint",
+				"precision": 3,
+				"scale": 0
+			},
+			{
+				"name": "icaintrate",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icadaysinall",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icalusign",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icacorrty",
+				"type": "tinyint",
+				"precision": 3,
+				"scale": 0
+			},
+			{
+				"name": "icaavrperspre",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icaindate",
+				"type": "date",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "icalimldescr",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icaendate",
+				"type": "date",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "icaoyrto",
+				"type": "tinyint",
+				"precision": 3,
+				"scale": 0
+			},
+			{
+				"name": "icacasign",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icaexptext",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icaintcurr",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icadednote",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icaprwdate",
+				"type": "date",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "icauwkey",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icaprevypre",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icacslynsw",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icaowndisc",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icawroforder",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icapaymfreq",
+				"type": "tinyint",
+				"precision": 3,
+				"scale": 0
+			},
+			{
+				"name": "icaamtlevel",
+				"type": "tinyint",
+				"precision": 3,
+				"scale": 0
+			},
+			{
+				"name": "icacantxt",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icachhour",
+				"type": "smallint",
+				"precision": 5,
+				"scale": 0
+			},
+			{
+				"name": "icapremgt",
+				"type": "bigint",
+				"precision": 19,
+				"scale": 0
+			},
+			{
+				"name": "icaprevyadmfee",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icauwtotamt",
+				"type": "bigint",
+				"precision": 19,
+				"scale": 0
+			},
+			{
+				"name": "icaknvmark",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icat1000prem",
+				"type": "numeric",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "icacrobbid",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icaoyrnote",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icanote",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "icaosvolamt",
+				"type": "bigint",
+				"precision": 19,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": "p_icatable"
+		}
+	}
+}
