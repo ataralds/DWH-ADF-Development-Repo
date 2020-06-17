@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "stage_hlp_exchange_rate",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "hlpExhangeRate"
@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "hlp_exchange_rate_to_usd",
+						"referenceName": "hlp_exchange_rate_usd",
 						"type": "DatasetReference"
 					},
 					"name": "hlpExchangeRateUSD"
@@ -29,7 +29,7 @@
 					"name": "FltrUSDCurrency"
 				}
 			],
-			"script": "source(output(\n\t\tcurrency_code_from as string,\n\t\tcurrency_code_to as string,\n\t\tcurrency_id_from as decimal(38,18),\n\t\tcurrency_id_to as decimal(38,18),\n\t\tday as timestamp,\n\t\trate as double\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: true,\n\tformat: 'parquet') ~> hlpExhangeRate\nhlpExhangeRate filter(currency_code_to=='USD') ~> FltrUSDCurrency\nFltrUSDCurrency sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['stage_hlp_exchange_rate_to_usd.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> hlpExchangeRateUSD"
+			"script": "source(allowSchemaDrift: false,\n\tvalidateSchema: true,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select \\ncurrency_code_from,\\ncurrency_code_to,\\ncurrency_id_from,\\ncurrency_id_to,\\nday,\\nrate\\nfrom \\ndwh_stage.hlp_exchange_rate',\n\tformat: 'query') ~> hlpExhangeRate\nhlpExhangeRate filter(currency_code_to=='USD') ~> FltrUSDCurrency\nFltrUSDCurrency sink(input(\n\t\tcapital_code as string,\n\t\taccount_number as long,\n\t\tcapital_desc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> hlpExchangeRateUSD"
 		}
 	}
 }
