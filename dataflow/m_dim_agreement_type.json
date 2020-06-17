@@ -21,7 +21,7 @@
 						"referenceName": "dim_agreement_type",
 						"type": "DatasetReference"
 					},
-					"name": "dimAgreementTypeInsert"
+					"name": "dimAgreementType"
 				}
 			],
 			"transformations": [
@@ -32,7 +32,7 @@
 					"name": "alterRow"
 				}
 			],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_prepare.pre_dim_agreement_type',\n\tformat: 'query',\n\twildcardPaths:['Pre_Dim/pre_dim_agreement_type.parquet']) ~> preDimAgreementType\npreDimAgreementType derive(top_key = 'ALL',\n\t\ttop_description = 'All Agreement Types') ~> derivedTopLevel\nderivedTopLevel alterRow(upsertIf(!isNull(agt_key))) ~> alterRow\nalterRow sink(input(\n\t\tdimension_key as long,\n\t\ttop_description as string,\n\t\ttop_key as string,\n\t\ttop_id as long,\n\t\tagt_key as string,\n\t\tagt_id as long,\n\t\tagt_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\teach(match(/* All input columns */ true()),\n\t\t\t/* Input name */ $$ = $$)\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimAgreementTypeInsert"
+			"script": "source(output(\n\t\tpk_key as string,\n\t\tdate_inserted as timestamp,\n\t\tlast_updated_by as string,\n\t\tagt_description as string,\n\t\tdate_last_updated as timestamp,\n\t\tinserted_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_prepare.pre_dim_agreement_type',\n\tformat: 'query',\n\twildcardPaths:['Pre_Dim/pre_dim_agreement_type.parquet']) ~> preDimAgreementType\npreDimAgreementType derive(top_key = 'ALL',\n\t\ttop_description = 'All Agreement Types') ~> derivedTopLevel\nderivedTopLevel alterRow(upsertIf(true())) ~> alterRow\nalterRow sink(input(\n\t\tdimension_key as long,\n\t\ttop_description as string,\n\t\ttop_key as string,\n\t\ttop_id as long,\n\t\tagt_key as string,\n\t\tagt_id as long,\n\t\tagt_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\teach(match(/* All input columns */ true()),\n\t\t\t/* Input name */ $$ = $$)\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimAgreementType"
 		}
 	}
 }
