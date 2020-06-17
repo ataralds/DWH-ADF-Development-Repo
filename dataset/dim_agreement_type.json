@@ -45,7 +45,7 @@
 		],
 		"typeProperties": {
 			"schema": "marts",
-			"table": "as_dim_agreement_type"
+			"table": "dim_agreement_type"
 		}
 	}
 }
