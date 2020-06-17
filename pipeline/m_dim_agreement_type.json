@@ -19,13 +19,16 @@
 						"referenceName": "m_dim_agreement_type",
 						"type": "DataFlowReference"
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
+					"integrationRuntime": {
+						"referenceName": "IRThomasClaimDetails",
+						"type": "IntegrationRuntimeReference"
 					}
 				}
 			}
 		],
+		"folder": {
+			"name": "mappings/marts/dim"
+		},
 		"annotations": []
 	}
 }
