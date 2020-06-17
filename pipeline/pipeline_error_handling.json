@@ -1,0 +1,98 @@
+{
+	"name": "pipeline_error_handling",
+	"properties": {
+		"activities": [
+			{
+				"name": "Send email on error",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "prc_audit_pipeline_error_status",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.01:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-111.westeurope.logic.azure.com:443/workflows/854a1b1a7a70443ea407fcc8ad02a8d6/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xI0dgmzlPJOnVcQ4PjxydVz2E5UIM0Qke2J4gC8Mkbo",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@pipeline().parameters.pPipelineName",
+						"Subject": "@variables('vSubject')",
+						"ErrorMessage": "@pipeline().parameters.pPipelineErrorMsg",
+						"EmailTo": "@variables('vEmailTo')"
+					}
+				}
+			},
+			{
+				"name": "prc_audit_pipeline_error_status",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.01:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[adf_audit].[prc_audit_pipeline_error_status]",
+					"storedProcedureParameters": {
+						"pInPipelineName": {
+							"value": {
+								"value": "@pipeline().parameters.pPipelineName",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "sql_server_development_connection",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"pPipelineName": {
+				"type": "string",
+				"defaultValue": "pipeline_name"
+			},
+			"pPipelineErrorMsg": {
+				"type": "string",
+				"defaultValue": "Pipeline failed. Please check"
+			},
+			"pEmailTo": {
+				"type": "string",
+				"defaultValue": "sudipta.dutta@gard.no"
+			}
+		},
+		"variables": {
+			"vEmailTo": {
+				"type": "String",
+				"defaultValue": "pEmailTo"
+			},
+			"vSubject": {
+				"type": "String",
+				"defaultValue": "ADF DWH Alert ! Pipeline Failed"
+			}
+		},
+		"folder": {
+			"name": "pipelines/dwh_master"
+		},
+		"annotations": []
+	}
+}

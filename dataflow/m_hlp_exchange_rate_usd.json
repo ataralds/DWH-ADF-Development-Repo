@@ -1,0 +1,35 @@
+{
+	"name": "m_hlp_exchange_rate_usd",
+	"properties": {
+		"folder": {
+			"name": "dwh_stage"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "stage_hlp_exchange_rate",
+						"type": "DatasetReference"
+					},
+					"name": "hlpExhangeRate"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "hlp_exchange_rate_to_usd",
+						"type": "DatasetReference"
+					},
+					"name": "hlpExchangeRateUSD"
+				}
+			],
+			"transformations": [
+				{
+					"name": "FltrUSDCurrency"
+				}
+			],
+			"script": "source(output(\n\t\tcurrency_code_from as string,\n\t\tcurrency_code_to as string,\n\t\tcurrency_id_from as decimal(38,18),\n\t\tcurrency_id_to as decimal(38,18),\n\t\tday as timestamp,\n\t\trate as double\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: true,\n\tformat: 'parquet') ~> hlpExhangeRate\nhlpExhangeRate filter(currency_code_to=='USD') ~> FltrUSDCurrency\nFltrUSDCurrency sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['stage_hlp_exchange_rate_to_usd.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> hlpExchangeRateUSD"
+		}
+	}
+}
