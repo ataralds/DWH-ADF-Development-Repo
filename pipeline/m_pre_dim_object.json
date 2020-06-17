@@ -17,15 +17,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_pre_dim_object",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"lloydscompany": {
-								"fileName": "lloyds_company.parquet"
-							},
-							"tcrossreference": {
-								"fileName": "t_crossreference.parquet"
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,
