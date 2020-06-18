@@ -1,0 +1,16 @@
+{
+	"name": "SourceDataset_vw4",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracelStageITF",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "CSTAGE_PARIS",
+			"table": "TEST_NAVN_SQL_SERVER"
+		}
+	}
+}

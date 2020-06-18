@@ -1,0 +1,67 @@
+{
+	"name": "CopyPipeline_testname_spes_char",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_vw4",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "CSTAGE_PARIS.TEST_NAVN_SQL_SERVER"
+					},
+					{
+						"name": "Destination",
+						"value": "dwh_stage.TEST_NAVN_SQL_SERVER"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PEAMDESCR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PEAMDESCR",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_vw4",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_vw4",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
