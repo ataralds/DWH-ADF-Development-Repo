@@ -17,15 +17,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_pre_dim_coverage",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"TCrossReference": {
-								"fileName": "t_crossreference.parquet"
-							},
-							"CoverageGroup": {
-								"fileName": "\"sta_coverage_group\""
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
 						"referenceName": "IrExecutePipeline",
