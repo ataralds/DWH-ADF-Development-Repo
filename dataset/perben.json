@@ -1,0 +1,21 @@
+{
+	"name": "perben",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "hei",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": "perben"
+		}
+	}
+}
