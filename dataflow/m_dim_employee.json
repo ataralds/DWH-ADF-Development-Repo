@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "pre_dim_employee",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "preDimEmployee"
@@ -33,7 +33,7 @@
 					"name": "AlterRow"
 				}
 			],
-			"script": "source(output(\n\t\temp_source_key as string,\n\t\tagresso_emp_id as string,\n\t\temp_first_name as string,\n\t\temp_last_name as string,\n\t\temp_job_mobile as string,\n\t\temp_job_email as string,\n\t\tmain_gard_office_location as string,\n\t\temp_name as string,\n\t\tlast_updated_by as string,\n\t\tincident_team_code as string,\n\t\tincident_team_desc as string,\n\t\temp_job_phone as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_employee.parquet']) ~> preDimEmployee\npreDimEmployee derive(top_key = 'ALL',\n\t\ttop_description = 'All Employees') ~> DeriveTopLevel\nDeriveTopLevel alterRow(upsertIf(!isNull(emp_source_key))) ~> AlterRow\nAlterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_employee.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimEmployee"
+			"script": "source(output(\n\t\tpk_key as string,\n\t\temp_name as string,\n\t\tincident_team_code as string,\n\t\tdate_last_updated as timestamp,\n\t\temp_senior_cl_hnd_from_date as date,\n\t\tdate_inserted as timestamp,\n\t\temp_job_email as string,\n\t\temp_first_name as string,\n\t\temp_senior_cl_hnd_to_date as date,\n\t\temp_job_phone as string,\n\t\temp_last_name as string,\n\t\tincident_team_desc as string,\n\t\tlast_updated_by as string,\n\t\temp_job_mobile as string,\n\t\tagresso_emp_id as string,\n\t\tinserted_by as string,\n\t\tmain_gard_office_location as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_prepare.pre_dim_employee',\n\tformat: 'query',\n\twildcardPaths:['Pre_Dim/pre_dim_employee.parquet']) ~> preDimEmployee\npreDimEmployee derive(top_key = 'ALL',\n\t\ttop_description = 'All Employees') ~> DeriveTopLevel\nDeriveTopLevel alterRow(upsertIf(true())) ~> AlterRow\nAlterRow sink(input(\n\t\tdimension_key as long,\n\t\ttop_id as long,\n\t\tagresso_emp_id as string,\n\t\temp_name as string,\n\t\temp_source_key as string,\n\t\tincident_team_desc as string,\n\t\tmain_gard_office_location as string,\n\t\ttop_key as string,\n\t\temp_first_name as string,\n\t\tincident_team_code as string,\n\t\temp_job_email as string,\n\t\temp_id as long,\n\t\temp_senior_cl_hnd_from_date as date,\n\t\temp_job_phone as string,\n\t\ttop_description as string,\n\t\temp_last_name as string,\n\t\temp_senior_cl_hnd_to_date as date,\n\t\temp_job_mobile as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimEmployee"
 		}
 	}
 }
