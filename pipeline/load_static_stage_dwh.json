@@ -16,20 +16,11 @@
 				}
 			},
 			{
-				"name": "pl_copy_static_to_lake",
-				"type": "ExecutePipeline",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"waitOnCompletion": true
-				}
-			},
-			{
 				"name": "error_handling",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "pl_copy_static_to_lake",
+						"activity": "copy_static_to_sql",
 						"dependencyConditions": [
 							"Failed"
 						]
@@ -44,11 +35,11 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"pPipelineName": {
-							"value": "copy_static_to_lake",
+							"value": "copy_static_to_sql",
 							"type": "Expression"
 						},
 						"pPipelineErrorMsg": {
-							"value": "@activity('pl_copy_static_to_lake').error.message",
+							"value": "@activity('copy_static_to_sql').error.message",
 							"type": "Expression"
 						}
 					}
@@ -82,6 +73,19 @@
 							"type": "Expression"
 						}
 					}
+				}
+			},
+			{
+				"name": "copy_static_to_sql",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "copy_static_to_sql",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
 				}
 			}
 		],
