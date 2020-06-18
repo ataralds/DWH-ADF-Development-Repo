@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "dim_source_system",
+						"referenceName": "temp",
 						"type": "DatasetReference"
 					},
 					"name": "DimSourceSystem"
