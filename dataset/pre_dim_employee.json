@@ -1,0 +1,89 @@
+{
+	"name": "pre_dim_employee",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pk_key",
+				"type": "varchar"
+			},
+			{
+				"name": "emp_name",
+				"type": "varchar"
+			},
+			{
+				"name": "incident_team_code",
+				"type": "varchar"
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "emp_senior_cl_hnd_from_date",
+				"type": "date"
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "emp_job_email",
+				"type": "varchar"
+			},
+			{
+				"name": "emp_first_name",
+				"type": "varchar"
+			},
+			{
+				"name": "emp_senior_cl_hnd_to_date",
+				"type": "date"
+			},
+			{
+				"name": "emp_job_phone",
+				"type": "varchar"
+			},
+			{
+				"name": "emp_last_name",
+				"type": "varchar"
+			},
+			{
+				"name": "incident_team_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "emp_job_mobile",
+				"type": "varchar"
+			},
+			{
+				"name": "agresso_emp_id",
+				"type": "varchar"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "main_gard_office_location",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_dim_employee"
+		}
+	}
+}
