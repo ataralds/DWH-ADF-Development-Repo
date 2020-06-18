@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "m_pre_dim_claim_type",
+				"name": "m_pre_dim_sub_claim_pa",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_claim_type",
+						"referenceName": "m_pre_dim_sub_claim_pa",
 						"type": "DataFlowReference"
 					},
 					"compute": {
