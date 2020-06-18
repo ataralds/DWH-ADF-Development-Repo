@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "m_dim_business_area",
 	"properties": {
 		"activities": [
 			{
@@ -26,6 +26,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "mappings/marts/dim"
+		},
 		"annotations": []
 	}
 }
