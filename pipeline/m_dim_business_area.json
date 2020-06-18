@@ -19,9 +19,9 @@
 						"referenceName": "m_dim_business_area",
 						"type": "DataFlowReference"
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
+					"integrationRuntime": {
+						"referenceName": "IRThomasClaimDetails",
+						"type": "IntegrationRuntimeReference"
 					}
 				}
 			}
