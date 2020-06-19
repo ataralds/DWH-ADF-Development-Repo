@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "m_sf_company",
+				"name": "m_sf_company_copy1",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_sf_company",
+						"referenceName": "m_sf_company_copy1",
 						"type": "DataFlowReference"
 					},
 					"compute": {
