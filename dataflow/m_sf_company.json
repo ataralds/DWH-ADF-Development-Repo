@@ -1,6 +1,9 @@
 {
 	"name": "m_sf_company",
 	"properties": {
+		"folder": {
+			"name": "dwh_stage"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

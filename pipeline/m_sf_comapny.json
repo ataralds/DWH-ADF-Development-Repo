@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_sf_company_copy1",
+						"referenceName": "m_sf_company",
 						"type": "DataFlowReference"
 					},
 					"compute": {
