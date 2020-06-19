@@ -1,0 +1,48 @@
+{
+	"name": "dim_claim_detail",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "dimension_key",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "top_key",
+				"type": "varchar"
+			},
+			{
+				"name": "top_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "top_description",
+				"type": "varchar"
+			},
+			{
+				"name": "cld_description",
+				"type": "varchar"
+			},
+			{
+				"name": "cld_key",
+				"type": "varchar"
+			},
+			{
+				"name": "cld_id",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "marts",
+			"table": "dim_claim_detail"
+		}
+	}
+}
