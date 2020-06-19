@@ -236,12 +236,6 @@
 				"scale": 3
 			},
 			{
-				"name": "agr_est_number_of_objects",
-				"type": "decimal",
-				"precision": 28,
-				"scale": 10
-			},
-			{
 				"name": "agr_club_retention",
 				"type": "decimal",
 				"precision": 28,
@@ -376,6 +370,11 @@
 			{
 				"name": "agr_market_area_code",
 				"type": "varchar"
+			},
+			{
+				"name": "agr_est_number_of_objects",
+				"type": "int",
+				"precision": 10
 			}
 		],
 		"typeProperties": {
