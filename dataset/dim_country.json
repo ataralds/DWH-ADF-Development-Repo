@@ -1,0 +1,103 @@
+{
+	"name": "dim_country",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "dimension_key",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ar2_code",
+				"type": "varchar"
+			},
+			{
+				"name": "ar1_code",
+				"type": "varchar"
+			},
+			{
+				"name": "reg_description",
+				"type": "varchar"
+			},
+			{
+				"name": "con_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "top_code",
+				"type": "varchar"
+			},
+			{
+				"name": "reg_code",
+				"type": "varchar"
+			},
+			{
+				"name": "top_description",
+				"type": "varchar"
+			},
+			{
+				"name": "con_oecd",
+				"type": "varchar"
+			},
+			{
+				"name": "con_country_name",
+				"type": "varchar"
+			},
+			{
+				"name": "ar1_description",
+				"type": "varchar"
+			},
+			{
+				"name": "ar1_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "reg_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "con_currency_code",
+				"type": "varchar"
+			},
+			{
+				"name": "con_2ltr_code",
+				"type": "varchar"
+			},
+			{
+				"name": "ar2_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "top_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ar2_description",
+				"type": "varchar"
+			},
+			{
+				"name": "con_iso_code",
+				"type": "varchar"
+			},
+			{
+				"name": "con_eu",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "marts",
+			"table": "dim_country"
+		}
+	}
+}

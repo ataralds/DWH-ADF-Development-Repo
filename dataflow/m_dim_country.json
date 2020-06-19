@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "pre_dim_country",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "preDimCountry"
@@ -34,7 +34,7 @@
 					"description": "Upsert if pk key not null"
 				}
 			],
-			"script": "source(output(\n\t\tpk_key as string,\n\t\treg_code as string,\n\t\treg_description as string,\n\t\tar1_code as string,\n\t\tar1_description as string,\n\t\tar2_code as string,\n\t\tar2_description as string,\n\t\tlast_updated_by as string,\n\t\tcon_2ltr_code as string,\n\t\tcon_country_name as string,\n\t\tcon_oecd as string,\n\t\tcon_currency_code as string,\n\t\tcon_eu as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_country.parquet']) ~> preDimCountry\npreDimCountry derive(top_code = 'ALL',\n\t\ttop_description = 'All Countries',\n\t\tcon_iso_code = '') ~> DerivedTopLevel\nDerivedTopLevel alterRow(upsertIf(!isNull(pk_key))) ~> AlterRow\nAlterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_country.parquet'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimCountry"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_prepare.pre_dim_country',\n\tformat: 'query',\n\twildcardPaths:['Pre_Dim/pre_dim_country.parquet']) ~> preDimCountry\npreDimCountry derive(top_code = 'ALL',\n\t\ttop_description = 'All Countries',\n\t\tcon_iso_code = '') ~> DerivedTopLevel\nDerivedTopLevel alterRow(upsertIf(true())) ~> AlterRow\nAlterRow sink(input(\n\t\tdimension_key as long,\n\t\tar2_code as string,\n\t\tar1_code as string,\n\t\treg_description as string,\n\t\tcon_id as long,\n\t\ttop_code as string,\n\t\treg_code as string,\n\t\ttop_description as string,\n\t\tcon_oecd as string,\n\t\tcon_country_name as string,\n\t\tar1_description as string,\n\t\tar1_id as long,\n\t\treg_id as long,\n\t\tcon_currency_code as string,\n\t\tcon_2ltr_code as string,\n\t\tar2_id as long,\n\t\ttop_id as long,\n\t\tar2_description as string,\n\t\tcon_iso_code as string,\n\t\tcon_eu as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:true,\n\tformat: 'table',\n\tmapColumn(\n\t\ttop_code,\n\t\ttop_description,\n\t\tcon_iso_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimCountry"
 		}
 	}
 }
