@@ -1,0 +1,52 @@
+{
+	"name": "pre_dim_source_system",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dwh_prepare_sql/pre_dim"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pk_source_system",
+				"type": "varchar"
+			},
+			{
+				"name": "description",
+				"type": "varchar"
+			},
+			{
+				"name": "active",
+				"type": "varchar"
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_dim_source_system"
+		}
+	}
+}
