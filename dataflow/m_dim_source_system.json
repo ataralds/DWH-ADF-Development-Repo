@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "temp",
+						"referenceName": "dim_source_system",
 						"type": "DatasetReference"
 					},
 					"name": "DimSourceSystem"
@@ -29,16 +29,13 @@
 					"name": "DeriveTopLevel"
 				},
 				{
-					"name": "RemoveUnusedColumns"
-				},
-				{
 					"name": "SelectOutputColumns"
 				},
 				{
 					"name": "AlterRow"
 				}
 			],
-			"script": "source(output(\n\t\tpk_source_system as string,\n\t\tdescription as string,\n\t\tactive as string,\n\t\tdate_last_updated as timestamp,\n\t\tdate_inserted as timestamp,\n\t\tlast_updated_by as string,\n\t\tinserted_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select *\\nfrom dwh_prepare.pre_dim_source_system',\n\tformat: 'query',\n\twildcardPaths:['Pre_Dim/pre_dim_source_system.parquet']) ~> PreDimSourceSystem\nRemoveUnusedColumns derive(top_key = 'ALL',\n\t\ttop_description = 'All Source Systems') ~> DeriveTopLevel\nPreDimSourceSystem select(mapColumn(\n\t\tpk_source_system,\n\t\tdescription\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nDeriveTopLevel select(mapColumn(\n\t\tsou_key = pk_source_system,\n\t\tsou_description = description,\n\t\ttop_key,\n\t\ttop_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectOutputColumns\nSelectOutputColumns alterRow(upsertIf(true())) ~> AlterRow\nAlterRow sink(input(\n\t\tdimension_key as long,\n\t\ttop_key as string,\n\t\tsou_id as long,\n\t\tsou_description as string,\n\t\ttop_description as string,\n\t\ttop_id as long,\n\t\tsou_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['sou_key'],\n\tformat: 'table',\n\tmapColumn(\n\t\ttop_key,\n\t\tsou_description,\n\t\ttop_description,\n\t\tsou_key\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimSourceSystem"
+			"script": "source(output(\n\t\tpk_source_system as string,\n\t\tdescription as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select pk_source_system, description\\nfrom dwh_prepare.pre_dim_source_system',\n\tformat: 'query',\n\twildcardPaths:['Pre_Dim/pre_dim_source_system.parquet']) ~> PreDimSourceSystem\nPreDimSourceSystem derive(top_key = 'ALL',\n\t\ttop_description = 'All Source Systems') ~> DeriveTopLevel\nDeriveTopLevel select(mapColumn(\n\t\tsou_key = pk_source_system,\n\t\tsou_description = description,\n\t\ttop_key,\n\t\ttop_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectOutputColumns\nSelectOutputColumns alterRow(upsertIf(true())) ~> AlterRow\nAlterRow sink(input(\n\t\tdimension_key as long,\n\t\ttop_key as string,\n\t\tsou_id as long,\n\t\tsou_description as string,\n\t\ttop_description as string,\n\t\ttop_id as long,\n\t\tsou_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['sou_key'],\n\tformat: 'table',\n\tmapColumn(\n\t\ttop_key,\n\t\tsou_description,\n\t\ttop_description,\n\t\tsou_key\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimSourceSystem"
 		}
 	}
 }
