@@ -110,10 +110,6 @@
 				"type": "varchar"
 			},
 			{
-				"name": "agr_business_area",
-				"type": "varchar"
-			},
-			{
 				"name": "agr_sf_market_area_desc",
 				"type": "varchar"
 			},
@@ -149,10 +145,6 @@
 			},
 			{
 				"name": "agr_def_clhndl_pi_crew_pri",
-				"type": "varchar"
-			},
-			{
-				"name": "agr_agreement_type",
 				"type": "varchar"
 			},
 			{
