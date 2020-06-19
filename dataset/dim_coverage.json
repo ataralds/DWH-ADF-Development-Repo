@@ -1,0 +1,97 @@
+{
+	"name": "dim_coverage",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "dimension_key",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "cov_gic_group_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_3ltr_code",
+				"type": "varchar"
+			},
+			{
+				"name": "tot_description",
+				"type": "varchar"
+			},
+			{
+				"name": "tot_key",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_layer_group_descr",
+				"type": "varchar"
+			},
+			{
+				"name": "grp_description",
+				"type": "varchar"
+			},
+			{
+				"name": "grp_key",
+				"type": "varchar"
+			},
+			{
+				"name": "grp_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "cov_exposure_group_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_description",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_energy_exp_group_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_gic_group_code",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_exposure_group_code",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "cov_energy_exp_group_code",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_key",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_layer_group_code",
+				"type": "varchar"
+			},
+			{
+				"name": "tot_id",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "marts",
+			"table": "dim_coverage"
+		}
+	}
+}
