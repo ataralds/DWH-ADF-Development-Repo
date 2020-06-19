@@ -64,7 +64,7 @@
 								},
 								"waitOnCompletion": true,
 								"parameters": {
-									"pPipelineName": "Pipeline Name",
+									"pPipelineName": "load_exchange_rate",
 									"pEmailSubject": "ADF DWH Alert ! Exchange rate file not arrived to load and copy into Azure.",
 									"pEmailBody": "Exchange rate file not available",
 									"pEmailTo": "sudipta.dutta@gard.no;siv.borve@gard.no"
