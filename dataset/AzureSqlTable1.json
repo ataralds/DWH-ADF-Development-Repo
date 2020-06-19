@@ -1,0 +1,92 @@
+{
+	"name": "AzureSqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "primary_contact_name",
+				"type": "varchar"
+			},
+			{
+				"name": "account_resp_me",
+				"type": "varchar"
+			},
+			{
+				"name": "gard_market_area_code",
+				"type": "varchar"
+			},
+			{
+				"name": "source_system",
+				"type": "varchar"
+			},
+			{
+				"name": "account_resp_pi",
+				"type": "varchar"
+			},
+			{
+				"name": "gard_market_area_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "account_status",
+				"type": "varchar"
+			},
+			{
+				"name": "primary_contact_email",
+				"type": "varchar"
+			},
+			{
+				"name": "client_lost_reason",
+				"type": "varchar"
+			},
+			{
+				"name": "gard_contact_id",
+				"type": "varchar"
+			},
+			{
+				"name": "source_system_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "company_email",
+				"type": "varchar"
+			},
+			{
+				"name": "company_owner_full_name",
+				"type": "varchar"
+			},
+			{
+				"name": "company_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "parent_company_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "company_name",
+				"type": "varchar"
+			},
+			{
+				"name": "company_record_type",
+				"type": "varchar"
+			},
+			{
+				"name": "parent_company_name",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": "sf_company"
+		}
+	}
+}
