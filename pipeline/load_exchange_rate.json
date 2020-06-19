@@ -48,7 +48,14 @@
 						{
 							"name": "pipeline_send_email",
 							"type": "ExecutePipeline",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "UpdateExchangeRteLoadStatus_copy1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"userProperties": [],
 							"typeProperties": {
 								"pipeline": {
@@ -62,6 +69,32 @@
 									"pEmailBody": "Exchange rate file not available",
 									"pEmailTo": "sudipta.dutta@gard.no;siv.borve@gard.no"
 								}
+							}
+						},
+						{
+							"name": "UpdateExchangeRteLoadStatus_copy1",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[adf_audit].[prc_audit_pipeline_progress_status]",
+								"storedProcedureParameters": {
+									"pPipelineId": {
+										"value": "1",
+										"type": "Int16"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "sql_server_development_connection",
+								"type": "LinkedServiceReference"
 							}
 						}
 					],
@@ -84,7 +117,7 @@
 							"type": "ExecutePipeline",
 							"dependsOn": [
 								{
-									"activity": "copy_exchange_rate",
+									"activity": "UpdateExchangeRteLoadStatus",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -103,6 +136,39 @@
 									"pEmailBody": "HLP_EXCHNAGE_RATE data copied into Azure SQL server successfully",
 									"pEmailTo": "sudipta.dutta@gard.no;siv.borve@gard.no"
 								}
+							}
+						},
+						{
+							"name": "UpdateExchangeRteLoadStatus",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "copy_exchange_rate",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[adf_audit].[prc_audit_pipeline_progress_status]",
+								"storedProcedureParameters": {
+									"pPipelineId": {
+										"value": "1",
+										"type": "Int16"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "sql_server_development_connection",
+								"type": "LinkedServiceReference"
 							}
 						}
 					]
