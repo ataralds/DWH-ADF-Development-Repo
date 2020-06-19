@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select table_name table_name from azure_config where where oracle_schema_name = 'MAPSYS'\n",
+						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name = 'MAPSYS'\n",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
@@ -61,24 +61,24 @@
 							"typeProperties": {
 								"source": {
 									"type": "OracleSource",
+									"oracleReaderQuery": "SELECT * FROM @{item().table_name} ",
 									"partitionOption": "None",
 									"queryTimeout": "02:00:00"
 								},
 								"sink": {
-									"type": "AzureSqlSink"
+									"type": "AzureSqlSink",
+									"preCopyScript": {
+										"value": "@{concat('TRUNCATE TABLE dwh_stage.',trim(replace(item().TABLE_NAME,'\"',' ')),';')}",
+										"type": "Expression"
+									},
+									"disableMetricsCollection": false
 								},
 								"enableStaging": false
 							},
 							"inputs": [
 								{
-									"referenceName": "Oracle_oltp05",
-									"type": "DatasetReference",
-									"parameters": {
-										"fileName": {
-											"value": "SELECT * FROM @{item().table_name} ",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "Oracle_mapsys",
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
