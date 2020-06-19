@@ -1,9 +1,9 @@
 {
-	"name": "m_pre_dim_sub_claim_pa",
+	"name": "pre_dim_claim_type",
 	"properties": {
 		"activities": [
 			{
-				"name": "m_pre_dim_sub_claim_pa_copy1",
+				"name": "m_pre_dim_sub_claim_pa",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_sub_claim_pa_copy1",
+						"referenceName": "m_pre_dim_sub_claim_pa",
 						"type": "DataFlowReference"
 					},
 					"compute": {

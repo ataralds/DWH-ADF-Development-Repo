@@ -1,9 +1,9 @@
 {
-	"name": "m_pre_dim_sub_claim_pa",
+	"name": "pipeline1",
 	"properties": {
 		"activities": [
 			{
-				"name": "m_pre_dim_sub_claim_pa_copy1",
+				"name": "m_pre_dim_sub_claim_pa_copy2",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_sub_claim_pa_copy1",
+						"referenceName": "m_pre_dim_sub_claim_pa_copy2",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -26,9 +26,6 @@
 				}
 			}
 		],
-		"folder": {
-			"name": "mappings/dwh_prepare/pre dim"
-		},
 		"annotations": []
 	}
 }
