@@ -86,7 +86,7 @@
 		],
 		"typeProperties": {
 			"schema": "dwh_stage",
-			"table": "sf_company"
+			"table": "ankit_sf_company"
 		}
 	}
 }
