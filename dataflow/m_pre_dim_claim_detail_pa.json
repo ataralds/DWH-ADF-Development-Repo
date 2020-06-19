@@ -10,7 +10,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "Other",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "tcrossreference"
@@ -18,10 +18,6 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "pre_dim_claim_detail_pa",
-						"type": "DatasetReference"
-					},
 					"name": "preDimClaimPA"
 				}
 			],
@@ -42,7 +38,7 @@
 					"name": "lastupdatedby"
 				}
 			],
-			"script": "source(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> tcrossreference\ntcrossreference filter(SOURCE_SYSTEM=='PARIS' && CODE_TYPE_ID==775) ~> parisClaimDetail\nxrefcld aggregate(groupBy(cld_description),\n\tcld_key = first(cld_key)) ~> deduplicator\nparisClaimDetail select(mapColumn(\n\t\tcld_key = TARGET_CODE,\n\t\tcld_description = TARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefcld\nlastupdatedby alterRow(upsertIf(!isNull(cld_key))) ~> alterRow\ndeduplicator derive(last_updated_by = 'pre_dim_claim_detail') ~> lastupdatedby\nalterRow sink(input(\n\t\tagt_description as string,\n\t\tagt_key as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_claim_detail_pa.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimClaimPA"
+			"script": "source(output(\n\t\tcode_type_id as long,\n\t\tcode2 as string,\n\t\ttarget_description as string,\n\t\tsource_system as string,\n\t\tom_x_ref as string,\n\t\ttarget_code as string,\n\t\tcode_type as string,\n\t\tsource_code_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.t_crossreference',\n\tformat: 'query') ~> tcrossreference\ntcrossreference filter(source_system=='PARIS' && code_type_id==775) ~> parisClaimDetail\nxrefcld aggregate(groupBy(cld_description),\n\tcld_key = first(cld_key)) ~> deduplicator\nparisClaimDetail select(mapColumn(\n\t\tcld_key = target_code,\n\t\tcld_description = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> xrefcld\nlastupdatedby alterRow(upsertIf(true())) ~> alterRow\ndeduplicator derive(last_updated_by = 'pre_dim_claim_detail') ~> lastupdatedby\nalterRow sink(partitionFileNames:['pre_dim_claim_detail_pa.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimClaimPA"
 		}
 	}
 }
