@@ -102,10 +102,6 @@
 				"type": "varchar"
 			},
 			{
-				"name": "agr_partner_team_grp_name",
-				"type": "varchar"
-			},
-			{
 				"name": "agr_date_established",
 				"type": "date"
 			},
@@ -138,10 +134,6 @@
 				"type": "decimal",
 				"precision": 28,
 				"scale": 10
-			},
-			{
-				"name": "agr_team_resp_uw_desc",
-				"type": "varchar"
 			},
 			{
 				"name": "agr_sf_company_id",
@@ -244,10 +236,6 @@
 				"scale": 3
 			},
 			{
-				"name": "agr_team_account_manager_code",
-				"type": "varchar"
-			},
-			{
 				"name": "agr_est_number_of_objects",
 				"type": "decimal",
 				"precision": 28,
@@ -282,10 +270,6 @@
 				"type": "varchar"
 			},
 			{
-				"name": "agr_partner_main_grp_name",
-				"type": "varchar"
-			},
-			{
 				"name": "agr_sf_company_broker_id",
 				"type": "decimal",
 				"precision": 28,
@@ -311,10 +295,6 @@
 			},
 			{
 				"name": "agr_market_segm_cnt_grp_code",
-				"type": "varchar"
-			},
-			{
-				"name": "agr_team_resp_uw_code",
 				"type": "varchar"
 			},
 			{
@@ -376,10 +356,6 @@
 				"type": "varchar"
 			},
 			{
-				"name": "agr_partner_office_name",
-				"type": "varchar"
-			},
-			{
 				"name": "agr_def_clhndl_dry_cargo_pri",
 				"type": "varchar"
 			},
@@ -399,10 +375,6 @@
 			},
 			{
 				"name": "agr_market_area_code",
-				"type": "varchar"
-			},
-			{
-				"name": "agr_team_account_manager_desc",
 				"type": "varchar"
 			}
 		],
