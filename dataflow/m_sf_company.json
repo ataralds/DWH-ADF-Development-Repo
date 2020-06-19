@@ -1,5 +1,5 @@
 {
-	"name": "m_sf_company_copy1",
+	"name": "m_sf_company",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
