@@ -1,6 +1,7 @@
 {
 	"name": "m_pre_dim_claim_team",
 	"properties": {
+		"description": "Created by olseir, 22.06.2020. ",
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -38,9 +39,15 @@
 			"transformations": [
 				{
 					"name": "AlterRow1"
+				},
+				{
+					"name": "RemoveDuplicates"
+				},
+				{
+					"name": "Union1"
 				}
 			],
-			"script": "source(output(\n\t\tlccuwsign as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select lccuwsign from dwh_stage.p_lcctable',\n\tformat: 'query') ~> lcctable\nsource(output(\n\t\tlcauwsign as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select lcauwsign from dwh_stage.p_lcatable',\n\tformat: 'query') ~> lcatable\nsource(output(\n\t\tsigsign as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select sigsign from dwh_stage.p_sigtable',\n\tformat: 'query') ~> sigtable\nlcctable alterRow(upsertIf(true())) ~> AlterRow1\nAlterRow1 sink(input(\n\t\tpk_pre_dim_claim_team as string,\n\t\tdate_inserted as timestamp,\n\t\tlast_updated_by as string,\n\t\tinserted_by as string,\n\t\temp_id_main_adjuster as decimal(28,10),\n\t\ttem_description as string,\n\t\tsign_lcacrsign as string,\n\t\tdate_last_updated as timestamp,\n\t\ttem_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+			"script": "source(output(\n\t\tlccuwsign as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select lccuwsign from dwh_stage.p_lcctable',\n\tformat: 'query') ~> lcctable\nsource(output(\n\t\tlcauwsign as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select lcauwsign from dwh_stage.p_lcatable',\n\tformat: 'query') ~> lcatable\nsource(output(\n\t\tsigsign as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select sigsign from dwh_stage.p_sigtable',\n\tformat: 'query') ~> sigtable\nRemoveDuplicates alterRow(upsertIf(true())) ~> AlterRow1\nUnion1 select(mapColumn(\n\t\tuwsign = lccuwsign\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveDuplicates\nlcctable, lcatable union(byName: false)~> Union1\nAlterRow1 sink(input(\n\t\tpk_pre_dim_claim_team as string,\n\t\tdate_inserted as timestamp,\n\t\tlast_updated_by as string,\n\t\tinserted_by as string,\n\t\temp_id_main_adjuster as decimal(28,10),\n\t\ttem_description as string,\n\t\tsign_lcacrsign as string,\n\t\tdate_last_updated as timestamp,\n\t\ttem_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 		}
 	}
 }
