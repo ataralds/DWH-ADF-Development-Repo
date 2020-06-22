@@ -1,0 +1,172 @@
+{
+	"name": "CopyPipeline_wna",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_wna",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "marts.dim_claim_type"
+					},
+					{
+						"name": "Destination",
+						"value": "AZURE_DWH.ORACLE_LOAD_DIM_CLAIM_TYPE"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource"
+					},
+					"sink": {
+						"type": "OracleSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "dimension_key",
+									"type": "Int64",
+									"physicalType": "bigint"
+								},
+								"sink": {
+									"name": "DIMENSION_KEY",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "top_key",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "TOP_KEY",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "top_id",
+									"type": "Int64",
+									"physicalType": "bigint"
+								},
+								"sink": {
+									"name": "TOP_ID",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "top_description",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "TOP_DESCRIPTION",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "clm_id",
+									"type": "Int64",
+									"physicalType": "bigint"
+								},
+								"sink": {
+									"name": "CLM_ID",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "clm_description",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "CLM_DESCRIPTION",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "clm_key",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "CLM_KEY",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "clm_source_system",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "CLM_SOURCE_SYSTEM",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "clm_source_key",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "CLM_SOURCE_KEY",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "clm_code",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "CLM_CODE",
+									"type": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_wna",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_wna",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}

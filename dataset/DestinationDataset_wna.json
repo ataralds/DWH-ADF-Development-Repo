@@ -1,0 +1,16 @@
+{
+	"name": "DestinationDataset_wna",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracleAzureDwh",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "AZURE_DWH",
+			"table": "ORACLE_LOAD_DIM_CLAIM_TYPE"
+		}
+	}
+}
