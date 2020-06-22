@@ -16,82 +16,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_incident_pa",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"hlpExchangeRateToUsd": {
-								"fileName": "hlp_exchange_rate_to_usd.parquet"
-							},
-							"fil": {
-								"fileName": "\"p_filtable\""
-							},
-							"fal": {
-								"fileName": "\"p_faltable\""
-							},
-							"lcc": {
-								"fileName": "\"p_lcctable\""
-							},
-							"tCrossReference": {
-								"fileName": "tcrossreference.parquet"
-							},
-							"lcf": {
-								"fileName": "\"p_lcftable\""
-							},
-							"lca": {
-								"fileName": "\"p_lcatable\""
-							},
-							"obb": {
-								"fileName": "\"p_obbtable\""
-							},
-							"oba": {
-								"fileName": "\"p_obatable\""
-							},
-							"ica": {
-								"fileName": "\"p_icatable\""
-							},
-							"lcr": {
-								"fileName": "\"p_lcrtable\""
-							},
-							"car": {
-								"fileName": "\"p_cartable\""
-							},
-							"laa": {
-								"fileName": "\"p_laatable\""
-							},
-							"aga": {
-								"fileName": "\"p_agatable\""
-							},
-							"sig": {
-								"fileName": "\"p_sigtable\""
-							},
-							"ina": {
-								"fileName": "\"p_inatable\""
-							},
-							"lab": {
-								"fileName": "\"p_labtable\""
-							},
-							"lda": {
-								"fileName": "\"p_ldatable\""
-							},
-							"qtb": {
-								"fileName": "\"p_qtbtable\""
-							},
-							"staParisClmLead": {
-								"fileName": "\"sta_paris_claim_lead\""
-							},
-							"unl": {
-								"fileName": "\"p_unltable\""
-							},
-							"staRiskGroup": {
-								"fileName": "\"sta_risk_group\""
-							},
-							"dimTime": {
-								"fileName": "\"sta_dim_time\""
-							},
-							"staIncidentRsvGroupMe": {
-								"fileName": "\"sta_incident_rsv_group_me\""
-							}
-						}
+						"referenceName": "m_pre_dim_incident_pa_copy1",
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,
