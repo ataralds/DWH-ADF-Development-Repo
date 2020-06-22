@@ -1,5 +1,5 @@
 {
-	"name": "dim_agreement",
+	"name": "m_dim_agreement",
 	"properties": {
 		"activities": [
 			{
@@ -26,6 +26,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "mappings/marts/dim"
+		},
 		"annotations": []
 	}
 }
