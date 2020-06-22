@@ -1,6 +1,9 @@
 {
 	"name": "m_dim_agreement",
 	"properties": {
+		"folder": {
+			"name": "marts"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
