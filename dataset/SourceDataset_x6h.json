@@ -1,0 +1,12 @@
+{
+	"name": "SourceDataset_x6h",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "agresso",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
