@@ -1,5 +1,5 @@
 {
-	"name": "SourceDataset_x6h",
+	"name": "OracleAgresso",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "agresso",
@@ -7,6 +7,9 @@
 		},
 		"annotations": [],
 		"type": "OracleTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "dwh_stage"
+		}
 	}
 }

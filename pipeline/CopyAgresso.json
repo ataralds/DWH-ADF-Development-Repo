@@ -4,7 +4,7 @@
 		"description": "Copy agresso source from synomnyms on agrint",
 		"activities": [
 			{
-				"name": "Copy_x6h",
+				"name": "Copy_Agresso",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -27,7 +27,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select * from s_udv_ags_employee",
+						"oracleReaderQuery": "select * from s_udv_ags_employee\n",
 						"partitionOption": "None"
 					},
 					"sink": {
@@ -432,7 +432,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SourceDataset_x6h",
+						"referenceName": "OracleAgresso",
 						"type": "DatasetReference"
 					}
 				],
