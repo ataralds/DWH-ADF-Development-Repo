@@ -1,0 +1,337 @@
+{
+	"name": "dim_agreement",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "dimension_key",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "agr_clm_hdl_defence",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_clm_hdl_mande",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_market_area_short_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_agreement_type_detail_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_main_office_ind",
+				"type": "char"
+			},
+			{
+				"name": "agr_est_premium_currency_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_resp_uw_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_agreement_name",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_clm_hdl_environmental",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_agreement_type_detail_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_top_group_client",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_market_area_sort",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_office",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_market_segment_split_code",
+				"type": "varchar"
+			},
+			{
+				"name": "top_description",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_key",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_top_group_client_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "agr_market_segment_split",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_club_retention_stat",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_market_area_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_est_premium_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_uw_assist_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_market_area_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_date_end",
+				"type": "date"
+			},
+			{
+				"name": "agr_member_number",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_clm_adjuster",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_market_segm_cnt_grp_code",
+				"type": "varchar"
+			},
+			{
+				"name": "top_key",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_market_segm_cnt_grp_sort",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_company_name_client",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_clm_hdl_cargo_dry",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_main_vessel_type_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_dummy_ind",
+				"type": "char"
+			},
+			{
+				"name": "agr_uw_year_days",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "agr_market_area_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_clm_hdl_pers_inj_and_crew",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_ext_adjuster_ind",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_order_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_top_group_broker",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_company_broker_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "agr_sf_company_owner",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_abatement_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_abatement_stat",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_date_start",
+				"type": "date"
+			},
+			{
+				"name": "agr_uw_assist_team_code",
+				"type": "varchar"
+			},
+			{
+				"name": "top_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "agr_market_segment_code",
+				"type": "varchar"
+			},
+			{
+				"name": "charterers_trad_clm_team_ind",
+				"type": "char"
+			},
+			{
+				"name": "agr_uw_assist_team_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_market_area_short_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "agr_key",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_uw_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_top_group_broker_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "agr_clm_hdl_cargo_liquid",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_client_lost_reason",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_uw_description",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_company_name_broker",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_uw_assist_description",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_market_area_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_est_total_gross_ton",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_internal_note",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_main_vessel_type_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_club_retention",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_market_segment",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_market_segm_country_group",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_company_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "agr_date_established",
+				"type": "date"
+			},
+			{
+				"name": "agr_clm_hdl_casualty_and_prop",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_resp_uw_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_uw_year",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "agr_reference",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_est_number_of_objects",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "marts",
+			"table": "dim_agreement"
+		}
+	}
+}
