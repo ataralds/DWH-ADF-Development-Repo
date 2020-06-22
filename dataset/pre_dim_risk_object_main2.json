@@ -1,0 +1,353 @@
+{
+	"name": "pre_dim_risk_object_main2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pk_key",
+				"type": "varchar"
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "deleted_ind",
+				"type": "char"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_business_type",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_capital",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_capital_branch_code",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_capital_branch_long_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_capital_branch_short_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_capital_code",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_claims_lead_ind",
+				"type": "char"
+			},
+			{
+				"name": "rob_claims_leader",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_club_retention",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_co_line",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_combined_single_limit_ind",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_condition_code",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_condition_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_count_risk_days",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_currency_code",
+				"type": "char"
+			},
+			{
+				"name": "rob_cut_line",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_date_end",
+				"type": "date"
+			},
+			{
+				"name": "rob_date_first_inception",
+				"type": "date"
+			},
+			{
+				"name": "rob_date_last_expiry",
+				"type": "date"
+			},
+			{
+				"name": "rob_date_orig_end",
+				"type": "date"
+			},
+			{
+				"name": "rob_date_registered",
+				"type": "date"
+			},
+			{
+				"name": "rob_date_start",
+				"type": "date"
+			},
+			{
+				"name": "rob_date_user_removed",
+				"type": "date"
+			},
+			{
+				"name": "rob_entered_tonnage",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_entered_tonnage_pro_rata",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_epi_curr",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_epi_premium",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_epi_rate",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_etc_broker_ind",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_exposure",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_ffo",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_gard_bermuda_nuf_ind",
+				"type": "char"
+			},
+			{
+				"name": "rob_inapayer",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_inapayer_name",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_layer_code",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_layer_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_mutual_fixed",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_non_vessel_indicator",
+				"type": "char"
+			},
+			{
+				"name": "rob_on_risk_ind",
+				"type": "char"
+			},
+			{
+				"name": "rob_original_rate",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_our_line",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_partial_interest",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_poolable_ind",
+				"type": "char"
+			},
+			{
+				"name": "rob_rdc",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_re_line",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_re_line_fac",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_re_line_war",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_reinsurance_pgm_code",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_reinsurance_pgm_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_reinsurance_type",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_reinsurance_type_code",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_removed_ind",
+				"type": "char"
+			},
+			{
+				"name": "rob_ret_line",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_risk_group_code",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_risk_group_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_risk_group_rsv_code",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_risk_group_rsv_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_risk_group_sort",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_segment_code",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_segment_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_small_craft_ind",
+				"type": "char"
+			},
+			{
+				"name": "rob_status",
+				"type": "char"
+			},
+			{
+				"name": "rob_sum_insured_os_curr",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_sum_insured_os_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_sum_insured_os_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_ton_entered_our_share",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_dim_risk_object_main"
+		}
+	}
+}
