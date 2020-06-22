@@ -1,0 +1,487 @@
+{
+	"name": "pre_dim_object",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "obj_engine_builder",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_propulsion_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_engine_designation",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_fuel_type",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_pandi_club",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_hullid",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "obj_sourceid",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "obj_num_of_holds",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_date_valid_from",
+				"type": "date"
+			},
+			{
+				"name": "obj_flag_iso3",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_fdwt",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_lifting_geartype_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_gbo_owner",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_num_of_passengers",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_operator",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_date_construction_end",
+				"type": "date"
+			},
+			{
+				"name": "obj_date_valid_to",
+				"type": "date"
+			},
+			{
+				"name": "obj_date_built",
+				"type": "date"
+			},
+			{
+				"name": "lloyds_vessel_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "obj_class3",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_rpm",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_pandi_club_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_class2",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_breadth_moulded",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_num_of_decks",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_propeller_type_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_engine_designer",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_market_area_country_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_hull_type_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_ship_builder",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_depth",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_num_of_crew",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_hull_type",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_lifting_geartype_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_operator_country_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_cap_trailer",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_m3",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_manager_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_cap_grain",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_engine_type",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_date_construction_start",
+				"type": "date"
+			},
+			{
+				"name": "obj_num_of_propellers",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_breadth_extreme",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_reg_owner",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_market_area_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_operator_country_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "obj_material_build",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_reg_owner_country_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_ship_builder_country",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_date_launch",
+				"type": "date"
+			},
+			{
+				"name": "obj_propeller_type_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_cap_gas",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_cap_teu",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_manager",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_key",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_reg_owner_country",
+				"type": "varchar"
+			},
+			{
+				"name": "top_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "obj_class1_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_status",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_cap_liquid",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "obj_market_area_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_iceclasstext",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_class1",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_class3_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_market_area_country_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_cap_car",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_cylinder_arrangement",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_object_type_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_object_name",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_dwt",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_status_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_gt",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_built_year",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "obj_hp",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_gb_owner_country_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_speed",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_iceclass",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_cap_bale",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_date_dead",
+				"type": "date"
+			},
+			{
+				"name": "obj_manager_country_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_total_kw",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_object_type",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_fuel_type_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_propulsion",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_class2_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_imo_number",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_num_of_hatches",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_num_of_cylinders",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_service_speed",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_gbo_owner_country",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_gard_objectid",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "obj_length_overall",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "obj_manager_country_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_stroke_type",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_flag_iso3_code",
+				"type": "varchar"
+			},
+			{
+				"name": "obj_num_of_total_tanks",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_dim_object"
+		}
+	}
+}
