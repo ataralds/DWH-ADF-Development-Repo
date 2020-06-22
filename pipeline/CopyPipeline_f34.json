@@ -1,0 +1,667 @@
+{
+	"name": "CopyPipeline_f34",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_f34",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "CSTAGE_PARIS.p_rsatable"
+					},
+					{
+						"name": "Destination",
+						"value": "dwh_stage.p_rsatable"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "rsafipid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsafipid",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsastpdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "rsastpdate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "rsaaintr",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsaaintr",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsarect",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsarect",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsacaldate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "rsacaldate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "rsahgrpre",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "rsahgrpre",
+									"type": "Decimal",
+									"physicalType": "numeric"
+								}
+							},
+							{
+								"source": {
+									"name": "rsavaldate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "rsavaldate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "rsafilid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsafilid",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsaosamtp",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "rsaosamtp",
+									"type": "Decimal",
+									"physicalType": "numeric"
+								}
+							},
+							{
+								"source": {
+									"name": "rsarefnam",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsarefnam",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsacurr",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsacurr",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsalgrpre",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "rsalgrpre",
+									"type": "Decimal",
+									"physicalType": "numeric"
+								}
+							},
+							{
+								"source": {
+									"name": "rsatext15",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsatext15",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsaagaid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsaagaid",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsafrdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "rsafrdate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "rsapcod2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsapcod2",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsacrdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "rsacrdate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "rsasysextid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsasysextid",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsaipaid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsaipaid",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsasupcur",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsasupcur",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsasw5",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsasw5",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsaduedate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "rsaduedate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "rsaremdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "rsaremdate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "rsacrsign",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsacrsign",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsabnkrf3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsabnkrf3",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsadocdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "rsadocdate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "rsacoment",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsacoment",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsacomment35",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsacomment35",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsadocamtp",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "rsadocamtp",
+									"type": "Decimal",
+									"physicalType": "numeric"
+								}
+							},
+							{
+								"source": {
+									"name": "rsacomment70",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsacomment70",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsaclmextid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsaclmextid",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsasortk",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsasortk",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsaknvmark",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsaknvmark",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsalcaid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsalcaid",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsacmref",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsacmref",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsapremextid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsapremextid",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsalccid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsalccid",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsaident",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsaident",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsabordrfl",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsabordrfl",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsaclmcat",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsaclmcat",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsapcode",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsapcode",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsaprocomamtp",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "rsaprocomamtp",
+									"type": "Decimal",
+									"physicalType": "numeric"
+								}
+							},
+							{
+								"source": {
+									"name": "rsaspreadref",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsaspreadref",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsasupamtp",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "rsasupamtp",
+									"type": "Decimal",
+									"physicalType": "numeric"
+								}
+							},
+							{
+								"source": {
+									"name": "rsaorgduedate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "rsaorgduedate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "rsaintrst",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsaintrst",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsabnkrf6",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsabnkrf6",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsaprocomp",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "rsaprocomp",
+									"type": "Decimal",
+									"physicalType": "numeric"
+								}
+							},
+							{
+								"source": {
+									"name": "rsasetdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "rsasetdate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "rsapolcod",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsapolcod",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsarecdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "rsarecdate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "rsainpre",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "rsainpre",
+									"type": "Decimal",
+									"physicalType": "numeric"
+								}
+							},
+							{
+								"source": {
+									"name": "rsastatus",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rsastatus",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rsanetamtp",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "rsanetamtp",
+									"type": "Decimal",
+									"physicalType": "numeric"
+								}
+							},
+							{
+								"source": {
+									"name": "rsatodate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "rsatodate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_f34",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_f34",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
