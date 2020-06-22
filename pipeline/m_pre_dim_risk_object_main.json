@@ -4,7 +4,7 @@
 		"description": "test run",
 		"activities": [
 			{
-				"name": "m_pre_dim_risk_object_pa",
+				"name": "m_pre_dim_risk_object_pa_SQL",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -18,60 +18,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_pre_dim_risk_object_pa",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"tcross": {
-								"fileName": "tcrossreference.parquet"
-							},
-							"pea": {
-								"fileName": "\"p_peatable\""
-							},
-							"ica": {
-								"fileName": "\"p_icatable\""
-							},
-							"iuv": {
-								"fileName": "\"p_iuvtable\""
-							},
-							"iuw": {
-								"fileName": "\"p_iuwtable\""
-							},
-							"ipa": {
-								"fileName": "\"p_ipatable\""
-							},
-							"aga": {
-								"fileName": "\"p_agatable\""
-							},
-							"ina": {
-								"fileName": "\"p_inatable\""
-							},
-							"obb": {
-								"fileName": "\"p_obbtable\""
-							},
-							"ing": {
-								"fileName": "\"p_ingtable\""
-							},
-							"oba": {
-								"fileName": "\"p_obatable\""
-							},
-							"hlpexhangerateusd": {
-								"fileName": "hlp_exchange_rate_to_usd.parquet"
-							},
-							"staparisclaimlead": {
-								"fileName": "\"sta_paris_claim_lead\""
-							},
-							"cco": {
-								"fileName": "\"p_ccotable\""
-							},
-							"paa": {
-								"fileName": "\"p_paatable\""
-							},
-							"stariskgroup": {
-								"fileName": "\"sta_risk_group\""
-							},
-							"isa": {
-								"fileName": "\"p_isatable\""
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,
