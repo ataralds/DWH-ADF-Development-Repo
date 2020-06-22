@@ -1,0 +1,16 @@
+{
+	"name": "DestinationDataset_tqb",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracleAzureDwh",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "AZURE_DWH",
+			"table": "PERBEN_LOAD_ORACLE_TEST"
+		}
+	}
+}

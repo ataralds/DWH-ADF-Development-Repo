@@ -1,0 +1,117 @@
+{
+	"name": "CopyPipeline_tqb",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_tqb",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "dwh_stage.perben_load_oracle"
+					},
+					{
+						"name": "Destination",
+						"value": "AZURE_DWH.PERBEN_LOAD_ORACLE_TEST"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource"
+					},
+					"sink": {
+						"type": "OracleSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "varch",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "VARCH",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "inte",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "INTE",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "numer",
+									"type": "Decimal",
+									"physicalType": "decimal"
+								},
+								"sink": {
+									"name": "NUMER",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "bigin",
+									"type": "Int64",
+									"physicalType": "bigint"
+								},
+								"sink": {
+									"name": "BIGIN",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "smallin",
+									"type": "Int16",
+									"physicalType": "smallint"
+								},
+								"sink": {
+									"name": "SMALLIN",
+									"type": "Double"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_tqb",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_tqb",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
