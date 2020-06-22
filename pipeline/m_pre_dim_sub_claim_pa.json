@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "m_pre_dim_sub_claim_pa",
+				"name": "m_pre_dim_sub_claim_pa_copy1",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,19 +16,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_sub_claim_pa",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"Lcc": {
-								"fileName": "\"p_lcctable\""
-							},
-							"Lca": {
-								"fileName": "\"p_lcatable\""
-							},
-							"TCross": {
-								"fileName": "tcrossreference.parquet"
-							}
-						}
+						"referenceName": "m_pre_dim_sub_claim_pa_copy1",
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,
@@ -37,6 +26,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "mappings/dwh_prepare/pre dim"
+		},
 		"annotations": []
 	}
 }

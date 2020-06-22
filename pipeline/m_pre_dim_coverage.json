@@ -17,23 +17,18 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_pre_dim_coverage",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"TCrossReference": {
-								"fileName": "t_crossreference.parquet"
-							},
-							"CoverageGroup": {
-								"fileName": "\"sta_coverage_group\""
-							}
-						}
+						"type": "DataFlowReference"
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
+					"integrationRuntime": {
+						"referenceName": "IrExecutePipeline",
+						"type": "IntegrationRuntimeReference"
 					}
 				}
 			}
 		],
+		"folder": {
+			"name": "mappings/dwh_prepare/pre dim"
+		},
 		"annotations": []
 	}
 }

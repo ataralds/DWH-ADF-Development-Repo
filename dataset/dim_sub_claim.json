@@ -2,43 +2,245 @@
 	"name": "dim_sub_claim",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "dwhdatalakedevelopment",
+			"referenceName": "sql_server_development_connection",
 			"type": "LinkedServiceReference"
 		},
-		"folder": {
-			"name": "marts/dim"
-		},
 		"annotations": [],
-		"type": "Parquet",
-		"typeProperties": {
-			"location": {
-				"type": "AzureBlobFSLocation",
-				"folderPath": "dim",
-				"fileSystem": "marts"
-			},
-			"compressionCodec": "snappy"
-		},
+		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "PK_KEY",
-				"type": "UTF8"
+				"name": "dimension_key",
+				"type": "bigint",
+				"precision": 19
 			},
 			{
-				"name": "CPT_DESCRIPTION",
-				"type": "UTF8"
+				"name": "scl_cargo_type_path",
+				"type": "varchar"
 			},
 			{
-				"name": "CPT_NUMBER",
-				"type": "INT32"
+				"name": "scl_sub_claim_date",
+				"type": "date"
 			},
 			{
-				"name": "INSERTED_BY",
-				"type": "UTF8"
+				"name": "scl_human_claim_type",
+				"type": "varchar"
 			},
 			{
-				"name": "DATE_INSERTED",
-				"type": "DATE"
+				"name": "scl_title_rank_path",
+				"type": "varchar"
+			},
+			{
+				"name": "top_key",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_claim_type_specification",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_rule_of_cover_code",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_title_rank",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_port_of_discharge_country",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_human_claim_type_top",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_sub_claim_type_code",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_port_of_loading",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_sub_claim_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "top_description",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_sub_claim_detail_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_sub_claim_number",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "scl_human_claim_type_path",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_human_location",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_member_sub_claim_reference",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_sub_claim_handler_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_cause_of_injury",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_place_of_receipt",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_used_deductible_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "scl_sub_claim_detail_code",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_gard_sub_claim_id",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_bill_of_lading_number",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_place_of_delivery",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_cargo_claim_category",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_title_rank_top",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_cargo_type_top",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_person_age",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "scl_cargo_claim_category_top",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_key",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_sub_claim_status",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_alleged_cause_top",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_sub_claim_remarks",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_cargo_claim_category_path",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_alleged_cause_path",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_carriage_method_top",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_rule_of_cover_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_alleged_cause",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_sub_claim_handler_code",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_inc_key",
+				"type": "varchar"
+			},
+			{
+				"name": "top_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "scl_port_of_discharge",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "scl_carriage_method",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_sub_claim_type_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_nationality",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_cargo_type",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_carriage_method_path",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_claim_type_specific_path",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_port_of_loading_country",
+				"type": "varchar"
+			},
+			{
+				"name": "scl_deleted_ind",
+				"type": "char"
 			}
-		]
+		],
+		"typeProperties": {
+			"schema": "marts",
+			"table": "dim_sub_claim"
+		}
 	}
 }

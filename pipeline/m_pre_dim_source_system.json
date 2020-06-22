@@ -17,20 +17,18 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_pre_dim_source_system",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"StaSourceSystem": {
-								"fileName": "\"sta_source_system\""
-							}
-						}
+						"type": "DataFlowReference"
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
+					"integrationRuntime": {
+						"referenceName": "IrExecutePipeline",
+						"type": "IntegrationRuntimeReference"
 					}
 				}
 			}
 		],
+		"folder": {
+			"name": "mappings/dwh_prepare/pre dim"
+		},
 		"annotations": []
 	}
 }
