@@ -1,0 +1,16 @@
+{
+	"name": "dim_claim_team",
+	"properties": {
+		"description": "Created by olseir, 23.06.2020",
+		"folder": {
+			"name": "marts/dim"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
