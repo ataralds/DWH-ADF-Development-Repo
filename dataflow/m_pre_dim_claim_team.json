@@ -59,17 +59,17 @@
 			],
 			"transformations": [
 				{
-					"name": "Union1"
+					"name": "LCCjoinLCA"
 				},
 				{
-					"name": "Filter1",
+					"name": "CodeTypeEmployee",
 					"description": "Code_type_id = 329 (employee)  and source_system = 'PARIS' "
 				},
 				{
-					"name": "Lookup1"
+					"name": "SignsignJOINCostCenter"
 				},
 				{
-					"name": "Join1"
+					"name": "UWSignJOINsigsign"
 				},
 				{
 					"name": "AddingKeyColoum"
@@ -78,13 +78,16 @@
 					"name": "RemoveDuplicates"
 				},
 				{
-					"name": "Join2"
+					"name": "EmployeeViewUDV"
 				},
 				{
-					"name": "Lookup2"
+					"name": "CostCenterLookup"
+				},
+				{
+					"name": "SelectOutputColumns"
 				}
 			],
-			"script": "source(output(\n\t\tlccuwsign as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select distinct lccuwsign from dwh_stage.p_lcctable',\n\tformat: 'query') ~> lcctable\nsource(output(\n\t\tlcauwsign as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select distinct lcauwsign from dwh_stage.p_lcatable',\n\tformat: 'query') ~> lcatable\nsource(output(\n\t\tsigsign as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select sigsign from dwh_stage.p_sigtable',\n\tformat: 'query') ~> sigtable\nsource(output(\n\t\tcode_type_id as long,\n\t\tsource_system as string,\n\t\ttarget_code as string,\n\t\tsource_code_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'Select code_type_id, source_system,  target_code, source_code_key from dwh_stage.t_crossreference',\n\tformat: 'query') ~> crossreference\nsource(output(\n\t\tad_name as string,\n\t\tcostcenter as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select  ad_name, costcenter from dwh_stage.s_udv_ags_employee ',\n\tformat: 'query') ~> sUdvAgsEmployee\nsource(output(\n\t\tdescription as string,\n\t\tcc_value as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'Select description , cc_value from dwh_stage.s_udv_orgunit',\n\tformat: 'query') ~> sUdvOrgunit\nlcctable, lcatable union(byName: false)~> Union1\ncrossreference filter(code_type_id==329 && source_system == 'PARIS') ~> Filter1\nsigtable, Lookup2 lookup(sigsign == source_code_key,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> Lookup1\nRemoveDuplicates, Lookup1 join(lccuwsign == sigsign,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nJoin1 derive(PK_pre_dim_claim_team = concat('P',sigsign)) ~> AddingKeyColoum\nUnion1 aggregate(groupBy(lccuwsign),\n\tlccuwsign_aggr = first(lccuwsign)) ~> RemoveDuplicates\nsUdvAgsEmployee, sUdvOrgunit join(costcenter == cc_value,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> Join2\nFilter1, Join2 lookup(crossreference@target_code == ad_name,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> Lookup2\nAddingKeyColoum sink(input(\n\t\tpk_pre_dim_claim_team as string,\n\t\tdate_inserted as timestamp,\n\t\tlast_updated_by as string,\n\t\tinserted_by as string,\n\t\temp_id_main_adjuster as decimal(28,10),\n\t\ttem_description as string,\n\t\tsign_lcacrsign as string,\n\t\tdate_last_updated as timestamp,\n\t\ttem_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> PreDimClaimTeam"
+			"script": "source(output(\n\t\tlccuwsign as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select distinct lccuwsign from dwh_stage.p_lcctable',\n\tformat: 'query') ~> lcctable\nsource(output(\n\t\tlcauwsign as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select distinct lcauwsign from dwh_stage.p_lcatable',\n\tformat: 'query') ~> lcatable\nsource(output(\n\t\tsigsign as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select sigsign from dwh_stage.p_sigtable',\n\tformat: 'query') ~> sigtable\nsource(output(\n\t\tcode_type_id as long,\n\t\tsource_system as string,\n\t\ttarget_code as string,\n\t\tsource_code_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'Select code_type_id, source_system,  target_code, source_code_key from dwh_stage.t_crossreference',\n\tformat: 'query') ~> crossreference\nsource(output(\n\t\tad_name as string,\n\t\tcostcenter as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select  ad_name, costcenter from dwh_stage.s_udv_ags_employee ',\n\tformat: 'query') ~> sUdvAgsEmployee\nsource(output(\n\t\tdescription as string,\n\t\tcc_value as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'Select description , cc_value from dwh_stage.s_udv_orgunit',\n\tformat: 'query') ~> sUdvOrgunit\nlcctable, lcatable union(byName: false)~> LCCjoinLCA\ncrossreference filter(code_type_id==329 && source_system == 'PARIS') ~> CodeTypeEmployee\nsigtable, CostCenterLookup lookup(sigsign == source_code_key,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> SignsignJOINCostCenter\nRemoveDuplicates, SignsignJOINCostCenter join(lccuwsign == sigsign,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> UWSignJOINsigsign\nUWSignJOINsigsign derive(PK_pre_dim_claim_team = concat('P',sigsign)) ~> AddingKeyColoum\nLCCjoinLCA aggregate(groupBy(lccuwsign),\n\tlccuwsign_aggr = first(lccuwsign)) ~> RemoveDuplicates\nsUdvAgsEmployee, sUdvOrgunit join(costcenter == cc_value,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> EmployeeViewUDV\nCodeTypeEmployee, EmployeeViewUDV lookup(crossreference@target_code == ad_name,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> CostCenterLookup\nAddingKeyColoum select(mapColumn(\n\t\tTem_Key = costcenter,\n\t\tTem_Description = description,\n\t\tPK_pre_dim_claim_team,\n\t\tsign_lcasign = lccuwsign\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectOutputColumns\nSelectOutputColumns sink(input(\n\t\tpk_pre_dim_claim_team as string,\n\t\tdate_inserted as timestamp,\n\t\tlast_updated_by as string,\n\t\tinserted_by as string,\n\t\temp_id_main_adjuster as decimal(28,10),\n\t\ttem_description as string,\n\t\tsign_lcacrsign as string,\n\t\tdate_last_updated as timestamp,\n\t\ttem_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tpk_pre_dim_claim_team = PK_pre_dim_claim_team,\n\t\ttem_description = Tem_Description,\n\t\tsign_lcacrsign = sign_lcasign,\n\t\ttem_key = Tem_Key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> PreDimClaimTeam"
 		}
 	}
 }
