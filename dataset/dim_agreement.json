@@ -21,7 +21,7 @@
 				"type": "varchar"
 			},
 			{
-				"name": "agr_clm_hdl_mande",
+				"name": "agr_clm_hdl_paris",
 				"type": "varchar"
 			},
 			{
