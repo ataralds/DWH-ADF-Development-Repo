@@ -80,7 +80,9 @@
 			},
 			{
 				"name": "created_date",
-				"type": "date"
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
 			},
 			{
 				"name": "last_updated_by",
