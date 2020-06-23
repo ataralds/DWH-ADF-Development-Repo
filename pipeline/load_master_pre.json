@@ -1,0 +1,99 @@
+{
+	"name": "load_master_pre",
+	"properties": {
+		"activities": [
+			{
+				"name": "load_static_stage_dwh",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_master_pre_paris",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "load_static_stage_dwh",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "load_master_pre_paris",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "load_master_pre_paris",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "error_handling",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "copy_static_to_sql",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": {
+							"value": "copy_static_to_sql",
+							"type": "Expression"
+						},
+						"pPipelineErrorMsg": {
+							"value": "@activity('copy_static_to_sql').error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "copy_static_to_sql",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_static_stage_dwh",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "copy_static_to_sql",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"variables": {
+			"vFailStatus": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "pipelines/dwh_stage"
+		},
+		"annotations": []
+	}
+}
