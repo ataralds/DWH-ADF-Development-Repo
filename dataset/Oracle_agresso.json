@@ -1,0 +1,24 @@
+{
+	"name": "Oracle_agresso",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "agresso",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"fileName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "agrint",
+			"table": {
+				"value": "@dataset().fileName",
+				"type": "Expression"
+			}
+		}
+	}
+}
