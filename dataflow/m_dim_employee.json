@@ -1,6 +1,9 @@
 {
 	"name": "m_dim_employee",
 	"properties": {
+		"folder": {
+			"name": "marts/dim"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -30,7 +33,7 @@
 					"name": "AlterRow"
 				}
 			],
-			"script": "source(output(\n\t\temp_source_key as string,\n\t\tagresso_emp_id as string,\n\t\temp_first_name as string,\n\t\temp_last_name as string,\n\t\temp_job_mobile as string,\n\t\temp_job_email as string,\n\t\tmain_gard_office_location as string,\n\t\temp_name as string,\n\t\tlast_updated_by as string,\n\t\tincident_team_code as string,\n\t\tincident_team_desc as string,\n\t\temp_job_phone as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_employee.parquet']) ~> preDimEmployee\npreDimEmployee derive(top_key = 'All',\n\t\ttop_description = 'All Employees') ~> DeriveTopLevel\nDeriveTopLevel alterRow(upsertIf(!isNull(emp_source_key))) ~> AlterRow\nAlterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_employee.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimEmployee"
+			"script": "source(output(\n\t\temp_source_key as string,\n\t\tagresso_emp_id as string,\n\t\temp_first_name as string,\n\t\temp_last_name as string,\n\t\temp_job_mobile as string,\n\t\temp_job_email as string,\n\t\tmain_gard_office_location as string,\n\t\temp_name as string,\n\t\tlast_updated_by as string,\n\t\tincident_team_code as string,\n\t\tincident_team_desc as string,\n\t\temp_job_phone as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_employee.parquet']) ~> preDimEmployee\npreDimEmployee derive(top_key = 'ALL',\n\t\ttop_description = 'All Employees') ~> DeriveTopLevel\nDeriveTopLevel alterRow(upsertIf(!isNull(emp_source_key))) ~> AlterRow\nAlterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_employee.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimEmployee"
 		}
 	}
 }
