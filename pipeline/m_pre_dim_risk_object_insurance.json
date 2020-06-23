@@ -1,9 +1,9 @@
 {
-	"name": "m_pre_dim_coverage",
+	"name": "m_pre_dim_risk_object_insurance",
 	"properties": {
 		"activities": [
 			{
-				"name": "m_pre_dim_coverage",
+				"name": "m_pre_dim_risk_object_ins",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,19 +16,16 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_coverage",
+						"referenceName": "m_pre_dim_risk_object_ins",
 						"type": "DataFlowReference"
 					},
-					"integrationRuntime": {
-						"referenceName": "IrExecutePipeline",
-						"type": "IntegrationRuntimeReference"
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
 					}
 				}
 			}
 		],
-		"folder": {
-			"name": "mappings/dwh_prepare/pre dim"
-		},
 		"annotations": []
 	}
 }

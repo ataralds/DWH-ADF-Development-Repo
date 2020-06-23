@@ -1,9 +1,9 @@
 {
-	"name": "m_pre_dim_coverage",
+	"name": "m_pre_dim_agreement_type",
 	"properties": {
 		"activities": [
 			{
-				"name": "m_pre_dim_coverage",
+				"name": "m_pre_dim_agreement_type",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,11 +16,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_coverage",
+						"referenceName": "m_pre_dim_agreement_type",
 						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
-						"referenceName": "IrExecutePipeline",
+						"referenceName": "IRThomasClaimDetails",
 						"type": "IntegrationRuntimeReference"
 					}
 				}
