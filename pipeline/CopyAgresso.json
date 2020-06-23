@@ -61,17 +61,6 @@
 							},
 							{
 								"source": {
-									"name": "STATUS",
-									"type": "String"
-								},
-								"sink": {
-									"name": "status",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
 									"name": "JOBPHONE",
 									"type": "String"
 								},
@@ -154,17 +143,6 @@
 								},
 								"sink": {
 									"name": "hr_manager",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "STATUS_DESCRIPTION",
-									"type": "String"
-								},
-								"sink": {
-									"name": "status_description",
 									"type": "String",
 									"physicalType": "varchar"
 								}
