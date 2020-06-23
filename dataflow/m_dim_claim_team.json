@@ -1,5 +1,5 @@
 {
-	"name": "dim_claim_team",
+	"name": "m_dim_claim_team",
 	"properties": {
 		"description": "Created by olseir, 23.06.2020",
 		"folder": {
@@ -7,10 +7,18 @@
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "MPreDimClaimTeam"
+				}
+			],
 			"sinks": [],
 			"transformations": [],
-			"script": ""
+			"script": "source(output(\n\t\tpk_pre_dim_claim_team as string,\n\t\tdate_inserted as timestamp,\n\t\tlast_updated_by as string,\n\t\tinserted_by as string,\n\t\temp_id_main_adjuster as decimal(28,10),\n\t\ttem_description as string,\n\t\tsign_lcacrsign as string,\n\t\tdate_last_updated as timestamp,\n\t\ttem_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select tem_description, tem_key from dwh_prepare.pre_dim_claim_team',\n\tformat: 'query') ~> MPreDimClaimTeam"
 		}
 	}
 }
