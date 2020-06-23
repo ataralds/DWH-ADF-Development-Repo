@@ -1,0 +1,337 @@
+{
+	"name": "pre_fact_claim_trans",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pk_transaction_key",
+				"type": "varchar"
+			},
+			{
+				"name": "claim_payment_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_claim_handler_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_claim_cost_group_key",
+				"type": "varchar"
+			},
+			{
+				"name": "guarantee_amount_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "claim_incurred_gross_stat",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_transaction_type_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_claim_type_key",
+				"type": "varchar"
+			},
+			{
+				"name": "claim_balance_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "claim_payment_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_status_at_trans_date",
+				"type": "varchar"
+			},
+			{
+				"name": "map_date",
+				"type": "date"
+			},
+			{
+				"name": "dim_coverage_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_claim_category",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_broker",
+				"type": "varchar"
+			},
+			{
+				"name": "created_date",
+				"type": "date"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_underwriter_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_agreement_type_key",
+				"type": "varchar"
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "created_by",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_claim_team_key",
+				"type": "varchar"
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "guarantee_amount_stat",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "claim_reserve_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_currency_key",
+				"type": "varchar"
+			},
+			{
+				"name": "claim_givenco_reserve_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_expense_code_group",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_risk_group_key",
+				"type": "varchar"
+			},
+			{
+				"name": "deleted_ind",
+				"type": "char"
+			},
+			{
+				"name": "claim_payment_usd_orig",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "claim_givenco_payment_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "claim_gl_payment_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "guarantee_amount_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "claim_reserve_usd_orig",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_sub_claim",
+				"type": "varchar"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_client_key",
+				"type": "varchar"
+			},
+			{
+				"name": "claim_reserve_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_claim_trans_date",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_ig_claim_type_key",
+				"type": "varchar"
+			},
+			{
+				"name": "claim_gl_payment_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "claim_givenco_reserve_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_business_area_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_partner_team",
+				"type": "varchar"
+			},
+			{
+				"name": "claim_reserve_gross_stat",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "mutual_fixed_ind",
+				"type": "char"
+			},
+			{
+				"name": "claim_givenco_payment_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_time_agreement",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_claim_rule",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_incident_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_risk_object_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_country_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_source_system_key",
+				"type": "varchar"
+			},
+			{
+				"name": "claim_incurred_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_claim_detail_key",
+				"type": "varchar"
+			},
+			{
+				"name": "claim_payment_gross_stat",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "claim_adv_payment_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_vessel_type_3ltr",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_guarantee",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_agreement_key",
+				"type": "varchar"
+			},
+			{
+				"name": "claim_adv_payment_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_market_area",
+				"type": "varchar"
+			},
+			{
+				"name": "claim_balance_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_expense_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_vessel_main_det_imono",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_capital_branch",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_fact_claim_trans"
+		}
+	}
+}
