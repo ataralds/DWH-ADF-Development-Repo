@@ -1,6 +1,7 @@
 {
-	"name": "OracleTable1",
+	"name": "Oracle_agresso_config",
 	"properties": {
+		"description": "Går mot Stage ITF",
 		"linkedServiceName": {
 			"referenceName": "OracelStageITF",
 			"type": "LinkedServiceReference"
