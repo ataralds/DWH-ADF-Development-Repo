@@ -3,13 +3,13 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Initialize_pipeline",
+				"name": "initialize_pipeline",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "Initialize_pipeline",
+						"referenceName": "initialize_pipeline",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
@@ -20,7 +20,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "Initialize_pipeline",
+						"activity": "initialize_pipeline",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -66,6 +66,33 @@
 				"linkedServiceName": {
 					"referenceName": "sql_server_development_connection",
 					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "pipeline_error_handling",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "initialize_pipeline",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "initialize_pipeline",
+						"pPipelineErrorMsg": {
+							"value": "@activity('initialize_pipeline').error.message",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
