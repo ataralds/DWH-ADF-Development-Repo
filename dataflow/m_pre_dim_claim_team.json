@@ -2,6 +2,9 @@
 	"name": "m_pre_dim_claim_team",
 	"properties": {
 		"description": "Created by olseir, 22.06.2020. ",
+		"folder": {
+			"name": "dwh_prepare/pre_dim"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
