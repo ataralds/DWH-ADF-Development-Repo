@@ -329,6 +329,10 @@
 			{
 				"name": "dim_capital_branch",
 				"type": "varchar"
+			},
+			{
+				"name": "voucher_no",
+				"type": "varchar"
 			}
 		],
 		"typeProperties": {
