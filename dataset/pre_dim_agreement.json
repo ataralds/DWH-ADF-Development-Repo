@@ -2,43 +2,413 @@
 	"name": "pre_dim_agreement",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "dwhdatalakedevelopment",
+			"referenceName": "sql_server_development_connection",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "dwh-prepare/pre-dim"
+			"name": "dwh_prepare_sql/pre_dim"
 		},
 		"annotations": [],
-		"type": "Parquet",
-		"typeProperties": {
-			"location": {
-				"type": "AzureBlobFSLocation",
-				"folderPath": "Pre_Dim",
-				"fileSystem": "dwh-prepare"
-			},
-			"compressionCodec": "snappy"
-		},
+		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "PK_KEY",
-				"type": "UTF8"
+				"name": "pk_key",
+				"type": "varchar"
 			},
 			{
-				"name": "CPT_DESCRIPTION",
-				"type": "UTF8"
+				"name": "agr_sf_client_lost_reason",
+				"type": "varchar"
 			},
 			{
-				"name": "CPT_NUMBER",
-				"type": "INT32"
+				"name": "agr_sf_company_name_broker",
+				"type": "varchar"
 			},
 			{
-				"name": "INSERTED_BY",
-				"type": "UTF8"
+				"name": "agr_def_clhandl_casualty_pri",
+				"type": "varchar"
 			},
 			{
-				"name": "DATE_INSERTED",
-				"type": "DATE"
+				"name": "agr_sf_company_owner",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_uw_description",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_dummy_ind",
+				"type": "char"
+			},
+			{
+				"name": "agr_market_area_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_agreement_type_detail_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_abatement_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "gic_cover_request_id",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_sf_company_name_client",
+				"type": "varchar"
+			},
+			{
+				"name": "gic_small_craft_ind",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_date_end",
+				"type": "date"
+			},
+			{
+				"name": "agr_agreement_type_detail_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_main_vessel_type_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_def_clhandl_defence_pri",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_def_clhandl_defence_sec",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_main_vessel_type_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_uw_assist_team_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_market_area_short_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_partner_team_grp_name",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_date_established",
+				"type": "date"
+			},
+			{
+				"name": "agr_def_clhandl_environm_sec",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_business_area",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_market_area_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_uw_year",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_order_code",
+				"type": "varchar"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_top_group_broker_id",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_team_resp_uw_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_company_id",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_est_premium_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_def_clhndl_pi_crew_pri",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_agreement_type",
+				"type": "varchar"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_uw_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_reference",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_internal_note",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_main_office_ind",
+				"type": "char"
+			},
+			{
+				"name": "agr_abatement_stat",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "agr_resp_uw_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_market_area_short_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_def_clhndl_dry_cargo_sec",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_club_retention_stat",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_uw_assist_description",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_market_segment_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_market_area_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_def_clhndl_pi_crew_sec",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_uw_assist_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_key",
+				"type": "varchar"
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "agr_team_account_manager_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_est_number_of_objects",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_club_retention",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_sf_top_group_broker",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_est_total_gross_ton",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_uw_assist_team_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_resp_uw_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_def_clhandl_casualty_sec",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_partner_main_grp_name",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_company_broker_id",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_sf_top_group_client",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_uw_year_days",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_market_segment_split_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_def_clhandl_liquid_ca_pri",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_market_segm_cnt_grp_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_team_resp_uw_code",
+				"type": "varchar"
+			},
+			{
+				"name": "office",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_def_claim_adjuster",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_market_segment",
+				"type": "varchar"
+			},
+			{
+				"name": "charterers_trad_clm_team_ind",
+				"type": "char"
+			},
+			{
+				"name": "agr_market_segm_cnt_grp_sort",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_est_premium_currency_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_def_clhandl_environm_pri",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_market_segm_country_group",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_ext_adjuster_ind",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_def_claims_handler_paris",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_member_number",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_date_start",
+				"type": "date"
+			},
+			{
+				"name": "agr_market_segment_split",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_market_area_sort",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_partner_office_name",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_def_clhndl_dry_cargo_pri",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_agreement_name",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_def_clhandl_liquid_ca_sec",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_sf_top_group_client_id",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "agr_market_area_code",
+				"type": "varchar"
+			},
+			{
+				"name": "agr_team_account_manager_desc",
+				"type": "varchar"
 			}
-		]
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_dim_agreement"
+		}
 	}
 }

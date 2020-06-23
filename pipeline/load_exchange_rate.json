@@ -1,0 +1,141 @@
+{
+	"name": "load_exchange_rate",
+	"properties": {
+		"activities": [
+			{
+				"name": "lookup_exchange_file_status",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.00:30:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "select \"file_arrival_status\" from \"hlp_exchange_rate_status\"",
+						"partitionOption": "None",
+						"queryTimeout": "00:30:00"
+					},
+					"dataset": {
+						"referenceName": "oracle_exchange_rate_status",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "lookup_exchange_file_status",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('lookup_exchange_file_status').output.firstRow.file_arrival_status,'Y')",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "pipeline_send_email",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "pipeline_send_email",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"pPipelineName": "Pipeline Name",
+									"pEmailSubject": "ADF DWH Alert ! Exchange rate file not arrived to load and copy into Azure.",
+									"pEmailBody": "Exchange rate file not available",
+									"pEmailTo": "sudipta.dutta@gard.no;siv.borve@gard.no"
+								}
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "copy_exchange_rate",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "copy_exchange_rate",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true
+							}
+						},
+						{
+							"name": "pipeline_send_email_1",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "copy_exchange_rate",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "pipeline_send_email",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"pPipelineName": "load_exchange_rate",
+									"pEmailSubject": "ADF DWH Alert ! Exchange rate copy job completed successfully",
+									"pEmailBody": "HLP_EXCHNAGE_RATE data copied into Azure SQL server successfully",
+									"pEmailTo": "sudipta.dutta@gard.no;siv.borve@gard.no"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "error_handling",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "If Condition1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "load_exchange_rate",
+						"pPipelineErrorMsg": "Pipeline failed. Please check"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "pipelines/dwh_stage"
+		},
+		"annotations": []
+	}
+}

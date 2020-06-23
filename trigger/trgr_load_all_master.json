@@ -1,0 +1,33 @@
+{
+	"name": "trgr_load_all_master",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "load_all_master",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2020-05-27T10:06:00.000Z",
+				"endTime": "2020-07-01T10:06:00.000Z",
+				"timeZone": "UTC",
+				"schedule": {
+					"minutes": [
+						25
+					],
+					"hours": [
+						22
+					]
+				}
+			}
+		}
+	}
+}
