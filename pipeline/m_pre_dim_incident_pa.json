@@ -19,9 +19,9 @@
 						"referenceName": "m_pre_dim_incident_pa_copy1",
 						"type": "DataFlowReference"
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
+					"integrationRuntime": {
+						"referenceName": "IRThomasClaimDetails",
+						"type": "IntegrationRuntimeReference"
 					}
 				}
 			}
