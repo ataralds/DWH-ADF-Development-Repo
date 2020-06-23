@@ -28,9 +28,12 @@
 			"transformations": [
 				{
 					"name": "AlterRow1"
+				},
+				{
+					"name": "AddTopKey"
 				}
 			],
-			"script": "source(output(\n\t\tpk_pre_dim_claim_team as string,\n\t\tdate_inserted as timestamp,\n\t\tlast_updated_by as string,\n\t\tinserted_by as string,\n\t\temp_id_main_adjuster as decimal(28,10),\n\t\ttem_description as string,\n\t\tsign_lcacrsign as string,\n\t\tdate_last_updated as timestamp,\n\t\ttem_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select *  from dwh_prepare.pre_dim_claim_team',\n\tformat: 'query') ~> MPreDimClaimTeam\nMPreDimClaimTeam alterRow(upsertIf(true())) ~> AlterRow1\nAlterRow1 sink(input(\n\t\tdimension_key as long,\n\t\ttem_key as string,\n\t\ttem_description as string,\n\t\ttem_id as long,\n\t\ttop_id as long,\n\t\ttop_key as string,\n\t\ttop_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['pk_pre_dim_claim_team'],\n\tformat: 'table',\n\tmapColumn(\n\t\tpk_pre_dim_claim_team,\n\t\tdate_inserted,\n\t\tlast_updated_by,\n\t\tinserted_by,\n\t\ttem_description,\n\t\tdate_last_updated,\n\t\ttem_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimClaimTeam"
+			"script": "source(output(\n\t\tpk_pre_dim_claim_team as string,\n\t\tdate_inserted as timestamp,\n\t\tlast_updated_by as string,\n\t\tinserted_by as string,\n\t\temp_id_main_adjuster as decimal(28,10),\n\t\ttem_description as string,\n\t\tsign_lcacrsign as string,\n\t\tdate_last_updated as timestamp,\n\t\ttem_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select *  from dwh_prepare.pre_dim_claim_team',\n\tformat: 'query') ~> MPreDimClaimTeam\nAddTopKey alterRow(upsertIf(!null(pk_pre_dim_claim_team))) ~> AlterRow1\nMPreDimClaimTeam derive(top_key = 'ALL',\n\t\ttop_description = 'All Claim Teams') ~> AddTopKey\nAlterRow1 sink(input(\n\t\tdimension_key as long,\n\t\ttem_key as string,\n\t\ttem_description as string,\n\t\ttem_id as long,\n\t\ttop_id as long,\n\t\ttop_key as string,\n\t\ttop_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['pk_pre_dim_claim_team'],\n\tformat: 'table',\n\tmapColumn(\n\t\ttem_key,\n\t\ttem_description,\n\t\ttem_id = pk_pre_dim_claim_team,\n\t\ttop_key,\n\t\ttop_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimClaimTeam"
 		}
 	}
 }
