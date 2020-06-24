@@ -9,10 +9,17 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "Oltp05",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "StaSourceSystem"
+				},
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "NotApplicable"
 				}
 			],
 			"sinks": [
@@ -26,15 +33,6 @@
 			],
 			"transformations": [
 				{
-					"name": "RemoveUnusedColumns"
-				},
-				{
-					"name": "NotApplicable"
-				},
-				{
-					"name": "NotApplicableRow"
-				},
-				{
 					"name": "UnionWithNotApplicable"
 				},
 				{
@@ -44,7 +42,7 @@
 					"name": "AlterRow"
 				}
 			],
-			"script": "source(output(\n\t\tactive as string,\n\t\tdescription as string,\n\t\tinserted_by as string,\n\t\tinserted_date as timestamp,\n\t\tpk_source_system as string,\n\t\tupdated_by as string,\n\t\tupdated_date as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> StaSourceSystem\nStaSourceSystem select(mapColumn(\n\t\tactive,\n\t\tdescription,\n\t\tpk_source_system\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemoveUnusedColumns\nRemoveUnusedColumns derive(pk_source_system = 'N/A',\n\t\tdescription = 'Not Applicable') ~> NotApplicable\nNotApplicable aggregate(groupBy(pk_source_system = pk_source_system),\n\tdescription = first(description)) ~> NotApplicableRow\nRemoveUnusedColumns, NotApplicableRow union(byName: true)~> UnionWithNotApplicable\nUnionWithNotApplicable derive(last_updated_by = 'm_pre_dim_source_system') ~> LastUpdatedBy\nLastUpdatedBy alterRow(upsertIf(!isNull(pk_source_system))) ~> AlterRow\nAlterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_source_system.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimSourceSystem"
+			"script": "source(output(\n\t\tpk_source_system as string,\n\t\tdescription as string,\n\t\tactive as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.sta_source_system',\n\tformat: 'query') ~> StaSourceSystem\nsource(output(\n\t\tpk_source_system as string,\n\t\tdescription as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select na_code as pk_source_system,\\nna_desc as description from dwh_stage.t_not_applicable',\n\tformat: 'query') ~> NotApplicable\nStaSourceSystem, NotApplicable union(byName: true)~> UnionWithNotApplicable\nUnionWithNotApplicable derive(last_updated_by = 'm_pre_dim_source_system') ~> LastUpdatedBy\nLastUpdatedBy alterRow(upsertIf(true())) ~> AlterRow\nAlterRow sink(input(\n\t\tpk_source_system as string,\n\t\tdescription as string,\n\t\tactive as string,\n\t\tdate_last_updated as timestamp,\n\t\tdate_inserted as timestamp,\n\t\tlast_updated_by as string,\n\t\tinserted_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['pk_source_system'],\n\tformat: 'table',\n\tmapColumn(\n\t\tpk_source_system,\n\t\tdescription,\n\t\tactive,\n\t\tlast_updated_by\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimSourceSystem"
 		}
 	}
 }

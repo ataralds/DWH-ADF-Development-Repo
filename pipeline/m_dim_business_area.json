@@ -1,9 +1,9 @@
 {
-	"name": "m_pre_dim_coverage",
+	"name": "m_dim_business_area",
 	"properties": {
 		"activities": [
 			{
-				"name": "m_pre_dim_coverage",
+				"name": "m_dim_business_area",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,18 +16,18 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_coverage",
+						"referenceName": "m_dim_business_area",
 						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
-						"referenceName": "IrExecutePipeline",
+						"referenceName": "IRThomasClaimDetails",
 						"type": "IntegrationRuntimeReference"
 					}
 				}
 			}
 		],
 		"folder": {
-			"name": "mappings/dwh_prepare/pre dim"
+			"name": "mappings/marts/dim"
 		},
 		"annotations": []
 	}
