@@ -56,6 +56,56 @@
 					],
 					"timeout": "0.01:00:00"
 				}
+			},
+			{
+				"name": "LkpStageLoadStatus",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Until1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select adf_audit.fn_check_stage_load_status(1) stage_load_status",
+						"queryTimeout": "00:30:00"
+					},
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "LkpStageLoadStatus",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('LkpStageLoadStatus').output.firstRow.stage_load_status,'Y')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"folder": {
