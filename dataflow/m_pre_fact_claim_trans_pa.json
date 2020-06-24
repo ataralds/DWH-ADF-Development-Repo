@@ -2,6 +2,9 @@
 	"name": "m_pre_fact_claim_trans_pa",
 	"properties": {
 		"description": "Pre fact mapping for claim transactions, excluding guarantees and advance payments.",
+		"folder": {
+			"name": "dwh_prepare/pre_fact"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

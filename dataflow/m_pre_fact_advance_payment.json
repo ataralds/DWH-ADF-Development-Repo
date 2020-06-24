@@ -2,6 +2,9 @@
 	"name": "m_pre_fact_advance_payment",
 	"properties": {
 		"description": "",
+		"folder": {
+			"name": "dwh_prepare/pre_fact"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
