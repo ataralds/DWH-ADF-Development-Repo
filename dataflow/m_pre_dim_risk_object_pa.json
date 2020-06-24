@@ -265,7 +265,8 @@
 					"name": "ExpressionRob"
 				},
 				{
-					"name": "currExchangerate"
+					"name": "currExchangerate",
+					"description": "Made two exchange rate because of inner and outer join"
 				},
 				{
 					"name": "ExchangeRateToUsd1"
