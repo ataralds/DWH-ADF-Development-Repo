@@ -205,7 +205,8 @@
 			},
 			{
 				"name": "adv_pay_accno",
-				"type": "varchar"
+				"type": "int",
+				"precision": 10
 			},
 			{
 				"name": "dim_payee",
