@@ -1,0 +1,49 @@
+{
+	"name": "m_pre_fact_ibnr_tmp",
+	"properties": {
+		"folder": {
+			"name": "dwh_prepare/pre_fact"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "sta_ibnr",
+						"type": "DatasetReference"
+					},
+					"name": "StaIBNR"
+				},
+				{
+					"name": "xrefCapitalBranch"
+				}
+			],
+			"sinks": [
+				{
+					"name": "tmpPreFactIbnr"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DimTimeKeys"
+				},
+				{
+					"name": "CapitalBranch"
+				},
+				{
+					"name": "Sorter"
+				},
+				{
+					"name": "Values"
+				},
+				{
+					"name": "renaming"
+				},
+				{
+					"name": "Select1"
+				}
+			],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: '',\n\tformat: 'query') ~> StaIBNR\nsource(output(\n\t\tsource_code_key as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> xrefCapitalBranch\nrenaming derive(dim_time_incident_year = case(isNull(trim(toString(incident_year)))==true(),'-1',toString(incident_year)),\n\t\tdim_time_financial_year = case(isNull(trim(toString(financial_year)))==true(),'N/A',toString(financial_year)),\n\t\tdim_business_area = case(in(['EN', 'BU', 'PM', 'CO', 'MA', 'PF'],business_area)==false(), 'N/A',business_area)) ~> DimTimeKeys\nDimTimeKeys, xrefCapitalBranch lookup(capital_branch == source_code_key,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> CapitalBranch\nSelect1 sort(asc(dim_capital_branch, false),\n\tasc(dim_business_area, false),\n\tasc(dim_time_incident_year, false),\n\tasc(gross_net, false),\n\tasc(poolable_ind, false),\n\tasc(hydra_ind, false),\n\tasc(dim_time_financial_year, false)) ~> Sorter\nCapitalBranch derive(each(match(endsWith(name,'_usd')), 'gross_'+$$ = case(gross_net=='G', $$, toLong(0))),\n\t\teach(match(endsWith(name,'_usd')), 'net_'+$$ = case(gross_net=='N', $$, toLong(0)))) ~> Values\nStaIBNR select(mapColumn(\n\t\tpk_ibnr,\n\t\tcapital_branch,\n\t\tgross_net,\n\t\taccount_period,\n\t\thydra_ind,\n\t\tibnr_usd,\n\t\tupdated_date,\n\t\ttext,\n\t\tmutual_fixed,\n\t\tfinancial_year,\n\t\tbinary_events_usd = binary_events,\n\t\tequalisation_reserve_usd,\n\t\tsource_system,\n\t\tincident_year,\n\t\tulae_usd,\n\t\tbusiness_area,\n\t\tcapital,\n\t\tinserted_date,\n\t\tpoolable_ind\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> renaming\nValues select(mapColumn(\n\t\tpk_transaction_key = pk_ibnr,\n\t\tgross_net,\n\t\thydra_ind,\n\t\ttext,\n\t\tinserted_date,\n\t\tpoolable_ind,\n\t\tdim_time_incident_year,\n\t\tdim_time_financial_year,\n\t\tdim_business_area,\n\t\tdim_capital_branch = target_code,\n\t\tgross_ibnr_usd,\n\t\tgross_binary_events_usd,\n\t\tgross_equalisation_reserve_usd,\n\t\tgross_ulae_usd,\n\t\tnet_ibnr_usd,\n\t\tnet_binary_events_usd,\n\t\tnet_equalisation_reserve_usd,\n\t\tnet_ulae_usd,\n\t\tdim_trans_date = account_period\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSorter sink(skipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> tmpPreFactIbnr"
+		}
+	}
+}
