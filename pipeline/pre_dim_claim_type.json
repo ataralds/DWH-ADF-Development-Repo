@@ -1,9 +1,9 @@
 {
-	"name": "m_pre_dim_coverage",
+	"name": "pre_dim_claim_type",
 	"properties": {
 		"activities": [
 			{
-				"name": "m_pre_dim_coverage",
+				"name": "m_pre_dim_sub_claim_pa",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,12 +16,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_coverage",
+						"referenceName": "m_pre_dim_sub_claim_pa",
 						"type": "DataFlowReference"
 					},
-					"integrationRuntime": {
-						"referenceName": "IrExecutePipeline",
-						"type": "IntegrationRuntimeReference"
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
 					}
 				}
 			}
