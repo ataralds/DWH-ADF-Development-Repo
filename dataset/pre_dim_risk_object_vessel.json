@@ -868,7 +868,7 @@
 		],
 		"typeProperties": {
 			"schema": "dwh_prepare",
-			"table": "pre_dim_risk_object"
+			"table": "pre_dim_risk_object_vessel"
 		}
 	}
 }
