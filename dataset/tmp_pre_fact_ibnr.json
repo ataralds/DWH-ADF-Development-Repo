@@ -1,0 +1,146 @@
+{
+	"name": "tmp_pre_fact_ibnr",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dwh_prepare_sql/pre_fact"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pk_transaction_key",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "net_binary_events_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_capital",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_capital_branch",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_business_area",
+				"type": "varchar"
+			},
+			{
+				"name": "net_ibnr_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_time_trans_date",
+				"type": "date"
+			},
+			{
+				"name": "net_ulae_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "net_equalisation_reserve_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_time_incident_year",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_time_financial_year",
+				"type": "varchar"
+			},
+			{
+				"name": "poolable_ind",
+				"type": "varchar"
+			},
+			{
+				"name": "hydra_ind",
+				"type": "varchar"
+			},
+			{
+				"name": "gross_equalisation_reserve_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "gross_ibnr_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "gross_ulae_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_risk_object",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_agreement_type",
+				"type": "varchar"
+			},
+			{
+				"name": "gross_binary_events_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "text",
+				"type": "varchar"
+			},
+			{
+				"name": "source_system",
+				"type": "varchar"
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "gross_net",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "tmp_pre_fact_ibnr"
+		}
+	}
+}
