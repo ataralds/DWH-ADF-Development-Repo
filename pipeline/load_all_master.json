@@ -104,7 +104,40 @@
 					"expression": {
 						"value": "@equals(activity('LkpStageLoadStatus').output.firstRow.stage_load_status,'Y')",
 						"type": "Expression"
-					}
+					},
+					"ifFalseActivities": [
+						{
+							"name": "pipeline_send_email",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "pipeline_send_email",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"pPipelineName": "load_all_master"
+								}
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "load_master_dwh",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "load_master_dwh",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true
+							}
+						}
+					]
 				}
 			}
 		],
