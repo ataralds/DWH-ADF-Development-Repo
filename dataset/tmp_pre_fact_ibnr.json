@@ -13,9 +13,8 @@
 		"schema": [
 			{
 				"name": "pk_transaction_key",
-				"type": "decimal",
-				"precision": 28,
-				"scale": 10
+				"type": "bigint",
+				"precision": 19
 			},
 			{
 				"name": "net_binary_events_usd",
