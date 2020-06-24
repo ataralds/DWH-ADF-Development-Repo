@@ -3,16 +3,58 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "load_master_dwh",
-				"type": "ExecutePipeline",
+				"name": "Until1",
+				"type": "Until",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
-					"pipeline": {
-						"referenceName": "load_master_dwh",
-						"type": "PipelineReference"
+					"expression": {
+						"value": "@equals(activity('LkpPreJobStatus').output.firstRow.pre_load_status,'Y')",
+						"type": "Expression"
 					},
-					"waitOnCompletion": true
+					"activities": [
+						{
+							"name": "LkpPreJobStatus",
+							"type": "Lookup",
+							"dependsOn": [
+								{
+									"activity": "Wait1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.04:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": "select adf_audit.fn_check_pre_load_status(1) pre_load_status",
+									"queryTimeout": "00:30:00"
+								},
+								"dataset": {
+									"referenceName": "azure_sql_server",
+									"type": "DatasetReference"
+								}
+							}
+						},
+						{
+							"name": "Wait1",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 120
+							}
+						}
+					],
+					"timeout": "0.01:00:00"
 				}
 			}
 		],
