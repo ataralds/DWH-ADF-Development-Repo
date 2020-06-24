@@ -1,0 +1,70 @@
+{
+	"name": "m_pre_fact_trading_certi_pa",
+	"properties": {
+		"folder": {
+			"name": "dwh_prepare/pre_fact"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "inatable",
+						"type": "DatasetReference"
+					},
+					"name": "inatable"
+				},
+				{
+					"dataset": {
+						"referenceName": "inntable",
+						"type": "DatasetReference"
+					},
+					"name": "inntable"
+				},
+				{
+					"dataset": {
+						"referenceName": "obatable",
+						"type": "DatasetReference"
+					},
+					"name": "obatable"
+				},
+				{
+					"name": "xrefCoverage"
+				},
+				{
+					"dataset": {
+						"referenceName": "agatable",
+						"type": "DatasetReference"
+					},
+					"name": "agatable"
+				}
+			],
+			"sinks": [
+				{
+					"name": "prefacttradingcertificate"
+				}
+			],
+			"transformations": [
+				{
+					"name": "innina"
+				},
+				{
+					"name": "inaaga"
+				},
+				{
+					"name": "inaobno"
+				},
+				{
+					"name": "inacoverage"
+				},
+				{
+					"name": "Expression"
+				},
+				{
+					"name": "CapitalBranchKey"
+				}
+			],
+			"script": "source(output(\n\t\tinainaid as string,\n\t\tinaagaid as string,\n\t\tinaobno as integer,\n\t\tinaintrst as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select inainaid, inaagaid, inaobno, inaintrst from dwh_stage.p_inatable',\n\tformat: 'query') ~> inatable\nsource(output(\n\t\tinninnid as string,\n\t\tinninaid as string,\n\t\tinncncode as string,\n\t\tinnstdate as date,\n\t\tinntodate as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select inninnid, inninaid, inncncode, innstdate, inntodate from dwh_stage.p_inntable',\n\tformat: 'query') ~> inntable\nsource(output(\n\t\tobaimono as binary,\n\t\tobaobno as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select obaimono, obaobno from dwh_stage.p_obatable',\n\tformat: 'query') ~> obatable\nsource(output(\n\t\tsource_code_key as string,\n\t\ttarget_code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> xrefCoverage\nsource(output(\n\t\tagaagaid as string,\n\t\tagaorgins as long,\n\t\tagabusnbranch as integer,\n\t\tagabusnregion as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select agaagaid, agaorgins, agabusnbranch, agabusnregion from dwh_stage.p_agatable',\n\tformat: 'query') ~> agatable\ninntable, inatable join(inninaid == inainaid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> innina\ninnina, CapitalBranchKey join(inaagaid == agaagaid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> inaaga\ninaaga, obatable join(inaobno == obaobno,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> inaobno\ninaobno, xrefCoverage join(inaintrst == source_code_key,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> inacoverage\ninacoverage derive(dim_coverage_key = coalesce(target_code, 'N/A'),\n\t\tdim_client_key = concat('P', toString(agaorgins)),\n\t\tdim_object_key = case(coalesce(toString(obaimono),toString(0))!=toString(0), concat('I', toString(obaimono)), concat('P', toString(obaimono))),\n\t\tlast_updated_by = 'M_PRE_FACT_TRADING_CERTI_PA',\n\t\tdim_capital_branch_key = coalesce(capbranchkey,'N/A')) ~> Expression\nagatable derive(capbranchkey = concat(toString(agabusnbranch), ' - ',toString(agabusnregion))) ~> CapitalBranchKey\nExpression sink(truncate: true,\n\tmapColumn(\n\t\tpk_trading_certificate = inninnid,\n\t\ttrading_certificate_type = inncncode,\n\t\tdim_client_key,\n\t\tdate_valid_to = inntodate,\n\t\tobject_key = dim_object_key,\n\t\tdim_coverage_key,\n\t\tdate_valid_from = innstdate,\n\t\tlast_updated_by,\n\t\tdim_capital_branch_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> prefacttradingcertificate"
+		}
+	}
+}
