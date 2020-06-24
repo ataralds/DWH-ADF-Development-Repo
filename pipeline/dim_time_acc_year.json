@@ -1,0 +1,35 @@
+{
+	"name": "dim_time_acc_year",
+	"properties": {
+		"description": "one time load",
+		"activities": [
+			{
+				"name": "dim_time_acc_year",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dim_time_acc_year",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "pipelines"
+		},
+		"annotations": []
+	}
+}
