@@ -1,0 +1,51 @@
+{
+	"name": "m_fact_trading_certificate",
+	"properties": {
+		"folder": {
+			"name": "marts/fact"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "PreFactTradingCertificate"
+				},
+				{
+					"name": "DimCoverage"
+				},
+				{
+					"name": "DimCurrentVessel"
+				},
+				{
+					"name": "DimPartner"
+				},
+				{
+					"name": "DimCapitalBranch"
+				}
+			],
+			"sinks": [
+				{
+					"name": "FactTradingCertificate"
+				}
+			],
+			"transformations": [
+				{
+					"name": "lkpdimCoverage"
+				},
+				{
+					"name": "lkpdimCurrentVessel"
+				},
+				{
+					"name": "lkpdimPartner"
+				},
+				{
+					"name": "upsert"
+				},
+				{
+					"name": "lkpcapbranch"
+				}
+			],
+			"script": "source(output(\n\t\tpk_trading_certificate as string,\n\t\tsection as decimal(28,10),\n\t\ttrading_certificate_type as string,\n\t\tdim_client_key as string,\n\t\tdate_valid_to as date,\n\t\tobject_key as string,\n\t\tdim_coverage_key as string,\n\t\tdm_number as decimal(28,10),\n\t\tdate_valid_from as date,\n\t\tdate_inserted as timestamp,\n\t\tlast_updated_by as string,\n\t\tinserted_by as string,\n\t\tdate_last_updated as timestamp,\n\t\tdim_capital_branch_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> PreFactTradingCertificate\nsource(output(\n\t\tdim_coverage as long,\n\t\tcov_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> DimCoverage\nsource(output(\n\t\tves_key as string,\n\t\tdim_current_vessel as long\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> DimCurrentVessel\nsource(output(\n\t\tprt_key as string,\n\t\tdim_partner as long\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> DimPartner\nsource(output(\n\t\tdim_capital_branch as long,\n\t\tbra_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> DimCapitalBranch\nPreFactTradingCertificate, DimCoverage lookup(dim_coverage_key == cov_key,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lkpdimCoverage\nlkpdimCoverage, DimCurrentVessel lookup(object_key == ves_key,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lkpdimCurrentVessel\nlkpdimCurrentVessel, DimPartner lookup(dim_client_key == prt_key,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lkpdimPartner\nlkpcapbranch alterRow(upsertIf(true())) ~> upsert\nlkpdimPartner, DimCapitalBranch lookup(dim_capital_branch_key == bra_key,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lkpcapbranch\nupsert sink(mapColumn(\n\t\ttrading_certificate_key = pk_trading_certificate,\n\t\ttrading_certificate_type,\n\t\tdate_valid_to,\n\t\tdm_number,\n\t\tdate_valid_from,\n\t\tdim_coverage,\n\t\tdim_current_vessel,\n\t\tdim_partner,\n\t\tdim_capital_branch\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FactTradingCertificate"
+		}
+	}
+}
