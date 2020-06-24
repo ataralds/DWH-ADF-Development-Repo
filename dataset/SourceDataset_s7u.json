@@ -1,0 +1,16 @@
+{
+	"name": "SourceDataset_s7u",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracleAzureDwh",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "AZURE_DWH",
+			"table": "CHINESETEST"
+		}
+	}
+}
