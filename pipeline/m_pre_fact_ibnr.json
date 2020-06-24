@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_fact_ibnr_tmp",
+						"referenceName": "m_pre_fact_ibnr",
 						"type": "DataFlowReference"
 					},
 					"compute": {

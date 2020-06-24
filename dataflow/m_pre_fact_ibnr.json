@@ -1,7 +1,7 @@
 {
-	"name": "m_pre_fact_ibnr_tmp",
+	"name": "m_pre_fact_ibnr",
 	"properties": {
-		"description": "Loading into temp table. Procedure runs to do the anlytical functions into the target table dwh_prepare.pre_fact_ibnr",
+		"description": "",
 		"folder": {
 			"name": "dwh_prepare/pre_fact"
 		},
