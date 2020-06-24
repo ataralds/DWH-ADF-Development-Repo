@@ -14,6 +14,46 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "load_pre_dim",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_stage_common",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "load_pre_dim",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pipeline_error_handling",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_stage_common",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"variables": {
