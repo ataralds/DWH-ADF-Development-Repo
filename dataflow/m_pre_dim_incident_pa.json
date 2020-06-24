@@ -2,6 +2,9 @@
 	"name": "m_pre_dim_incident_pa",
 	"properties": {
 		"description": "mangler lookup til claimteam ",
+		"folder": {
+			"name": "dwh_prepare/pre_dim"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
