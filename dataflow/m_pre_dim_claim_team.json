@@ -55,7 +55,8 @@
 			],
 			"transformations": [
 				{
-					"name": "LCCjoinLCA"
+					"name": "LCCjoinLCA",
+					"description": "Combining signature  rows from lcc and lcs"
 				},
 				{
 					"name": "CodeTypeEmployee",
