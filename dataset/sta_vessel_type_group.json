@@ -1,0 +1,183 @@
+{
+	"name": "sta_vessel_type_group",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dwh_stage_sql/Oltp05/Static"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pk_vessel_type_group",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fp_3_ltr_code",
+				"type": "varchar"
+			},
+			{
+				"name": "fp_level_5_code",
+				"type": "varchar"
+			},
+			{
+				"name": "fk_rsk_driver_size",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_driver_grp_1",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_driver_grp_4",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_driver_grp_3",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_driver_grp_2",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_driver_iv",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_driver_lvl4",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_driver_loh",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_grp_crew",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_grp_cargo",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_grp_main",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_grp_pollution",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_grp_ri",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_grp_passenger",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_grp_hull",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_grp_machinery",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_grp_size",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "vsl_marine_group",
+				"type": "varchar"
+			},
+			{
+				"name": "vsl_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "fk_rsk_driver_grp_6",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fp_level_5_hull",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "vsl_risk_group",
+				"type": "varchar"
+			},
+			{
+				"name": "fp_level_5_decode",
+				"type": "varchar"
+			},
+			{
+				"name": "fp_level_5_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "vsl_gard_group",
+				"type": "varchar"
+			},
+			{
+				"name": "update_date",
+				"type": "date"
+			},
+			{
+				"name": "insert_date",
+				"type": "date"
+			},
+			{
+				"name": "vsl_cefor_group",
+				"type": "varchar"
+			},
+			{
+				"name": "fk_rsk_driver_grp_5",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fp_level_5_sub",
+				"type": "varchar"
+			},
+			{
+				"name": "fk_gard_group",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fk_rsk_driver_lvl3",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": "sta_vessel_type_group"
+		}
+	}
+}

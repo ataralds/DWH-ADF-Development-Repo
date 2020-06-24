@@ -2,43 +2,50 @@
 	"name": "dim_agreement_type",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "dwhdatalakedevelopment",
+			"referenceName": "sql_server_development_connection",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "marts/dim"
+			"name": "dwh_prepare_sql/pre_dim"
 		},
 		"annotations": [],
-		"type": "Parquet",
-		"typeProperties": {
-			"location": {
-				"type": "AzureBlobFSLocation",
-				"folderPath": "dim",
-				"fileSystem": "marts"
-			},
-			"compressionCodec": "snappy"
-		},
+		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "PK_KEY",
-				"type": "UTF8"
+				"name": "dimension_key",
+				"type": "bigint",
+				"precision": 19
 			},
 			{
-				"name": "CPT_DESCRIPTION",
-				"type": "UTF8"
+				"name": "top_description",
+				"type": "varchar"
 			},
 			{
-				"name": "CPT_NUMBER",
-				"type": "INT32"
+				"name": "top_key",
+				"type": "varchar"
 			},
 			{
-				"name": "INSERTED_BY",
-				"type": "UTF8"
+				"name": "top_id",
+				"type": "bigint",
+				"precision": 19
 			},
 			{
-				"name": "DATE_INSERTED",
-				"type": "DATE"
+				"name": "agt_key",
+				"type": "varchar"
+			},
+			{
+				"name": "agt_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "agt_description",
+				"type": "varchar"
 			}
-		]
+		],
+		"typeProperties": {
+			"schema": "marts",
+			"table": "dim_agreement_type"
+		}
 	}
 }

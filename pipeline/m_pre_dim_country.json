@@ -1,0 +1,39 @@
+{
+	"name": "m_pre_dim_country",
+	"properties": {
+		"activities": [
+			{
+				"name": "m_pre_dim_country",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "m_pre_dim_country",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"vcrossreference": {
+								"fileName": "v_crossreference.parquet"
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IrExecutePipeline",
+						"type": "IntegrationRuntimeReference"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "mappings/dwh_prepare/pre dim"
+		},
+		"annotations": []
+	}
+}

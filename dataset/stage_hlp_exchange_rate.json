@@ -1,0 +1,24 @@
+{
+	"name": "stage_hlp_exchange_rate",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Copy job/dwh-stage/Oltp05"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "\"hlp_exchange_rate\"",
+				"folderPath": "Exchange_rate",
+				"fileSystem": "dwh-stage"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
