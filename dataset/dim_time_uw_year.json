@@ -7,6 +7,10 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": "sta_dim_time_uw_year"
+		}
 	}
 }
