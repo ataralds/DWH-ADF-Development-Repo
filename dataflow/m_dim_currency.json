@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "pre_dim_currency",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "preDimCurrency"
@@ -33,7 +33,7 @@
 					"description": "Upsert if pk key is not null"
 				}
 			],
-			"script": "source(output(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_currency.parquet']) ~> preDimCurrency\npreDimCurrency derive(top_key = 'ALL',\n\t\ttop_description = 'All Currencies') ~> DeriveTopLevel\nDeriveTopLevel alterRow(upsertIf(!isNull(PK_KEY))) ~> AlterRow\nAlterRow sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_currency.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimCurrency"
+			"script": "source(output(\n\t\tpk_key as string,\n\t\tcur_oecd as string,\n\t\tdate_last_updated as timestamp,\n\t\tdate_inserted as timestamp,\n\t\tinserted_by as string,\n\t\tcur_last_exch_rate_to_usd as decimal(28,10),\n\t\tlast_updated_by as string,\n\t\tcur_description as string,\n\t\tcur_2ltr_code as string,\n\t\tcur_eu as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from\\ndwh_prepare.pre_dim_currency',\n\tformat: 'query',\n\twildcardPaths:['Pre_Dim/pre_dim_currency.parquet']) ~> preDimCurrency\npreDimCurrency derive(top_key = 'ALL',\n\t\ttop_description = 'All Currencies') ~> DeriveTopLevel\nDeriveTopLevel alterRow(upsertIf(true())) ~> AlterRow\nAlterRow sink(input(\n\t\tdimension_key as long,\n\t\ttot_description as string,\n\t\ttot_code as string,\n\t\tcur_description as string,\n\t\tcur_id as long,\n\t\tcur_last_exch_rate_to_usd as decimal(28,10),\n\t\tcur_eu as string,\n\t\tcur_iso_code as string,\n\t\tcur_oecd as string,\n\t\tcur_2ltr_code as string,\n\t\ttot_id as long\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['cur_iso_code'],\n\tformat: 'table',\n\tmapColumn(\n\t\ttot_description = top_description,\n\t\ttot_code = top_key,\n\t\tcur_description,\n\t\tcur_last_exch_rate_to_usd,\n\t\tcur_eu,\n\t\tcur_iso_code = pk_key,\n\t\tcur_oecd,\n\t\tcur_2ltr_code\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimCurrency"
 		}
 	}
 }

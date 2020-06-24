@@ -17,15 +17,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_pre_dim_currency",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"HlpExchangeRateToUsd": {
-								"fileName": "hlp_exchange_rate_to_usd.parquet"
-							},
-							"tCrossReference": {
-								"fileName": "t_crossreference.parquet"
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,
