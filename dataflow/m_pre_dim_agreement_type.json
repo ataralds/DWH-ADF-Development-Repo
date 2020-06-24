@@ -1,0 +1,47 @@
+{
+	"name": "m_pre_dim_agreement_type",
+	"properties": {
+		"folder": {
+			"name": "dwh_prepare/pre_dim"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "tcrossreference"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_agreement_type",
+						"type": "DatasetReference"
+					},
+					"name": "preDimAgreementType"
+				}
+			],
+			"transformations": [
+				{
+					"name": "agreementtype"
+				},
+				{
+					"name": "deduplicator"
+				},
+				{
+					"name": "renameOutputColumn"
+				},
+				{
+					"name": "addLastUpdatedBy"
+				},
+				{
+					"name": "alterrow"
+				}
+			],
+			"script": "source(output(\n\t\tcode_type_id as long,\n\t\tcode2 as string,\n\t\ttarget_description as string,\n\t\tsource_system as string,\n\t\tom_x_ref as string,\n\t\ttarget_code as string,\n\t\tcode_type as string,\n\t\tsource_code_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.t_crossreference',\n\tformat: 'query') ~> tcrossreference\ntcrossreference filter(code_type_id == 113) ~> agreementtype\nagreementtype aggregate(groupBy(target_description),\n\ttarget_code = first(target_code)) ~> deduplicator\ndeduplicator select(mapColumn(\n\t\tagt_description = target_description,\n\t\tagt_key = target_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> renameOutputColumn\nrenameOutputColumn derive(last_updated_by = 'pre_dim_agreement_type') ~> addLastUpdatedBy\naddLastUpdatedBy alterRow(upsertIf(true())) ~> alterrow\nalterrow sink(input(\n\t\tpk_key as string,\n\t\tdate_inserted as timestamp,\n\t\tlast_updated_by as string,\n\t\tagt_description as string,\n\t\tdate_last_updated as timestamp,\n\t\tinserted_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['pk_key'],\n\tformat: 'table',\n\tmapColumn(\n\t\tpk_key = agt_key,\n\t\tlast_updated_by,\n\t\tagt_description\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> preDimAgreementType"
+		}
+	}
+}

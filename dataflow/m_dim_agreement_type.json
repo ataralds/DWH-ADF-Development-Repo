@@ -1,0 +1,38 @@
+{
+	"name": "m_dim_agreement_type",
+	"properties": {
+		"folder": {
+			"name": "marts/dim"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_agreement",
+						"type": "DatasetReference"
+					},
+					"name": "preDimAgreementType"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dim_agreement_type",
+						"type": "DatasetReference"
+					},
+					"name": "dimAgreementType"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedTopLevel"
+				},
+				{
+					"name": "alterRow"
+				}
+			],
+			"script": "source(output(\n\t\tpk_key as string,\n\t\tdate_inserted as timestamp,\n\t\tlast_updated_by as string,\n\t\tagt_description as string,\n\t\tdate_last_updated as timestamp,\n\t\tinserted_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_prepare.pre_dim_agreement_type',\n\tformat: 'query',\n\twildcardPaths:['Pre_Dim/pre_dim_agreement_type.parquet']) ~> preDimAgreementType\npreDimAgreementType derive(top_key = 'ALL',\n\t\ttop_description = 'All Agreement Types') ~> derivedTopLevel\nderivedTopLevel alterRow(upsertIf(true())) ~> alterRow\nalterRow sink(input(\n\t\tdimension_key as long,\n\t\ttop_description as string,\n\t\ttop_key as string,\n\t\ttop_id as long,\n\t\tagt_key as string,\n\t\tagt_id as long,\n\t\tagt_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['agt_key'],\n\tformat: 'table',\n\tmapColumn(\n\t\ttop_description,\n\t\ttop_key,\n\t\tagt_key = pk_key,\n\t\tagt_description\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> dimAgreementType"
+		}
+	}
+}

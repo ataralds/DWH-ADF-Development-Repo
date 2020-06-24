@@ -1,0 +1,87 @@
+{
+	"name": "load_stage_exact_table",
+	"properties": {
+		"activities": [
+			{
+				"name": "LkpSrcLoadStatusExact",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.00:03:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "select fn_check_exact_source_load LOAD_STATUS from dummy_table_dataset",
+						"partitionOption": "None",
+						"queryTimeout": "00:05:00"
+					},
+					"dataset": {
+						"referenceName": "Oracle_oltp05_dummy_table",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "If_table_is_loaded",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "LkpSrcLoadStatusExact",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('LkpSrcLoadStatusExact').output.firstRow.LOAD_STATUS,'N')",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "copy_exact_to_sql",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "copy_exact_to_sql",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "vTableLoaded",
+								"value": "'Empty Table'"
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"vTableLoaded": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "pipelines/dwh_stage"
+		},
+		"annotations": []
+	}
+}

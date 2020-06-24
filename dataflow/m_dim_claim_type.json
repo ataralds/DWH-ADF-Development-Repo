@@ -2,29 +2,43 @@
 	"name": "m_dim_claim_type",
 	"properties": {
 		"folder": {
-			"name": "marts/pre_dim"
+			"name": "marts/dim"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "dwh_prepare_pre_dim",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "PreDimClmType"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dim_claim_type",
+						"type": "DatasetReference"
+					},
+					"name": "DimClaimType"
+				}
+			],
 			"transformations": [
 				{
-					"name": "Aggregate1"
+					"name": "PreDimClmTypeslected"
 				},
 				{
-					"name": "Select1"
+					"name": "Deduplicate"
+				},
+				{
+					"name": "AlterRow1"
+				},
+				{
+					"name": "DerivedColumn1"
 				}
 			],
-			"script": "source(output(\n\t\tclm_source_system as string,\n\t\tclm_code as string,\n\t\tclm_source_key as string,\n\t\tinserted_by as string,\n\t\tlast_updated_by as string,\n\t\tdate_inserted as timestamp,\n\t\tdate_last_updated as timestamp,\n\t\tpk_key_clm as string,\n\t\tclm_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> source1\nsource1 aggregate(groupBy(clm_description = clm_description,\n\t\tpk_key_clm = pk_key_clm,\n\t\tclm_source_system = clm_source_system,\n\t\tclm_source_key = clm_source_key),\n\tclm_code = first(clm_code)) ~> Aggregate1\nAggregate1 select(mapColumn(\n\t\tclm_description,\n\t\tclm_key = pk_key_clm,\n\t\tclm_source_system,\n\t\tclm_source_key,\n\t\tclm_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1"
+			"script": "source(output(\n\t\tpk_key_clm as string,\n\t\tdate_inserted as timestamp,\n\t\tinserted_by as string,\n\t\tlast_updated_by as string,\n\t\tdate_last_updated as timestamp,\n\t\tclm_code as string,\n\t\tclm_source_system as string,\n\t\tclm_description as string,\n\t\tclm_source_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_prepare.pre_dim_claim_type',\n\tformat: 'query') ~> PreDimClmType\nPreDimClmType select(mapColumn(\n\t\tpk_key_clm,\n\t\tclm_code,\n\t\tclm_source_system,\n\t\tclm_description,\n\t\tclm_source_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> PreDimClmTypeslected\nPreDimClmTypeslected aggregate(groupBy(pk_key_clm),\n\teach(match(name!='pk_key_clm'), $$ = first($$))) ~> Deduplicate\nDerivedColumn1 alterRow(upsertIf(true())) ~> AlterRow1\nDeduplicate derive(Top_key = 'ALL',\n\t\tTop_description = 'All Claim Types') ~> DerivedColumn1\nAlterRow1 sink(input(\n\t\tdimension_key as long,\n\t\tclm_key as string,\n\t\ttop_id as long,\n\t\tclm_code as string,\n\t\tclm_source_key as string,\n\t\tclm_id as long,\n\t\ttop_description as string,\n\t\tclm_description as string,\n\t\tclm_source_system as string,\n\t\ttop_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['clm_key'],\n\tformat: 'table',\n\tmapColumn(\n\t\tclm_key = pk_key_clm,\n\t\tclm_code,\n\t\tclm_source_key,\n\t\ttop_description = Top_description,\n\t\tclm_description,\n\t\tclm_source_system,\n\t\ttop_key = Top_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimClaimType"
 		}
 	}
 }

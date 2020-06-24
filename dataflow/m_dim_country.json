@@ -1,0 +1,40 @@
+{
+	"name": "m_dim_country",
+	"properties": {
+		"folder": {
+			"name": "marts/dim"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_country",
+						"type": "DatasetReference"
+					},
+					"name": "preDimCountry"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dim_country",
+						"type": "DatasetReference"
+					},
+					"name": "DimCountry"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DerivedTopLevel",
+					"description": "Derive top_key and top_description"
+				},
+				{
+					"name": "AlterRow",
+					"description": "Upsert if pk key not null"
+				}
+			],
+			"script": "source(output(\n\t\tpk_key as string,\n\t\treg_code as string,\n\t\treg_description as string,\n\t\tar1_code as string,\n\t\tar1_description as string,\n\t\tar2_code as string,\n\t\tar2_description as string,\n\t\tlast_updated_by as string,\n\t\tcon_2ltr_code as string,\n\t\tcon_country_name as string,\n\t\tcon_oecd as string,\n\t\tcon_currency_code as string,\n\t\tcon_eu as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\twildcardPaths:['Pre_Dim/pre_dim_country.parquet']) ~> preDimCountry\npreDimCountry derive(top_code = 'ALL',\n\t\ttop_description = 'All Countries',\n\t\tcon_iso_code = '') ~> DerivedTopLevel\nDerivedTopLevel alterRow(upsertIf(!isNull(pk_key))) ~> AlterRow\nAlterRow sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['dim_country.parquet'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimCountry"
+		}
+	}
+}

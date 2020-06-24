@@ -1,0 +1,229 @@
+{
+	"name": "load_pre_dim",
+	"properties": {
+		"activities": [
+			{
+				"name": "m_pre_dim_agreement_pa",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "m_pre_dim_agreement_pa",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "m_pre_dim_country",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "m_pre_dim_country",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "m_pre_dim_coverage",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "m_pre_dim_coverage",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "m_pre_dim_source_system",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "m_pre_dim_source_system",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pipeline_error_handling",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "m_pre_dim_agreement_pa",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "m_pre_dim_agreement_pa"
+					}
+				}
+			},
+			{
+				"name": "pipeline_error_handling1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "m_pre_dim_country",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "m_pre_dim_country"
+					}
+				}
+			},
+			{
+				"name": "pipeline_error_handling2",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "m_pre_dim_coverage",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "m_pre_dim_coverage"
+					}
+				}
+			},
+			{
+				"name": "pipeline_error_handling4",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "m_pre_dim_source_system",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "m_pre_dim_source_system"
+					}
+				}
+			},
+			{
+				"name": "m_pre_dim_employee",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "m_pre_dim_employee",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "m_pre_dim_sub_claim_pa",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "m_pre_dim_sub_claim_pa",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pipeline_error_handling5",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "m_pre_dim_employee",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "m_pre_dim_employee"
+					}
+				}
+			},
+			{
+				"name": "pipeline_error_handling6",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "m_pre_dim_sub_claim_pa",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"variables": {
+			"vPreDim": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "pipelines/dwh_prepare"
+		},
+		"annotations": []
+	}
+}

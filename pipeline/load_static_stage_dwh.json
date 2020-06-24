@@ -1,0 +1,102 @@
+{
+	"name": "load_static_stage_dwh",
+	"properties": {
+		"activities": [
+			{
+				"name": "load_stage_lloyds_table",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "load_stage_lloyds_table",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "error_handling",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "copy_static_to_sql",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": {
+							"value": "copy_static_to_sql",
+							"type": "Expression"
+						},
+						"pPipelineErrorMsg": {
+							"value": "@activity('copy_static_to_sql').error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "error_handling_copy1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_stage_lloyds_table",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": {
+							"value": "load_stage_lloyds_table",
+							"type": "Expression"
+						},
+						"pPipelineErrorMsg": {
+							"value": "@activity('load_stage_lloyds_table').error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "copy_static_to_sql",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "copy_static_to_sql",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"variables": {
+			"vInnerFailStatus": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "pipelines/dwh_stage"
+		},
+		"annotations": []
+	}
+}
