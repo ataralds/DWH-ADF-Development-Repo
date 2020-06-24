@@ -1,0 +1,65 @@
+{
+	"name": "M_PRE_DIM_RISK_OBJECT_ded",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "tCrossreference"
+				},
+				{
+					"name": "ifatable"
+				},
+				{
+					"name": "HlpExchrateUSD"
+				},
+				{
+					"name": "ica"
+				},
+				{
+					"name": "ipa"
+				},
+				{
+					"name": "iuv"
+				},
+				{
+					"name": "iuw"
+				},
+				{
+					"name": "pea"
+				},
+				{
+					"name": "isa"
+				},
+				{
+					"name": "isz"
+				},
+				{
+					"name": "aga"
+				},
+				{
+					"name": "ina"
+				},
+				{
+					"name": "obb"
+				},
+				{
+					"name": "oba"
+				},
+				{
+					"name": "StaVesselTypeGroup"
+				},
+				{
+					"name": "staLohScale"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tCrossreference\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> ifatable\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> HlpExchrateUSD\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> ica\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> ipa\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> iuv\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> iuw\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> pea\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> isa\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> isz\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> aga\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> ina\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> obb\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> oba\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> StaVesselTypeGroup\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> staLohScale"
+		}
+	}
+}
