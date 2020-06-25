@@ -1,0 +1,98 @@
+{
+	"name": "pre_dim_personal_ledger",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dwh_prepare_sql/pre_dim"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ple_rsarsaid_key",
+				"type": "varchar"
+			},
+			{
+				"name": "ple_art_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "ple_installment_nr",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "ple_payment_status_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "ple_account_group",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "ple_art",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "ple_office_country",
+				"type": "varchar"
+			},
+			{
+				"name": "ple_allocated_doc_nr",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "ple_office_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "ple_office_code",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "ple_account_group_name",
+				"type": "varchar"
+			},
+			{
+				"name": "ple_payment_status_code",
+				"type": "varchar"
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_dim_personal_ledger"
+		}
+	}
+}
