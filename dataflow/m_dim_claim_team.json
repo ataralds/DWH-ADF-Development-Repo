@@ -31,9 +31,13 @@
 				},
 				{
 					"name": "deduplicator"
+				},
+				{
+					"name": "Constants",
+					"description": "Set constant TOP_KEY and TOP_DESCR"
 				}
 			],
-			"script": "source(output(\n\t\tpk_pre_dim_claim_team as string,\n\t\tdate_inserted as timestamp,\n\t\tlast_updated_by as string,\n\t\tinserted_by as string,\n\t\temp_id_main_adjuster as decimal(28,10),\n\t\ttem_description as string,\n\t\tsign_lcacrsign as string,\n\t\tdate_last_updated as timestamp,\n\t\ttem_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select *  from dwh_prepare.pre_dim_claim_team',\n\tformat: 'query') ~> MPreDimClaimTeam\ndeduplicator alterRow(upsertIf(!isNull(tem_key))) ~> AlterRow1\nMPreDimClaimTeam aggregate(groupBy(tem_key),\n\t{} = ERROR_FUNCTION(''),\n\t\teach(match(first($$)), ERROR_FUNCTION('') = ERROR_FUNCTION(''))) ~> deduplicator\nAlterRow1 sink(input(\n\t\tdimension_key as long,\n\t\ttem_key as string,\n\t\ttem_description as string,\n\t\ttem_id as long,\n\t\ttop_id as long,\n\t\ttop_key as string,\n\t\ttop_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['tem_key'],\n\tformat: 'table',\n\tmapColumn(\n\t\ttem_key,\n\t\ttem_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimClaimTeam"
+			"script": "source(output(\n\t\ttem_key as string,\n\t\ttem_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select tem_key, tem_description  from dwh_prepare.pre_dim_claim_team',\n\tformat: 'query') ~> MPreDimClaimTeam\nConstants alterRow(upsertIf(!isNull(tem_key))) ~> AlterRow1\nMPreDimClaimTeam aggregate(groupBy(tem_key),\n\teach(match(name!='tem_key'), $$ = first($$))) ~> deduplicator\ndeduplicator derive(top_key = 'ALL',\n\t\ttop_description = 'All Claims Teams') ~> Constants\nAlterRow1 sink(input(\n\t\tdimension_key as long,\n\t\ttem_key as string,\n\t\ttem_description as string,\n\t\ttem_id as long,\n\t\ttop_id as long,\n\t\ttop_key as string,\n\t\ttop_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['tem_key'],\n\tformat: 'table',\n\tmapColumn(\n\t\ttem_key,\n\t\ttem_description,\n\t\ttop_key,\n\t\ttop_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimClaimTeam"
 		}
 	}
 }
