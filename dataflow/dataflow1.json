@@ -1,0 +1,30 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "Window1"
+				},
+				{
+					"name": "DerivedColumn1"
+				},
+				{
+					"name": "Sort1"
+				}
+			],
+			"script": "source(output(\n\t\ta as string,\n\t\tb as string,\n\t\tamount as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.an_func_test',\n\tformat: 'query') ~> source1\nSort1 window(over(a,\n\t\tb),\n\tasc(a, true),\n\tasc(b, true),\n\tc = lag(amount,1,0)) ~> Window1\nWindow1 derive(d = amount-c) ~> DerivedColumn1\nsource1 sort(asc(a, false),\n\tasc(b, false)) ~> Sort1"
+		}
+	}
+}
