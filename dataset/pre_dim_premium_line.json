@@ -71,9 +71,8 @@
 			},
 			{
 				"name": "prl_premium_days",
-				"type": "decimal",
-				"precision": 28,
-				"scale": 10
+				"type": "smallint",
+				"precision": 5
 			},
 			{
 				"name": "prl_pro_rata_ind",
