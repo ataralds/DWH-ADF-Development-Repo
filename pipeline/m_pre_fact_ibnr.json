@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "m_pre_fact_ibnr_tmp",
+				"name": "m_pre_fact_ibnr",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
