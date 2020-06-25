@@ -1,0 +1,16 @@
+{
+	"name": "IRtestwestEurope",
+	"properties": {
+		"type": "Managed",
+		"typeProperties": {
+			"computeProperties": {
+				"location": "West Europe",
+				"dataFlowProperties": {
+					"computeType": "General",
+					"coreCount": 16,
+					"timeToLive": 0
+				}
+			}
+		}
+	}
+}

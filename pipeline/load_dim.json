@@ -1,0 +1,83 @@
+{
+	"name": "load_dim",
+	"properties": {
+		"activities": [
+			{
+				"name": "m_dim_country",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "m_dim_country",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "m_dim_coverage",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "m_dim_coverage",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pipeline_error_handling",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "m_dim_country",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "m_dim_country"
+					}
+				}
+			},
+			{
+				"name": "pipeline_error_handling1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "m_dim_coverage",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "m_dim_coverage"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "pipelines/dwh_marts"
+		},
+		"annotations": []
+	}
+}

@@ -1,0 +1,63 @@
+{
+	"name": "m_pre_dim_vessel_type_group_copy1",
+	"properties": {
+		"folder": {
+			"name": "dwh_prepare/pre_dim"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "sta_vessel_type_group",
+						"type": "DatasetReference"
+					},
+					"name": "StaVesselTypeGroup"
+				},
+				{
+					"dataset": {
+						"referenceName": "sta_risk_group",
+						"type": "DatasetReference"
+					},
+					"name": "StaRiskDriverGroup"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "pre_dim_vessel_type_group",
+						"type": "DatasetReference"
+					},
+					"name": "VesselTypeGroup"
+				}
+			],
+			"transformations": [
+				{
+					"name": "RiskD1"
+				},
+				{
+					"name": "VesslTypeGroup"
+				},
+				{
+					"name": "RiskGroup1"
+				},
+				{
+					"name": "RiskD2"
+				},
+				{
+					"name": "Select1"
+				},
+				{
+					"name": "RiskGroup2"
+				},
+				{
+					"name": "Select2"
+				},
+				{
+					"name": "CovertingtoInt"
+				}
+			],
+			"script": "source(output(\n\t\tpk_vessel_type_group as long,\n\t\tfp_3_ltr_code as string,\n\t\tfp_level_5_code as string,\n\t\tfk_rsk_driver_size as long,\n\t\tfk_rsk_driver_grp_1 as long,\n\t\tfk_rsk_driver_grp_4 as long,\n\t\tfk_rsk_driver_grp_3 as long,\n\t\tfk_rsk_driver_grp_2 as long,\n\t\tfk_rsk_driver_iv as long,\n\t\tfk_rsk_driver_lvl4 as long,\n\t\tfk_rsk_driver_loh as long,\n\t\tfk_rsk_grp_crew as long,\n\t\tfk_rsk_grp_cargo as long,\n\t\tfk_rsk_grp_main as long,\n\t\tfk_rsk_grp_pollution as long,\n\t\tfk_rsk_grp_ri as long,\n\t\tfk_rsk_grp_passenger as long,\n\t\tfk_rsk_grp_hull as long,\n\t\tfk_rsk_grp_machinery as long,\n\t\tfk_rsk_grp_size as long,\n\t\tvsl_marine_group as string,\n\t\tvsl_desc as string,\n\t\tfk_rsk_driver_grp_6 as long,\n\t\tfp_level_5_hull as long,\n\t\tvsl_risk_group as string,\n\t\tfp_level_5_decode as string,\n\t\tfp_level_5_desc as string,\n\t\tvsl_gard_group as string,\n\t\tupdate_date as date,\n\t\tinsert_date as date,\n\t\tvsl_cefor_group as string,\n\t\tfk_rsk_driver_grp_5 as long,\n\t\tfp_level_5_sub as string,\n\t\tfk_gard_group as long,\n\t\tfk_rsk_driver_lvl3 as long\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StaVesselTypeGroup\nsource(output(\n\t\tinserted_date as date,\n\t\tupdated_date as date,\n\t\trisk_group_sort as long,\n\t\tcoverage_code as string,\n\t\tcoverage_desc as string,\n\t\trisk_group_code as string,\n\t\tsegment_code as string,\n\t\tagreement_type as string,\n\t\tbusiness_area as string,\n\t\treinsurance_pgm_code as string,\n\t\trisk_group_desc as string,\n\t\tpk_risk_group as long,\n\t\treinsurance_pgm_desc as string,\n\t\tsegment_desc as string,\n\t\tmutual_fixed as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StaRiskDriverGroup\nStaRiskDriverGroup select(mapColumn(\n\t\tvtg_main_group_level_1_code = risk_group_code,\n\t\tvtg_main_group_level_1_desc = risk_group_desc,\n\t\tvtg_main_group_level_1_sort = risk_group_sort,\n\t\tpk_risk_driver_group = pk_risk_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskD1\nStaVesselTypeGroup select(mapColumn(\n\t\tfk_rsk_driver_grp_1,\n\t\tfk_rsk_driver_grp_5,\n\t\tfp_3_ltr_code,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tvsl_desc\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> VesslTypeGroup\nVesslTypeGroup, RiskD1 join(fk_rsk_driver_grp_1 == pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup1\nStaRiskDriverGroup select(mapColumn(\n\t\tvtg_main_group_level_2_code = risk_group_code,\n\t\tvtg_main_group_level_2_desc = risk_group_desc,\n\t\tvtg_main_group_level_2_sort = risk_group_sort,\n\t\tpk_risk_driver_group = pk_risk_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RiskD2\nRiskGroup1 select(mapColumn(\n\t\tfk_rsk_driver_grp_5,\n\t\tvtg_key = fp_3_ltr_code,\n\t\tinsert_date,\n\t\tpk_vessel_type_group,\n\t\tvsl_desc,\n\t\tvtg_main_group_level_1_code,\n\t\tvtg_main_group_level_1_desc,\n\t\tvtg_main_group_level_1_sort,\n\t\tpk_risk_driver_group\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1, RiskD2 join(fk_rsk_driver_grp_5 == RiskD2@pk_risk_driver_group,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> RiskGroup2\nRiskGroup2 select(mapColumn(\n\t\tvtg_key,\n\t\tvtg_description = vsl_desc,\n\t\tvtg_main_group_level_1_code,\n\t\tvtg_main_group_level_1_desc,\n\t\tvtg_main_group_level_1_sort,\n\t\tvtg_main_group_level_2_code,\n\t\tvtg_main_group_level_2_desc,\n\t\tvtg_main_group_level_2_sort\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSelect2 derive(vtg_main_group_level_1_code = toInteger(vtg_main_group_level_1_code),\n\t\tvtg_main_group_level_2_code = toInteger(vtg_main_group_level_2_code)) ~> CovertingtoInt\nCovertingtoInt sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['pre_dim_vessel_type_group.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> VesselTypeGroup"
+		}
+	}
+}

@@ -6,10 +6,10 @@
 		"type": "Oracle",
 		"typeProperties": {
 			"connectionString": "host=oltp05db.gard.local;port=1521;servicename=oltp05.gard.local;user id=azure_read",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI1MGE3YWFjYS1jNTE4LTQyMGMtOGUzNC0xMzBhMWMyZjI3MzciLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJkYjM2MTQ3Yy0yMDE2LTQxNmYtODVkMS02MzgyNDBmMzM1OGQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
-			"referenceName": "AMSSRVRUN01",
+			"referenceName": "AMSSRV049",
 			"type": "IntegrationRuntimeReference"
 		}
 	}

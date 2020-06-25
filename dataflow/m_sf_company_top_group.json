@@ -1,0 +1,48 @@
+{
+	"name": "m_sf_company_top_group",
+	"properties": {
+		"folder": {
+			"name": "dwh_stage"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "sf_company_b_tree",
+						"type": "DatasetReference"
+					},
+					"name": "CompanyBtree"
+				},
+				{
+					"dataset": {
+						"referenceName": "sf_company_b_tree",
+						"type": "DatasetReference"
+					},
+					"name": "ComapnyBtreeRight"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sf_company_top_group",
+						"type": "DatasetReference"
+					},
+					"name": "SfCompanyTopGroup"
+				}
+			],
+			"transformations": [
+				{
+					"name": "leftRightCompany"
+				},
+				{
+					"name": "FilteredValues"
+				},
+				{
+					"name": "SelectedColumns"
+				}
+			],
+			"script": "source(output(\n\t\tCOMPANY_NAME as string,\n\t\tCOMPANY_ID as double,\n\t\tPARENT_COMPANY_ID as double,\n\t\tLEFT_NODE as double,\n\t\tRIGHT_NODE as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> CompanyBtree\nsource(output(\n\t\tCOMPANY_NAME as string,\n\t\tCOMPANY_ID as double,\n\t\tPARENT_COMPANY_ID as double,\n\t\tLEFT_NODE as double,\n\t\tRIGHT_NODE as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> ComapnyBtreeRight\nCompanyBtree, ComapnyBtreeRight join(CompanyBtree@LEFT_NODE >= ComapnyBtreeRight@LEFT_NODE\n\t&& CompanyBtree@LEFT_NODE <= ComapnyBtreeRight@RIGHT_NODE,\n\tjoinType:'inner',\n\tbroadcast: 'left')~> leftRightCompany\nleftRightCompany filter(ComapnyBtreeRight@PARENT_COMPANY_ID == -1) ~> FilteredValues\nFilteredValues select(mapColumn(\n\t\tcompany_name = CompanyBtree@COMPANY_NAME,\n\t\tcompany_id = CompanyBtree@COMPANY_ID,\n\t\tcompany_name_top_group = ComapnyBtreeRight@COMPANY_NAME,\n\t\tcompany_id_top_group = ComapnyBtreeRight@COMPANY_ID\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectedColumns\nSelectedColumns sink(input(\n\t\tCOMPANY_NAME as string,\n\t\tCOMPANY_ID as double,\n\t\tPARENT_COMPANY_ID as double,\n\t\tLEFT_NODE as double,\n\t\tRIGHT_NODE as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['sf_company_top_group.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SfCompanyTopGroup"
+		}
+	}
+}

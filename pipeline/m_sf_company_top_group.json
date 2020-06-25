@@ -1,0 +1,39 @@
+{
+	"name": "m_sf_company_top_group",
+	"properties": {
+		"activities": [
+			{
+				"name": "m_sf_company_top_group",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "m_sf_company_top_group",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"CompanyBtree": {
+								"fileName": "sf_company_b_tree.parquet"
+							},
+							"ComapnyBtreeRight": {
+								"fileName": "sf_company_b_tree.parquet"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}

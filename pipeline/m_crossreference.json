@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "m_crossreference",
+				"name": "m_t_crossreference",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,24 +16,19 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_crossreference",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"OmMapCodeValues": {
-								"fileName": "\"map_code_values\""
-							},
-							"OmMapCodeType": {
-								"fileName": "\"map_code_type\""
-							}
-						}
+						"referenceName": "m_t_crossreference",
+						"type": "DataFlowReference"
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
+					"integrationRuntime": {
+						"referenceName": "IrExecutePipeline",
+						"type": "IntegrationRuntimeReference"
 					}
 				}
 			}
 		],
+		"folder": {
+			"name": "mappings/dwh_stage"
+		},
 		"annotations": []
 	}
 }

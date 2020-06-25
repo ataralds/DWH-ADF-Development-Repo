@@ -16,24 +16,11 @@
 				}
 			},
 			{
-				"name": "pl_copy_static_to_lake",
-				"type": "ExecutePipeline",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "copy_static_to_lake",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
 				"name": "error_handling",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "pl_copy_static_to_lake",
+						"activity": "copy_static_to_sql",
 						"dependencyConditions": [
 							"Failed"
 						]
@@ -42,17 +29,17 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "error_handling",
+						"referenceName": "pipeline_error_handling",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
 					"parameters": {
 						"pPipelineName": {
-							"value": "copy_static_to_lake",
+							"value": "copy_static_to_sql",
 							"type": "Expression"
 						},
 						"pPipelineErrorMsg": {
-							"value": "@activity('pl_copy_static_to_lake').error.message",
+							"value": "@activity('copy_static_to_sql').error.message",
 							"type": "Expression"
 						}
 					}
@@ -72,7 +59,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "error_handling",
+						"referenceName": "pipeline_error_handling",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
@@ -87,6 +74,19 @@
 						}
 					}
 				}
+			},
+			{
+				"name": "copy_static_to_sql",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "copy_static_to_sql",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"variables": {
@@ -95,7 +95,7 @@
 			}
 		},
 		"folder": {
-			"name": "pipeline/dwh_stage"
+			"name": "pipelines/dwh_stage"
 		},
 		"annotations": []
 	}

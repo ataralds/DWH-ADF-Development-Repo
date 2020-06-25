@@ -4,30 +4,79 @@
 		"activities": [
 			{
 				"name": "m_hlp_exchange_rate_usd",
-				"type": "ExecuteDataFlow",
+				"type": "ExecutePipeline",
 				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
+					"pipeline": {
 						"referenceName": "m_hlp_exchange_rate_usd",
-						"type": "DataFlowReference"
+						"type": "PipelineReference"
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pipeline_error_handling1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "m_hlp_exchange_rate_usd",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "m_hlp_exchange_rate_usd"
+					}
+				}
+			},
+			{
+				"name": "m_crossreference",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "m_crossreference",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pipeline_error_handling",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "m_crossreference",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "m_crossreference"
 					}
 				}
 			}
 		],
 		"folder": {
-			"name": "pipeline/dwh_stage"
+			"name": "pipelines/dwh_stage"
 		},
 		"annotations": []
 	}
