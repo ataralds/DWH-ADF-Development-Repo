@@ -1,6 +1,7 @@
 {
 	"name": "m_dim_current_vessel",
 	"properties": {
+		"description": "",
 		"folder": {
 			"name": "marts/dim"
 		},
@@ -12,30 +13,32 @@
 						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
-					"name": "DimRiskObject",
-					"description": "selecting distinct values from dim risk object"
+					"name": "ROBmain",
+					"description": "CHECK QUERY"
 				},
 				{
 					"dataset": {
 						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
-					"name": "DimRiskObject2",
-					"description": "selecting distinct values from dim risk object"
+					"name": "ROB",
+					"description": "CHECK QUERY"
 				},
 				{
 					"dataset": {
 						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
-					"name": "MaxDimRiskObject"
+					"name": "RO",
+					"description": "CHECK QUERY"
 				},
 				{
 					"dataset": {
 						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
-					"name": "MaxDimRiskObject3"
+					"name": "RO2",
+					"description": "CHECK QUERY"
 				}
 			],
 			"sinks": [
@@ -61,10 +64,10 @@
 					"name": "maxdate"
 				},
 				{
-					"name": "maxobjectkey"
+					"name": "HlpCurrVessl"
 				},
 				{
-					"name": "lkpmaximono"
+					"name": "LKPhlpcurrvsl"
 				},
 				{
 					"name": "objectkey"
@@ -97,7 +100,7 @@
 					"name": "upsert"
 				}
 			],
-			"script": "source(output(\n\t\trob_imono as string,\n\t\trob_object_key as string,\n\t\trob_date_end as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select rob_imono, rob_object_key, rob_date_end from marts.dim_risk_object',\n\tformat: 'query') ~> DimRiskObject\nsource(output(\n\t\trob_vessel_name as string,\n\t\trob_object_key as string,\n\t\trob_imono as string,\n\t\trob_date_end as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select rob_vessel_name,\\nrob_object_key,\\nrob_imono,\\nrob_date_end \\nfrom marts.dim_risk_object',\n\tformat: 'query') ~> DimRiskObject2\nsource(output(\n\t\trob_date_start as date,\n\t\trob_imono as string,\n\t\trob_object_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select rob_date_start, rob_imono, rob_object_key from marts.dim_risk_object',\n\tformat: 'query') ~> MaxDimRiskObject\nsource(output(\n\t\trob_imono as string,\n\t\trob_object_key as string,\n\t\trob_date_start as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select rob_imono, rob_object_key, rob_date_start from marts.dim_risk_object',\n\tformat: 'query') ~> MaxDimRiskObject3\nDimRiskObject2 derive(source_system = case(like(rob_object_key, 'G%'), 'GIC', 'PARIS')) ~> SourceSystem\nSourceSystem derive(key = case(coalesce(rob_imono, '0')!='0', concat('I', rob_imono), rob_object_key),\n\t\tparis_key = case(source_system=='PARIS', rob_object_key, toString(null())),\n\t\timono = case(coalesce(rob_imono,'0')!='0', rob_imono, toString(null())),\n\t\tvessel_name_paris = case(source_system=='PARIS', rob_vessel_name, toString(null()))) ~> Keys\nMaxDimRiskObject, MaxDimRiskObject3 join(MaxDimRiskObject@rob_imono == MaxDimRiskObject3@rob_imono\n\t&& MaxDimRiskObject@rob_date_start == MaxDimRiskObject3@rob_date_start,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> maxmax\nMaxDimRiskObject3 aggregate(groupBy(rob_object_key),\n\trob_date_start = max(rob_date_start)) ~> maxdate\nmaxmax aggregate(groupBy(rob_imono = MaxDimRiskObject@rob_imono),\n\trob_object_key = max(MaxDimRiskObject@rob_object_key)) ~> maxobjectkey\nDimRiskObject, maxobjectkey lookup(DimRiskObject@rob_imono == maxobjectkey@rob_imono,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lkpmaximono\nlkpmaximono derive(object_key = case(like(DimRiskObject@rob_object_key, 'P%')&&DimRiskObject@rob_imono!='0', coalesce(maxobjectkey@rob_object_key,DimRiskObject@rob_object_key), DimRiskObject@rob_object_key)) ~> objectkey\nobjectkey derive(key = case(coalesce(maxobjectkey@rob_imono,'0')!='0', concat('I', DimRiskObject@rob_imono), DimRiskObject@rob_object_key)) ~> key\nkey aggregate(groupBy(key,\n\t\tobject_key),\n\trob_date_end = max(rob_date_end)) ~> maxenddate\nmaxenddate, Keys join(maxenddate@key == Keys@key\n\t&& object_key == rob_object_key\n\t&& maxenddate@rob_date_end == DimRiskObject2@rob_date_end,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> joiner\njoiner derive(Paris_date = case(like(rob_object_key,'P%'), maxenddate@rob_date_end,toDate(case(1!=1,1)))) ~> ParisDate\nSelect1 aggregate(groupBy(key),\n\teach(match(name!='key'), $$ = max($$))) ~> maxeverything\nParisDate select(mapColumn(\n\t\tkey = maxenddate@key,\n\t\trob_object_key = object_key,\n\t\trob_date_end = maxenddate@rob_date_end,\n\t\tvessel_name = rob_vessel_name,\n\t\trob_imono,\n\t\tparis_key,\n\t\tvessel_name_paris,\n\t\tParis_date\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nmaxeverything derive(vessel_name = case(like(maxeverything@key,'I%'), case(isNull(Paris_date)==true(), vessel_name, vessel_name_paris), vessel_name),\n\t\tkey = coalesce(maxeverything@key,'N/A')) ~> vesselname\nvesselname select(mapColumn(\n\t\tves_key = {maxeverything@key},\n\t\tvessel_name,\n\t\tves_imono = rob_imono,\n\t\tves_paris_key = paris_key,\n\t\tvessel_name_paris\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> renaming\nrenaming alterRow(upsertIf(true())) ~> upsert\nupsert sink(input(\n\t\tdimension_key as long,\n\t\tves_vessel_name_me as string,\n\t\tves_vessel_name as string,\n\t\tall_description as string,\n\t\tves_imono as string,\n\t\tves_gic_key as string,\n\t\tves_vessel_name_pi as string,\n\t\tall_key as string,\n\t\tves_key as string,\n\t\tves_paris_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['ves_paris_key'],\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimCurrentVessel"
+			"script": "source(output(\n\t\trob_imono as string,\n\t\trob_object_key as string,\n\t\trob_date_end as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select distinct rob_imono, rob_object_key, rob_date_end from marts.dim_risk_object\\nwhere coalesce(rob_status,\\'A\\')!=\\'C\\'',\n\tformat: 'query') ~> ROBmain\nsource(output(\n\t\trob_vessel_name as string,\n\t\trob_object_key as string,\n\t\trob_imono as string,\n\t\trob_date_end as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select distinct rob_vessel_name,\\nrob_object_key,\\nrob_imono,\\nrob_date_end \\nfrom marts.dim_risk_object\\nwhere coalesce(rob_status,\\'A\\')!=\\'C\\'',\n\tformat: 'query') ~> ROB\nsource(output(\n\t\trob_date_start as date,\n\t\trob_imono as string,\n\t\trob_object_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select rob_date_start, rob_imono, rob_object_key from marts.dim_risk_object\\nwhere coalesce(rob_imono,\\'0\\')!=\\'0\\'\\nand rob_object_key like \\'P%\\'',\n\tformat: 'query') ~> RO\nsource(output(\n\t\trob_imono as string,\n\t\trob_object_key as string,\n\t\trob_date_start as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select rob_imono, rob_object_key, rob_date_start from marts.dim_risk_object\\nwhere rob_object_key like \\'P%\\'',\n\tformat: 'query') ~> RO2\nROB derive(source_system = case(like(rob_object_key, 'G%'), 'GIC', 'PARIS')) ~> SourceSystem\nSourceSystem derive(key = case(coalesce(rob_imono, '0')!='0', concat('I', rob_imono), rob_object_key),\n\t\tparis_key = case(source_system=='PARIS', rob_object_key, toString(null())),\n\t\timono = case(coalesce(rob_imono,'0')!='0', rob_imono, toString(null())),\n\t\tvessel_name_paris = case(source_system=='PARIS', rob_vessel_name, toString(null())),\n\t\tvessel_name = rob_vessel_name) ~> Keys\nRO, RO2 join(RO@rob_imono == RO2@rob_imono\n\t&& RO@rob_date_start == RO2@rob_date_start,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> maxmax\nRO2 aggregate(groupBy(rob_object_key),\n\trob_date_start = max(rob_date_start)) ~> maxdate\nmaxmax aggregate(groupBy(rob_imono = RO@rob_imono),\n\trob_object_key = max(RO@rob_object_key)) ~> HlpCurrVessl\nROBmain, HlpCurrVessl lookup(ROBmain@rob_imono == HlpCurrVessl@rob_imono,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LKPhlpcurrvsl\nLKPhlpcurrvsl derive(object_key = case(like(ROBmain@rob_object_key, 'P%')&&ROBmain@rob_imono!='0', coalesce(HlpCurrVessl@rob_object_key,ROBmain@rob_object_key), ROBmain@rob_object_key)) ~> objectkey\nobjectkey derive(key = case(coalesce(HlpCurrVessl@rob_imono,'0')!='0', concat('I', ROBmain@rob_imono), ROBmain@rob_object_key)) ~> key\nkey aggregate(groupBy(key,\n\t\tobject_key),\n\trob_date_end = max(rob_date_end)) ~> maxenddate\nmaxenddate, Keys join(maxenddate@key == Keys@key\n\t&& object_key == rob_object_key\n\t&& maxenddate@rob_date_end == ROB@rob_date_end,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> joiner\njoiner derive(Paris_date = case(like(rob_object_key,'P%'), maxenddate@rob_date_end,toDate(case(1!=1,1)))) ~> ParisDate\nSelect1 aggregate(groupBy(key),\n\teach(match(name!='key'), $$ = max($$))) ~> maxeverything\nParisDate select(mapColumn(\n\t\tkey = maxenddate@key,\n\t\trob_object_key = object_key,\n\t\trob_date_end = maxenddate@rob_date_end,\n\t\tvessel_name = rob_vessel_name,\n\t\trob_imono,\n\t\tparis_key,\n\t\tvessel_name_paris,\n\t\tParis_date\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nmaxeverything derive(vessel_name = case(like(key,'I%'), case(isNull(Paris_date)==true(), vessel_name, vessel_name_paris), vessel_name),\n\t\tkey = coalesce(key,'N/A')) ~> vesselname\nvesselname select(mapColumn(\n\t\tves_key = key,\n\t\tvessel_name,\n\t\tves_imono = rob_imono,\n\t\tves_paris_key = paris_key,\n\t\tvessel_name_paris\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> renaming\nrenaming alterRow(upsertIf(true())) ~> upsert\nupsert sink(input(\n\t\tdimension_key as long,\n\t\tves_vessel_name_me as string,\n\t\tves_vessel_name as string,\n\t\tall_description as string,\n\t\tves_imono as string,\n\t\tves_gic_key as string,\n\t\tves_vessel_name_pi as string,\n\t\tall_key as string,\n\t\tves_key as string,\n\t\tves_paris_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['ves_paris_key'],\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimCurrentVessel"
 		}
 	}
 }
