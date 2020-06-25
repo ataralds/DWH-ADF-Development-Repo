@@ -1,0 +1,54 @@
+{
+	"name": "TCrossref",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dwhdatalakedevelopment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "tcrossreference.parquet",
+				"folderPath": "Mapping_System",
+				"fileSystem": "dwh-stage"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "source_code_key",
+				"type": "UTF8"
+			},
+			{
+				"name": "source_system",
+				"type": "UTF8"
+			},
+			{
+				"name": "target_code",
+				"type": "UTF8"
+			},
+			{
+				"name": "target_description",
+				"type": "UTF8"
+			},
+			{
+				"name": "code_type_id",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "code2",
+				"type": "UTF8"
+			},
+			{
+				"name": "om_x_ref",
+				"type": "UTF8"
+			},
+			{
+				"name": "code_type",
+				"type": "UTF8"
+			}
+		]
+	}
+}
