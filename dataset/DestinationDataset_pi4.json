@@ -1,0 +1,16 @@
+{
+	"name": "DestinationDataset_pi4",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OracleAzureDwh",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "AZURE_DWH",
+			"table": "TEST_PRE_FACT_IBNR"
+		}
+	}
+}

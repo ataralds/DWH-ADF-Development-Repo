@@ -1,0 +1,293 @@
+{
+	"name": "CopyPipeline_pi4",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_pi4",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "dwh_prepare.pre_fact_ibnr"
+					},
+					{
+						"name": "Destination",
+						"value": "AZURE_DWH.TEST_PRE_FACT_IBNR"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource"
+					},
+					"sink": {
+						"type": "OracleSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "pk_transaction_key",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "PK_TRANSACTION_KEY",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "dim_capital",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "DIM_CAPITAL",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "dim_capital_branch",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "DIM_CAPITAL_BRANCH",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "dim_business_area",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "DIM_BUSINESS_AREA",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "net_ibnr_usd",
+									"type": "Decimal",
+									"physicalType": "decimal"
+								},
+								"sink": {
+									"name": "NET_IBNR_USD",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "dim_time_trans_date",
+									"type": "Date",
+									"physicalType": "date"
+								},
+								"sink": {
+									"name": "DIM_TIME_TRANS_DATE",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "net_ulae_usd",
+									"type": "Decimal",
+									"physicalType": "decimal"
+								},
+								"sink": {
+									"name": "NET_ULAE_USD",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "net_equalisation_reserve_usd",
+									"type": "Decimal",
+									"physicalType": "decimal"
+								},
+								"sink": {
+									"name": "NET_EQUALISATION_RESERVE_USD",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "dim_time_incident_year",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "DIM_TIME_INCIDENT_YEAR",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "dim_time_financial_year",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "DIM_TIME_FINANCIAL_YEAR",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "poolable_ind",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "POOLABLE_IND",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "hydra_ind",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "HYDRA_IND",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "gross_equalisation_reserve_usd",
+									"type": "Decimal",
+									"physicalType": "decimal"
+								},
+								"sink": {
+									"name": "GROSS_EQUALISATION_RESERVE_USD",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "gross_ibnr_usd",
+									"type": "Decimal",
+									"physicalType": "decimal"
+								},
+								"sink": {
+									"name": "GROSS_IBNR_USD",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "gross_ulae_usd",
+									"type": "Decimal",
+									"physicalType": "decimal"
+								},
+								"sink": {
+									"name": "GROSS_ULAE_USD",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "dim_risk_object",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "DIM_RISK_OBJECT",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "dim_agreement_type",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "DIM_AGREEMENT_TYPE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "gross_binary_events_usd",
+									"type": "Decimal",
+									"physicalType": "decimal"
+								},
+								"sink": {
+									"name": "GROSS_BINARY_EVENTS_USD",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "net_binary_events_usd",
+									"type": "Decimal",
+									"physicalType": "decimal"
+								},
+								"sink": {
+									"name": "NET_BINARY_EVENTS_USD",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "text",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "TEXT",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "source_system",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "SOURCE_SYSTEM",
+									"type": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_pi4",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_pi4",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
