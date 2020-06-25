@@ -9,36 +9,78 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "code_type_id",
+				"name": "dimension_key",
 				"type": "bigint",
 				"precision": 19
 			},
 			{
-				"name": "code2",
+				"name": "exp_key",
 				"type": "varchar"
 			},
 			{
-				"name": "target_description",
+				"name": "top_key",
 				"type": "varchar"
 			},
 			{
-				"name": "source_system",
+				"name": "exp_cost_compensation",
 				"type": "varchar"
 			},
 			{
-				"name": "om_x_ref",
+				"name": "top_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "exp_code",
 				"type": "varchar"
 			},
 			{
-				"name": "target_code",
+				"name": "exp_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "exp_description",
 				"type": "varchar"
 			},
 			{
-				"name": "code_type",
+				"name": "top_description",
 				"type": "varchar"
 			},
 			{
-				"name": "source_code_key",
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "exg_key",
+				"type": "varchar"
+			},
+			{
+				"name": "exg_description",
+				"type": "varchar"
+			},
+			{
+				"name": "ext_description",
+				"type": "varchar"
+			},
+			{
+				"name": "ext_code",
 				"type": "varchar"
 			}
 		],
