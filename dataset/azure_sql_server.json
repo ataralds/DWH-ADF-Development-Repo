@@ -9,16 +9,7 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "dimension_key",
-				"type": "bigint",
-				"precision": 19
-			},
-			{
 				"name": "exp_key",
-				"type": "varchar"
-			},
-			{
-				"name": "top_key",
 				"type": "varchar"
 			},
 			{
@@ -26,25 +17,11 @@
 				"type": "varchar"
 			},
 			{
-				"name": "top_id",
-				"type": "bigint",
-				"precision": 19
-			},
-			{
 				"name": "exp_code",
 				"type": "varchar"
 			},
 			{
-				"name": "exp_id",
-				"type": "bigint",
-				"precision": 19
-			},
-			{
 				"name": "exp_description",
-				"type": "varchar"
-			},
-			{
-				"name": "top_description",
 				"type": "varchar"
 			},
 			{
