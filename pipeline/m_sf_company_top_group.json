@@ -17,15 +17,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_sf_company_top_group",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"CompanyBtree": {
-								"fileName": "sf_company_b_tree.parquet"
-							},
-							"ComapnyBtreeRight": {
-								"fileName": "sf_company_b_tree.parquet"
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,
@@ -34,6 +26,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "mappings/dwh_stage"
+		},
 		"annotations": []
 	}
 }
