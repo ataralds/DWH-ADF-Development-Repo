@@ -43,8 +43,8 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "dwh_stage",
-			"table": "t_crossreference"
+			"schema": "dwh_prepare",
+			"table": "pre_dim_expense"
 		}
 	}
 }
