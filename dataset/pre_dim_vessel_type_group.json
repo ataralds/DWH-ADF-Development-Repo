@@ -1,0 +1,71 @@
+{
+	"name": "pre_dim_vessel_type_group",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "vtg_key",
+				"type": "varchar"
+			},
+			{
+				"name": "vtg_main_group_level_1_sort",
+				"type": "varchar"
+			},
+			{
+				"name": "vtg_main_group_level_2_code",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "vtg_description",
+				"type": "varchar"
+			},
+			{
+				"name": "vtg_main_group_level_2_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "vtg_main_group_level_1_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "vtg_main_group_level_1_code",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "vtg_main_group_level_2_sort",
+				"type": "varchar"
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_dim_vessel_type_group"
+		}
+	}
+}
