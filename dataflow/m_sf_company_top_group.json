@@ -24,6 +24,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "sf_company_top_group",
+						"type": "DatasetReference"
+					},
 					"name": "SfCompanyTopGroup"
 				}
 			],
@@ -38,7 +42,7 @@
 					"name": "SelectedColumns"
 				}
 			],
-			"script": "source(output(\n\t\tright_node as long,\n\t\tleft_node as long,\n\t\tparent_company_id as long,\n\t\tcompany_id as long,\n\t\tcompany_name as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.sf_company_b_tree',\n\tformat: 'query') ~> CompanyBtreeLeft\nsource(output(\n\t\tright_node as long,\n\t\tleft_node as long,\n\t\tparent_company_id as long,\n\t\tcompany_id as long,\n\t\tcompany_name as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.sf_company_b_tree',\n\tformat: 'query') ~> ComapnyBtreeRight\nCompanyBtreeLeft, ComapnyBtreeRight join(CompanyBtreeLeft@left_node >= ComapnyBtreeRight@left_node\n\t&& CompanyBtreeLeft@left_node <= ComapnyBtreeRight@right_node,\n\tjoinType:'inner',\n\tbroadcast: 'left')~> leftRightCompany\nleftRightCompany filter(ComapnyBtreeRight@parent_company_id == -1) ~> FilteredValues\nFilteredValues select(mapColumn(\n\t\tcompany_name = CompanyBtreeLeft@company_name,\n\t\tcompany_id = CompanyBtreeLeft@company_id,\n\t\tcompany_name_top_group = ComapnyBtreeRight@company_name,\n\t\tcompany_id_top_group = ComapnyBtreeRight@company_id\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectedColumns\nSelectedColumns sink(partitionFileNames:['sf_company_top_group.parquet'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SfCompanyTopGroup"
+			"script": "source(output(\n\t\tright_node as long,\n\t\tleft_node as long,\n\t\tparent_company_id as long,\n\t\tcompany_id as long,\n\t\tcompany_name as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.sf_company_b_tree',\n\tformat: 'query') ~> CompanyBtreeLeft\nsource(output(\n\t\tright_node as long,\n\t\tleft_node as long,\n\t\tparent_company_id as long,\n\t\tcompany_id as long,\n\t\tcompany_name as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.sf_company_b_tree',\n\tformat: 'query') ~> ComapnyBtreeRight\nCompanyBtreeLeft, ComapnyBtreeRight join(CompanyBtreeLeft@left_node >= ComapnyBtreeRight@left_node\n\t&& CompanyBtreeLeft@left_node <= ComapnyBtreeRight@right_node,\n\tjoinType:'inner',\n\tbroadcast: 'left')~> leftRightCompany\nleftRightCompany filter(ComapnyBtreeRight@parent_company_id == -1) ~> FilteredValues\nFilteredValues select(mapColumn(\n\t\tcompany_name = CompanyBtreeLeft@company_name,\n\t\tcompany_id = CompanyBtreeLeft@company_id,\n\t\tcompany_name_top_group = ComapnyBtreeRight@company_name,\n\t\tcompany_id_top_group = ComapnyBtreeRight@company_id\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectedColumns\nSelectedColumns sink(input(\n\t\tcompany_name_top_group as string,\n\t\tcompany_id_top_group as long,\n\t\tcompany_name as string,\n\t\tcompany_id as long\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SfCompanyTopGroup"
 		}
 	}
 }
