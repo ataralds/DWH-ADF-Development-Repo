@@ -2,43 +2,37 @@
 	"name": "sf_company_top_group",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "dwhdatalakedevelopment",
+			"referenceName": "sql_server_development_connection",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
 			"name": "dwh-stage"
 		},
 		"annotations": [],
-		"type": "Parquet",
-		"typeProperties": {
-			"location": {
-				"type": "AzureBlobFSLocation",
-				"folderPath": "Salesforce",
-				"fileSystem": "dwh-stage"
-			},
-			"compressionCodec": "snappy"
-		},
+		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "COMPANY_NAME",
-				"type": "UTF8"
+				"name": "company_name_top_group",
+				"type": "varchar"
 			},
 			{
-				"name": "COMPANY_ID",
-				"type": "DOUBLE"
+				"name": "company_id_top_group",
+				"type": "bigint",
+				"precision": 19
 			},
 			{
-				"name": "PARENT_COMPANY_ID",
-				"type": "DOUBLE"
+				"name": "company_name",
+				"type": "varchar"
 			},
 			{
-				"name": "LEFT_NODE",
-				"type": "DOUBLE"
-			},
-			{
-				"name": "RIGHT_NODE",
-				"type": "DOUBLE"
+				"name": "company_id",
+				"type": "bigint",
+				"precision": 19
 			}
-		]
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": "sf_company_top_group"
+		}
 	}
 }

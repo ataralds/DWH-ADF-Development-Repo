@@ -2,22 +2,88 @@
 	"name": "pre_dim_coverage",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "dwhdatalakedevelopment",
+			"referenceName": "sql_server_development_connection",
 			"type": "LinkedServiceReference"
 		},
-		"folder": {
-			"name": "dwh-prepare/pre-dim"
-		},
 		"annotations": [],
-		"type": "Parquet",
-		"typeProperties": {
-			"location": {
-				"type": "AzureBlobFSLocation",
-				"folderPath": "Pre_Dim",
-				"fileSystem": "dwh-prepare"
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pk_key",
+				"type": "varchar"
 			},
-			"compressionCodec": "snappy"
-		},
-		"schema": []
+			{
+				"name": "cov_exposure_group_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_3ltr_code",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_energy_exp_group_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_gic_group_code",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_layer_group_code",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_exposure_group_code",
+				"type": "varchar"
+			},
+			{
+				"name": "grp_key",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_description",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_layer_group_descr",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_energy_exp_group_code",
+				"type": "varchar"
+			},
+			{
+				"name": "grp_description",
+				"type": "varchar"
+			},
+			{
+				"name": "cov_gic_group_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_dim_coverage"
+		}
 	}
 }

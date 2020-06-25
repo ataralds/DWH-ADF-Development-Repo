@@ -2,53 +2,94 @@
 	"name": "sf_company",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "dwhdatalakedevelopment",
+			"referenceName": "sql_server_development_connection",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
 			"name": "dwh-stage"
 		},
 		"annotations": [],
-		"type": "Parquet",
-		"typeProperties": {
-			"location": {
-				"type": "AzureBlobFSLocation",
-				"folderPath": "Other",
-				"fileSystem": "dwh-stage"
-			},
-			"compressionCodec": "snappy"
-		},
+		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "FROM_CURRENCY_ID",
-				"type": "DOUBLE"
+				"name": "primary_contact_name",
+				"type": "varchar"
 			},
 			{
-				"name": "TO_CURRENCY_ID",
-				"type": "DOUBLE"
+				"name": "account_resp_me",
+				"type": "varchar"
 			},
 			{
-				"name": "EXCHANGE_FROM_DATE",
-				"type": "INT96"
+				"name": "gard_market_area_code",
+				"type": "varchar"
 			},
 			{
-				"name": "EXCHANGE_RATE",
-				"type": "DECIMAL",
-				"precision": 38,
-				"scale": 18
+				"name": "source_system",
+				"type": "varchar"
 			},
 			{
-				"name": "EXCHANGE_TO_DATE",
-				"type": "INT96"
+				"name": "account_resp_pi",
+				"type": "varchar"
 			},
 			{
-				"name": "FROM_CURRENCY_CODE",
-				"type": "UTF8"
+				"name": "gard_market_area_desc",
+				"type": "varchar"
 			},
 			{
-				"name": "TO_CURRENCY_CODE",
-				"type": "UTF8"
+				"name": "account_status",
+				"type": "varchar"
+			},
+			{
+				"name": "primary_contact_email",
+				"type": "varchar"
+			},
+			{
+				"name": "client_lost_reason",
+				"type": "varchar"
+			},
+			{
+				"name": "gard_contact_id",
+				"type": "varchar"
+			},
+			{
+				"name": "source_system_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "company_email",
+				"type": "varchar"
+			},
+			{
+				"name": "company_owner_full_name",
+				"type": "varchar"
+			},
+			{
+				"name": "company_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "parent_company_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "company_name",
+				"type": "varchar"
+			},
+			{
+				"name": "company_record_type",
+				"type": "varchar"
+			},
+			{
+				"name": "parent_company_name",
+				"type": "varchar"
 			}
-		]
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": "sf_company"
+		}
 	}
 }

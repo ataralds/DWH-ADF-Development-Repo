@@ -2,43 +2,63 @@
 	"name": "pre_dim_business_area",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "dwhdatalakedevelopment",
+			"referenceName": "sql_server_development_connection",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "dwh-prepare/pre-dim"
+			"name": "dwh_prepare_sql/pre_dim"
 		},
 		"annotations": [],
-		"type": "Parquet",
-		"typeProperties": {
-			"location": {
-				"type": "AzureBlobFSLocation",
-				"folderPath": "Pre_Dim",
-				"fileSystem": "dwh-prepare"
-			},
-			"compressionCodec": "snappy"
-		},
+		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "PK_KEY",
-				"type": "UTF8"
+				"name": "pk_key",
+				"type": "varchar"
 			},
 			{
-				"name": "CPT_DESCRIPTION",
-				"type": "UTF8"
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
 			},
 			{
-				"name": "CPT_NUMBER",
-				"type": "INT32"
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
 			},
 			{
-				"name": "INSERTED_BY",
-				"type": "UTF8"
+				"name": "bus_description",
+				"type": "varchar"
 			},
 			{
-				"name": "DATE_INSERTED",
-				"type": "DATE"
+				"name": "grp_key",
+				"type": "varchar"
+			},
+			{
+				"name": "bua_description",
+				"type": "varchar"
+			},
+			{
+				"name": "bua_key",
+				"type": "varchar"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "grp_description",
+				"type": "varchar"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
 			}
-		]
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_dim_business_area"
+		}
 	}
 }

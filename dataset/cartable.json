@@ -1,0 +1,608 @@
+{
+	"name": "cartable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dwh_stage_sql/Paris"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "peamaxper",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "peaccint",
+				"type": "varchar"
+			},
+			{
+				"name": "peafromcomp",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "peaknvmark",
+				"type": "varchar"
+			},
+			{
+				"name": "peaoutgiro",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peapurtyp",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peacrmid",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "peanotaco",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaalternatepayer",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "peaiesect",
+				"type": "varchar"
+			},
+			{
+				"name": "peaclomet",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaxlpoin",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "peaieint4",
+				"type": "varchar"
+			},
+			{
+				"name": "peaieint5",
+				"type": "varchar"
+			},
+			{
+				"name": "peavendorid",
+				"type": "varchar"
+			},
+			{
+				"name": "peaieint2",
+				"type": "varchar"
+			},
+			{
+				"name": "peastopcod",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaaprobo",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaie3busnse",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peacustomerid",
+				"type": "varchar"
+			},
+			{
+				"name": "peacomp2",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaacorbo",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaprovmailfreq",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaiecon2",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "peaclobor",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaiediv",
+				"type": "varchar"
+			},
+			{
+				"name": "peaoutgirolusign",
+				"type": "varchar"
+			},
+			{
+				"name": "peaorigmemberfrom",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "peapibregsign",
+				"type": "varchar"
+			},
+			{
+				"name": "peanopurr",
+				"type": "varchar"
+			},
+			{
+				"name": "peaextid2",
+				"type": "varchar"
+			},
+			{
+				"name": "peaingirolusign",
+				"type": "varchar"
+			},
+			{
+				"name": "peamailcndnsplit",
+				"type": "varchar"
+			},
+			{
+				"name": "peaoutcreday",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "peasex",
+				"type": "varchar"
+			},
+			{
+				"name": "peaiebusnse",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peastaamt",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaingiroludate",
+				"type": "date"
+			},
+			{
+				"name": "peaaddbor",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peacolid",
+				"type": "varchar"
+			},
+			{
+				"name": "peaaclobo",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peamexcurr",
+				"type": "varchar"
+			},
+			{
+				"name": "peaincreday",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "peaiecon3",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "peamexamt",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "peapeaid",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "peaexttransfer",
+				"type": "varchar"
+			},
+			{
+				"name": "peamexcdate",
+				"type": "date"
+			},
+			{
+				"name": "peaiyear",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "peaieint",
+				"type": "varchar"
+			},
+			{
+				"name": "peaiebusndiv",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peacrdate",
+				"type": "date"
+			},
+			{
+				"name": "peaieint1",
+				"type": "varchar"
+			},
+			{
+				"name": "peaiecon4",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "peaswrun",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peainvisible",
+				"type": "varchar"
+			},
+			{
+				"name": "peaie2busnse",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "pealuuser",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "peastdate",
+				"type": "date"
+			},
+			{
+				"name": "peaingirono",
+				"type": "varchar"
+			},
+			{
+				"name": "peaie2busndiv",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaswink",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaclosmailfreq",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peapersrfl",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "peaclmadv",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peanotdays",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "peacruser",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "peastoppremnote",
+				"type": "varchar"
+			},
+			{
+				"name": "peaxlcurr",
+				"type": "varchar"
+			},
+			{
+				"name": "peaaaddbo",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peavatno",
+				"type": "varchar"
+			},
+			{
+				"name": "peanotlay",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "pearesdat",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "peastaniv",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaoutgiroludate",
+				"type": "date"
+			},
+			{
+				"name": "peaclmintynsw",
+				"type": "varchar"
+			},
+			{
+				"name": "peamdescr",
+				"type": "varbinary"
+			},
+			{
+				"name": "peaieint3",
+				"type": "varchar"
+			},
+			{
+				"name": "peaie3busndiv",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peabirtno",
+				"type": "varchar"
+			},
+			{
+				"name": "peaoutgirono",
+				"type": "varchar"
+			},
+			{
+				"name": "peaorgno",
+				"type": "varchar"
+			},
+			{
+				"name": "pealudate",
+				"type": "date"
+			},
+			{
+				"name": "peastatyp",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peasubtype",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "peacalcurr",
+				"type": "varchar"
+			},
+			{
+				"name": "peasw10",
+				"type": "varchar"
+			},
+			{
+				"name": "peaclmbor",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaaddmailfreq",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peapersid",
+				"type": "varchar"
+			},
+			{
+				"name": "peastensw",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peadueday",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "pealang2",
+				"type": "varchar"
+			},
+			{
+				"name": "peaprobor",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peamailsizemb",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "peacrsign",
+				"type": "varchar"
+			},
+			{
+				"name": "peacclamt",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "peacorrmailfreq",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peamailuseservadress",
+				"type": "varchar"
+			},
+			{
+				"name": "peaclmmailfreq",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaiecond",
+				"type": "varchar"
+			},
+			{
+				"name": "peacalamt",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "peaendate",
+				"type": "date"
+			},
+			{
+				"name": "peaaccaddynsw",
+				"type": "varchar"
+			},
+			{
+				"name": "peaaclmbo",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peamasked",
+				"type": "varchar"
+			},
+			{
+				"name": "peaaclmadv",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peanopdue",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaextid",
+				"type": "varchar"
+			},
+			{
+				"name": "pealusign",
+				"type": "varchar"
+			},
+			{
+				"name": "peaingiro",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peamexpro",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "peaccintr",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "peaexttransfer2",
+				"type": "varchar"
+			},
+			{
+				"name": "peanotsort",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peastopuse",
+				"type": "varchar"
+			},
+			{
+				"name": "peacclcurr",
+				"type": "varchar"
+			},
+			{
+				"name": "peacorbo",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peasttniv",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaiecon5",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "peausecolfee",
+				"type": "varchar"
+			},
+			{
+				"name": "peabirtws",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaclamailfreq",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaccode",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaiselectronic",
+				"type": "varchar"
+			},
+			{
+				"name": "peasttprmclm",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "peaiecon1",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "pealeicode",
+				"type": "varbinary"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": "p_cartable"
+		}
+	}
+}

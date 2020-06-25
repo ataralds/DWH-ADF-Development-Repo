@@ -1,0 +1,109 @@
+{
+	"name": "copy_static_to_sql",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lookup_static",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "select table_name table_name from azure_config where oracle_schema_name in ('STATIC','RSKDRV') and oracle_table_name not in ('HLP_EXCHANGE_RATE','HLP_EXCHANGE_RATE_STATUS')\n",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "oracle_configfile_oltp05",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEachsStatic",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup_static",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup_static').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy Static",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"oracleReaderQuery": {
+										"value": "SELECT * FROM @{item().table_name} ",
+										"type": "Expression"
+									},
+									"partitionOption": "None",
+									"queryTimeout": "02:00:00"
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"preCopyScript": {
+										"value": "@{concat('TRUNCATE TABLE dwh_stage.',trim(replace(item().TABLE_NAME,'\"',' ')),';')}",
+										"type": "Expression"
+									},
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "oracle_scr_oltp05",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "SqlStatic",
+									"type": "DatasetReference",
+									"parameters": {
+										"sinkDataset": {
+											"value": "@trim(replace(item().TABLE_NAME,'\"',' '))",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "copy job/dwh_stage/oltp05"
+		},
+		"annotations": []
+	}
+}
