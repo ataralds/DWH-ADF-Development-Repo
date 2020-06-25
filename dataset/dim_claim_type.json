@@ -5,6 +5,9 @@
 			"referenceName": "sql_server_development_connection",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "marts_sql"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
