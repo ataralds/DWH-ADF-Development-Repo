@@ -1,0 +1,12 @@
+{
+	"name": "m_pre_dim_ig_claim_type",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
