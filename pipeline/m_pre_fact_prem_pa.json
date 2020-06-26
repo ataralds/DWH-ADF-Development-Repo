@@ -1,9 +1,9 @@
 {
-	"name": "pre_dim_vessel_type_group",
+	"name": "m_pre_fact_prem_pa",
 	"properties": {
 		"activities": [
 			{
-				"name": "m_pre_dim_vessel_type_group",
+				"name": "m_pre_fact_prem_pa",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,16 +16,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_vessel_type_group",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"StaVesselTypeGroup": {
-								"fileName": "\"sta_vessl_type_group\""
-							},
-							"StaRiskDriverGroup": {
-								"fileName": "\"sta_risk_driver_group\""
-							}
-						}
+						"referenceName": "m_pre_fact_prem_pa",
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,
@@ -35,7 +27,7 @@
 			}
 		],
 		"folder": {
-			"name": "mappings/dwh_prepare/pre dim"
+			"name": "mappings/dwh_prepare/pre_fact"
 		},
 		"annotations": []
 	}

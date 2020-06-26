@@ -17,15 +17,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_pre_dim_employee",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"tcrossreference": {
-								"fileName": "t_crossreference.parquet"
-							},
-							"udvAgressoEmployee": {
-								"fileName": "s_udv_ags_employee.parquet"
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
 						"referenceName": "IrExecutePipeline",

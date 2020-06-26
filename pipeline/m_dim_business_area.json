@@ -1,9 +1,9 @@
 {
-	"name": "P_Sf_Company",
+	"name": "m_dim_business_area",
 	"properties": {
 		"activities": [
 			{
-				"name": "m_sf_company",
+				"name": "m_dim_business_area",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,21 +16,19 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_sf_company",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"SfCompanyNew": {
-								"fileName": "\"sf_company_new\""
-							}
-						}
+						"referenceName": "m_dim_business_area",
+						"type": "DataFlowReference"
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
+					"integrationRuntime": {
+						"referenceName": "IRThomasClaimDetails",
+						"type": "IntegrationRuntimeReference"
 					}
 				}
 			}
 		],
+		"folder": {
+			"name": "mappings/marts/dim"
+		},
 		"annotations": []
 	}
 }
