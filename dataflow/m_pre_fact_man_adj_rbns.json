@@ -1,0 +1,15 @@
+{
+	"name": "m_pre_fact_man_adj_rbns",
+	"properties": {
+		"folder": {
+			"name": "dwh_prepare/pre_fact"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
