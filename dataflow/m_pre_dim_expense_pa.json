@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "azure_sql_server",
+						"referenceName": "pre_dim_expense",
 						"type": "DatasetReference"
 					},
 					"name": "PreDimExpense"
