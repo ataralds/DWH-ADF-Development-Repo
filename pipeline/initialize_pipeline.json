@@ -1,5 +1,5 @@
 {
-	"name": "Initialize_pipeline",
+	"name": "initialize_pipeline",
 	"properties": {
 		"activities": [
 			{
