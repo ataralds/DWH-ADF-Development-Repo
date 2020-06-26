@@ -1,0 +1,15 @@
+{
+	"name": "m_agresso_trans",
+	"properties": {
+		"folder": {
+			"name": "dwh_stage"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
