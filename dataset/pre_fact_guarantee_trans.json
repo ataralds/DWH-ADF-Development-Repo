@@ -1,0 +1,156 @@
+{
+	"name": "pre_fact_guarantee_trans",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pk_transaction_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_claim_handler_key",
+				"type": "varchar"
+			},
+			{
+				"name": "guarantee_amount_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_claim_type_key",
+				"type": "varchar"
+			},
+			{
+				"name": "map_date",
+				"type": "date"
+			},
+			{
+				"name": "dim_coverage_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_broker_key",
+				"type": "varchar"
+			},
+			{
+				"name": "created_date",
+				"type": "date"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_underwriter_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_agreement_type_key",
+				"type": "varchar"
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "created_by",
+				"type": "varchar"
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "guarantee_amount_stat",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_currency_key",
+				"type": "varchar"
+			},
+			{
+				"name": "deleted_ind",
+				"type": "char"
+			},
+			{
+				"name": "guarantee_amount_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_sub_claim",
+				"type": "varchar"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_client_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_claim_trans_date",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_business_area_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_incident_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_risk_object_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_country_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_source_system_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_vessel_type_3ltr",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_guarantee_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_agreement_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_capital_branch_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_object_key",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_fact_guarantee_trans"
+		}
+	}
+}
