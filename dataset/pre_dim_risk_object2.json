@@ -1,0 +1,179 @@
+{
+	"name": "pre_dim_risk_object2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pk_key",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_ded_amount_aad_curr",
+				"type": "varchar"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_ded_days_indemnity",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_ded_amount_aad_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_ded_amount_rdc_curr",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_ded_amount_ice_curr",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_ded_amount_daily_ind",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_loh_scale",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_ded_amount_pa_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_unique_entry_key",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_ded_amount_amd_curr",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_ded_amount_amd_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_ded_amount_ice_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_ded_amount_daily_ind_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_ded_amount_amd_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_ded_days",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_ded_days_machinery",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_ded_amount_pa_curr",
+				"type": "varchar"
+			},
+			{
+				"name": "rob_ded_amount_aad_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "rob_ded_days_in_all",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_ded_layer",
+				"type": "varchar"
+			},
+			{
+				"name": "deleted_ind",
+				"type": "char"
+			},
+			{
+				"name": "rob_ded_amount_rdc_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_ded_amount_pa_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_ded_amount_ice_org",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_ded_amount_rdc_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "rob_ded_amount_daily_ind_curr",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_dim_risk_object_2"
+		}
+	}
+}
