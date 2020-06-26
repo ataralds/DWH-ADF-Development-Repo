@@ -9,7 +9,8 @@
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "dwh_stage"
+			"schema": "dwh_stage",
+			"table": ""
 		}
 	}
 }
