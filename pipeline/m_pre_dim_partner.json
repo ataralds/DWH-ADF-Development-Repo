@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "m_pre_dim_partner_me",
+				"name": "m_pre_dim_partner_me_copy3",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_partner_me",
+						"referenceName": "m_pre_dim_partner_me_copy3",
 						"type": "DataFlowReference"
 					},
 					"compute": {
