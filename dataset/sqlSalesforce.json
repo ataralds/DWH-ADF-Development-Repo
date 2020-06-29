@@ -87,7 +87,10 @@
 		],
 		"typeProperties": {
 			"schema": "dwh_stage",
-			"table": ""
+			"table": {
+				"value": "@dataset().sinkDataset",
+				"type": "Expression"
+			}
 		}
 	}
 }
