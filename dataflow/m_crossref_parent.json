@@ -1,6 +1,9 @@
 {
 	"name": "m_crossref_parent",
 	"properties": {
+		"folder": {
+			"name": "dwh_stage"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
