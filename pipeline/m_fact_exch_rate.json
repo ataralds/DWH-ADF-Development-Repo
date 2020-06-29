@@ -17,12 +17,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_fact_exch_rate",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"dimTime": {
-								"fileName": "\"sta_dim_time\""
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
 						"referenceName": "IrExecutePipeline",
