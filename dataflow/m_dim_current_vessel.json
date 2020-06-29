@@ -1,7 +1,6 @@
 {
 	"name": "m_dim_current_vessel",
 	"properties": {
-		"description": "",
 		"folder": {
 			"name": "marts/dim"
 		},
