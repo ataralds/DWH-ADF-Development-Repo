@@ -1,0 +1,98 @@
+{
+	"name": "dim_premium_line",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "dimension_key",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "prl_period_to",
+				"type": "date"
+			},
+			{
+				"name": "prl_premium_basis",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "prl_text",
+				"type": "varchar"
+			},
+			{
+				"name": "top_key",
+				"type": "varchar"
+			},
+			{
+				"name": "prl_sub_limit_ind",
+				"type": "char"
+			},
+			{
+				"name": "prl_pro_rata_ind",
+				"type": "char"
+			},
+			{
+				"name": "prl_key",
+				"type": "varchar"
+			},
+			{
+				"name": "prl_type_code_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "prl_period_from",
+				"type": "date"
+			},
+			{
+				"name": "prl_reason",
+				"type": "varchar"
+			},
+			{
+				"name": "prl_type_code",
+				"type": "varchar"
+			},
+			{
+				"name": "prl_ri_vessel_type",
+				"type": "varchar"
+			},
+			{
+				"name": "prl_add_cover_limit_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "prl_main_cover_limit_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "prl_paris_ipacode",
+				"type": "varchar"
+			},
+			{
+				"name": "prl_premium_days",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "top_description",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "marts",
+			"table": "dim_premium_line"
+		}
+	}
+}
