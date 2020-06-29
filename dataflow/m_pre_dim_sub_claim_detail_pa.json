@@ -1,0 +1,16 @@
+{
+	"name": "m_pre_dim_sub_claim_detail_pa",
+	"properties": {
+		"description": "Created by olseir 29.06.2020\nBased on m_pre_diom_sub_claim_detail_me in Oracle",
+		"folder": {
+			"name": "dwh_prepare/pre_dim"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
