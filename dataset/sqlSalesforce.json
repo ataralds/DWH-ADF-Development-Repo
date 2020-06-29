@@ -1,0 +1,88 @@
+{
+	"name": "sqlSalesforce",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "lablabid",
+				"type": "varchar"
+			},
+			{
+				"name": "labtime",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "lablodescr",
+				"type": "varchar"
+			},
+			{
+				"name": "labmainev",
+				"type": "varchar"
+			},
+			{
+				"name": "labomclmtype",
+				"type": "varchar"
+			},
+			{
+				"name": "labagtype",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "lablaaid",
+				"type": "varchar"
+			},
+			{
+				"name": "labbigevent",
+				"type": "varchar"
+			},
+			{
+				"name": "labknvmark",
+				"type": "varchar"
+			},
+			{
+				"name": "labportcccid",
+				"type": "varchar"
+			},
+			{
+				"name": "labevno",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "labclmsta",
+				"type": "varchar"
+			},
+			{
+				"name": "labportunlid",
+				"type": "varchar"
+			},
+			{
+				"name": "labareacd",
+				"type": "varchar"
+			},
+			{
+				"name": "labtzone",
+				"type": "varchar"
+			},
+			{
+				"name": "labclmdate",
+				"type": "date"
+			},
+			{
+				"name": "labacarea",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": ""
+		}
+	}
+}
