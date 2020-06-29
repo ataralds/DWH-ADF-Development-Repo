@@ -1,0 +1,30 @@
+{
+	"name": "m_fact_ibnr_transaction",
+	"properties": {
+		"folder": {
+			"name": "marts/fact"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "preFactIBNR"
+				},
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "preFactManAdjRBNS"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(output(\n\t\tpk_transaction_key as integer,\n\t\tnet_binary_events_usd as decimal(28,10),\n\t\tdim_capital as string,\n\t\tdim_capital_branch as string,\n\t\tdim_business_area as string,\n\t\tnet_ibnr_usd as decimal(28,10),\n\t\tdim_time_trans_date as date,\n\t\tnet_ulae_usd as decimal(28,10),\n\t\tnet_equalisation_reserve_usd as decimal(28,10),\n\t\tdim_time_incident_year as string,\n\t\tdim_time_financial_year as string,\n\t\tpoolable_ind as string,\n\t\thydra_ind as string,\n\t\tgross_equalisation_reserve_usd as decimal(28,10),\n\t\tgross_ibnr_usd as decimal(28,10),\n\t\tgross_ulae_usd as decimal(28,10),\n\t\tgross_binary_events_usd as decimal(28,10),\n\t\ttext as string,\n\t\tsource_system as string,\n\t\tdate_inserted as timestamp,\n\t\tlast_updated_by as string,\n\t\tinserted_by as string,\n\t\tdate_last_updated as timestamp,\n\t\tdim_object_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_prepare.pre_fact_ibnr',\n\tformat: 'query') ~> preFactIBNR\nsource(output(\n\t\tdim_capital_branch_key as string,\n\t\tamount_usd as decimal(28,10),\n\t\tdim_business_area_key as string,\n\t\tpoolable_ind as string,\n\t\thydra_ind as string,\n\t\tdim_time_incident_year_key as string,\n\t\tdim_time_financial_year_key as string,\n\t\tdim_time_trans_date_key as date,\n\t\tpk_pre_fact_man_rbns_adj as long,\n\t\tamount_net_usd as decimal(28,10)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_prepare.pre_fact_man_rbns_adj',\n\tformat: 'query') ~> preFactManAdjRBNS"
+		}
+	}
+}
