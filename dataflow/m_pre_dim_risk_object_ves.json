@@ -2,6 +2,9 @@
 	"name": "m_pre_dim_risk_object_ves",
 	"properties": {
 		"description": "Start testing how to make the risk_object. Starting on PA",
+		"folder": {
+			"name": "dwh_prepare/pre_dim"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
