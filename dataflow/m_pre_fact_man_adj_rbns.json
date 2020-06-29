@@ -12,12 +12,30 @@
 						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
-					"name": "agressoTrans"
+					"name": "agressoTrans",
+					"description": "ACCOUNT in ( 46503, 46506, 46603, 46507, 47503)\n   and  INOUTGRP1.DATE_TO >=  to_date('20.02.2016', 'dd.mm.rrrr')"
+				},
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "staManualResultTrans"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> agressoTrans"
+			"transformations": [
+				{
+					"name": "grossRiAmount"
+				},
+				{
+					"name": "sumAmounts"
+				},
+				{
+					"name": "netAmount"
+				}
+			],
+			"script": "source(output(\n\t\tcapital as string,\n\t\tbranch as string,\n\t\thrg as string,\n\t\tamount_usd as long,\n\t\taccount as string,\n\t\tcc_reporting_period as long,\n\t\tagr_reporting_period as long,\n\t\tdate_from as date,\n\t\tdate_to as date,\n\t\tinc_year as string,\n\t\tfin_year as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.agr_agresso_trans where account in ( 46503, 46506, 46603, 46507, 47503)',\n\tformat: 'query') ~> agressoTrans\nsource(output(\n\t\tamount_net_usd as long,\n\t\tamount_gross_usd as long,\n\t\tbranch_code as string,\n\t\tinc_year as string,\n\t\tfin_year as short,\n\t\ttransaction_date as date,\n\t\thrg as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select amount_net_usd,\\namount_gross_usd,\\nbranch_code,\\ncast(inc_year as varchar(4)) as inc_year,\\nfin_year, \\ntransaction_date,\\nhrg from\\ndwh_stage.sta_manual_result_trans',\n\tformat: 'query') ~> staManualResultTrans\nagressoTrans derive(amount_gross_usd = case(\r\n    account!='47503',\r\n    coalesce(amount_usd,0), \r\n    toLong(0)),\n\t\tamount_ri_usd = case(\r\n    account=='47503', \r\n    amount_usd, \r\n    toLong(0)\r\n    )) ~> grossRiAmount\ngrossRiAmount aggregate(groupBy(branch,\n\t\thrg,\n\t\tdate_to,\n\t\tinc_year,\n\t\tfin_year),\n\tamount_gross_usd = sum(amount_gross_usd),\n\t\tamount_ri_usd = sum(amount_ri_usd)) ~> sumAmounts\nsumAmounts derive(amount_net_usd = coalesce(amount_gross_usd,0)+coalesce(amount_ri_usd,0)) ~> netAmount"
 		}
 	}
 }
