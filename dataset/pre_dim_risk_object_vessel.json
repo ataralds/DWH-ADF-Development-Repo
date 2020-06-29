@@ -141,15 +141,13 @@
 			},
 			{
 				"name": "rob_tonnage_gross",
-				"type": "decimal",
-				"precision": 28,
-				"scale": 10
+				"type": "smallint",
+				"precision": 5
 			},
 			{
 				"name": "rob_tonnage_dw",
-				"type": "decimal",
-				"precision": 28,
-				"scale": 10
+				"type": "smallint",
+				"precision": 5
 			},
 			{
 				"name": "rob_mou_type",
