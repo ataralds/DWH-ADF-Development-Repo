@@ -1,0 +1,27 @@
+{
+	"name": "m_crossref_parent",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "mapTargetCodeParent"
+				},
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "mapCodeValues"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(output(\n\t\tmap_code_type_id as long,\n\t\ttarget_code as string,\n\t\tparent_map_code_type_id as long,\n\t\tparent_target_code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select map_code_type_id, target_code, parent_map_code_type_id, parent_target_code\\nfrom dwh_stage.map_target_code_parent',\n\tformat: 'query') ~> mapTargetCodeParent\nsource(output(\n\t\tmap_code_val_id as long,\n\t\ttarget_table_id as long,\n\t\tmap_code_type_id as long,\n\t\tsource_tab_col_id as long,\n\t\tsource_code_action as string,\n\t\tactive_flag as string,\n\t\tom_x_ref as string,\n\t\tsource_code_field2 as string,\n\t\tsource_code_field2_value as string,\n\t\tsource_code_table as string,\n\t\tsource_code_descr as string,\n\t\tmap_rule as string,\n\t\tsource_code_field3_value as string,\n\t\tcreated_by as string,\n\t\tgard_comments as string,\n\t\ttarget_short_descr as string,\n\t\tsource_table2_id as long,\n\t\tintech_comments as string,\n\t\tsource_code_field1 as string,\n\t\tpredefined_om_code as string,\n\t\tsource_code_field4 as string,\n\t\ttarget_long_descr as string,\n\t\tsource_code_field1_value as string,\n\t\tcode2 as string,\n\t\ttarget_code as string,\n\t\tsource_code_field3 as string,\n\t\tmodified_date as date,\n\t\tsource_code_field4_value as string,\n\t\tmodified_by as string,\n\t\tcode2_description as string,\n\t\tsource_system as string,\n\t\tsource_code_key as string,\n\t\tcreated_date as date,\n\t\tsource_table_id as long,\n\t\tmap_code_status as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * \\nfrom dwh_stage.map_code_values',\n\tformat: 'query') ~> mapCodeValues"
+		}
+	}
+}
