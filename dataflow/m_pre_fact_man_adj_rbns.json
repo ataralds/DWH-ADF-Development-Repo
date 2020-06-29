@@ -8,12 +8,16 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"name": "source1"
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "agressoTrans"
 				}
 			],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> agressoTrans"
 		}
 	}
 }
