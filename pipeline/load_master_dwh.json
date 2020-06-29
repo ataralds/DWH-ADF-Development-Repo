@@ -3,6 +3,19 @@
 	"properties": {
 		"activities": [
 			{
+				"name": "load_stage_common",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "load_stage_common",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
 				"name": "load_pre_dim",
 				"type": "ExecutePipeline",
 				"dependsOn": [
@@ -23,81 +36,23 @@
 				}
 			},
 			{
-				"name": "load_stage_common",
-				"type": "ExecutePipeline",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "load_stage_common",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "load_dim",
+				"name": "pipeline_error_handling",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "load_pre_dim",
+						"activity": "load_stage_common",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					}
 				],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "load_dim",
+						"referenceName": "pipeline_error_handling",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "load_trans_daily",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "load_dim",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "load_trans_daily",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "pipeline_send_email",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "load_trans_daily",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "pipeline_send_email",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"pPipelineName": "load_master_dwh",
-						"pEmailSubject": "Azure DWH Alert ! load_master_dwh completed successfully",
-						"pEmailBody": " load_master_dwh completed successfully"
-					}
 				}
 			}
 		],

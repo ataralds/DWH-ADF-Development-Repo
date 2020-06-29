@@ -32,7 +32,7 @@
 			}
 		],
 		"folder": {
-			"name": "mappings/marts/dim/fact"
+			"name": "mappings/marts/fact"
 		},
 		"annotations": []
 	}
