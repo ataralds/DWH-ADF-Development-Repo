@@ -5,6 +5,9 @@
 			"referenceName": "sql_server_development_connection",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "dwh_prepare_sql/pre_dim"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [

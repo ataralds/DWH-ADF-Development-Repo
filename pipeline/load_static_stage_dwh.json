@@ -16,36 +16,6 @@
 				}
 			},
 			{
-				"name": "error_handling",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "copy_static_to_sql",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "pipeline_error_handling",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"pPipelineName": {
-							"value": "copy_static_to_sql",
-							"type": "Expression"
-						},
-						"pPipelineErrorMsg": {
-							"value": "@activity('copy_static_to_sql').error.message",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
 				"name": "error_handling_copy1",
 				"type": "ExecutePipeline",
 				"dependsOn": [
@@ -76,16 +46,83 @@
 				}
 			},
 			{
-				"name": "copy_static_to_sql",
+				"name": "copy_mapsys_to_sql",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "copy_static_to_sql",
+						"referenceName": "copy_mapsys_to_sql",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pipeline_error_handling",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "copy_mapsys_to_sql",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "copy_mapsys_to_sql",
+						"pPipelineErrorMsg": {
+							"value": "@activity('copy_mapsys_to_sql').error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "load_stage_exact_table",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "load_stage_exact_table",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pipeline_error_handling1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_stage_exact_table",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_error_handling",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pPipelineName": "load_stage_exact_table",
+						"pPipelineErrorMsg": {
+							"value": "@activity('load_stage_exact_table').error.message",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],

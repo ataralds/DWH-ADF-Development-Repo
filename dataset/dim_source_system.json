@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "marts_sql"
+			"name": "marts_sql/dim"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
