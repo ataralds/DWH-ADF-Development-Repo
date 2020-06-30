@@ -27,6 +27,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "mappings/dwh_prepare/pre dim"
+		},
 		"annotations": []
 	}
 }
