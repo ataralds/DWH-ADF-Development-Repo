@@ -1,9 +1,9 @@
 {
-	"name": "m_fact_exch_rate",
+	"name": "m_pre_dim_personal_ledger",
 	"properties": {
 		"activities": [
 			{
-				"name": "m_fact_exch_rate",
+				"name": "m_pre_dim_personal_ledger",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,18 +16,18 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_fact_exch_rate",
+						"referenceName": "m_pre_dim_personal_ledger",
 						"type": "DataFlowReference"
 					},
-					"integrationRuntime": {
-						"referenceName": "IrExecutePipeline",
-						"type": "IntegrationRuntimeReference"
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
 					}
 				}
 			}
 		],
 		"folder": {
-			"name": "mappings/marts/fact"
+			"name": "mappings/dwh_prepare/pre dim"
 		},
 		"annotations": []
 	}
