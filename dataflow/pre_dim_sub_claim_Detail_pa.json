@@ -1,0 +1,16 @@
+{
+	"name": "pre_dim_sub_claim_Detail_pa",
+	"properties": {
+		"description": "Created by olseir 30.06.2020\nMOve",
+		"folder": {
+			"name": "dwh_prepare/pre_dim"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
