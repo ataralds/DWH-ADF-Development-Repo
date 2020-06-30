@@ -1,14 +1,9 @@
 {
-	"name": "Other",
+	"name": "Other_copy1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dwhdatalakedevelopment",
 			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"fileName": {
-				"type": "string"
-			}
 		},
 		"folder": {
 			"name": "Copy job/dwh-stage/Other"
@@ -18,7 +13,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "@dataset().fileName",
 				"folderPath": "Other",
 				"fileSystem": "dwh-stage"
 			},
