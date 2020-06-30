@@ -1,5 +1,5 @@
 {
-	"name": "pre_dim_risk_object_main2",
+	"name": "pre_dim_risk_object_main",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_server_development_connection",
