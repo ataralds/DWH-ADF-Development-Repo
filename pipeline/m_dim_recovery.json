@@ -2,6 +2,31 @@
 	"name": "m_dim_recovery",
 	"properties": {
 		"description": "created by olseir, 30.06.2020",
+		"activities": [
+			{
+				"name": "dim_recovery",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dim_recovery",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
+			}
+		],
 		"folder": {
 			"name": "mappings/marts/dim"
 		},
