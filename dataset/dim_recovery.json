@@ -1,0 +1,95 @@
+{
+	"name": "dim_recovery",
+	"properties": {
+		"description": "created by olseir 30.06.2020",
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "dimension_key",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "rec_possible_rec_comments",
+				"type": "varchar"
+			},
+			{
+				"name": "rec_litigation_code",
+				"type": "varchar"
+			},
+			{
+				"name": "rec_key",
+				"type": "varchar"
+			},
+			{
+				"name": "rec_possible_recovery_ind",
+				"type": "char"
+			},
+			{
+				"name": "rec_litigation_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "rec_reason_for_no_rec_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "rec_strategy_partner_ind",
+				"type": "char"
+			},
+			{
+				"name": "rec_actual_rec_comments",
+				"type": "varchar"
+			},
+			{
+				"name": "rec_obtained_guarantee_ind",
+				"type": "char"
+			},
+			{
+				"name": "rec_ind_pending",
+				"type": "char"
+			},
+			{
+				"name": "rec_actual_rec_initials",
+				"type": "varchar"
+			},
+			{
+				"name": "rec_description",
+				"type": "varchar"
+			},
+			{
+				"name": "rec_actual_rec_reminder_date",
+				"type": "date"
+			},
+			{
+				"name": "rec_actual_rec_date",
+				"type": "date"
+			},
+			{
+				"name": "top_key",
+				"type": "varchar"
+			},
+			{
+				"name": "rec_reason_for_no_rec_code",
+				"type": "varchar"
+			},
+			{
+				"name": "top_description",
+				"type": "varchar"
+			},
+			{
+				"name": "rec_actual_rec_ind",
+				"type": "char"
+			}
+		],
+		"typeProperties": {
+			"schema": "marts",
+			"table": "dim_recovery"
+		}
+	}
+}
