@@ -16,9 +16,24 @@
 					"name": "PreDimRecovery"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
-			"script": "source(output(\n\t\trec_key as string,\n\t\trec_strategy_partner_ind as string,\n\t\tdate_inserted as timestamp,\n\t\tdate_last_updated as timestamp,\n\t\trec_ind_pending as string,\n\t\trec_actual_rec_comments as string,\n\t\trec_actual_rec_date as date,\n\t\trec_actual_rec_ind as string,\n\t\trec_actual_rec_initials as string,\n\t\trec_actual_rec_reminder_date as date,\n\t\trec_litigation_code as string,\n\t\trec_litigation_desc as string,\n\t\trec_obtained_guarantee_ind as string,\n\t\trec_possible_recovery_ind as string,\n\t\trec_reason_for_no_rec_code as string,\n\t\trec_reason_for_no_rec_desc as string,\n\t\trec_possible_rec_comments as string,\n\t\tinserted_by as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_prepare.pre_dim_recovery',\n\tformat: 'query') ~> PreDimRecovery"
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dim_recovery",
+						"type": "DatasetReference"
+					},
+					"name": "DimRecovery"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AddConstants"
+				},
+				{
+					"name": "AlterRow1"
+				}
+			],
+			"script": "source(output(\n\t\trec_key as string,\n\t\trec_strategy_partner_ind as string,\n\t\tdate_inserted as timestamp,\n\t\tdate_last_updated as timestamp,\n\t\trec_ind_pending as string,\n\t\trec_actual_rec_comments as string,\n\t\trec_actual_rec_date as date,\n\t\trec_actual_rec_ind as string,\n\t\trec_actual_rec_initials as string,\n\t\trec_actual_rec_reminder_date as date,\n\t\trec_litigation_code as string,\n\t\trec_litigation_desc as string,\n\t\trec_obtained_guarantee_ind as string,\n\t\trec_possible_recovery_ind as string,\n\t\trec_reason_for_no_rec_code as string,\n\t\trec_reason_for_no_rec_desc as string,\n\t\trec_possible_rec_comments as string,\n\t\tinserted_by as string,\n\t\tlast_updated_by as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_prepare.pre_dim_recovery',\n\tformat: 'query') ~> PreDimRecovery\nPreDimRecovery derive(top_key = 'ALL',\n\t\ttop_description = 'All Recoveries') ~> AddConstants\nAddConstants alterRow(upsertIf(!isNull(rec_key))) ~> AlterRow1\nAlterRow1 sink(input(\n\t\tdimension_key as long,\n\t\trec_possible_rec_comments as string,\n\t\trec_litigation_code as string,\n\t\trec_key as string,\n\t\trec_possible_recovery_ind as string,\n\t\trec_litigation_desc as string,\n\t\trec_reason_for_no_rec_desc as string,\n\t\trec_strategy_partner_ind as string,\n\t\trec_actual_rec_comments as string,\n\t\trec_obtained_guarantee_ind as string,\n\t\trec_ind_pending as string,\n\t\trec_actual_rec_initials as string,\n\t\trec_description as string,\n\t\trec_actual_rec_reminder_date as date,\n\t\trec_actual_rec_date as date,\n\t\ttop_key as string,\n\t\trec_reason_for_no_rec_code as string,\n\t\ttop_description as string,\n\t\trec_actual_rec_ind as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['rec_key'],\n\tformat: 'table',\n\tmapColumn(\n\t\trec_possible_rec_comments,\n\t\trec_litigation_code,\n\t\trec_key,\n\t\trec_possible_recovery_ind,\n\t\trec_litigation_desc,\n\t\trec_reason_for_no_rec_desc,\n\t\trec_strategy_partner_ind,\n\t\trec_actual_rec_comments,\n\t\trec_obtained_guarantee_ind,\n\t\trec_ind_pending,\n\t\trec_actual_rec_initials,\n\t\trec_actual_rec_reminder_date,\n\t\trec_actual_rec_date,\n\t\ttop_key,\n\t\trec_reason_for_no_rec_code,\n\t\ttop_description,\n\t\trec_actual_rec_ind\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DimRecovery"
 		}
 	}
 }
