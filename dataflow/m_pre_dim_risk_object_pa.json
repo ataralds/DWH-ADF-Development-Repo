@@ -131,7 +131,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "pre_dim_risk_object_main2",
+						"referenceName": "pre_dim_risk_object_main",
 						"type": "DatasetReference"
 					},
 					"name": "PreDimRiskObjectPa"
