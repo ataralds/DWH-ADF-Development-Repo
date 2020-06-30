@@ -1,9 +1,9 @@
 {
-	"name": "m_fact_exch_rate",
+	"name": "m_pre_fact_trading_certif_pa",
 	"properties": {
 		"activities": [
 			{
-				"name": "m_fact_exch_rate",
+				"name": "m_pre_fact_trading_certi_pa",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,23 +16,18 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_fact_exch_rate",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"dimTime": {
-								"fileName": "\"sta_dim_time\""
-							}
-						}
+						"referenceName": "m_pre_fact_trading_certi_pa",
+						"type": "DataFlowReference"
 					},
-					"integrationRuntime": {
-						"referenceName": "IrExecutePipeline",
-						"type": "IntegrationRuntimeReference"
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
 					}
 				}
 			}
 		],
 		"folder": {
-			"name": "mappings/marts/fact"
+			"name": "mappings/dwh_prepare/pre_fact"
 		},
 		"annotations": []
 	}

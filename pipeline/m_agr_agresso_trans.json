@@ -1,9 +1,9 @@
 {
-	"name": "m_fact_exch_rate",
+	"name": "m_agr_agresso_trans",
 	"properties": {
 		"activities": [
 			{
-				"name": "m_fact_exch_rate",
+				"name": "m_agresso_trans",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,23 +16,18 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_fact_exch_rate",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"dimTime": {
-								"fileName": "\"sta_dim_time\""
-							}
-						}
+						"referenceName": "m_agresso_trans",
+						"type": "DataFlowReference"
 					},
-					"integrationRuntime": {
-						"referenceName": "IrExecutePipeline",
-						"type": "IntegrationRuntimeReference"
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
 					}
 				}
 			}
 		],
 		"folder": {
-			"name": "mappings/marts/fact"
+			"name": "mappings/dwh_stage"
 		},
 		"annotations": []
 	}

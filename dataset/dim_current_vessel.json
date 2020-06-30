@@ -1,5 +1,5 @@
 {
-	"name": "dim_source_system",
+	"name": "dim_current_vessel",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_server_development_connection",
@@ -17,35 +17,45 @@
 				"precision": 19
 			},
 			{
-				"name": "top_key",
+				"name": "ves_vessel_name_me",
 				"type": "varchar"
 			},
 			{
-				"name": "sou_id",
-				"type": "bigint",
-				"precision": 19
-			},
-			{
-				"name": "sou_description",
+				"name": "ves_vessel_name",
 				"type": "varchar"
 			},
 			{
-				"name": "top_description",
+				"name": "all_description",
 				"type": "varchar"
 			},
 			{
-				"name": "top_id",
-				"type": "bigint",
-				"precision": 19
+				"name": "ves_imono",
+				"type": "varchar"
 			},
 			{
-				"name": "sou_key",
+				"name": "ves_gic_key",
+				"type": "varchar"
+			},
+			{
+				"name": "ves_vessel_name_pi",
+				"type": "varchar"
+			},
+			{
+				"name": "all_key",
+				"type": "varchar"
+			},
+			{
+				"name": "ves_key",
+				"type": "varchar"
+			},
+			{
+				"name": "ves_paris_key",
 				"type": "varchar"
 			}
 		],
 		"typeProperties": {
 			"schema": "marts",
-			"table": "dim_source_system"
+			"table": "dim_current_vessel"
 		}
 	}
 }

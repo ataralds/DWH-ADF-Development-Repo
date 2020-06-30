@@ -3,118 +3,24 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "load_static_stage_dwh",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "copy_mapsys_to_sql",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "load_static_stage_dwh",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "copy_exact_to_sql",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "load_static_stage_dwh",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "copy_exact_to_sql",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "error_handling",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "copy_exact_to_sql",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "pipeline_error_handling",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"pPipelineName": "copy_exact_to_sql",
-						"pPipelineErrorMsg": {
-							"value": "@activity('copy_exact_to_sql').error.message",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "error_handling_copy1",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "load_static_stage_dwh",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "pipeline_error_handling",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"pPipelineName": "load_static_stage_dwh",
-						"pPipelineErrorMsg": {
-							"value": "@activity('load_static_stage_dwh').error.message",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "Initialize_pipeline",
+				"name": "initialize_pipeline",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "Initialize_pipeline",
+						"referenceName": "initialize_pipeline",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
 				}
 			},
 			{
-				"name": "load_master_pre_paris",
+				"name": "load_master_pre",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "Initialize_pipeline",
+						"activity": "initialize_pipeline",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -123,30 +29,43 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "load_master_pre_paris",
+						"referenceName": "load_master_pre",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
 				}
 			},
 			{
-				"name": "copy_mapsys_to_sql",
-				"type": "ExecutePipeline",
+				"name": "UpdateExchangeRteLoadStatus",
+				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "load_master_pre_paris",
+						"activity": "load_master_pre",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
 				"userProperties": [],
 				"typeProperties": {
-					"pipeline": {
-						"referenceName": "copy_mapsys_to_sql",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
+					"storedProcedureName": "[adf_audit].[prc_audit_pipeline_progress_status]",
+					"storedProcedureParameters": {
+						"pPipelineId": {
+							"value": "2",
+							"type": "Int16"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "sql_server_development_connection",
+					"type": "LinkedServiceReference"
 				}
 			},
 			{
@@ -154,7 +73,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "copy_mapsys_to_sql",
+						"activity": "initialize_pipeline",
 						"dependencyConditions": [
 							"Failed"
 						]
@@ -168,9 +87,9 @@
 					},
 					"waitOnCompletion": true,
 					"parameters": {
-						"pPipelineName": "copy_mapsys_to_sql",
+						"pPipelineName": "initialize_pipeline",
 						"pPipelineErrorMsg": {
-							"value": "@activity('copy_mapsys_to_sql').error.message",
+							"value": "@activity('initialize_pipeline').error.message",
 							"type": "Expression"
 						}
 					}
