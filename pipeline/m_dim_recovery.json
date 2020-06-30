@@ -1,0 +1,10 @@
+{
+	"name": "m_dim_recovery",
+	"properties": {
+		"description": "created by olseir, 30.06.2020",
+		"folder": {
+			"name": "mappings/marts/dim"
+		},
+		"annotations": []
+	}
+}
