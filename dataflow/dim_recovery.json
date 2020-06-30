@@ -1,0 +1,16 @@
+{
+	"name": "dim_recovery",
+	"properties": {
+		"description": "Created by olseir 30.06.2020",
+		"folder": {
+			"name": "marts/dim"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
