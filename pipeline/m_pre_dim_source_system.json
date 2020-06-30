@@ -17,12 +17,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_pre_dim_source_system",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"StaSourceSystem": {
-								"fileName": "\"sta_source_system\""
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
 						"referenceName": "IrExecutePipeline",
