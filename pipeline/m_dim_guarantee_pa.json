@@ -1,9 +1,9 @@
 {
-	"name": "m_pre_dim_sub_claim_pa",
+	"name": "m_dim_guarantee_pa",
 	"properties": {
 		"activities": [
 			{
-				"name": "m_pre_dim_sub_claim_pa",
+				"name": "m_dim_guarantee_pa",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_sub_claim_pa",
+						"referenceName": "m_dim_guarantee_pa",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -27,7 +27,7 @@
 			}
 		],
 		"folder": {
-			"name": "mappings/dwh_prepare/pre dim"
+			"name": "mappings/marts/dim"
 		},
 		"annotations": []
 	}

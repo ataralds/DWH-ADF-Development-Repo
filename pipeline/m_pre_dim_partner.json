@@ -1,9 +1,9 @@
 {
-	"name": "m_pre_dim_sub_claim_pa",
+	"name": "m_pre_dim_partner",
 	"properties": {
 		"activities": [
 			{
-				"name": "m_pre_dim_sub_claim_pa",
+				"name": "m_pre_dim_partner_me",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "m_pre_dim_sub_claim_pa",
+						"referenceName": "m_pre_dim_partner_me",
 						"type": "DataFlowReference"
 					},
 					"compute": {
