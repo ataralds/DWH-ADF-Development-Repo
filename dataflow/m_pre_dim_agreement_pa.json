@@ -23,7 +23,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "pebtable",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "ppebtable"
