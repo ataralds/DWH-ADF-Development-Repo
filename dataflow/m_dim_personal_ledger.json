@@ -1,0 +1,16 @@
+{
+	"name": "m_dim_personal_ledger",
+	"properties": {
+		"description": "Created by olseir, 01.07.2020.\nBased on dim_reskonto_details in Oracle",
+		"folder": {
+			"name": "marts/dim"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
