@@ -1,0 +1,68 @@
+{
+	"name": "fact_trading_certificate",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "marts_sql/fact"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "trading_certificate_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_coverage",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_current_vessel",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_partner",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "trading_certificate_type",
+				"type": "varchar"
+			},
+			{
+				"name": "date_valid_from",
+				"type": "date"
+			},
+			{
+				"name": "section",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "date_valid_to",
+				"type": "date"
+			},
+			{
+				"name": "dm_number",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_capital_branch",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "marts",
+			"table": "fact_trading_certificate"
+		}
+	}
+}

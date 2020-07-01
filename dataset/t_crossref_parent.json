@@ -1,0 +1,35 @@
+{
+	"name": "t_crossref_parent",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "code_type_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "target_code",
+				"type": "varchar"
+			},
+			{
+				"name": "parent_code_type_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "parent_target_code",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": "t_crossref_parent"
+		}
+	}
+}
