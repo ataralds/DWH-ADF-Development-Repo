@@ -1,0 +1,49 @@
+{
+	"name": "hlp_exchange_rate_to_usd",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "exchange_rate",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "from_currency_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "from_currency_code",
+				"type": "char"
+			},
+			{
+				"name": "to_currency_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "exchange_to_date",
+				"type": "date"
+			},
+			{
+				"name": "to_currency_code",
+				"type": "char"
+			},
+			{
+				"name": "exchange_from_date",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_stage",
+			"table": "hlp_exchange_rate_to_usd"
+		}
+	}
+}
