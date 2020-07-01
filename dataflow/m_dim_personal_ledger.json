@@ -7,10 +7,18 @@
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "PreDimPersonlLedger"
+				}
+			],
 			"sinks": [],
 			"transformations": [],
-			"script": ""
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_prepare.pre_dim_personal_ledger',\n\tformat: 'query') ~> PreDimPersonlLedger"
 		}
 	}
 }
