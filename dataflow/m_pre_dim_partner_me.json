@@ -9,80 +9,108 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "Paris",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
-					"name": "paa"
+					"name": "paatable"
 				},
 				{
 					"dataset": {
-						"referenceName": "Paris",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
-					"name": "pea"
+					"name": "peatable"
 				},
 				{
 					"dataset": {
-						"referenceName": "Paris",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
-					"name": "peb"
+					"name": "pebtable"
 				},
 				{
 					"dataset": {
-						"referenceName": "Paris",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
-					"name": "pez"
+					"name": "peztable"
 				},
 				{
 					"dataset": {
-						"referenceName": "Paris",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "qtbtable"
 				},
 				{
 					"dataset": {
-						"referenceName": "Paris",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "crctable"
 				},
 				{
 					"dataset": {
-						"referenceName": "Other",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "tcrossreference"
 				},
 				{
 					"dataset": {
-						"referenceName": "Paris",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "pectable"
 				},
 				{
 					"dataset": {
-						"referenceName": "Paris",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "cbsttable"
 				},
 				{
 					"dataset": {
-						"referenceName": "Paris",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "cbstable2"
 				},
 				{
 					"dataset": {
-						"referenceName": "Oltp05",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "SfCompany"
+				},
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "sfcompanytop"
+				},
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "ExternalLeiCode"
+				},
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "RespPI"
+				},
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "RespME"
 				}
 			],
 			"sinks": [
@@ -91,7 +119,7 @@
 						"referenceName": "pre_dim_partner",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "PreDimPartner"
 				}
 			],
 			"transformations": [
@@ -102,13 +130,7 @@
 					"name": "pebmaxpeb"
 				},
 				{
-					"name": "pebdunco"
-				},
-				{
-					"name": "Prtstatusjoin"
-				},
-				{
-					"name": "peatable"
+					"name": "pebqtb"
 				},
 				{
 					"name": "Prtstatus"
@@ -117,13 +139,10 @@
 					"name": "prtpea"
 				},
 				{
-					"name": "crcselected"
-				},
-				{
 					"name": "peacrc"
 				},
 				{
-					"name": "paatable"
+					"name": "paatable1"
 				},
 				{
 					"name": "Paafiltered"
@@ -132,55 +151,34 @@
 					"name": "crcpaa"
 				},
 				{
-					"name": "peztable"
-				},
-				{
 					"name": "paapez"
 				},
 				{
 					"name": "lookupState"
 				},
 				{
-					"name": "pebtable"
-				},
-				{
-					"name": "Expression1"
-				},
-				{
-					"name": "Select1"
+					"name": "Expressions"
 				},
 				{
 					"name": "lookupCapital"
 				},
 				{
-					"name": "Select2"
-				},
-				{
 					"name": "lookupCompSubtype"
-				},
-				{
-					"name": "Select3"
 				},
 				{
 					"name": "lookupCountry"
 				},
 				{
-					"name": "Select4"
-				},
-				{
 					"name": "lookupContractType"
-				},
-				{
-					"name": "Select5"
 				},
 				{
 					"name": "DerivedColumn1"
 				},
 				{
-					"name": "Lookup2"
+					"name": "RatingCompany"
 				},
 				{
-					"name": "partner"
+					"name": "StreamPartner"
 				},
 				{
 					"name": "DerivedColumn3"
@@ -210,16 +208,85 @@
 					"name": "country"
 				},
 				{
-					"name": "Select8"
-				},
-				{
-					"name": "selectedcolumns"
+					"name": "Partner"
 				},
 				{
 					"name": "compsubtype"
+				},
+				{
+					"name": "pebpeoopeaid"
+				},
+				{
+					"name": "XrefState"
+				},
+				{
+					"name": "XrefCapital"
+				},
+				{
+					"name": "XrefCountry"
+				},
+				{
+					"name": "XrefCompSubType"
+				},
+				{
+					"name": "LookupRatingComp"
+				},
+				{
+					"name": "CompTopJoin"
+				},
+				{
+					"name": "SFCompanyFlow"
+				},
+				{
+					"name": "PartnerCompany"
+				},
+				{
+					"name": "CompLei"
+				},
+				{
+					"name": "LeiPI"
+				},
+				{
+					"name": "LeiME"
+				},
+				{
+					"name": "AccResPI"
+				},
+				{
+					"name": "AccResME"
+				},
+				{
+					"name": "DerivedColumn5"
+				},
+				{
+					"name": "SfCompanyTopFinal"
+				},
+				{
+					"name": "Select1"
+				},
+				{
+					"name": "PartnerRole"
+				},
+				{
+					"name": "XrefPartnerRole"
+				},
+				{
+					"name": "PartRole"
+				},
+				{
+					"name": "area"
+				},
+				{
+					"name": "XrefArea"
+				},
+				{
+					"name": "Areas"
+				},
+				{
+					"name": "AlterRow1"
 				}
 			],
-			"script": "source(output(\n\t\tpaabusncla as decimal(38,18),\n\t\tpaabusnsec as decimal(38,18),\n\t\tpaacaddrcountry as string,\n\t\tpaacaddress1 as string,\n\t\tpaacaddress2 as string,\n\t\tpaacaddress3 as string,\n\t\tpaacaddress4 as string,\n\t\tpaacaddress5 as string,\n\t\tpaacaddrpostal as string,\n\t\tpaaccmail as string,\n\t\tpaacfax as string,\n\t\tpaacname as string,\n\t\tpaacname2 as string,\n\t\tpaacontcname as string,\n\t\tpaacontcphone as string,\n\t\tpaacontemail as string,\n\t\tpaacontmobcphone as string,\n\t\tpaacontpeaid as decimal(38,18),\n\t\tpaacphone as string,\n\t\tpaactelex as string,\n\t\tpaafunct as decimal(38,18),\n\t\tpaaintnet as string,\n\t\tpaaintnote as string,\n\t\tpaalcname as string,\n\t\tpaalongname as string,\n\t\tpaamail as string,\n\t\tpaapeaid as decimal(38,18),\n\t\tpaarevcname as string,\n\t\tpaascname as string,\n\t\tpaaspbusndiv as decimal(38,18),\n\t\tpaawww as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> paa\nsource(output(\n\t\tpeaaaddbo as decimal(38,18),\n\t\tpeaaccaddynsw as string,\n\t\tpeaaclmadv as decimal(38,18),\n\t\tpeaaclmbo as decimal(38,18),\n\t\tpeaaclobo as decimal(38,18),\n\t\tpeaacorbo as decimal(38,18),\n\t\tpeaaddbor as decimal(38,18),\n\t\tpeaaddmailfreq as decimal(38,18),\n\t\tpeaalternatepayer as decimal(38,18),\n\t\tpeaaprobo as decimal(38,18),\n\t\tpeabirtno as string,\n\t\tpeabirtws as decimal(38,18),\n\t\tpeacalamt as decimal(38,18),\n\t\tpeacalcurr as string,\n\t\tpeaccint as string,\n\t\tpeaccintr as decimal(38,18),\n\t\tpeacclamt as decimal(38,18),\n\t\tpeacclcurr as string,\n\t\tpeaccode as decimal(38,18),\n\t\tpeaclamailfreq as decimal(38,18),\n\t\tpeaclmadv as decimal(38,18),\n\t\tpeaclmbor as decimal(38,18),\n\t\tpeaclmintynsw as string,\n\t\tpeaclmmailfreq as decimal(38,18),\n\t\tpeaclobor as decimal(38,18),\n\t\tpeaclomet as decimal(38,18),\n\t\tpeaclosmailfreq as decimal(38,18),\n\t\tpeacolid as string,\n\t\tpeacomp2 as decimal(38,18),\n\t\tpeacorbo as decimal(38,18),\n\t\tpeacorrmailfreq as decimal(38,18),\n\t\tpeacrdate as timestamp,\n\t\tpeacrmid as decimal(38,18),\n\t\tpeacrsign as string,\n\t\tpeacruser as decimal(38,18),\n\t\tpeacustomerid as string,\n\t\tpeadueday as decimal(38,18),\n\t\tpeaendate as timestamp,\n\t\tpeaextid as string,\n\t\tpeaextid2 as string,\n\t\tpeaexttransfer as string,\n\t\tpeaexttransfer2 as string,\n\t\tpeafromcomp as decimal(38,18),\n\t\tpeaie2busndiv as decimal(38,18),\n\t\tpeaie2busnse as decimal(38,18),\n\t\tpeaie3busndiv as decimal(38,18),\n\t\tpeaie3busnse as decimal(38,18),\n\t\tpeaiebusndiv as decimal(38,18),\n\t\tpeaiebusnse as decimal(38,18),\n\t\tpeaiecon1 as decimal(38,18),\n\t\tpeaiecon2 as decimal(38,18),\n\t\tpeaiecon3 as decimal(38,18),\n\t\tpeaiecon4 as decimal(38,18),\n\t\tpeaiecon5 as decimal(38,18),\n\t\tpeaiecond as string,\n\t\tpeaiediv as string,\n\t\tpeaieint as string,\n\t\tpeaieint1 as string,\n\t\tpeaieint2 as string,\n\t\tpeaieint3 as string,\n\t\tpeaieint4 as string,\n\t\tpeaieint5 as string,\n\t\tpeaiesect as string,\n\t\tpeaincreday as decimal(38,18),\n\t\tpeaingiro as decimal(38,18),\n\t\tpeaingiroludate as timestamp,\n\t\tpeaingirolusign as string,\n\t\tpeaingirono as string,\n\t\tpeainvisible as string,\n\t\tpeaiselectronic as string,\n\t\tpeaiyear as decimal(38,18),\n\t\tpeaknvmark as string,\n\t\tpealang2 as string,\n\t\tpealeicode as string,\n\t\tpealudate as timestamp,\n\t\tpealusign as string,\n\t\tpealuuser as decimal(38,18),\n\t\tpeamailcndnsplit as string,\n\t\tpeamailsizemb as decimal(38,18),\n\t\tpeamailuseservadress as string,\n\t\tpeamasked as string,\n\t\tpeamaxper as decimal(38,18),\n\t\tpeamdescr as string,\n\t\tpeamexamt as decimal(38,18),\n\t\tpeamexcdate as timestamp,\n\t\tpeamexcurr as string,\n\t\tpeamexpro as decimal(38,18),\n\t\tpeanopdue as decimal(38,18),\n\t\tpeanopurr as string,\n\t\tpeanotaco as decimal(38,18),\n\t\tpeanotdays as decimal(38,18),\n\t\tpeanotlay as decimal(38,18),\n\t\tpeanotsort as decimal(38,18),\n\t\tpeaorgno as string,\n\t\tpeaorigmemberfrom as decimal(38,18),\n\t\tpeaoutcreday as decimal(38,18),\n\t\tpeaoutgiro as decimal(38,18),\n\t\tpeaoutgiroludate as timestamp,\n\t\tpeaoutgirolusign as string,\n\t\tpeaoutgirono as string,\n\t\tpeapeaid as decimal(38,18),\n\t\tpeapersid as string,\n\t\tpeapersrfl as decimal(38,18),\n\t\tpeapibregsign as string,\n\t\tpeaprobor as decimal(38,18),\n\t\tpeaprovmailfreq as decimal(38,18),\n\t\tpeapurtyp as decimal(38,18),\n\t\tpearesdat as timestamp,\n\t\tpeasex as string,\n\t\tpeastaamt as decimal(38,18),\n\t\tpeastaniv as decimal(38,18),\n\t\tpeastatyp as decimal(38,18),\n\t\tpeastdate as timestamp,\n\t\tpeastensw as decimal(38,18),\n\t\tpeastopcod as decimal(38,18),\n\t\tpeastoppremnote as string,\n\t\tpeastopuse as string,\n\t\tpeasttniv as decimal(38,18),\n\t\tpeasttprmclm as decimal(38,18),\n\t\tpeasubtype as decimal(38,18),\n\t\tpeasw10 as string,\n\t\tpeaswink as decimal(38,18),\n\t\tpeaswrun as decimal(38,18),\n\t\tpeausecolfee as string,\n\t\tpeavatno as string,\n\t\tpeavendorid as string,\n\t\tpeaxlcurr as string,\n\t\tpeaxlpoin as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> pea\nsource(output(\n\t\tpebbrdate as timestamp,\n\t\tpebcivilstatus as decimal(38,18),\n\t\tpebconbusncla as decimal(38,18),\n\t\tpebconbusndiv as decimal(38,18),\n\t\tpebconbusnsec as decimal(38,18),\n\t\tpebconcomp2 as decimal(38,18),\n\t\tpebconoffice as decimal(38,18),\n\t\tpebdistrict as string,\n\t\tpebdunco as decimal(38,18),\n\t\tpebemlcurr as string,\n\t\tpebemlmdescr as string,\n\t\tpebetcbroker as string,\n\t\tpebfortsector as decimal(38,18),\n\t\tpebforttrade as string,\n\t\tpebgeneml as decimal(38,18),\n\t\tpebgroup as decimal(38,18),\n\t\tpebhourprice as decimal(38,18),\n\t\tpebinstadynz as string,\n\t\tpebisolan as string,\n\t\tpebkycapprdate as timestamp,\n\t\tpebkycapproved as string,\n\t\tpebkyccompany as decimal(38,18),\n\t\tpebkyccompdescr as string,\n\t\tpebkycid as string,\n\t\tpebludate as timestamp,\n\t\tpeblusign as string,\n\t\tpebmacheml as decimal(38,18),\n\t\tpebmansanctdescr as string,\n\t\tpebmansanction as string,\n\t\tpebmdescr as string,\n\t\tpebmvaynsw as string,\n\t\tpebnmisic as string,\n\t\tpebnmnyk as string,\n\t\tpeboffsanctdescr as string,\n\t\tpeboffsanction as string,\n\t\tpebonrisk as string,\n\t\tpebonriskdate as timestamp,\n\t\tpebpaylevel as decimal(38,18),\n\t\tpebpeaid as decimal(38,18),\n\t\tpebpebid as string,\n\t\tpebpeoid as string,\n\t\tpebpeoopeaid as decimal(38,18),\n\t\tpebpersacc as decimal(38,18),\n\t\tpebpever as decimal(38,18),\n\t\tpebpibregdate as timestamp,\n\t\tpebpibregsign as string,\n\t\tpebpidcname as string,\n\t\tpebpidid as decimal(38,18),\n\t\tpebpricecurr as string,\n\t\tpebqadate as timestamp,\n\t\tpebqasign as string,\n\t\tpebqastatus as string,\n\t\tpebratcod as string,\n\t\tpebratcomp as decimal(38,18),\n\t\tpebratedate as timestamp,\n\t\tpebratludate as timestamp,\n\t\tpebratsign as string,\n\t\tpebreason as string,\n\t\tpebressign as string,\n\t\tpebsitid as string,\n\t\tpebsupporter as string,\n\t\tpebtaxno as string,\n\t\tpebtypelevel as decimal(38,18),\n\t\tpebusstate as string,\n\t\tpebvaldate as timestamp,\n\t\tpebverstat as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> peb\nsource(output(\n\t\tpezdefaccrebynsw as string,\n\t\tpezdefagtnol as decimal(38,18),\n\t\tpezdefbusnbranch as decimal(38,18),\n\t\tpezdefbusncla as decimal(38,18),\n\t\tpezdefbusndiv as decimal(38,18),\n\t\tpezdefbusnsec as decimal(38,18),\n\t\tpezdefccpid as string,\n\t\tpezdefcomcod as string,\n\t\tpezdefcurr as string,\n\t\tpezdefinstcalctype as decimal(38,18),\n\t\tpezdefmortg as decimal(38,18),\n\t\tpezdefncomm as decimal(38,18),\n\t\tpezdefoffice as decimal(38,18),\n\t\tpezdeftarcodof as string,\n\t\tpezpezid as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> pez\nsource(output(\n\t\tqtbdispynsw as string,\n\t\tqtbfieldn as string,\n\t\tqtbmdescr as string,\n\t\tqtbsdescr as string,\n\t\tqtbvalue as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> qtbtable\nsource(output(\n\t\tcrcccode as decimal(38,18),\n\t\tcrccpers2 as decimal(38,18),\n\t\tcrccpers3 as decimal(38,18),\n\t\tcrccpers4 as decimal(38,18),\n\t\tcrclospro as decimal(38,18),\n\t\tcrcmdescr as string,\n\t\tcrcperinc as string,\n\t\tcrcratcod as string,\n\t\tcrcratcomp as decimal(38,18),\n\t\tcrcsdescr as string,\n\t\tcrcstopuse as string,\n\t\tcrcsw5 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> crctable\nsource(output(\n\t\tSOURCE_CODE_KEY as string,\n\t\tSOURCE_SYSTEM as string,\n\t\tTARGET_CODE as string,\n\t\tTARGET_DESCRIPTION as string,\n\t\tCODE_TYPE as string,\n\t\tCODE_TYPE_ID as double,\n\t\tCODE2 as string,\n\t\tOM_X_REF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> tcrossreference\nsource(output(\n\t\tpeccofobl as string,\n\t\tpeccofopt as decimal(38,18),\n\t\tpecconpeaid as decimal(38,18),\n\t\tpeccontyp as string,\n\t\tpecdepint as decimal(38,18),\n\t\tpecdepity as string,\n\t\tpecduedate as timestamp,\n\t\tpecextkey as string,\n\t\tpecibnrpr as decimal(38,18),\n\t\tpeciyear as decimal(38,18),\n\t\tpecmanfee as decimal(38,18),\n\t\tpecnoofyr as decimal(38,18),\n\t\tpecnoufyr as decimal(38,18),\n\t\tpecpcaid as string,\n\t\tpecpecid as decimal(38,18),\n\t\tpecprocom as decimal(38,18),\n\t\tpecprosw1 as string,\n\t\tpecprosw2 as string,\n\t\tpecsw5 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> pectable\nsource(output(\n\t\tcbsaddper as decimal(38,18),\n\t\tcbsagform as string,\n\t\tcbsaowreb as decimal(38,18),\n\t\tcbsautocl as decimal(38,18),\n\t\tcbsbusnbranch as decimal(38,18),\n\t\tcbsbusnsec as decimal(38,18),\n\t\tcbscnform as string,\n\t\tcbscrewform as string,\n\t\tcbsdefcondco as decimal(38,18),\n\t\tcbsdefpayer as string,\n\t\tcbsdnform as string,\n\t\tcbsetcpremium as string,\n\t\tcbslang2 as string,\n\t\tcbsmdescr as string,\n\t\tcbsmutual as string,\n\t\tcbspitype as string,\n\t\tcbsrefcod as string,\n\t\tcbsrenew as decimal(38,18),\n\t\tcbsrenewendrule as decimal(38,18),\n\t\tcbsrenewperiod as decimal(38,18),\n\t\tcbssdescr as string,\n\t\tcbssiidef as string,\n\t\tcbsstopuse as string,\n\t\tcbssw10 as string,\n\t\tcbstarynsw as string,\n\t\tcbstaxappl as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> cbsttable\nsource(output(\n\t\tcbsaddper as decimal(38,18),\n\t\tcbsagform as string,\n\t\tcbsaowreb as decimal(38,18),\n\t\tcbsautocl as decimal(38,18),\n\t\tcbsbusnbranch as decimal(38,18),\n\t\tcbsbusnsec as decimal(38,18),\n\t\tcbscnform as string,\n\t\tcbscrewform as string,\n\t\tcbsdefcondco as decimal(38,18),\n\t\tcbsdefpayer as string,\n\t\tcbsdnform as string,\n\t\tcbsetcpremium as string,\n\t\tcbslang2 as string,\n\t\tcbsmdescr as string,\n\t\tcbsmutual as string,\n\t\tcbspitype as string,\n\t\tcbsrefcod as string,\n\t\tcbsrenew as decimal(38,18),\n\t\tcbsrenewendrule as decimal(38,18),\n\t\tcbsrenewperiod as decimal(38,18),\n\t\tcbssdescr as string,\n\t\tcbssiidef as string,\n\t\tcbsstopuse as string,\n\t\tcbssw10 as string,\n\t\tcbstarynsw as string,\n\t\tcbstaxappl as decimal(38,18)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> cbstable2\nsource(output(\n\t\taccount_resp_me as string,\n\t\taccount_resp_pi as string,\n\t\taccount_status as string,\n\t\tclient_lost_reason as string,\n\t\tcompany_email as string,\n\t\tcompany_id as double,\n\t\tcompany_name as string,\n\t\tcompany_owner_full_name as string,\n\t\tcompany_owner_id as string,\n\t\tcountry as string,\n\t\tcuo_full_name as string,\n\t\tcuo_user_id as string,\n\t\tdate_inserted as timestamp,\n\t\tdate_updated as timestamp,\n\t\tgard_contact_id as string,\n\t\tmarket_area_code as string,\n\t\tmarket_area_description as string,\n\t\tmarket_area_id as string,\n\t\tparent_company_id as double,\n\t\tparent_company_name as string,\n\t\tparis_gic_id as double,\n\t\tprimary_contact_email as string,\n\t\tprimary_contact_name as string,\n\t\tsf_last_updated_date as timestamp,\n\t\tsource_system as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> SfCompany\npeb aggregate(groupBy(pebpeaid = pebpeaid),\n\tMAXPEBPEVER = max(pebpever)) ~> maxpeb\npebtable, maxpeb join(pebtable@pebpeaid == maxpeb@pebpeaid\n\t&& pebpever == MAXPEBPEVER,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> pebmaxpeb\nqtbtable filter(qtbfieldn=='pebdunco') ~> pebdunco\npebmaxpeb, pebdunco join(pebdunco == toInteger(qtbvalue),\n\tjoinType:'left',\n\tbroadcast: 'auto')~> Prtstatusjoin\npea select(mapColumn(\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> peatable\nPrtstatusjoin select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid = {pebtable@pebpeaid},\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever = pebpever,\n\t\tpebdunco,\n\t\tpebpeaid = {maxpeb@pebpeaid},\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN = qtbfieldn,\n\t\tQTBVALUE = qtbvalue,\n\t\tQTBMDESCR = qtbmdescr,\n\t\tQTBSDESCR = qtbsdescr,\n\t\tQTBDISPYNSW = qtbdispynsw\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Prtstatus\nPrtstatus, peatable join(pebpeaid == peapeaid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> prtpea\ncrctable select(mapColumn(\n\t\tcrcratcod,\n\t\tcrcmdescr\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> crcselected\nprtpea, crcselected join(pebratcod == crcratcod,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> peacrc\npaa select(mapColumn(\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> paatable\npaatable filter(iifNull(paafunct,0) ==0) ~> Paafiltered\npeacrc, Paafiltered join(peapeaid == paapeaid,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> crcpaa\npez select(mapColumn(\n\t\tpezpezid,\n\t\tpezdefbusnbranch\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> peztable\ncrcpaa, peztable join(peapeaid == pezpezid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> paapez\nExpression1, state lookup(pebtaxno == SOURCE_CODE_KEY,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lookupState\npeb select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tpebpever,\n\t\tpebdunco\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> pebtable\npaapez derive(Key = concat('P',toString(peapeaid)),\n\t\t{Partner Name} = iifNull(trim(paalongname),iifNull(trim(paacname, peamdescr))),\n\t\tAddress = concat(trim(paacaddress1),iif(isNull((concat(trim(paacaddress2),concat(trim(paacaddress3), trim(paacaddress4))))),' ',paacaddress2)),\n\t\t{Rating Code} = case(isNull(pebratcod),'N/A',pebratcod),\n\t\t{Rating Code desc} = case(isNull(crcmdescr),'N/A',crcmdescr),\n\t\t{Partner Short Name} = peamdescr,\n\t\tPezdefbusnbranch = toString(pezdefbusnbranch),\n\t\tpeasubtype = toString(peasubtype),\n\t\t{Source System} = 'PARIS',\n\t\t{Code Type State} = 368,\n\t\t{Code Type Capital} = 116,\n\t\t{Code Type Comp Sub} = 795,\n\t\t{Code Type Country} = 50) ~> Expression1\nlookupState select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever,\n\t\tpebdunco,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN,\n\t\tQTBVALUE,\n\t\tQTBMDESCR,\n\t\tQTBSDESCR,\n\t\tQTBDISPYNSW,\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2,\n\t\tcrcratcod,\n\t\tcrcmdescr,\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex,\n\t\tpezpezid,\n\t\tKey,\n\t\t{Partner Name},\n\t\tAddress,\n\t\t{Rating Code},\n\t\t{Rating Code desc},\n\t\t{Partner Short Name},\n\t\tPezdefbusnbranch = {Expression1@Pezdefbusnbranch},\n\t\t{Source System},\n\t\t{Code Type State},\n\t\t{Code Type Capital},\n\t\t{Code Type Comp Sub},\n\t\t{Code Type Country},\n\t\tSOURCE_CODE_KEY,\n\t\tSOURCE_SYSTEM,\n\t\t{State Code} = TARGET_CODE,\n\t\t{State Description} = TARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1, capital lookup(Pezdefbusnbranch == tcrossreference@SOURCE_CODE_KEY,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lookupCapital\nlookupCapital select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever,\n\t\tpebdunco,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN,\n\t\tQTBVALUE,\n\t\tQTBMDESCR,\n\t\tQTBSDESCR,\n\t\tQTBDISPYNSW,\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2,\n\t\tcrcratcod,\n\t\tcrcmdescr,\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex,\n\t\tpezpezid,\n\t\tKey,\n\t\t{Partner Name},\n\t\tAddress,\n\t\t{Rating Code},\n\t\t{Rating Code desc},\n\t\t{Partner Short Name},\n\t\tPezdefbusnbranch,\n\t\t{Source System},\n\t\t{Code Type State},\n\t\t{Code Type Capital},\n\t\t{Code Type Comp Sub},\n\t\t{Code Type Country},\n\t\t{State Code},\n\t\t{State Description},\n\t\t{Capital Code} = TARGET_CODE,\n\t\t{Capital Description} = TARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSelect2, compsubtype lookup(peasubtype == SOURCE_CODE_KEY,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lookupCompSubtype\nlookupCompSubtype select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever,\n\t\tpebdunco,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN,\n\t\tQTBVALUE,\n\t\tQTBMDESCR,\n\t\tQTBSDESCR,\n\t\tQTBDISPYNSW,\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2,\n\t\tcrcratcod,\n\t\tcrcmdescr,\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex,\n\t\tpezpezid,\n\t\tKey,\n\t\t{Partner Name},\n\t\tAddress,\n\t\t{Rating Code},\n\t\t{Rating Code desc},\n\t\t{Partner Short Name},\n\t\tPezdefbusnbranch,\n\t\t{Source System},\n\t\t{Code Type State},\n\t\t{Code Type Capital},\n\t\t{Code Type Comp Sub},\n\t\t{Code Type Country},\n\t\t{State Code},\n\t\t{State Description},\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Company Sub Code} = TARGET_CODE,\n\t\t{Company Sub Description} = TARGET_DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nSelect3, country lookup(pebisolan == SOURCE_CODE_KEY,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lookupCountry\nlookupCountry select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever,\n\t\tpebdunco,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN,\n\t\tQTBVALUE,\n\t\tQTBMDESCR,\n\t\tQTBSDESCR,\n\t\tQTBDISPYNSW,\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2,\n\t\tcrcratcod,\n\t\tcrcmdescr,\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex,\n\t\tpezpezid,\n\t\tKey,\n\t\t{Partner Name},\n\t\tAddress,\n\t\t{Rating Code},\n\t\t{Rating Code desc},\n\t\t{Partner Short Name},\n\t\tPezdefbusnbranch,\n\t\t{Source System},\n\t\t{Code Type State},\n\t\t{Code Type Capital},\n\t\t{Code Type Comp Sub},\n\t\t{Code Type Country},\n\t\t{State Code},\n\t\t{State Description},\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Domicile Code} = TARGET_CODE,\n\t\t{Domicile Description} = TARGET_DESCRIPTION,\n\t\t{Company Sub Code},\n\t\t{Company Sub Description}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nSelect4, pectable lookup(peapeaid == pecpecid,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lookupContractType\nlookupContractType select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever,\n\t\tpebdunco,\n\t\tMAXPEBPEVER,\n\t\tQTBFIELDN,\n\t\tQTBVALUE,\n\t\tQTBMDESCR,\n\t\tQTBSDESCR,\n\t\tQTBDISPYNSW,\n\t\tpeapeaid,\n\t\tpeamdescr,\n\t\tpeaccode,\n\t\tpealeicode,\n\t\tpeasubtype,\n\t\tpeaextid2,\n\t\tcrcratcod,\n\t\tcrcmdescr,\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex,\n\t\tpezpezid,\n\t\tKey,\n\t\t{Partner Name},\n\t\tAddress,\n\t\t{Rating Code},\n\t\t{Rating Code desc},\n\t\t{Partner Short Name},\n\t\tPezdefbusnbranch,\n\t\t{Source System},\n\t\t{Code Type State},\n\t\t{Code Type Capital},\n\t\t{Code Type Comp Sub},\n\t\t{Code Type Country},\n\t\t{State Code},\n\t\t{State Description},\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Domicile Code},\n\t\t{Domicile Description},\n\t\tpeccontype = peccontyp,\n\t\t{Company Sub Code},\n\t\t{Company Sub Description}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select5\nSelect5 derive({Contract Type} = case(peccontype == '0' , 'NORMAL',case(peccontype == '1','WAR',case(peccontype == '9','XL','OTHER')))) ~> DerivedColumn1\nDerivedColumn1, paa lookup(pebratcomp == paa@paapeaid,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> Lookup2\nLookup2 select(mapColumn(\n\t\tkey = Key,\n\t\t{Partner Name},\n\t\tAddress,\n\t\tpebdunco,\n\t\tQtbmdescr = QTBMDESCR,\n\t\tAddress1 = {Select5@paacaddress1},\n\t\tAddress2 = {Select5@paacaddress2},\n\t\tAddress3 = {Select5@paacaddress3},\n\t\tAddress4 = {Select5@paacaddress4},\n\t\tpaacaddress3 = {Select5@paacaddress3},\n\t\t{Rating Company} = {paa@paacname},\n\t\tPebratcod = pebratcod,\n\t\t{Rating Code desc},\n\t\tPebratedate = pebratedate,\n\t\t{Domicile Code},\n\t\t{Domicile Description},\n\t\tPeaccode = peaccode,\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Company Sub code} = {Company Sub Code},\n\t\t{Company Sub Description},\n\t\tState = {State Description},\n\t\t{Paacname RatingComp} = {paa@paacname},\n\t\tPeaextid2 = peaextid2,\n\t\t{Contract Type}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> partner\ncbsttable derive(Key = 'PDIR99',\n\t\t{Partner Name} = 'Direct Placed',\n\t\tAddress = 'Not Applicable',\n\t\tpebdunco = toDecimal(null()),\n\t\tDuncodesc = 'Not Applicable',\n\t\tAddress1 = 'Not Applicable',\n\t\tAddress2 = 'Not Applicable',\n\t\tAddress3 = 'Not Applicable',\n\t\tAddress4 = 'Not Applicable',\n\t\t{Rating Company} = 'Not Applicable',\n\t\t{Rating Code} = 'N/A',\n\t\t{Rating Code Description} = 'Not Applicable',\n\t\t{Rating Date} = toTimestamp(case(1!=1,1)),\n\t\t{Domicile Code} = 'N/A',\n\t\t{Domicile Description} = 'Not Applicable',\n\t\tPeacode = toDecimal(null()),\n\t\t{Capital Code} = toString(null()),\n\t\t{Capital Description} = toString(null()),\n\t\t{Company Sub code} = toString(null()),\n\t\t{Company Sub Desc} = toString(null()),\n\t\tState = 'N/A',\n\t\tPeaextid2 = toString(null()),\n\t\t{Contract Type} = toString(null())) ~> DerivedColumn3\nDerivedColumn3 select(mapColumn(\n\t\tkey = Key,\n\t\t{Partner Name},\n\t\tAddress,\n\t\tpebdunco,\n\t\tQtbmdescr = Duncodesc,\n\t\tAddress1,\n\t\tAddress2,\n\t\tAddress3,\n\t\tAddress4,\n\t\t{Rating Company},\n\t\tPebratcod = {Rating Code},\n\t\t{Rating Code desc} = {Rating Code Description},\n\t\tPebratedate = {Rating Date},\n\t\t{Domicile Code},\n\t\t{Domicile Description},\n\t\tPeaccode = Peacode,\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Company Sub code},\n\t\t{Company Sub Description} = {Company Sub Desc},\n\t\tState,\n\t\tPeaextid2,\n\t\t{Contract Type}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> constantBroker\ncbstable2 derive({Partner Name} = 'Facultativ',\n\t\t{Pk Key} = 'PFACULTATIV',\n\t\tAddress = 'Not Applicable',\n\t\tAddress1 = 'Not Applicable',\n\t\tAddress2 = 'Not Applicable',\n\t\tAddress3 = 'Not Applicable',\n\t\tAddress4 = 'Not Applicable',\n\t\t{Rating Company} = 'Not Applicable',\n\t\t{Rating Code} = 'N/A',\n\t\t{Rating Code desc} = 'Not Applicable',\n\t\t{Domicile Description} = 'Not Applicable',\n\t\tPebratedate = toTimestamp(case(1!=1,1)),\n\t\tCity = 'N/A',\n\t\tState = 'N/A',\n\t\tPebdunco = toDecimal(null()),\n\t\tDuncodesc = 'Not Applicable',\n\t\t{Pea Lei Code} = toString(null()),\n\t\tPeaccode = toDecimal(null()),\n\t\t{Contract Type} = 'OTHER') ~> DerivedColumn4\nDerivedColumn4 select(mapColumn(\n\t\tkey = {Pk Key},\n\t\t{Partner Name},\n\t\tAddress,\n\t\tpebdunco = Pebdunco,\n\t\tQtbmdescr = Duncodesc,\n\t\tAddress1,\n\t\tAddress2,\n\t\tAddress3,\n\t\tAddress4,\n\t\t{Rating Company},\n\t\tPebratcod = {Rating Company},\n\t\t{Rating Code desc},\n\t\tPebratedate,\n\t\t{Domicile Code} = City,\n\t\t{Domicile Description},\n\t\tPeaccode,\n\t\t{Capital Code} = {Pea Lei Code},\n\t\t{Capital Description} = {Pea Lei Code},\n\t\t{Company Sub code} = {Pea Lei Code},\n\t\t{Company Sub Description} = {Pea Lei Code},\n\t\tState,\n\t\t{Contract Type},\n\t\tPeaextid2 = {Pea Lei Code}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> constantcontract\npartner, constantBroker, constantcontract union(byName: true)~> Union1\nUnion1 aggregate(groupBy(Key = key),\n\teach(match(name!='key'), $$ = first($$))) ~> deduplicate\ntcrossreference filter(CODE_TYPE_ID == 368 && SOURCE_SYSTEM == 'PARIS') ~> state\ntcrossreference filter(CODE_TYPE_ID == 116 && SOURCE_SYSTEM == 'PARIS') ~> capital\ntcrossreference filter(CODE_TYPE_ID == 50 && SOURCE_SYSTEM == 'PARIS') ~> country\nSfCompany select(mapColumn(\n\t\taccount_resp_me,\n\t\taccount_resp_pi,\n\t\taccount_status,\n\t\tclient_lost_reason,\n\t\tcompany_email,\n\t\tcompany_id,\n\t\tcompany_name,\n\t\tcompany_owner_full_name,\n\t\tcompany_owner_id,\n\t\tcountry,\n\t\tcuo_full_name,\n\t\tcuo_user_id,\n\t\tdate_inserted,\n\t\tdate_updated,\n\t\tgard_contact_id,\n\t\tmarket_area_code,\n\t\tmarket_area_description,\n\t\tmarket_area_id,\n\t\tparent_company_id,\n\t\tparent_company_name,\n\t\tparis_gic_id,\n\t\tprimary_contact_email,\n\t\tprimary_contact_name,\n\t\tsf_last_updated_date,\n\t\tsource_system\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select8\ndeduplicate select(mapColumn(\n\t\tKey,\n\t\tPartner_Name = {Partner Name},\n\t\tAddress,\n\t\tpebdunco,\n\t\tQtbmdescr,\n\t\tAddress1,\n\t\tAddress2,\n\t\tAddress3,\n\t\tAddress4,\n\t\tRating_Company = {Rating Company},\n\t\tPebratcod,\n\t\tRating_Code_desc = {Rating Code desc},\n\t\tPebratedate,\n\t\tDomicile_Code = {Domicile Code},\n\t\tDomicile_Description = {Domicile Description},\n\t\tPeaccode,\n\t\tCapital_Code = {Capital Code},\n\t\tCapital_Description = {Capital Description},\n\t\tCompany_Sub_code = {Company Sub code},\n\t\tCompany_Sub_Description = {Company Sub Description},\n\t\tState,\n\t\tPeaextid = Peaextid2,\n\t\tContract_Type = {Contract Type}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> selectedcolumns\ntcrossreference filter(CODE_TYPE_ID == 795 && SOURCE_SYSTEM == 'PARIS') ~> compsubtype\nselectedcolumns sink(input(\n\t\tPK_KEY as string,\n\t\tCPT_DESCRIPTION as string,\n\t\tCPT_NUMBER as integer,\n\t\tINSERTED_BY as string,\n\t\tDATE_INSERTED as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+			"script": "source(output(\n\t\tpaapeaid as long,\n\t\tpaafunct as integer,\n\t\tpaacaddress3 as string,\n\t\tpaalongname as string,\n\t\tpaacname as string,\n\t\tpaacaddress4 as string,\n\t\tpaacaddress2 as string,\n\t\tpaacaddress1 as string,\n\t\tpaactelex as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select \t\t\\n                paapeaid,\\n\t\tpaafunct ,\\n\t\tpaacaddress3 ,\\n\t\tpaalongname ,\\n\t\tpaacname ,\\n\t\tpaacaddress4 ,\\n\t\tpaacaddress2 ,\\n\t\tpaacaddress1 ,\\n\t\tpaactelex \\n from dwh_stage.p_paatable\\n where ISNULL(paafunct,0) = 0',\n\tformat: 'query') ~> paatable\nsource(output(\n\t\tpeapeaid as long,\n\t\tpeamdescr as string,\n\t\tpeaccode as integer,\n\t\tpealeicode as string,\n\t\tpeasubtype as short,\n\t\tpeaextid2 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select \\n\t\tpeapeaid,\\n\t\tpeamdescr,\\n\t\tpeaccode,\\n\t\tpealeicode,\\n\t\tpeasubtype,\\n\t\tpeaextid2\\nfrom dwh_stage.p_peatable',\n\tformat: 'query') ~> peatable\nsource(output(\n\t\tpebpebid as string,\n\t\tpebpeaid as long,\n\t\tpebpeoopeaid as long,\n\t\tpebratcod as string,\n\t\tpebratedate as date,\n\t\tpebisolan as string,\n\t\tpebratcomp as long,\n\t\tpebtaxno as string,\n\t\tpebpever as short,\n\t\tpebdunco as integer,\n\t\tpebvaldate as date,\n\t\tpebetcbroker as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select \\n\t\tpebpebid,\\n\t\tpebpeaid,\\n\t\tpebpeoopeaid,\\n\t\tpebratcod,\\n\t\tpebratedate,\\n\t\tpebisolan,\\n\t\tpebratcomp,\\n\t\tpebtaxno,\\n\t\tpebpever,\\n                pebdunco,\\n                pebvaldate,\\n                pebetcbroker\\nfrom   dwh_stage.p_pebtable',\n\tformat: 'query') ~> pebtable\nsource(output(\n\t\tpezpezid as long,\n\t\tpezdefbusnbranch as integer,\n\t\tpezdefcurr as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select pezpezid,\\n         pezdefbusnbranch,\\n         pezdefcurr\\n from dwh_stage.p_peztable',\n\tformat: 'query') ~> peztable\nsource(output(\n\t\tqtbfieldn as string,\n\t\tqtbdispynsw as string,\n\t\tqtbmdescr as string,\n\t\tqtbvalue as string,\n\t\tqtbsdescr as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.p_qtbtable\\nwhere qtbfieldn = \\'pebdunco\\'',\n\tformat: 'query') ~> qtbtable\nsource(output(\n\t\tcrcratcod as string,\n\t\tcrcmdescr as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select crcratcod,crcmdescr from dwh_stage.p_crctable',\n\tformat: 'query') ~> crctable\nsource(output(\n\t\tcode_type_id as long,\n\t\tcode2 as string,\n\t\ttarget_description as string,\n\t\tsource_system as string,\n\t\tom_x_ref as string,\n\t\ttarget_code as string,\n\t\tcode_type as string,\n\t\tsource_code_key as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.t_crossreference\\nwhere source_system = \\'PARIS\\'',\n\tformat: 'query') ~> tcrossreference\nsource(output(\n\t\tpecpecid as long,\n\t\tpeccontyp as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select pecpecid,peccontyp from dwh_stage.p_pectable',\n\tformat: 'query') ~> pectable\nsource(output(\n\t\tcbsbusnsec as integer,\n\t\tcbsmdescr as string,\n\t\tcbslang2 as string,\n\t\tcbssw10 as string,\n\t\tcbsbusnbranch as integer,\n\t\tcbssdescr as string,\n\t\tcbsdefcondco as short,\n\t\tcbsrefcod as string,\n\t\tcbsagform as string,\n\t\tcbsdnform as string,\n\t\tcbspitype as string,\n\t\tcbstarynsw as string,\n\t\tcbsetcpremium as string,\n\t\tcbsmutual as string,\n\t\tcbsaddper as integer,\n\t\tcbsaowreb as decimal(28,10),\n\t\tcbsautocl as integer,\n\t\tcbsdefpayer as string,\n\t\tcbsrenew as integer,\n\t\tcbscnform as string,\n\t\tcbsrenewperiod as integer,\n\t\tcbsstopuse as string,\n\t\tcbsrenewendrule as integer,\n\t\tcbssiidef as string,\n\t\tcbstaxappl as integer,\n\t\tcbscrewform as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.p_cbstable',\n\tformat: 'query') ~> cbsttable\nsource(output(\n\t\tcbsbusnsec as integer,\n\t\tcbsmdescr as string,\n\t\tcbslang2 as string,\n\t\tcbssw10 as string,\n\t\tcbsbusnbranch as integer,\n\t\tcbssdescr as string,\n\t\tcbsdefcondco as short,\n\t\tcbsrefcod as string,\n\t\tcbsagform as string,\n\t\tcbsdnform as string,\n\t\tcbspitype as string,\n\t\tcbstarynsw as string,\n\t\tcbsetcpremium as string,\n\t\tcbsmutual as string,\n\t\tcbsaddper as integer,\n\t\tcbsaowreb as decimal(28,10),\n\t\tcbsautocl as integer,\n\t\tcbsdefpayer as string,\n\t\tcbsrenew as integer,\n\t\tcbscnform as string,\n\t\tcbsrenewperiod as integer,\n\t\tcbsstopuse as string,\n\t\tcbsrenewendrule as integer,\n\t\tcbssiidef as string,\n\t\tcbstaxappl as integer,\n\t\tcbscrewform as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.p_cbstable',\n\tformat: 'query') ~> cbstable2\nsource(output(\n\t\tprimary_contact_name as string,\n\t\taccount_resp_me as string,\n\t\tgard_market_area_code as string,\n\t\tsource_system as string,\n\t\taccount_resp_pi as string,\n\t\tgard_market_area_desc as string,\n\t\taccount_status as string,\n\t\tprimary_contact_email as string,\n\t\tclient_lost_reason as string,\n\t\tgard_contact_id as string,\n\t\tsource_system_id as long,\n\t\tcompany_email as string,\n\t\tcompany_owner_full_name as string,\n\t\tcompany_id as long,\n\t\tparent_company_id as long,\n\t\tcompany_name as string,\n\t\tparent_company_name as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select\tdistinct\tprimary_contact_name,\\n\t\taccount_resp_me,\\n\t\tgard_market_area_code,\\n\t\tsource_system,\\n\t\taccount_resp_pi,\\n\t\tgard_market_area_desc ,\\n\t\taccount_status ,\\n\t\tprimary_contact_email ,\\n\t\tclient_lost_reason ,\\n\t\tgard_contact_id ,\\n\t\tsource_system_id ,\\n\t\tcompany_email ,\\n\t\tcompany_owner_full_name ,\\n\t\tcompany_id ,\\n\t\tparent_company_id,\\n\t\tcompany_name ,\\n\t\tparent_company_name \\nfrom dwh_stage.sf_company\\nwhere source_system = \\'PARIS\\'',\n\tformat: 'query') ~> SfCompany\nsource(output(\n\t\tcompany_name_top_group as string,\n\t\tcompany_id_top_group as long,\n\t\tcompany_name as string,\n\t\tcompany_id as long\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.sf_company_top_group',\n\tformat: 'query') ~> sfcompanytop\nsource(output(\n\t\tlei_code as string,\n\t\tlegal_name as string,\n\t\tother_entity_name as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select lei_code,legal_name,other_entity_name from dwh_stage.sta_extern_lei_code_register',\n\tformat: 'query') ~> ExternalLeiCode\nsource(output(\n\t\ttarget_code as string,\n\t\ttarget_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select distinct  target_code, target_description from dwh_stage.t_crossreference\\nwhere code_type_id = \\'329\\'\\nand source_system=\\'GIC\\'',\n\tformat: 'query') ~> RespPI\nsource(output(\n\t\ttarget_code as string,\n\t\ttarget_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select distinct  target_code, target_description from dwh_stage.t_crossreference\\nwhere code_type_id = \\'329\\'\\nand source_system=\\'PARIS\\'',\n\tformat: 'query') ~> RespME\npebtable aggregate(groupBy(pebpeaid),\n\tmaxpebpever = max(pebpever)) ~> maxpeb\npebtable, maxpeb join(pebtable@pebpeaid == maxpeb@pebpeaid\n\t&& pebpever == maxpebpever,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> pebmaxpeb\npebmaxpeb, qtbtable join(pebdunco == toInteger(qtbvalue),\n\tjoinType:'left',\n\tbroadcast: 'auto')~> pebqtb\npebqtb select(mapColumn(\n\t\tpebpebid,\n\t\tpebpeaid = pebtable@pebpeaid,\n\t\tpebpeoopeaid,\n\t\tpebratcod,\n\t\tpebratedate,\n\t\tpebisolan,\n\t\tpebratcomp,\n\t\tpebtaxno,\n\t\tPebpever = pebpever,\n\t\tpebdunco,\n\t\tpebpeaid = maxpeb@pebpeaid,\n\t\tqtbmdescr,\n\t\tpebvaldate,\n\t\tpebetcbroker\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Prtstatus\npebpeoopeaid, peatable join(pebpeaid == peapeaid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> prtpea\nprtpea, crctable join(pebratcod == crcratcod,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> peacrc\npaatable select(mapColumn(\n\t\tpaapeaid,\n\t\tpaafunct,\n\t\tpaalongname,\n\t\tpaacaddress1,\n\t\tpaacaddress4,\n\t\tpaacaddress2,\n\t\tpaacname,\n\t\tpaacaddress3,\n\t\tpaactelex\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> paatable1\npaatable1 filter(iifNull(paafunct,0) ==0) ~> Paafiltered\npeacrc, paatable join(peapeaid == paapeaid,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> crcpaa\ncrcpaa, peztable join(peapeaid == pezpezid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> paapez\nExpressions, XrefState lookup(pebtaxno == source_code_key_State,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lookupState\npaapez derive(Key = concat('P',toString(peapeaid)),\n\t\t{Partner Name} = iifNull(trim(paalongname),iifNull(trim(paacname, peamdescr))),\n\t\tAddress = concat(trim(paacaddress1),iif(isNull((concat(trim(paacaddress2),concat(trim(paacaddress3), trim(paacaddress4))))),' ',paacaddress2)),\n\t\t{Rating Code} = case(isNull(pebratcod),'N/A',pebratcod),\n\t\t{Rating Code desc} = case(isNull(crcmdescr),'N/A',crcmdescr),\n\t\t{Partner Short Name} = peamdescr,\n\t\tpezdefbusnbranch = toString(pezdefbusnbranch),\n\t\tpeasubtype = toString(peasubtype),\n\t\t{Source System} = 'PARIS',\n\t\t{Code Type State} = 368,\n\t\t{Code Type Capital} = 116,\n\t\t{Code Type Comp Sub} = 795,\n\t\t{Code Type Country} = 50) ~> Expressions\nlookupState, XrefCapital lookup(pezdefbusnbranch == source_code_key_Capital,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lookupCapital\nlookupCapital, XrefCompSubType lookup(peasubtype == source_code_key_CompSubtype,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lookupCompSubtype\nlookupCompSubtype, XrefCountry lookup(pebisolan == source_code_key_Country,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lookupCountry\nlookupCountry, pectable lookup(peapeaid == pecpecid,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> lookupContractType\nlookupContractType derive({Contract Type} = case(peccontyp == '0' , 'NORMAL',case(peccontyp == '1','WAR',case(peccontyp == '9','XL','OTHER')))) ~> DerivedColumn1\nDerivedColumn1, LookupRatingComp lookup(pebratcomp == LookupRatingComp@paapeaid,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> RatingCompany\nRatingCompany select(mapColumn(\n\t\tkey = Key,\n\t\t{Partner Name},\n\t\tAddress,\n\t\tpebdunco,\n\t\tQtbmdescr = qtbmdescr,\n\t\tAddress1 = paacaddress1,\n\t\tAddress2 = paacaddress2,\n\t\tAddress3 = paacaddress3,\n\t\tAddress4 = paacaddress4,\n\t\t{Rating Company} = paacname_RatingComp,\n\t\tPebratcod = pebratcod,\n\t\t{Rating Code desc},\n\t\tPebratedate = pebratedate,\n\t\t{Partner Short Name},\n\t\t{Domicile Code} = target_code_Country,\n\t\t{Domicile Description} = target_description_Country,\n\t\tPeaccode = peaccode,\n\t\tpealeicode,\n\t\t{Capital Code} = target_code_Capital,\n\t\t{Capital Description} = target_description_Capital,\n\t\t{Company Sub code} = target_code_Compsubtype,\n\t\t{Company Sub Description} = target_description_Compsubtype,\n\t\tState = target_code_State,\n\t\tPeaextid2 = peaextid2,\n\t\t{Contract Type},\n\t\tpebvaldate,\n\t\tpebetcbroker,\n\t\tpezdefcurr\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> StreamPartner\ncbsttable derive(Key = 'PDIR99',\n\t\t{Partner Name} = 'Direct Placed',\n\t\t{Partner Short Name} = 'Direct Placed',\n\t\tAddress = 'Not Applicable',\n\t\tpebdunco = toDecimal(null()),\n\t\tDuncodesc = 'Not Applicable',\n\t\tAddress1 = 'Not Applicable',\n\t\tAddress2 = 'Not Applicable',\n\t\tAddress3 = 'Not Applicable',\n\t\tAddress4 = 'Not Applicable',\n\t\t{Rating Company} = 'Not Applicable',\n\t\t{Rating Code} = 'N/A',\n\t\t{Rating Code Description} = 'Not Applicable',\n\t\t{Rating Date} = toDate(case(1!=1,1)),\n\t\t{Val Date} = toDate(case(1!=1,1)),\n\t\t{Domicile Code} = 'N/A',\n\t\t{Domicile Description} = 'Not Applicable',\n\t\tPeacode = toDecimal(null()),\n\t\t{Capital Code} = toString(null()),\n\t\t{Capital Description} = toString(null()),\n\t\t{Company Sub code} = toString(null()),\n\t\t{Company Sub Desc} = toString(null()),\n\t\tState = 'N/A',\n\t\tPeaextid2 = toString(null()),\n\t\t{Contract Type} = toString(null()),\n\t\t{Pea Lei Code} = toString(null()),\n\t\tpebetcbroker = toString(null()),\n\t\tpezdefcurr = toString(null())) ~> DerivedColumn3\nDerivedColumn3 select(mapColumn(\n\t\tkey = Key,\n\t\t{Partner Name},\n\t\tAddress,\n\t\tpebdunco,\n\t\tQtbmdescr = Duncodesc,\n\t\tAddress1,\n\t\tAddress2,\n\t\tAddress3,\n\t\tAddress4,\n\t\t{Rating Company},\n\t\tPebratcod = {Rating Code},\n\t\t{Rating Code desc} = {Rating Code Description},\n\t\tPebratedate = {Rating Date},\n\t\t{Partner Short Name},\n\t\t{Domicile Code},\n\t\t{Domicile Description},\n\t\tPeaccode = Peacode,\n\t\tpealeicode = {Pea Lei Code},\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Company Sub code},\n\t\t{Company Sub Description} = {Company Sub Desc},\n\t\tState,\n\t\tPeaextid2,\n\t\t{Contract Type},\n\t\tpebvaldate = {Val Date},\n\t\tpebetcbroker,\n\t\tpezdefcurr\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> constantBroker\ncbstable2 derive({Partner Name} = 'Facultativ',\n\t\t{Pk Key} = 'PFACULTATIV',\n\t\tAddress = 'Not Applicable',\n\t\tAddress1 = 'Not Applicable',\n\t\tAddress2 = 'Not Applicable',\n\t\tAddress3 = 'Not Applicable',\n\t\tAddress4 = 'Not Applicable',\n\t\t{Rating Company} = 'Not Applicable',\n\t\t{Rating Code} = 'N/A',\n\t\t{Rating Code desc} = 'Not Applicable',\n\t\t{Domicile Description} = 'Not Applicable',\n\t\tPebratedate = toDate(case(1!=1,1)),\n\t\tpebvaldate = toDate(case(1!=1,1)),\n\t\tCity = 'N/A',\n\t\tState = 'N/A',\n\t\tPebdunco = toDecimal(null()),\n\t\tDuncodesc = 'Not Applicable',\n\t\t{Pea Lei Code} = toString(null()),\n\t\tPeaextid2 = toString(null()),\n\t\tpezdefcurr = toString(null()),\n\t\t{Capital Description} = toString(null()),\n\t\t{Company Sub code} = toString(null()),\n\t\t{Company Sub Description} = toString(null()),\n\t\tpealeicode = toString(null()),\n\t\tPeaccode = toDecimal(null()),\n\t\t{Contract Type} = 'OTHER',\n\t\t{Partner Short Name} = 'Direct Placed',\n\t\tpebetcbroker = 'N') ~> DerivedColumn4\nDerivedColumn4 select(mapColumn(\n\t\tkey = {Pk Key},\n\t\t{Partner Name},\n\t\tAddress,\n\t\tpebdunco = Pebdunco,\n\t\tQtbmdescr = Duncodesc,\n\t\tAddress1,\n\t\tAddress2,\n\t\tAddress3,\n\t\tAddress4,\n\t\t{Rating Company},\n\t\tPebratcod = {Rating Code},\n\t\t{Rating Code desc},\n\t\tPebratedate,\n\t\t{Partner Short Name},\n\t\t{Domicile Code} = City,\n\t\t{Domicile Description},\n\t\tPeaccode,\n\t\tpealeicode,\n\t\t{Capital Code} = {Pea Lei Code},\n\t\t{Capital Description},\n\t\t{Company Sub code},\n\t\t{Company Sub Description},\n\t\tState,\n\t\t{Contract Type},\n\t\tPeaextid2,\n\t\tpebvaldate,\n\t\tpebetcbroker,\n\t\tpezdefcurr\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> constantcontract\nStreamPartner, constantBroker, constantcontract union(byName: true)~> Union1\nUnion1 aggregate(groupBy(Key = key),\n\teach(match(name!='key'), $$ = first($$))) ~> deduplicate\ntcrossreference filter(code_type_id == 368) ~> state\ntcrossreference filter(code_type_id == 116) ~> capital\ntcrossreference filter(code_type_id == 50) ~> country\ndeduplicate select(mapColumn(\n\t\tKey,\n\t\t{Partner Name},\n\t\tAddress,\n\t\tpebdunco,\n\t\tQtbmdescr,\n\t\tAddress1,\n\t\tAddress2,\n\t\tAddress3,\n\t\tAddress4,\n\t\t{Rating Company},\n\t\tPebratcod,\n\t\t{Rating Code desc},\n\t\tPebratedate,\n\t\t{Partner Short Name},\n\t\t{Domicile Code},\n\t\t{Domicile Description},\n\t\tPeaccode,\n\t\tpealeicode,\n\t\t{Capital Code},\n\t\t{Capital Description},\n\t\t{Company Sub code},\n\t\t{Company Sub Description},\n\t\tState,\n\t\tPeaextid2,\n\t\t{Contract Type},\n\t\tpebvaldate,\n\t\tpebetcbroker,\n\t\tpezdefcurr\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Partner\ntcrossreference filter(code_type_id == 795) ~> compsubtype\nPrtstatus derive(pebpeoopeaid = case(pebpeoopeaid == 0,toInteger(null()),toInteger(pebpeoopeaid))) ~> pebpeoopeaid\nstate select(mapColumn(\n\t\ttarget_description_State = target_description,\n\t\ttarget_code_State = target_code,\n\t\tsource_code_key_State = source_code_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefState\ncapital select(mapColumn(\n\t\ttarget_description_Capital = target_description,\n\t\ttarget_code_Capital = target_code,\n\t\tsource_code_key_Capital = source_code_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefCapital\ncountry select(mapColumn(\n\t\ttarget_description_Country = target_description,\n\t\ttarget_code_Country = target_code,\n\t\tsource_code_key_Country = source_code_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefCountry\ncompsubtype select(mapColumn(\n\t\ttarget_description_Compsubtype = target_description,\n\t\ttarget_code_Compsubtype = target_code,\n\t\tsource_code_key_CompSubtype = source_code_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefCompSubType\npaatable select(mapColumn(\n\t\tpaacname_RatingComp = paacname,\n\t\tpaapeaid\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> LookupRatingComp\nSelect1, SfCompanyTopFinal join(company_id_sfcomp == company_id_top,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> CompTopJoin\nCompTopJoin derive(Key = concat('P', toString(source_system_id_sfcomp))) ~> SFCompanyFlow\nPartner, SFCompanyFlow join(Partner@Key == SFCompanyFlow@Key,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> PartnerCompany\nPartnerCompany, ExternalLeiCode join(pealeicode == lei_code,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> CompLei\nCompLei, AccResPI join(account_resp_pi_sfcomp == target_code_account_Resp_PI,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> LeiPI\nLeiPI, AccResME join(account_resp_me_sfcomp == target_code_account_Resp_ME,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> LeiME\nRespPI select(mapColumn(\n\t\ttarget_code_account_Resp_PI = target_code,\n\t\ttarget_description_account_Resp_PI = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> AccResPI\nRespME select(mapColumn(\n\t\ttarget_code_account_Resp_ME = target_code,\n\t\ttarget_description_account_Resp_ME = target_description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> AccResME\nLeiME derive(prt_sf_client_lost_reason = client_lost_reason_sfcomp,\n\t\tprt_sf_company_id = iifNull(company_id_sfcomp,-1),\n\t\tprt_sf_company_name = iifNull(company_name_sfcomp,'Not Applicable'),\n\t\tprt_sf_company_owner = iifNull(company_owner_full_name_sfcomp,'Not Applicable'),\n\t\tprt_sf_market_area_code = iifNull(gard_market_area_code_sfcomp,'N/A'),\n\t\tprt_sf_market_area_desc = iifNull(gard_market_area_desc_sfcomp,'Not Applicable'),\n\t\tprt_sf_top_company = iifNull(company_name_top_group,iifNull(parent_company_name_sfcomp,'Not Applicable')),\n\t\tprt_sf_top_company_id = iifNull(company_id_top_group,iifNull(parent_company_id_sfcomp,-1)),\n\t\tprt_sf_account_resp_pi_init = account_resp_pi_sfcomp,\n\t\tprt_sf_account_resp_pi_desc = target_description_account_Resp_PI,\n\t\tprt_sf_account_resp_me_init = account_resp_me_sfcomp,\n\t\tprt_sf_account_resp_me_desc = target_description_account_Resp_ME,\n\t\tprt_sf_account_status = account_status_sfcomp,\n\t\tprt_currency_code = iifNull(pezdefcurr,'USD'),\n\t\tprt_comm_on_etc_basis_year = toInteger(year(pebvaldate)),\n\t\tprt_legal_name = case(iifNull(legal_name,'LGN')!='LGN', substring(legal_name, 1, 500), other_entity_name),\n\t\tpeaccode = toString(Peaccode),\n\t\tdate_inserted = currentDate(),\n\t\tinserted_by = 'm_pre_dim_partner_me',\n\t\tprt_comm_on_etc_basis = iifNull(pebetcbroker,'N')) ~> DerivedColumn5\nsfcompanytop select(mapColumn(\n\t\tcompany_name_top_group,\n\t\tcompany_id_top_group,\n\t\tcompany_name_top = company_name,\n\t\tcompany_id_top = company_id\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SfCompanyTopFinal\nSfCompany select(mapColumn(\n\t\teach(match(true()),\n\t\t\t$$+'_sfcomp' = $$)\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\ntcrossreference filter(code_type_id==109 && target_description == 'Claims Adjustors') ~> PartnerRole\nPartnerRole select(mapColumn(\n\t\ttarget_description_PartRole = target_description,\n\t\ttarget_code_PartRole = target_code,\n\t\tsource_code_key_PartRole = source_code_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefPartnerRole\nDerivedColumn5, XrefPartnerRole join(DerivedColumn5@peaccode == source_code_key_PartRole,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> PartRole\ntcrossreference filter(code_type_id==798) ~> area\narea select(mapColumn(\n\t\ttarget_description_area = target_description,\n\t\ttarget_code_area = target_code,\n\t\tsource_code_key_area = source_code_key\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> XrefArea\nPartRole, XrefArea join({Domicile Code} == source_code_key_area,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> Areas\nAreas alterRow(upsertIf(true())) ~> AlterRow1\nAlterRow1 sink(input(\n\t\tpk_key as string,\n\t\tprt_intercompany_code as string,\n\t\tprt_intercompany_desc as string,\n\t\tprt_company_sub_code as string,\n\t\tprt_company_sub_desc as string,\n\t\tprt_reporting_area_code as string,\n\t\tprt_reporting_area_desc as string,\n\t\tprt_member_since as date,\n\t\tprt_legal_name as string,\n\t\tprt_state as string,\n\t\tprt_sf_account_resp_pi_init as string,\n\t\tprt_sf_account_resp_pi_desc as string,\n\t\tprt_sf_account_resp_me_init as string,\n\t\tprt_sf_account_resp_me_desc as string,\n\t\tprt_sf_account_status as string,\n\t\tprt_comm_on_etc_basis as string,\n\t\tprt_comm_on_etc_basis_year as integer,\n\t\tprt_gard_contact_id as string,\n\t\tprt_sf_gard_contact_id as string,\n\t\tprt_contract_type as string,\n\t\tprt_sf_company_email as string,\n\t\tprt_sf_primary_contact_email as string,\n\t\tprt_sf_primary_contact_name as string,\n\t\tprt_default_etc_broker_ind as string,\n\t\tprt_default_etc_broker_strdate as date,\n\t\tprt_partner_number as integer,\n\t\tprt_office_key as string,\n\t\tprt_sf_client_lost_reason as string,\n\t\tprt_sf_company_id as integer,\n\t\tprt_sf_company_name as string,\n\t\tprt_sf_company_owner as string,\n\t\tprt_sf_key as string,\n\t\tprt_sf_market_area_code as string,\n\t\tprt_sf_market_area_desc as string,\n\t\tprt_sf_top_company as string,\n\t\tprt_sf_top_company_id as integer,\n\t\tprt_account_responsible as string,\n\t\tprt_currency_code as string,\n\t\tprt_currency_desc as string,\n\t\tprt_primary_underwriter as string,\n\t\tprt_lei_code as string,\n\t\tname as string,\n\t\tinserted_by as string,\n\t\tdate_inserted as timestamp,\n\t\tlast_updated_by as string,\n\t\tdate_last_updated as timestamp,\n\t\tprt_address_1 as string,\n\t\tprt_address_2 as string,\n\t\tprt_address_3 as string,\n\t\tprt_address_4 as string,\n\t\tprt_full_address as string,\n\t\tprt_status_code as string,\n\t\tprt_status_desc as string,\n\t\tprt_partner_group as string,\n\t\tprt_broker_code as integer,\n\t\tprt_hedge_pct as integer,\n\t\tprt_rating_company as string,\n\t\tprt_rating_code as string,\n\t\tprt_rating_code_desc as string,\n\t\tprt_rating_date as date,\n\t\tprt_partner_group_desc as string,\n\t\tprt_partner_short_name as string,\n\t\tprt_domicile_code as string,\n\t\tprt_domicile_name as string,\n\t\tprt_partner_role_code as string,\n\t\tprt_partner_role_desc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['pk_key'],\n\tformat: 'table',\n\tmapColumn(\n\t\tpk_key = Partner@Key,\n\t\tprt_intercompany_code = {Capital Code},\n\t\tprt_intercompany_desc = {Capital Description},\n\t\tprt_company_sub_code = {Company Sub code},\n\t\tprt_company_sub_desc = {Company Sub Description},\n\t\tprt_reporting_area_code = target_code_area,\n\t\tprt_reporting_area_desc = target_description_area,\n\t\tprt_member_since = date_inserted,\n\t\tprt_legal_name,\n\t\tprt_state = State,\n\t\tprt_sf_account_resp_pi_init,\n\t\tprt_sf_account_resp_pi_desc,\n\t\tprt_sf_account_resp_me_init,\n\t\tprt_sf_account_resp_me_desc,\n\t\tprt_sf_account_status,\n\t\tprt_comm_on_etc_basis,\n\t\tprt_comm_on_etc_basis_year,\n\t\tprt_gard_contact_id = Peaextid2,\n\t\tprt_sf_gard_contact_id = gard_contact_id_sfcomp,\n\t\tprt_contract_type = {Contract Type},\n\t\tprt_sf_company_email = company_email_sfcomp,\n\t\tprt_sf_primary_contact_email = primary_contact_email_sfcomp,\n\t\tprt_sf_primary_contact_name = primary_contact_name_sfcomp,\n\t\tprt_default_etc_broker_ind = prt_comm_on_etc_basis,\n\t\tprt_default_etc_broker_strdate = pebvaldate,\n\t\tprt_partner_number = source_system_id_sfcomp,\n\t\tprt_office_key = Partner@Key,\n\t\tprt_sf_client_lost_reason,\n\t\tprt_sf_company_id,\n\t\tprt_sf_company_name,\n\t\tprt_sf_company_owner,\n\t\tprt_sf_market_area_code,\n\t\tprt_sf_market_area_desc,\n\t\tprt_sf_top_company,\n\t\tprt_sf_top_company_id,\n\t\tprt_currency_code,\n\t\tprt_lei_code = pealeicode,\n\t\tname = {Partner Name},\n\t\tprt_address_1 = Address1,\n\t\tprt_address_2 = Address2,\n\t\tprt_address_3 = Address3,\n\t\tprt_address_4 = Address4,\n\t\tprt_full_address = Address,\n\t\tprt_status_code = pebdunco,\n\t\tprt_status_desc = Qtbmdescr,\n\t\tprt_rating_company = {Rating Company},\n\t\tprt_rating_code = Pebratcod,\n\t\tprt_rating_code_desc = {Rating Code desc},\n\t\tprt_rating_date = Pebratedate,\n\t\tprt_partner_short_name = {Partner Short Name},\n\t\tprt_domicile_code = {Domicile Code},\n\t\tprt_domicile_name = {Domicile Description},\n\t\tprt_partner_role_code = target_code_PartRole,\n\t\tprt_partner_role_desc = target_description_PartRole,\n\t\tinserted_by\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> PreDimPartner"
 		}
 	}
 }

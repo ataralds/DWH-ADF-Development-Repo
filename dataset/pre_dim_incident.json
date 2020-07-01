@@ -1,0 +1,429 @@
+{
+	"name": "pre_dim_incident",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pk_key_inc",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_retention",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_gic_incident_id",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_mygard_claim_id",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_date_archive",
+				"type": "date"
+			},
+			{
+				"name": "inc_deleted_ind",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_year_of_registered",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_ind_open",
+				"type": "char"
+			},
+			{
+				"name": "inc_reg_in_paris_pool_ind",
+				"type": "char"
+			},
+			{
+				"name": "inc_claim_process_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "grp_text",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_team_description",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_longitude",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "inc_voyage_to",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_ded_used_text_1",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_registered_by_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_ded_used_amount_2",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "best_value_estimate",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_vessel_name",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_yearmonth_of_registered",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_reserve_created_by_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_text_restricted",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_claim_adjuster_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "grp_description",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_gard_claim_id",
+				"type": "varchar"
+			},
+			{
+				"name": "grp_event_detail_description",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_registered_date",
+				"type": "date"
+			},
+			{
+				"name": "inc_voyage_from",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_main_claim_detail_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_main_claim_handler_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "grp_ind_major_incient",
+				"type": "char"
+			},
+			{
+				"name": "grp_key",
+				"type": "varchar"
+			},
+			{
+				"name": "grp_main_event_code",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_latitude",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_om_rule_code",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_ded_used_amount_usd_1",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_reserve_created_by_code",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_year_of_incident_calyear",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_description",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_year_of_incident",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_incident_risk_group_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_me_tlo_ind",
+				"type": "char"
+			},
+			{
+				"name": "inc_complexity_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_date_of_incident",
+				"type": "date"
+			},
+			{
+				"name": "inc_geotag_reference",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_claim_process_code",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_casualty_cause",
+				"type": "varchar"
+			},
+			{
+				"name": "reserve_worst_outcome",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_status_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_imono",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_text",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_ded_used_amount_1",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_ded_used_days_1",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_me_tlo_type",
+				"type": "varchar"
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "inc_ded_used_curr_2",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_ded_used_amount_usd_2",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_om_rule_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_me_claim_cat_type",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_registered_by_code",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_text_unresticted",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_claim_adjuster_code",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_code",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_immediate_cause",
+				"type": "varchar"
+			},
+			{
+				"name": "grp_claim_incurred_gross_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_ded_used_curr_1",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_main_claim_detail_code",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_ded_used_text_2",
+				"type": "varchar"
+			},
+			{
+				"name": "grp_event_deatil_code",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_date_archive_old",
+				"type": "date"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_place_of_incident",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_main_claim_type_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_yearmonth_of_incident",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_date_last_reviewed",
+				"type": "date"
+			},
+			{
+				"name": "inc_members_reference",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_payment_created_by_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_main_jurisdiction",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_complexity_code",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_ded_used_days_2",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "grp_main_event_description",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_incident_risk_group",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_main_claim_type_code",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_incident_reference",
+				"type": "varchar"
+			},
+			{
+				"name": "grp_code",
+				"type": "varchar"
+			},
+			{
+				"name": "reserve_best_outcome",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_file_number",
+				"type": "varchar"
+			},
+			{
+				"name": "grp_id",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "inc_payment_created_by_code",
+				"type": "varchar"
+			},
+			{
+				"name": "inc_main_claim_handler_code",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_dim_incident"
+		}
+	}
+}

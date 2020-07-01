@@ -1,0 +1,85 @@
+{
+	"name": "preDimCountry",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pk_key",
+				"type": "varchar"
+			},
+			{
+				"name": "ar1_description",
+				"type": "varchar"
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "reg_code",
+				"type": "varchar"
+			},
+			{
+				"name": "con_2ltr_code",
+				"type": "varchar"
+			},
+			{
+				"name": "con_currency_code",
+				"type": "varchar"
+			},
+			{
+				"name": "ar1_code",
+				"type": "varchar"
+			},
+			{
+				"name": "con_oecd",
+				"type": "varchar"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "con_country_name",
+				"type": "varchar"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "con_eu",
+				"type": "varchar"
+			},
+			{
+				"name": "reg_description",
+				"type": "varchar"
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ar2_code",
+				"type": "varchar"
+			},
+			{
+				"name": "ar2_description",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_dim_country"
+		}
+	}
+}

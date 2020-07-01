@@ -1,0 +1,53 @@
+{
+	"name": "fact_exchange_rate",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "marts_sql"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "dim_currency_to",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "dim_currency_from",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "from_currency_code",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_time",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "exchange_rate",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "exchange_date",
+				"type": "date"
+			},
+			{
+				"name": "to_currency_code",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "marts",
+			"table": "fact_exchange_rate"
+		}
+	}
+}

@@ -32,7 +32,7 @@
 						"PipelineName": "@pipeline().parameters.pPipelineName",
 						"Subject": "@variables('vSubject')",
 						"ErrorMessage": "@pipeline().parameters.pPipelineErrorMsg",
-						"EmailTo": "@variables('vEmailTo')"
+						"EmailTo": "@pipeline().parameters.pEmailTo"
 					}
 				}
 			},
@@ -81,10 +81,6 @@
 			}
 		},
 		"variables": {
-			"vEmailTo": {
-				"type": "String",
-				"defaultValue": "pEmailTo"
-			},
 			"vSubject": {
 				"type": "String",
 				"defaultValue": "ADF DWH Alert ! Pipeline Failed"

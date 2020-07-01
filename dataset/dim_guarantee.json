@@ -1,0 +1,121 @@
+{
+	"name": "dim_guarantee",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "marts_sql/dim"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "dimension_key",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "top_key",
+				"type": "varchar"
+			},
+			{
+				"name": "gut_key",
+				"type": "varchar"
+			},
+			{
+				"name": "gut_form_of_guarantee_code",
+				"type": "varchar"
+			},
+			{
+				"name": "gut_guarantee_issued_by",
+				"type": "varchar"
+			},
+			{
+				"name": "gut_inc_key",
+				"type": "varchar"
+			},
+			{
+				"name": "gut_interests_and_costs_incl",
+				"type": "char"
+			},
+			{
+				"name": "gut_date_cancelled",
+				"type": "date"
+			},
+			{
+				"name": "gut_guarantee_remarks",
+				"type": "varchar"
+			},
+			{
+				"name": "gut_form_of_guarantee_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "gut_date_expiry",
+				"type": "date"
+			},
+			{
+				"name": "gut_outside_cover_ind",
+				"type": "char"
+			},
+			{
+				"name": "gut_date_created",
+				"type": "date"
+			},
+			{
+				"name": "gut_guarantee_type_code",
+				"type": "varchar"
+			},
+			{
+				"name": "gut_jurisdiction",
+				"type": "varchar"
+			},
+			{
+				"name": "gut_guarantee_status",
+				"type": "varchar"
+			},
+			{
+				"name": "gut_guarantee_type_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "top_description",
+				"type": "varchar"
+			},
+			{
+				"name": "gut_open_ind",
+				"type": "char"
+			},
+			{
+				"name": "gut_guarantee_provider",
+				"type": "varchar"
+			},
+			{
+				"name": "gut_guarantee_number",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "gut_guarantee_issued_to",
+				"type": "varchar"
+			},
+			{
+				"name": "gut_date_given",
+				"type": "date"
+			},
+			{
+				"name": "gut_counter_guarantee_for",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "marts",
+			"table": "dim_guarantee"
+		}
+	}
+}

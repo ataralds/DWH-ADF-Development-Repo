@@ -35,7 +35,11 @@
 					},
 					"waitOnCompletion": true,
 					"parameters": {
-						"pPipelineName": "copy_paris_to_sql"
+						"pPipelineName": "copy_paris_to_sql",
+						"pPipelineErrorMsg": {
+							"value": "@activity('copy_paris_to_SQL').error.message\n",
+							"type": "Expression"
+						}
 					}
 				}
 			}

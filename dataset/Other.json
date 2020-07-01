@@ -18,10 +18,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().fileName",
-					"type": "Expression"
-				},
+				"fileName": "@dataset().fileName",
 				"folderPath": "Other",
 				"fileSystem": "dwh-stage"
 			},

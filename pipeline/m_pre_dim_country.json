@@ -17,12 +17,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_pre_dim_country",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"vcrossreference": {
-								"fileName": "v_crossreference.parquet"
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
 						"referenceName": "IrExecutePipeline",

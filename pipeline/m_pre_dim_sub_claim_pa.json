@@ -17,22 +17,11 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "m_pre_dim_sub_claim_pa",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"Lcc": {
-								"fileName": "\"p_lcctable\""
-							},
-							"Lca": {
-								"fileName": "\"p_lcatable\""
-							},
-							"TCross": {
-								"fileName": "tcrossreference.parquet"
-							}
-						}
+						"type": "DataFlowReference"
 					},
-					"integrationRuntime": {
-						"referenceName": "IrExecutePipeline",
-						"type": "IntegrationRuntimeReference"
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
 					}
 				}
 			}

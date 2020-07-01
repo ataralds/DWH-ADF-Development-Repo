@@ -1,0 +1,84 @@
+{
+	"name": "pre_fact_trading_certificate",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dwh_prepare_sql/pre_fact"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pk_trading_certificate",
+				"type": "varchar"
+			},
+			{
+				"name": "section",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "trading_certificate_type",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_client_key",
+				"type": "varchar"
+			},
+			{
+				"name": "date_valid_to",
+				"type": "date"
+			},
+			{
+				"name": "object_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_coverage_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dm_number",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "date_valid_from",
+				"type": "date"
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "dim_capital_branch_key",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_fact_trading_certificate"
+		}
+	}
+}

@@ -1,0 +1,65 @@
+{
+	"name": "pre_fact_man_rbns_adj",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dwh_prepare_sql/pre_fact"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "dim_capital_branch_key",
+				"type": "varchar"
+			},
+			{
+				"name": "amount_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "dim_business_area_key",
+				"type": "varchar"
+			},
+			{
+				"name": "poolable_ind",
+				"type": "varchar"
+			},
+			{
+				"name": "hydra_ind",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_time_incident_year_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_time_financial_year_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dim_time_trans_date_key",
+				"type": "date"
+			},
+			{
+				"name": "pk_pre_fact_man_rbns_adj",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "amount_net_usd",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_fact_man_rbns_adj"
+		}
+	}
+}
