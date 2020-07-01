@@ -1,5 +1,5 @@
 {
-	"name": "m_dim_claim_details",
+	"name": "m_dim_claim_detail",
 	"properties": {
 		"activities": [
 			{
@@ -26,6 +26,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "mappings/marts/dim"
+		},
 		"annotations": []
 	}
 }
