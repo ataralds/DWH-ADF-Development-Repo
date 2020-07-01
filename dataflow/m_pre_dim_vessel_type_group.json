@@ -9,14 +9,14 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "sta_vessel_type_group",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "StaVesselTypeGroup"
 				},
 				{
 					"dataset": {
-						"referenceName": "sta_risk_group",
+						"referenceName": "azure_sql_server",
 						"type": "DatasetReference"
 					},
 					"name": "StaRiskDriverGroup"
