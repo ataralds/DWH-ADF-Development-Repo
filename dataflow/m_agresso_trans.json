@@ -1,0 +1,104 @@
+{
+	"name": "m_agresso_trans",
+	"properties": {
+		"folder": {
+			"name": "dwh_stage"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "sUdvGLtransAggAllvouc"
+				},
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "sUdvPeriods"
+				},
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "sUdvClientinfo"
+				},
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "sUdvDimvalue"
+				},
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "xrefCapitalbranch"
+				},
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "xrefCapital"
+				},
+				{
+					"dataset": {
+						"referenceName": "azure_sql_server",
+						"type": "DatasetReference"
+					},
+					"name": "xrefBusinessarea"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "agr_agresso_trans",
+						"type": "DatasetReference"
+					},
+					"name": "agrAgressoTrans"
+				}
+			],
+			"transformations": [
+				{
+					"name": "transper"
+				},
+				{
+					"name": "clients"
+				},
+				{
+					"name": "dimvalue"
+				},
+				{
+					"name": "clientkey"
+				},
+				{
+					"name": "xrefcaprbnch"
+				},
+				{
+					"name": "xrefcapitals"
+				},
+				{
+					"name": "xreflineofbusiness"
+				},
+				{
+					"name": "droppingcolumns"
+				},
+				{
+					"name": "expression"
+				},
+				{
+					"name": "sumAmount"
+				}
+			],
+			"script": "source(output(\n\t\tatt_6_id as string,\n\t\tatt_4_id as string,\n\t\tdim_6 as string,\n\t\tdim_4 as string,\n\t\tperiod as long,\n\t\tatt_2_id as string,\n\t\tdim_2 as string,\n\t\tatt_3_id as string,\n\t\tamount4 as long,\n\t\tdim_7 as string,\n\t\tdim_3 as string,\n\t\tatt_1_id as string,\n\t\tdim_1 as string,\n\t\tamount as long,\n\t\tatt_7_id as string,\n\t\tclient as string,\n\t\tcurrency as string,\n\t\taccount as string,\n\t\tcur_amount as long\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.s_udv_gltrans_agg_allvouc',\n\tformat: 'query') ~> sUdvGLtransAggAllvouc\nsource(output(\n\t\tstatus as string,\n\t\tclient as string,\n\t\tperiod as long,\n\t\tdate_from as date,\n\t\tdate_to as date,\n\t\tcons_period as long,\n\t\tfiscal_year as long\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.s_udv_periods\\nwhere substring(STR(cons_period),1,4)>=\\'2014\\'',\n\tformat: 'query') ~> sUdvPeriods\nsource(output(\n\t\tclient as string,\n\t\tamount_currency as string,\n\t\tamount4_currency as string,\n\t\tclient_name as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.s_udv_clientinfo',\n\tformat: 'query') ~> sUdvClientinfo\nsource(output(\n\t\tdim_position as string,\n\t\tdim_value as string,\n\t\tattribute_name as string,\n\t\tclient as string,\n\t\tstatus as string,\n\t\tattribute_id as string,\n\t\tdim_description as string,\n\t\tattribute_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from dwh_stage.s_udv_dim_value\\nwhere attribute_id=\\'N0\\'',\n\tformat: 'query') ~> sUdvDimvalue\nsource(output(\n\t\tcode_type as string,\n\t\tsource_code_key as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tcode2 as string,\n\t\tom_x_ref as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select code_type,\\n            source_code_key,\\n            target_code,\\n            target_description,\\n            code2,\\n            om_x_ref\\n       from dwh_stage.t_crossreference\\n      where source_system = \\'AGRESSO\\' and code_type_id = 464\\n',\n\tformat: 'query') ~> xrefCapitalbranch\nsource(output(\n\t\tcode_type as string,\n\t\tsource_code_key as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tcode2 as string,\n\t\tom_x_ref as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select code_type,\\n            source_code_key,\\n            target_code,\\n            target_description,\\n            code2,\\n            om_x_ref\\n       from dwh_stage.t_crossreference\\n      where     source_system = \\'AGRESSO\\'\\n            and code_type_id= 116\\n            and trim(source_code_key) not in (\\'80\\', \\'70\\')\\n',\n\tformat: 'query') ~> xrefCapital\nsource(output(\n\t\tcode_type as string,\n\t\tsource_code_key as string,\n\t\ttarget_code as string,\n\t\ttarget_description as string,\n\t\tcode2 as string,\n\t\tom_x_ref as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select code_type,\\n            source_code_key,\\n            target_code,\\n            target_description,\\n            code2,\\n            om_x_ref\\n       from dwh_stage.t_crossreference\\n      where source_system = \\'CC\\'                                \\n  and code_type_id = 793\\n',\n\tformat: 'query') ~> xrefBusinessarea\nsUdvGLtransAggAllvouc, sUdvPeriods join(sUdvGLtransAggAllvouc@period == sUdvPeriods@period\n\t&& sUdvGLtransAggAllvouc@client == sUdvPeriods@client,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> transper\ntransper, sUdvClientinfo join(sUdvGLtransAggAllvouc@client == sUdvClientinfo@client,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> clients\nclients, sUdvDimvalue join(sUdvGLtransAggAllvouc@client == sUdvDimvalue@client\n\t&& dim_2 == dim_value,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> dimvalue\ndimvalue derive(clientkey = concat(toString(sUdvGLtransAggAllvouc@client),\r\n ' - ',\r\n case(\r\n    sUdvGLtransAggAllvouc@client=='30'&&dim_1=='11',\r\n     '10',\r\n      dim_1\r\n      ))) ~> clientkey\nclientkey, xrefCapitalbranch join(clientkey == source_code_key,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> xrefcaprbnch\nxrefcaprbnch, xrefCapital join(sUdvGLtransAggAllvouc@client == xrefCapital@source_code_key,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> xrefcapitals\nxrefcapitals, xrefBusinessarea join(dim_value == xrefBusinessarea@source_code_key,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> xreflineofbusiness\nxreflineofbusiness select(mapColumn(\n\t\tdim_4,\n\t\tamount4,\n\t\tdim_3,\n\t\taccount,\n\t\tagr_reporting_period = sUdvPeriods@period,\n\t\tdate_from,\n\t\tdate_to,\n\t\tcc_reporting_period = cons_period,\n\t\tbranch = xrefCapitalbranch@target_code,\n\t\tcapital = xrefCapital@target_code,\n\t\thrg = xrefBusinessarea@target_code\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> droppingcolumns\ndroppingcolumns derive(amount4 = coalesce(amount4,0),\n\t\tinc_year = coalesce(dim_4,dim_3),\n\t\tfin_year = toInteger(substring(toString(cc_reporting_period), 1, 4))) ~> expression\nexpression aggregate(groupBy(account,\n\t\tagr_reporting_period,\n\t\tdate_from,\n\t\tdate_to,\n\t\tcc_reporting_period,\n\t\tbranch,\n\t\tcapital,\n\t\thrg,\n\t\tinc_year,\n\t\tfin_year),\n\tamount_usd = sum(amount4)) ~> sumAmount\nsumAmount sink(input(\n\t\tcapital as string,\n\t\tbranch as string,\n\t\thrg as string,\n\t\tamount_usd as long,\n\t\taccount as string,\n\t\tcc_reporting_period as long,\n\t\tagr_reporting_period as long,\n\t\tdate_from as date,\n\t\tdate_to as date,\n\t\tinc_year as string,\n\t\tfin_year as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> agrAgressoTrans"
+		}
+	}
+}

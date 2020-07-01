@@ -1,0 +1,69 @@
+{
+	"name": "pre_dim_expense",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_server_development_connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "exp_key",
+				"type": "varchar"
+			},
+			{
+				"name": "exp_cost_compensation",
+				"type": "varchar"
+			},
+			{
+				"name": "exp_code",
+				"type": "varchar"
+			},
+			{
+				"name": "exp_description",
+				"type": "varchar"
+			},
+			{
+				"name": "inserted_by",
+				"type": "varchar"
+			},
+			{
+				"name": "last_updated_by",
+				"type": "varchar"
+			},
+			{
+				"name": "date_inserted",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "date_last_updated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "exg_key",
+				"type": "varchar"
+			},
+			{
+				"name": "exg_description",
+				"type": "varchar"
+			},
+			{
+				"name": "ext_description",
+				"type": "varchar"
+			},
+			{
+				"name": "ext_code",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dwh_prepare",
+			"table": "pre_dim_expense"
+		}
+	}
+}
